@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Battlefield™ Portal Project"
+config/features=PackedStringArray("4.5")
 config/icon="res://addons/bf_portal/godot_portal_logo.svg"
 
 [editor_plugins]
@@ -21,13 +22,8 @@ enabled=PackedStringArray("res://addons/bf_portal/plugin.cfg", "res://addons/bf_
 
 common/drop_mouse_on_gui_input_disabled=true
 
-[physics]
-
-common/enable_pause_aware_picking=true
-
 [importer_defaults]
 
-; Disabled the following for faster startup time
 scene={
 "animation/import": false,
 "gltf/embedded_image_handling": 2,
@@ -35,3 +31,7 @@ scene={
 "meshes/ensure_tangents": false,
 "meshes/generate_lods": false
 }
+
+[physics]
+
+common/enable_pause_aware_picking=true

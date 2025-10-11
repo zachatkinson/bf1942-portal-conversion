@@ -457,8 +457,22 @@ def main():
     # Paths
     project_root = Path(__file__).parent.parent
     kursk_data_path = project_root / 'tools' / 'kursk_extracted_data.json'
-    mapping_db_path = project_root / 'tools' / 'object_mapping_database.json'
-    output_path = project_root / 'GodotProject' / 'levels' / 'Kursk.tscn'
+
+    # Allow custom mapping database via command line argument
+    # This enables future multi-era support (WW2, Vietnam, etc.)
+    if len(sys.argv) > 1 and sys.argv[1] == '--mapping':
+        mapping_db_path = Path(sys.argv[2])
+        print(f"Using custom mapping database: {mapping_db_path}")
+    else:
+        mapping_db_path = project_root / 'tools' / 'object_mapping_database.json'
+
+    # Allow custom output path
+    if '--output' in sys.argv:
+        output_idx = sys.argv.index('--output')
+        output_path = Path(sys.argv[output_idx + 1])
+        print(f"Using custom output path: {output_path}")
+    else:
+        output_path = project_root / 'GodotProject' / 'levels' / 'Kursk.tscn'
 
     print("=" * 70)
     print("Kursk .tscn Generator")
