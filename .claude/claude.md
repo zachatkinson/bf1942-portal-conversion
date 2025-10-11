@@ -467,11 +467,46 @@ python tools/validate_map.py GodotProject/levels/<name>.tscn
 - **BF1942 Modding**: https://bfmods.com
 - **RFA Tools**: https://github.com/yann-papouin/bga
 
+## RFA Extraction Tools (Phase 1 Research)
+
+### Challenge
+
+BF1942 maps are stored in .rfa (Refractor Archive) format with LZO compression. Full Python parsing requires reverse engineering the binary format.
+
+### Available Tools
+
+**Windows Tools (Recommended for Initial Extraction):**
+1. **BGA (Battlefield Game Archive)** - https://github.com/yann-papouin/bga
+   - Most comprehensive, written in Pascal/Delphi
+   - GUI with file preview, extract, and repack capabilities
+
+2. **WinRFA** - Classic modding tool with simple GUI
+
+3. **rfaUnpack.exe** - Command-line extractor
+
+**Python Libraries:**
+- `python-lzo` - LZO decompression support
+- No complete Python RFA parser found (as of 2025-10-10)
+
+### Recommended Approach
+
+**Phase 1 (Current):** Use existing Windows tools
+- Extract RFAs on Windows gaming PC using BGA
+- Copy extracted files to: `bf1942_source/extracted/Kursk/`
+- Alternative: Install Wine on Mac to run BGA.exe
+
+**Phase 3 (Future):** Implement Python RFA parser for automation
+- Reverse engineer RFA binary format
+- Implement header/file table parsing
+- Create automated extraction pipeline
+
+See `tools/README.md` for detailed extraction instructions.
+
 ## Project Status
 
 See `PROJECT_PLAN.md` for detailed progress tracking.
 
-**Current Phase**: Phase 0 - Establishing best practices and documentation
+**Current Phase**: Phase 1 - RFA extraction and BF1942 data analysis
 **Next Milestone**: Extract Kursk map data as proof-of-concept
 **Target**: Playable Kursk recreation in BF6 Portal
 
