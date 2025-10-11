@@ -1,0 +1,367 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "BF1942 to BF6 Portal object mapping database for Kursk conversion",
+    "created": "2025-10-10",
+    "last_updated": "2025-10-10",
+    "author": "Zach Atkinson & Claude (Anthropic)"
+  },
+  "coordinate_systems": {
+    "bf1942": {
+      "handedness": "right-handed",
+      "up_axis": "Y",
+      "units": "meters",
+      "rotation_format": "euler",
+      "rotation_order": "pitch/yaw/roll",
+      "position_format": "x/y/z"
+    },
+    "bf6": {
+      "handedness": "right-handed",
+      "up_axis": "Y",
+      "units": "meters",
+      "rotation_format": "transform3d_matrix",
+      "position_format": "Vector3(x, y, z)"
+    },
+    "conversion_notes": {
+      "scale_factor": 1.0,
+      "requires_axis_swap": false,
+      "requires_rotation_conversion": true,
+      "euler_to_matrix": "Convert BF1942 Euler angles to Godot Transform3D rotation matrix"
+    }
+  },
+  "vehicle_spawners": {
+    "lighttankspawner": {
+      "bf1942_type": "lighttankspawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template_axis": "VEH_Leopard",
+      "bf6_vehicle_template_allies": "VEH_Abrams",
+      "category": "ground_vehicle",
+      "role": "light_tank",
+      "description": "Light tank spawner - mapped to modern MBT",
+      "notes": "BF6 doesn't distinguish light/heavy tanks; use same MBT for both",
+      "properties": {
+        "respawn_time": 60,
+        "max_spawns": -1,
+        "physics_cost": 50
+      }
+    },
+    "heavytankspawner": {
+      "bf1942_type": "heavytankspawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template_axis": "VEH_Leopard",
+      "bf6_vehicle_template_allies": "VEH_Abrams",
+      "category": "ground_vehicle",
+      "role": "heavy_tank",
+      "description": "Heavy tank spawner - mapped to modern MBT",
+      "notes": "Same as light tank in BF6; differentiate by position/strategic value",
+      "properties": {
+        "respawn_time": 90,
+        "max_spawns": -1,
+        "physics_cost": 50
+      }
+    },
+    "APCSpawner": {
+      "bf1942_type": "APCSpawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template": "VEH_CV90",
+      "category": "ground_vehicle",
+      "role": "apc",
+      "description": "Armored Personnel Carrier - mapped to modern IFV",
+      "notes": "CV90 Infantry Fighting Vehicle provides transport + firepower",
+      "properties": {
+        "respawn_time": 60,
+        "max_spawns": -1,
+        "physics_cost": 40
+      }
+    },
+    "ScoutCarSpawner": {
+      "bf1942_type": "ScoutCarSpawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template": "VEH_Vector",
+      "category": "ground_vehicle",
+      "role": "scout",
+      "description": "Scout car - mapped to light armored vehicle",
+      "notes": "Fast, lightly armored recon vehicle",
+      "properties": {
+        "respawn_time": 30,
+        "max_spawns": -1,
+        "physics_cost": 20
+      }
+    },
+    "FighterSpawner": {
+      "bf1942_type": "FighterSpawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template": "VEH_F16",
+      "category": "aircraft",
+      "role": "fighter",
+      "description": "Fighter aircraft - mapped to modern multi-role jet",
+      "notes": "F-16 provides air superiority and ground attack capability",
+      "properties": {
+        "respawn_time": 90,
+        "max_spawns": -1,
+        "physics_cost": 60
+      }
+    },
+    "DiveBomberSpawner": {
+      "bf1942_type": "DiveBomberSpawner",
+      "bf6_type": "VehicleSpawner",
+      "bf6_vehicle_template": "VEH_AH64E",
+      "category": "aircraft",
+      "role": "attack_helicopter",
+      "description": "Dive bomber - mapped to attack helicopter",
+      "notes": "Apache attack helicopter fulfills ground attack role; more appropriate than jet bomber for Portal gameplay",
+      "properties": {
+        "respawn_time": 90,
+        "max_spawns": -1,
+        "physics_cost": 60
+      }
+    },
+    "AAGunSpawner": {
+      "bf1942_type": "AAGunSpawner",
+      "bf6_type": "StationaryEmplacementSpawner",
+      "bf6_vehicle_template": "VEH_Stationary_GDF009",
+      "category": "stationary_weapon",
+      "role": "anti_aircraft",
+      "description": "Anti-aircraft gun - direct mapping to stationary AA",
+      "notes": "Stationary AA emplacement for base defense",
+      "properties": {
+        "respawn_time": 30,
+        "max_spawns": -1,
+        "physics_cost": 10
+      }
+    },
+    "ArtillerySpawner": {
+      "bf1942_type": "ArtillerySpawner",
+      "bf6_type": "StationaryEmplacementSpawner",
+      "bf6_vehicle_template": "VEH_Stationary_BGM71TOW",
+      "category": "stationary_weapon",
+      "role": "artillery_replacement",
+      "description": "Artillery - mapped to stationary TOW launcher (no true artillery in BF6)",
+      "notes": "COMPROMISE: BF6 has no artillery spawners; TOW provides static anti-vehicle capability",
+      "warning": "Not a perfect replacement; consider gameplay balance adjustments",
+      "properties": {
+        "respawn_time": 15,
+        "max_spawns": -1,
+        "physics_cost": 10
+      }
+    }
+  },
+  "gameplay_objects": {
+    "control_point": {
+      "bf1942_types": [
+        "AxisBase_1_Cpoint",
+        "AlliesBase_2_Cpoint",
+        "openbase_lumbermill_Cpoint",
+        "openbasecammo"
+      ],
+      "bf6_type": "CapturePoint",
+      "category": "objective",
+      "description": "Conquest control point",
+      "required_properties": {
+        "ObjId": "integer",
+        "Team": "integer (0=neutral, 1=axis, 2=allies)",
+        "radius": "float (capture radius in meters)"
+      },
+      "notes": "Direct 1:1 mapping; BF6 natively supports capture points"
+    },
+    "hq_spawner": {
+      "bf1942_type": "team_base",
+      "bf6_type": "HQ_PlayerSpawner",
+      "category": "spawn",
+      "description": "Team headquarters with infantry spawn points",
+      "required_properties": {
+        "ObjId": "integer",
+        "Team": "integer (1 or 2)",
+        "AltTeam": "integer (usually 0)",
+        "HQArea": "NodePath to PolygonVolume",
+        "InfantrySpawns": "Array of NodePath to SpawnPoint nodes"
+      },
+      "minimum_spawn_points": 4,
+      "notes": "Must create HQ with minimum 4 spawn points per team"
+    },
+    "spawn_point": {
+      "bf1942_type": "infantry_spawn",
+      "bf6_type": "SpawnPoint",
+      "category": "spawn",
+      "description": "Individual infantry spawn location",
+      "required_properties": {
+        "transform": "Transform3D (position and orientation)"
+      },
+      "parent": "Must be child of HQ_PlayerSpawner",
+      "notes": "Position relative to parent HQ; rotation determines player facing direction"
+    },
+    "combat_area": {
+      "bf1942_type": "map_boundary",
+      "bf6_type": "CombatArea",
+      "category": "boundary",
+      "description": "Defines playable area; players outside are warned/killed",
+      "required_properties": {
+        "CombatVolume": "NodePath to PolygonVolume"
+      },
+      "polygon_volume": {
+        "height": "float (vertical extent of playable area)",
+        "points": "PackedVector2Array (2D boundary polygon)"
+      },
+      "notes": "Create polygon encompassing all spawn points and objectives"
+    }
+  },
+  "terrain": {
+    "bf1942_terrain": {
+      "heightmap_file": "Heightmap.raw",
+      "format": "16-bit raw heightmap",
+      "resolution": "Unknown (needs analysis)",
+      "vertical_scale": "Unknown",
+      "notes": "Cannot import to BF6 Portal"
+    },
+    "bf6_terrain": {
+      "selected_map": "MP_Outskirts",
+      "terrain_file": "res://static/MP_Outskirts_Terrain.tscn",
+      "assets_file": "res://static/MP_Outskirts_Assets.tscn",
+      "rationale": "Open terrain best matches Kursk's rolling plains",
+      "notes": "Pre-built terrain; positions may need adjustment for elevation"
+    }
+  },
+  "kursk_specific_data": {
+    "map_dimensions": {
+      "x_range": {"min": 437.315, "max": 639.658, "size": 202.343},
+      "y_range": {"min": 76.6406, "max": 94.12, "size": 17.4794},
+      "z_range": {"min": 238.39, "max": 849.956, "size": 611.566},
+      "notes": "Y-axis shows relatively flat terrain with ~17m elevation change"
+    },
+    "control_points": [
+      {
+        "name": "AxisBase_1_Cpoint",
+        "position": [437.315, 77.8547, 238.39],
+        "team": 1,
+        "obj_id": 1,
+        "type": "main_base"
+      },
+      {
+        "name": "AlliesBase_2_Cpoint",
+        "position": [568.058, 76.6406, 849.956],
+        "team": 2,
+        "obj_id": 2,
+        "type": "main_base"
+      },
+      {
+        "name": "openbase_lumbermill_Cpoint",
+        "position": [639.658, 83.3344, 556.038],
+        "team": 0,
+        "obj_id": 3,
+        "type": "neutral"
+      },
+      {
+        "name": "openbasecammo",
+        "position": [508.833, 84.8718, 582.2],
+        "team": 0,
+        "obj_id": 4,
+        "type": "neutral"
+      }
+    ],
+    "vehicle_counts": {
+      "axis_base": 7,
+      "allies_base": 7,
+      "lumber_mill": 3,
+      "central_ammo": 1,
+      "total": 18
+    },
+    "team_balance": "Both teams have equal vehicle spawners (7 each); neutral points add variety"
+  },
+  "conversion_rules": {
+    "team_mapping": {
+      "bf1942_axis": 1,
+      "bf1942_allies": 2,
+      "bf1942_neutral": 0,
+      "bf6_team1": 1,
+      "bf6_team2": 2,
+      "bf6_neutral": 0,
+      "note": "Direct 1:1 team mapping"
+    },
+    "object_id_ranges": {
+      "hqs_and_spawns": {"start": 1, "end": 99, "description": "HQs and spawn points"},
+      "gameplay_objects": {"start": 100, "end": 999, "description": "Capture points, triggers"},
+      "vehicle_spawners": {"start": 1000, "end": 1999, "description": "Vehicle spawners"},
+      "props_and_environment": {"start": 2000, "end": 9999, "description": "Static objects"}
+    },
+    "spawn_point_rules": {
+      "minimum_per_team": 4,
+      "recommended_per_team": 8,
+      "spacing": "3-5 meters apart",
+      "placement": "Relative to parent HQ position",
+      "orientation": "Vary facing directions for tactical spawning"
+    },
+    "vehicle_spawner_rules": {
+      "preserve_team_ownership": true,
+      "preserve_position": true,
+      "preserve_rotation": true,
+      "linked_to_control_point": "Set via OSId property",
+      "note": "OSId links spawner to control point; ownership transfers on capture"
+    }
+  },
+  "validation_rules": {
+    "required_nodes": [
+      "TEAM_1_HQ (with 4+ SpawnPoints)",
+      "TEAM_2_HQ (with 4+ SpawnPoints)",
+      "CombatArea (with PolygonVolume)",
+      "Static layer (with terrain reference)"
+    ],
+    "position_validation": {
+      "all_positions_within_combat_area": true,
+      "hq_separation_minimum": 50.0,
+      "spawn_points_within_hq_area": true
+    },
+    "object_id_validation": {
+      "unique_obj_ids": true,
+      "no_negative_ids": true,
+      "sequential_recommended": true
+    },
+    "transform_validation": {
+      "valid_rotation_matrix": true,
+      "orthonormal_basis": true,
+      "no_nan_values": true
+    }
+  },
+  "gdscript_templates": {
+    "hq_spawner": {
+      "template": "[node name=\"TEAM_{TEAM}_HQ\" parent=\".\" node_paths=PackedStringArray(\"HQArea\", \"InfantrySpawns\") instance=ExtResource(\"HQ_PlayerSpawner\")]\ntransform = Transform3D({MATRIX})\nTeam = {TEAM}\nAltTeam = 0\nObjId = {OBJ_ID}\nHQArea = NodePath(\"HQ_Team{TEAM}\")\nInfantrySpawns = [{SPAWN_PATHS}]",
+      "variables": ["TEAM", "MATRIX", "OBJ_ID", "SPAWN_PATHS"]
+    },
+    "spawn_point": {
+      "template": "[node name=\"SpawnPoint_{TEAM}_{INDEX}\" parent=\"TEAM_{TEAM}_HQ\" instance=ExtResource(\"SpawnPoint\")]\ntransform = Transform3D({MATRIX})",
+      "variables": ["TEAM", "INDEX", "MATRIX"]
+    },
+    "vehicle_spawner": {
+      "template": "[node name=\"VehicleSpawner_{INDEX}\" parent=\".\" instance=ExtResource(\"VehicleSpawner\")]\ntransform = Transform3D({MATRIX})\nTeam = {TEAM}\nObjId = {OBJ_ID}\nVehicleTemplate = \"{VEHICLE_TYPE}\"",
+      "variables": ["INDEX", "MATRIX", "TEAM", "OBJ_ID", "VEHICLE_TYPE"]
+    },
+    "capture_point": {
+      "template": "[node name=\"CapturePoint_{INDEX}\" parent=\".\" instance=ExtResource(\"CapturePoint\")]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {POS_X}, {POS_Y}, {POS_Z})\nTeam = {TEAM}\nObjId = {OBJ_ID}",
+      "variables": ["INDEX", "POS_X", "POS_Y", "POS_Z", "TEAM", "OBJ_ID"]
+    },
+    "combat_area": {
+      "template": "[node name=\"CombatArea\" parent=\".\" node_paths=PackedStringArray(\"CombatVolume\") instance=ExtResource(\"CombatArea\")]\ntransform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {CENTER_X}, {CENTER_Y}, {CENTER_Z})\nCombatVolume = NodePath(\"CollisionPolygon3D\")\n\n[node name=\"CollisionPolygon3D\" instance=ExtResource(\"PolygonVolume\") parent=\"CombatArea\"]\nheight = {HEIGHT}\npoints = PackedVector2Array({POINTS})",
+      "variables": ["CENTER_X", "CENTER_Y", "CENTER_Z", "HEIGHT", "POINTS"]
+    }
+  },
+  "notes": {
+    "general": [
+      "This mapping database provides comprehensive BF1942 to BF6 conversion rules",
+      "All BF6 vehicles and gameplay objects are unrestricted (usable on any map)",
+      "Coordinate systems are compatible (both Y-up, right-handed, meters)",
+      "Main conversion challenge is Euler angle to Transform3D matrix conversion",
+      "Terrain must use existing BF6 map (MP_Outskirts recommended)"
+    ],
+    "compromises": [
+      "No true artillery in BF6; using stationary TOW launcher instead",
+      "Modern vehicles replace WW2 vehicles (aesthetic change)",
+      "Cannot import custom terrain heightmaps",
+      "Static props will be limited to unrestricted Generic/Common assets"
+    ],
+    "future_work": [
+      "Phase 4: Static object mapping (buildings, trees, props)",
+      "Balance testing: Vehicle respawn times, capture point radii",
+      "Texture/lighting adjustments for visual polish",
+      "Additional map conversions using same pipeline"
+    ]
+  }
+}

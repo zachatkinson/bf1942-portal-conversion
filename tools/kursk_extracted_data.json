@@ -1,0 +1,349 @@
+{
+  "map_name": "Kursk",
+  "source_game": "Battlefield 1942",
+  "target_game": "Battlefield 6 Portal",
+  "extraction_date": "2025-10-10",
+  "control_points": [
+    {
+      "name": "AxisBase_1_Cpoint",
+      "position": {
+        "x": 437.315,
+        "y": 77.8547,
+        "z": 238.39
+      },
+      "team": null,
+      "os_id": null,
+      "properties": {}
+    },
+    {
+      "name": "AlliesBase_2_Cpoint",
+      "position": {
+        "x": 568.058,
+        "y": 76.6406,
+        "z": 849.956
+      },
+      "team": null,
+      "os_id": null,
+      "properties": {}
+    },
+    {
+      "name": "openbase_lumbermill_Cpoint",
+      "position": {
+        "x": 639.658,
+        "y": 83.3344,
+        "z": 556.038
+      },
+      "team": null,
+      "os_id": null,
+      "properties": {}
+    },
+    {
+      "name": "openbasecammo",
+      "position": {
+        "x": 508.833,
+        "y": 84.8718,
+        "z": 582.2
+      },
+      "team": null,
+      "os_id": null,
+      "properties": {}
+    }
+  ],
+  "vehicle_spawners": [
+    {
+      "bf1942_type": "lighttankspawner",
+      "position": {
+        "x": 450.345,
+        "y": 78.6349,
+        "z": 249.093
+      },
+      "rotation": {
+        "pitch": 0.0,
+        "yaw": 0.103998,
+        "roll": 1.52588
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "lighttankspawner",
+      "position": {
+        "x": 444.421,
+        "y": 78.6286,
+        "z": 248.701
+      },
+      "rotation": {
+        "pitch": 1.27288,
+        "yaw": 0.170019,
+        "roll": -1.52588
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "APCSpawner",
+      "position": {
+        "x": 449.911,
+        "y": 79.0704,
+        "z": 234.584
+      },
+      "rotation": {
+        "pitch": 0.0,
+        "yaw": 1.17886,
+        "roll": 1.52588
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "heavytankspawner",
+      "position": {
+        "x": 388.567,
+        "y": 78.7631,
+        "z": 246.062
+      },
+      "rotation": {
+        "pitch": 0.0,
+        "yaw": -0.664717,
+        "roll": -1.52588
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "ScoutCarSpawner",
+      "position": {
+        "x": 409.739,
+        "y": 78.1727,
+        "z": 233.916
+      },
+      "rotation": {
+        "pitch": -92.664,
+        "yaw": -0.0204939,
+        "roll": -0.409744
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "FighterSpawner",
+      "position": {
+        "x": 376.687,
+        "y": 79.0611,
+        "z": 203.812
+      },
+      "rotation": {
+        "pitch": 91.616,
+        "yaw": -12.871,
+        "roll": 1.52588
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "DiveBomberSpawner",
+      "position": {
+        "x": 374.75,
+        "y": 79.857,
+        "z": 216.141
+      },
+      "rotation": {
+        "pitch": 98.5421,
+        "yaw": -8.4672,
+        "roll": 0.602325
+      },
+      "team": 1,
+      "os_id": 1,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "heavytankspawner",
+      "position": {
+        "x": 594.427,
+        "y": 78.4077,
+        "z": 871.696
+      },
+      "rotation": {
+        "pitch": 89.1573,
+        "yaw": 0.0152983,
+        "roll": -0.618668
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "lighttankspawner",
+      "position": {
+        "x": 574.056,
+        "y": 77.7991,
+        "z": 849.572
+      },
+      "rotation": {
+        "pitch": -177.84,
+        "yaw": -0.132352,
+        "roll": -1.52588
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "lighttankspawner",
+      "position": {
+        "x": 563.023,
+        "y": 77.8716,
+        "z": 843.171
+      },
+      "rotation": {
+        "pitch": 179.352,
+        "yaw": -0.0754579,
+        "roll": 1.52588
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "ScoutCarSpawner",
+      "position": {
+        "x": 562.049,
+        "y": 77.4702,
+        "z": 868.331
+      },
+      "rotation": {
+        "pitch": 179.352,
+        "yaw": -0.441373,
+        "roll": 1.52588
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "APCSpawner",
+      "position": {
+        "x": 580.677,
+        "y": 78.2001,
+        "z": 872.065
+      },
+      "rotation": {
+        "pitch": -89.6219,
+        "yaw": 0.0103454,
+        "roll": -1.16164
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "FighterSpawner",
+      "position": {
+        "x": 490.64,
+        "y": 79.15,
+        "z": 899.592
+      },
+      "rotation": {
+        "pitch": 90.3638,
+        "yaw": -10.3916,
+        "roll": -1.58968
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "DiveBomberSpawner",
+      "position": {
+        "x": 495.157,
+        "y": 78.1042,
+        "z": 884.279
+      },
+      "rotation": {
+        "pitch": 91.616,
+        "yaw": -12.871,
+        "roll": 1.52588
+      },
+      "team": 2,
+      "os_id": 2,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "AAGunSpawner",
+      "position": {
+        "x": 684.391,
+        "y": 93.4701,
+        "z": 553.988
+      },
+      "rotation": {
+        "pitch": -90.792,
+        "yaw": 0.0,
+        "roll": 1.52588
+      },
+      "team": null,
+      "os_id": 3,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "ArtillerySpawner",
+      "position": {
+        "x": 635.281,
+        "y": 83.6894,
+        "z": 552.097
+      },
+      "rotation": {
+        "pitch": -91.119,
+        "yaw": 0.0968891,
+        "roll": 0.690414
+      },
+      "team": null,
+      "os_id": 3,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "ArtillerySpawner",
+      "position": {
+        "x": 634.986,
+        "y": 83.7747,
+        "z": 560.106
+      },
+      "rotation": {
+        "pitch": -89.8568,
+        "yaw": 0.1112,
+        "roll": 0.691544
+      },
+      "team": null,
+      "os_id": 3,
+      "properties": {}
+    },
+    {
+      "bf1942_type": "heavytankspawner",
+      "position": {
+        "x": 496.456,
+        "y": 85.524,
+        "z": 583.978
+      },
+      "rotation": {
+        "pitch": -171.783,
+        "yaw": 0.66694,
+        "roll": 1.52588
+      },
+      "team": null,
+      "os_id": 4,
+      "properties": {}
+    }
+  ],
+  "statistics": {
+    "total_control_points": 4,
+    "total_vehicle_spawners": 18,
+    "axis_spawners": 7,
+    "allies_spawners": 7,
+    "neutral_spawners": 4
+  }
+}
