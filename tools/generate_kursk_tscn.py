@@ -152,8 +152,8 @@ class TscnGenerator:
             HQ node section with spawn points
         """
         # Add HQ resource
-        hq_res_id = self.add_ext_resource("PackedScene", "res://objects/HQ_PlayerSpawner.tscn")
-        spawn_res_id = self.add_ext_resource("PackedScene", "res://objects/SpawnPoint.tscn")
+        hq_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/HQ_PlayerSpawner.tscn")
+        spawn_res_id = self.add_ext_resource("PackedScene", "res://objects/entities/SpawnPoint.tscn")
 
         obj_id = self.get_next_obj_id()
 
@@ -208,7 +208,7 @@ class TscnGenerator:
         Returns:
             Capture point nodes as string
         """
-        cp_res_id = self.add_ext_resource("PackedScene", "res://objects/CapturePoint.tscn")
+        cp_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Conquest/CapturePoint.tscn")
 
         lines = []
 
@@ -238,7 +238,7 @@ class TscnGenerator:
         Returns:
             Vehicle spawner nodes as string
         """
-        vehicle_res_id = self.add_ext_resource("PackedScene", "res://objects/VehicleSpawner.tscn")
+        vehicle_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/VehicleSpawner.tscn")
 
         lines = []
 
@@ -296,7 +296,7 @@ class TscnGenerator:
         Returns:
             Combat area node as string
         """
-        combat_area_res_id = self.add_ext_resource("PackedScene", "res://objects/CombatArea.tscn")
+        combat_area_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/CombatArea.tscn")
 
         # Calculate map bounds from Kursk data
         all_positions = []
@@ -367,16 +367,16 @@ class TscnGenerator:
         Returns:
             Static layer node as string
         """
-        # Use MP_Outskirts terrain as recommended in Phase 2
-        terrain_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Outskirts_Terrain.tscn")
-        assets_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Outskirts_Assets.tscn")
+        # Use MP_Tungsten terrain - better match for Kursk's flat, open landscape
+        terrain_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Tungsten_Terrain.tscn")
+        assets_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Tungsten_Assets.tscn")
 
         lines = [
             '[node name="Static" type="Node3D" parent="."]',
             '',
-            f'[node name="MP_Outskirts_Terrain" parent="Static" instance=ExtResource("{terrain_res_id}")]',
+            f'[node name="MP_Tungsten_Terrain" parent="Static" instance=ExtResource("{terrain_res_id}")]',
             '',
-            f'[node name="MP_Outskirts_Assets" parent="Static" instance=ExtResource("{assets_res_id}")]',
+            f'[node name="MP_Tungsten_Assets" parent="Static" instance=ExtResource("{assets_res_id}")]',
             ''
         ]
 

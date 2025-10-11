@@ -59,7 +59,10 @@ For full automation, we'll need to:
 
 **Dependencies needed:**
 ```bash
-pip install python-lzo
+pip3 install python-lzo
+# Or with uv (recommended):
+uv pip install python-lzo
+
 # On Linux: sudo apt-get install liblzo2-dev
 ```
 
@@ -70,7 +73,9 @@ Located: `/tools/rfa_extractor.py`
 **Status**: Skeleton implementation, provides guidance
 **Usage**:
 ```bash
-python tools/rfa_extractor.py <input.rfa> <output_dir>
+python3 tools/rfa_extractor.py <input.rfa> <output_dir>
+# Or with uv (recommended):
+uv run tools/rfa_extractor.py <input.rfa> <output_dir>
 ```
 
 Currently displays instructions for using external tools.
