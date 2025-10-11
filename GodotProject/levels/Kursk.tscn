@@ -209,7 +209,7 @@ ObjId = 1015
 VehicleTemplate = "FighterSpawner"
 
 [node name="CombatArea" parent="." node_paths=PackedStringArray("CombatVolume") instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 467.393, 63.9535, 509.17499999999995)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.442717911712691, 63.9535, -309.6276366766982)
 CombatVolume = NodePath("CollisionPolygon3D")
 
 [node name="CollisionPolygon3D" type="Area3D" parent="CombatArea"]

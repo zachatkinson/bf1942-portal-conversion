@@ -160,6 +160,20 @@ class PortalConverter:
                 map_data.team1_hq = self.coord_offset.apply_offset(map_data.team1_hq, offset)
                 map_data.team2_hq = self.coord_offset.apply_offset(map_data.team2_hq, offset)
 
+                # Offset bounds for CombatArea
+                if map_data.bounds:
+                    from bfportal.core.interfaces import Vector3
+                    map_data.bounds.min_point = Vector3(
+                        map_data.bounds.min_point.x + offset.x,
+                        map_data.bounds.min_point.y + offset.y,
+                        map_data.bounds.min_point.z + offset.z
+                    )
+                    map_data.bounds.max_point = Vector3(
+                        map_data.bounds.max_point.x + offset.x,
+                        map_data.bounds.max_point.y + offset.y,
+                        map_data.bounds.max_point.z + offset.z
+                    )
+
             # Step 2.5: Detect orientation and calculate terrain rotation
             print(f"\n🧭 Detecting map orientation...")
             map_detector = MapOrientationDetector(map_data)
