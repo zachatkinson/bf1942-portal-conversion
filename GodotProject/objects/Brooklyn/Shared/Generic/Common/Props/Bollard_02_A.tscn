@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Bollard_02_A.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/Shared/Generic/Common/Props/Bollard_02_A.gd" type="Script" id="2"]
+
+
+[node name="Bollard_02_A" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

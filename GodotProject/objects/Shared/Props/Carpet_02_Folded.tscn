@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Carpet_02_Folded.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Shared/Props/Carpet_02_Folded.gd" type="Script" id="2"]
+
+
+[node name="Carpet_02_Folded" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

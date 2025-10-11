@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/OldTownCorridorStairhouseSlopeRoofGable_01_640x768x1280_Barricaded.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Battery/Architecture/OldTownCorridorStairhouseSlopeRoofGable_01_640x768x1280_Barricaded.gd" type="Script" id="2"]
+
+
+[node name="OldTownCorridorStairhouseSlopeRoofGable_01_640x768x1280_Barricaded" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

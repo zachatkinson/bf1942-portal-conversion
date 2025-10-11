@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Tenement_01_1088x1728_C180_B_PropsDressing_B.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Aftermath/Architecture/Tenement_01_1088x1728_C180_B_PropsDressing_B.gd" type="Script" id="2"]
+
+
+[node name="Tenement_01_1088x1728_C180_B_PropsDressing_B" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

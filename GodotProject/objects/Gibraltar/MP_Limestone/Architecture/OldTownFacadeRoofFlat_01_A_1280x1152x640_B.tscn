@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/OldTownFacadeRoofFlat_01_A_1280x1152x640_B.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Limestone/Architecture/OldTownFacadeRoofFlat_01_A_1280x1152x640_B.gd" type="Script" id="2"]
+
+
+[node name="OldTownFacadeRoofFlat_01_A_1280x1152x640_B" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

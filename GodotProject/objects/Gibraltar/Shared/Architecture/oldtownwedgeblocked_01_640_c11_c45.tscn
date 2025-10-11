@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/oldtownwedgeblocked_01_640_c11_c45.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/Shared/Architecture/oldtownwedgeblocked_01_640_c11_c45.gd" type="Script" id="2"]
+
+
+[node name="oldtownwedgeblocked_01_640_c11_c45" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

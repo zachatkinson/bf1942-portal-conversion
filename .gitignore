@@ -1,0 +1,148 @@
+# BF1942 to BF6 Portal Conversion Project - .gitignore
+
+# ============================================================================
+# Source Data (Too large / Copyrighted content)
+# ============================================================================
+bf1942_source/
+FbExportData/thumbnails/
+
+# Large model files (exceeds GitHub 100MB limit)
+GodotProject/raw/models/*.glb
+
+# ============================================================================
+# Project Planning (Local tracking only)
+# ============================================================================
+PROJECT_PLAN.md
+
+# ============================================================================
+# Godot Engine
+# ============================================================================
+# Godot 4+ specific ignores
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# Imported translations (automatically generated from CSV)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# ============================================================================
+# Python
+# ============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Python distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# ============================================================================
+# Node.js / TypeScript
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+*.tsbuildinfo
+
+# Compiled TypeScript
+*.js.map
+/mods/**/*.js
+!/mods/**/*.d.ts
+
+# ============================================================================
+# macOS
+# ============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Thumbnails
+Thumbs.db
+
+# ============================================================================
+# Windows
+# ============================================================================
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# ============================================================================
+# IDE / Editor
+# ============================================================================
+# JetBrains IDEs (IntelliJ, PyCharm, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# ============================================================================
+# Temporary / Generated Files
+# ============================================================================
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# Project Specific
+# ============================================================================
+# Exported map files (can be regenerated)
+FbExportData/levels/*.spatial.json
+
+# Conversion tool outputs (temporary)
+/conversion_output/
+/temp_extractions/
+
+# Test outputs
+/test_maps/
+/debug_output/
+
+# ============================================================================
+# Keep Important Files (Negations)
+# ============================================================================
+# Keep these specific files even if patterns above would ignore them
+!FbExportData/asset_types.json
+!FbExportData/level_info.json
+
+# Keep README and documentation
+!README.html
+!*.md
+!PROJECT_PLAN.md
+
+# Keep configuration files
+!package.json
+!tsconfig.json
+!requirements.txt
+!sdk.version.json
+
+# Keep Godot project file
+!GodotProject/project.godot

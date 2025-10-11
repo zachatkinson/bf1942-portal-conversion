@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/PegboardWideShelf_01_Highside.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Global/Props/PegboardWideShelf_01_Highside.gd" type="Script" id="2"]
+
+
+[node name="PegboardWideShelf_01_Highside" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

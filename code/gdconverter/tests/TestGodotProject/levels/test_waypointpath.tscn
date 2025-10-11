@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs028kjbvulr7"]
+
+[ext_resource type="PackedScene" path="res://AI_WaypointPath.tscn" id="3_q0afq"]
+
+[sub_resource type="Curve3D" id="Curve3D_x3yal"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.658226, 0.0711787, 0.98948, 0, 0, 0, 0, 0, 0, -0.100769, 0.6327, -0.735915, 0, 0, 0, 0, 0, 0, 0.661588, 0.408619, -1.67979, 0, 0, 0, 0, 0, 0, 1.3564, -0.606339, -1.38302, 0, 0, 0, 0, 0, 0, 0.687974, -1.10195, 0.43226, 0, 0, 0, 0, 0, 0, 0.101929, -1.00441, 1.26447),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="MP_Portal_Sand" type="Node3D"]
+
+[node name="AI_WaypointPath" parent="." instance=ExtResource("3_q0afq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.31579, 0, 1.51627)
+curve = SubResource("Curve3D_x3yal")

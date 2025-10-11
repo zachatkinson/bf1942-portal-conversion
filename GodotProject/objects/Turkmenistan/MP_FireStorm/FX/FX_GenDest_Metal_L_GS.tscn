@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/FX_Default.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Turkmenistan/MP_FireStorm/FX/FX_GenDest_Metal_L_GS.gd" type="Script" id="2"]
+
+
+[node name="FX_GenDest_Metal_L_GS" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

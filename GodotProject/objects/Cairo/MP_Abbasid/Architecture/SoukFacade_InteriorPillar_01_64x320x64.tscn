@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/SoukFacade_InteriorPillar_01_64x320x64.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Cairo/MP_Abbasid/Architecture/SoukFacade_InteriorPillar_01_64x320x64.gd" type="Script" id="2"]
+
+
+[node name="SoukFacade_InteriorPillar_01_64x320x64" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

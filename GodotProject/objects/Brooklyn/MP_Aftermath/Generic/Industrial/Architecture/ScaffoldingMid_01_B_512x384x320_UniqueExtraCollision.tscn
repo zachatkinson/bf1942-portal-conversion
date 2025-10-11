@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/ScaffoldingMid_01_B_512x384x320_UniqueExtraCollision.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Aftermath/Generic/Industrial/Architecture/ScaffoldingMid_01_B_512x384x320_UniqueExtraCollision.gd" type="Script" id="2"]
+
+
+[node name="ScaffoldingMid_01_B_512x384x320_UniqueExtraCollision" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

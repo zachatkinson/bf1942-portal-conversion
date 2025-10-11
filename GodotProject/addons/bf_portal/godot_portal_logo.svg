@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_2"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   width="1024"
+   height="1024"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <style
+       id="style1">.cls-1{fill:#fff;}</style>
+  </defs>
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:square"
+     id="rect17"
+     width="1024"
+     height="1024"
+     x="2.8421709e-14"
+     y="6.2033712e-14" />
+  <g
+     id="Layer_1-2"
+     transform="matrix(1.123621,0,0,1.123621,75.051866,259.17965)">
+    <path
+       class="cls-1"
+       d="M 50.21,33.25 V 18.03 C 50.21,-1.32 31.74,0.02 27.77,0.02 H 0 v 99.96 h 27.77 c 3.97,0 22.44,1.34 22.44,-18.01 V 66.75 c 0,-12.76 -5.66,-15.86 -7.46,-16.75 1.8,-0.89 7.46,-3.99 7.46,-16.75 z M 16.23,14.77 h 11.2 c 5.38,0 6.48,1.87 6.48,5.54 v 16.71 c 0,3.46 -1.97,5.61 -6.42,5.61 H 16.23 Z m 17.69,64.92 c 0,3.67 -1.1,5.54 -6.48,5.54 H 16.24 V 57.37 H 27.5 c 4.45,0 6.42,2.15 6.42,5.61 z"
+       id="path1"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 598.15,18.03 c 0,-19.35 -18.47,-18.01 -22.44,-18.01 h -27.77 v 99.96 h 27.77 c 3.97,0 22.44,1.34 22.44,-18.01 z m -16.29,61.66 c 0,3.67 -1.1,5.54 -6.48,5.54 h -11.2 V 14.75 h 11.26 c 4.45,0 6.42,2.15 6.42,5.61 V 79.7 Z"
+       id="path2"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 332.17,0 v 14.75 h -25.28 v 27.88 h 23.78 v 14.75 h -23.78 v 27.88 h 25.28 v 14.75 H 290.66 V 0 Z"
+       id="path3"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 481.43,0 v 14.75 h -25.28 v 27.88 h 23.78 v 14.75 h -23.78 v 27.88 h 25.28 v 14.75 H 439.92 V 0 Z"
+       id="path4"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 390.35,0 v 14.75 h -25.28 v 27.88 h 23.78 v 14.75 h -23.78 v 42.63 H 348.84 V 0 Z"
+       id="path5"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 514.33,0 v 85.25 h 25.28 V 100 H 498.1 V 0 Z"
+       id="path6"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 257.04,0 v 85.25 h 25.28 V 100 H 240.81 V 0 Z"
+       id="path7"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="M 423.25,0 V 100 H 407.02 V 0 Z"
+       id="path8"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 102.99,100 h 16.16 L 103.68,0 H 74.02 L 58.55,100 H 74.71 L 78.59,72.12 H 99.11 Z M 80.65,57.37 86.6,14.74 h 4.5 l 5.95,42.63 z"
+       id="path9"
+       style="fill:#ffffff;fill-opacity:1" />
+    <polygon
+       class="cls-1"
+       points="212.22,14.75 230.27,14.75 230.27,0 177.93,0 177.93,14.75 195.98,14.75 195.98,100 212.22,100 "
+       id="polygon9"
+       style="fill:#ffffff;fill-opacity:1" />
+    <polygon
+       class="cls-1"
+       points="154.61,14.75 172.66,14.75 172.66,0 120.33,0 120.33,14.75 138.38,14.75 138.38,100 154.61,100 "
+       id="polygon10"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="M 606.27,1.25 V 7.5 h -1.32 V 1.25 h -2.53 V 0 h 6.38 v 1.25 z"
+       id="path10"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="M 615.29,7.51 V 2.38 l -1.49,3.29 h -0.87 L 611.44,2.4 v 5.12 h -1.32 V 0.01 h 1.51 l 1.76,3.7 1.73,-3.7 h 1.49 v 7.5 z"
+       id="path11"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 118.06,162.25 c 8.14,8.14 12.21,19.79 12.21,34.93 v 98.56 c 0,14.86 -4.07,26.43 -12.21,34.71 -8.14,8.29 -19.79,12.43 -34.92,12.43 H 52.29 V 450.01 H 0 V 150.04 h 83.13 c 15.14,0 26.78,4.07 34.92,12.21 z M 77.99,294.02 v -95.13 c 0,-2.85 -1.43,-4.29 -4.29,-4.29 H 52.27 V 298.3 H 73.7 c 2.85,0 4.29,-1.43 4.29,-4.29 z"
+       id="path12"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="M 154.69,162.21 C 162.97,154.07 174.54,150 189.4,150 h 36 c 15.14,0 26.78,4.07 34.92,12.21 8.14,8.14 12.21,19.79 12.21,34.92 v 205.73 c 0,14.86 -4.07,26.43 -12.21,34.71 -8.14,8.29 -19.79,12.43 -34.92,12.43 h -36 c -14.86,0 -26.43,-4.14 -34.71,-12.43 -8.29,-8.28 -12.43,-19.85 -12.43,-34.71 V 197.13 c 0,-15.14 4.14,-26.78 12.43,-34.92 z m 44.14,243.22 h 17.14 c 2.85,0 4.29,-1.43 4.29,-4.28 v -202.3 c 0,-2.85 -1.43,-4.29 -4.29,-4.29 h -17.14 c -2.86,0 -4.29,1.43 -4.29,4.29 v 202.3 c 0,2.86 1.43,4.28 4.29,4.28 z"
+       id="path13"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 405.59,162.25 c 8.14,8.14 12.21,19.79 12.21,34.93 v 98.56 c 0,19.43 -6.72,33 -20.14,40.71 L 417.8,450.01 H 366.38 L 351.81,342.88 h -12 V 450.01 H 287.53 V 150.04 h 83.13 c 15.14,0 26.78,4.07 34.92,12.21 z m -40.07,131.77 v -95.13 c 0,-2.85 -1.43,-4.29 -4.29,-4.29 H 339.8 v 103.7 h 21.43 c 2.85,0 4.29,-1.43 4.29,-4.29 z"
+       id="path14"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="M 548.06,194.6 H 513.78 V 450 H 461.5 V 194.6 h -34.28 v -44.57 h 120.84 z"
+       id="path15"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 743.47,150.04 v 255.4 h 34.28 v 44.57 H 691.19 V 150.04 Z"
+       id="path16"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       class="cls-1"
+       d="m 626.48,450 h 52.28 L 646.62,150.04 H 567.77 L 535.63,450 h 52.28 l 3.52,-44.57 h 31.52 l 3.52,44.57 z m -31.52,-89.13 12.23,-154.69 12.23,154.69 h -24.47 z"
+       id="path17"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>

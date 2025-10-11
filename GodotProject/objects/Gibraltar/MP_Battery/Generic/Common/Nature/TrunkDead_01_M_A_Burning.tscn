@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/TrunkDead_01_M_A_Burning.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Battery/Generic/Common/Nature/TrunkDead_01_M_A_Burning.gd" type="Script" id="2"]
+
+
+[node name="TrunkDead_01_M_A_Burning" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

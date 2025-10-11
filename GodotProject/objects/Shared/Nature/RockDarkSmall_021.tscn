@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/RockDarkSmall_021.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Shared/Nature/RockDarkSmall_021.gd" type="Script" id="2"]
+
+
+[node name="RockDarkSmall_021" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

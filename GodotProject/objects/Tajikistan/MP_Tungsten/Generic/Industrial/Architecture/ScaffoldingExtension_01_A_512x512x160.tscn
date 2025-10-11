@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/ScaffoldingExtension_01_A_512x512x160.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Tajikistan/MP_Tungsten/Generic/Industrial/Architecture/ScaffoldingExtension_01_A_512x512x160.gd" type="Script" id="2"]
+
+
+[node name="ScaffoldingExtension_01_A_512x512x160" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

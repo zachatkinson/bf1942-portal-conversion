@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/GCarSedan_01_Taxi.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/Shared/Uncategorized/GCarSedan_01_Taxi.gd" type="Script" id="2"]
+
+
+[node name="GCarSedan_01_Taxi" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

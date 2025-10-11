@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/WreckTank_Bradley_01_Turret.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Shared/Generic/Military/Props/WreckTank_Bradley_01_Turret.gd" type="Script" id="2"]
+
+
+[node name="WreckTank_Bradley_01_Turret" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

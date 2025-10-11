@@ -1,0 +1,8 @@
+{
+    "MP_Portal_Sand": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Portal"
+    }
+}

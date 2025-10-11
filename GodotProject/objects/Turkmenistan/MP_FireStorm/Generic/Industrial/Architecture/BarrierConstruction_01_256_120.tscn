@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/BarrierConstruction_01_256_120.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Turkmenistan/MP_FireStorm/Generic/Industrial/Architecture/BarrierConstruction_01_256_120.gd" type="Script" id="2"]
+
+
+[node name="BarrierConstruction_01_256_120" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Car_Park_Office.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/Shared/Backdrop/Car_Park_Office.gd" type="Script" id="2"]
+
+
+[node name="Car_Park_Office" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

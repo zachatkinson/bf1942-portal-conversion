@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Architecture_01_H.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Limestone/Backdrop/Architecture_01_H.gd" type="Script" id="2"]
+
+
+[node name="Architecture_01_H" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/GMetroBus_01_Brooklyn.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/Shared/Uncategorized/GMetroBus_01_Brooklyn.gd" type="Script" id="2"]
+
+
+[node name="GMetroBus_01_Brooklyn" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/OilWell_01_Pipes_3.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Turkmenistan/MP_FireStorm/Generic/Industrial/Props/OilWell_01_Pipes_3.gd" type="Script" id="2"]
+
+
+[node name="OilWell_01_Pipes_3" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

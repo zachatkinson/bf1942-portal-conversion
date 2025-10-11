@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/ServerRackLarge_01.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Global/Generic/Common/Props/ServerRackLarge_01.gd" type="Script" id="2"]
+
+
+[node name="ServerRackLarge_01" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

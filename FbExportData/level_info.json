@@ -1,0 +1,56 @@
+{
+    "MP_Abbasid": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Cairo"
+    },
+    "MP_Aftermath": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Brooklyn"
+    },
+    "MP_Battery": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Gibraltar"
+    },
+    "MP_Capstone": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Tajikistan"
+    },
+    "MP_Dumbo": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Brooklyn"
+    },
+    "MP_FireStorm": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Turkmenistan"
+    },
+    "MP_Limestone": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Gibraltar"
+    },
+    "MP_Outskirts": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Cairo"
+    },
+    "MP_Tungsten": {
+        "budget": {
+            "physicsCostMax": 100000
+        },
+        "theater": "Tajikistan"
+    }
+}

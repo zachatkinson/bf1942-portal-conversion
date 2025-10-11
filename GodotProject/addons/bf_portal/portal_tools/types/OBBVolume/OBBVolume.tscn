@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgsg770ai6g2x"]
+
+[ext_resource type="Script" uid="uid://cd01rxg0weibo" path="res://addons/bf_portal/portal_tools/types/OBBVolume/OBBVolume.gd" id="1_am9ty"]
+
+[node name="OBBVolume" type="Node3D"]
+script = ExtResource("1_am9ty")
+size = Vector3(1, 1, 1)
+color = Color(0, 0.6, 0.7, 0.42)

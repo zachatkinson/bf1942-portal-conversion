@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/TankerTrailer_01_Foot.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Turkmenistan/MP_FireStorm/Generic/Common/Props/TankerTrailer_01_Foot.gd" type="Script" id="2"]
+
+
+[node name="TankerTrailer_01_Foot" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

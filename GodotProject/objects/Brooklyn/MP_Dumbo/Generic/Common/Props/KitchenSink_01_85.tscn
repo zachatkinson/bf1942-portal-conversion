@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/KitchenSink_01_85.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Dumbo/Generic/Common/Props/KitchenSink_01_85.gd" type="Script" id="2"]
+
+
+[node name="KitchenSink_01_85" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

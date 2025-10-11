@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Walnut_01_M.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Tajikistan/Shared/Generic/Common/Nature/Walnut_01_M.gd" type="Script" id="2"]
+
+
+[node name="Walnut_01_M" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

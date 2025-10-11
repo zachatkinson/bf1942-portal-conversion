@@ -1,0 +1,309 @@
+[gd_scene load_steps=27 format=3 uid="uid://cuhne5iqt2w7k"]
+
+[ext_resource type="Script" uid="uid://dnntnuqwvo70t" path="res://addons/bf_portal/memory_plugin/check_memory.gd" id="1_qdqjm"]
+[ext_resource type="Script" uid="uid://c1vsaei6l6kb5" path="res://addons/bf_portal/memory_plugin/col_toggles.gd" id="2_3rku6"]
+[ext_resource type="Script" uid="uid://bsxd5qo5gy5bg" path="res://addons/bf_portal/memory_plugin/create_table.gd" id="3_fuljc"]
+[ext_resource type="Script" uid="uid://kbk54lyhsfev" path="res://addons/bf_portal/memory_plugin/search.gd" id="3_ivs08"]
+[ext_resource type="Script" uid="uid://m0td288p5c4l" path="res://addons/bf_portal/memory_plugin/drag.gd" id="5_77rfh"]
+[ext_resource type="Texture2D" uid="uid://dw47hnafpx2f8" path="res://addons/bf_portal/memory_plugin/icons/toggle_icon_right.png" id="6_uk0t3"]
+[ext_resource type="Script" uid="uid://dj35nqa8fteax" path="res://addons/bf_portal/memory_plugin/table_container/table_container.gd" id="8_wudvi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bml73"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6cn85"]
+color = Color(0.690196, 0.690196, 0.690196, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tpfn4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvikr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wxapb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dshao"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cae1e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_20b57"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1g16"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2d138"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0pvp"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0941176, 0.109804, 0.133333, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfw3a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crd8r"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0941176, 0.109804, 0.133333, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_biece"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pd0w4"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0941176, 0.109804, 0.133333, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_osfra"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcd5v"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0941176, 0.109804, 0.133333, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wkiol"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut1i"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0941176, 0.109804, 0.133333, 1)
+
+[node name="MemoryTool" type="Control"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+script = ExtResource("1_qdqjm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LevelSummary" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelSummary"]
+layout_mode = 2
+tooltip_text = "An overview of the currently opened level. 
+Only provides a summary if a valid level is open. Displays error message otherwise."
+theme_override_font_sizes/bold_font_size = 17
+bbcode_enabled = true
+text = "[center][b]Level Summary[b][center]"
+fit_content = true
+
+[node name="Spacer" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelSummary"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Summary" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/LevelSummary"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bml73")
+text = "Click refresh on a level to see data"
+fit_content = true
+
+[node name="Spacer1" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_6cn85")
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Refresh"
+
+[node name="ColumnToggles" type="BoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+vertical = true
+script = ExtResource("2_3rku6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles"]
+clip_contents = true
+layout_mode = 2
+
+[node name="AllData" type="CheckBox" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tpfn4")
+button_pressed = true
+text = "All"
+metadata/CheckBox = false
+
+[node name="InstanceNames" type="CheckBox" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vvikr")
+button_pressed = true
+text = "Objects"
+
+[node name="InstanceCount" type="CheckBox" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wxapb")
+button_pressed = true
+text = "Count"
+
+[node name="Memory" type="CheckBox" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dshao")
+button_pressed = true
+text = "Physics Cost"
+
+[node name="Search" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_ivs08")
+
+[node name="SearchLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Search"]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Filters the table for user's search."
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cae1e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_20b57")
+text = "Search:"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Spacer" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Search"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="SearchBar" type="LineEdit" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Search"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p1g16")
+
+[node name="Spacer3" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_6cn85")
+
+[node name="Spacer4" type="Control" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="DataTable" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_fuljc")
+
+[node name="Table" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("8_wudvi")
+separation_horizontal = 0
+separation_vertical = 1
+
+[node name="Toggles" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="MainToggle" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/Toggles"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2d138")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g0pvp")
+icon = ExtResource("6_uk0t3")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ObjectType" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="TypeButton" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/ObjectType"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bfw3a")
+theme_override_styles/normal = SubResource("StyleBoxFlat_crd8r")
+text = "Type"
+alignment = 0
+
+[node name="InstNames" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="NamesButton" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/InstNames"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_biece")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pd0w4")
+text = "Objects"
+alignment = 0
+script = ExtResource("5_77rfh")
+
+[node name="InstCount" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="CountButton" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/InstCount"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_osfra")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bcd5v")
+text = "Count"
+alignment = 0
+script = ExtResource("5_77rfh")
+
+[node name="Memory" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="MemoryButton" type="Button" parent="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/Memory"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wkiol")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut1i")
+text = "Physics Cost"
+alignment = 0
+script = ExtResource("5_77rfh")
+
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer/AllData" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles" method="_on_all_data_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer/InstanceNames" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles" method="_on_object_names_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer/InstanceCount" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles" method="_on_instance_count_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles/HBoxContainer/Memory" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/ColumnToggles" method="_on_memory_toggled"]
+[connection signal="text_changed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Search/SearchBar" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/Search" method="_on_search_bar_text_changed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/Toggles/MainToggle" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable" method="_on_all_collapse_expand_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/ObjectType/TypeButton" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable" method="_on_type_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/InstNames/NamesButton" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable" method="_on_names_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/InstCount/CountButton" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable" method="_on_count_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable/Table/Memory/MemoryButton" to="VBoxContainer/ScrollContainer/MarginContainer/VBoxContainer/DataTable" method="_on_memory_pressed"]

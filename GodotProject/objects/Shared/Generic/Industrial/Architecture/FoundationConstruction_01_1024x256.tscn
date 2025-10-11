@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/FoundationConstruction_01_1024x256.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Shared/Generic/Industrial/Architecture/FoundationConstruction_01_1024x256.gd" type="Script" id="2"]
+
+
+[node name="FoundationConstruction_01_1024x256" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

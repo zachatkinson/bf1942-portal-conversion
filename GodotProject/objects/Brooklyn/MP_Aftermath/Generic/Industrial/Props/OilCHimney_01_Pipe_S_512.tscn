@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/OilCHimney_01_Pipe_S_512.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Aftermath/Generic/Industrial/Props/OilCHimney_01_Pipe_S_512.gd" type="Script" id="2"]
+
+
+[node name="OilCHimney_01_Pipe_S_512" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

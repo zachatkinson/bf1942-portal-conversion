@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/IMM_CableTray_256_01_B.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Aftermath/Generic/Common/Props/IMM_CableTray_256_01_B.gd" type="Script" id="2"]
+
+
+[node name="IMM_CableTray_256_01_B" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Midrise_01_1280x1920x1280_C180_B_Mirrored.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Battery/Architecture/Midrise_01_1280x1920x1280_C180_B_Mirrored.gd" type="Script" id="2"]
+
+
+[node name="Midrise_01_1280x1920x1280_C180_B_Mirrored" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

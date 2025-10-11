@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/Area04_Tenement_01_1920x1728_C90_A_01.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Dumbo/Uncategorized/Area04_Tenement_01_1920x1728_C90_A_01.gd" type="Script" id="2"]
+
+
+[node name="Area04_Tenement_01_1920x1728_C90_A_01" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

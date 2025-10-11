@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/FoundationWall_01_CC45.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/MP_Battery/Architecture/FoundationWall_01_CC45.gd" type="Script" id="2"]
+
+
+[node name="FoundationWall_01_CC45" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/RubblePileStone_01_Side.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Shared/Generic/Common/Props/RubblePileStone_01_Side.gd" type="Script" id="2"]
+
+
+[node name="RubblePileStone_01_Side" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

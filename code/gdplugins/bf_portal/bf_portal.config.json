@@ -1,0 +1,9 @@
+{
+	"setupEnabled": true,
+	"python": "../python",
+	"venv": "../venv",
+	"gdconverter": "../code/gdconverter",
+	"fbExportData": "../FbExportData",
+	"export": "../export/levels",
+	"data_version": ""
+}

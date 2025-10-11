@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/SoukHouse_02_1024x1152_CV90_Interior_D.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Cairo/MP_Abbasid/Uncategorized/SoukHouse_02_1024x1152_CV90_Interior_D.gd" type="Script" id="2"]
+
+
+[node name="SoukHouse_02_1024x1152_CV90_Interior_D" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

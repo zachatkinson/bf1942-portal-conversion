@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/OutskirtsHouseLarge_01_ConstructionSite.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Cairo/MP_Outskirts/Architecture/OutskirtsHouseLarge_01_ConstructionSite.gd" type="Script" id="2"]
+
+
+[node name="OutskirtsHouseLarge_01_ConstructionSite" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

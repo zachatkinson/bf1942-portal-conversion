@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://jv31so3xcr7p"]
+
+[ext_resource type="Script" uid="uid://ck5uniw0pl6u8" path="res://addons/bf_portal/portal_tools/types/PolygonVolume/PolygonVolume.gd" id="1_yd7mp"]
+
+[node name="PolygonVolume" type="Node3D"]
+script = ExtResource("1_yd7mp")
+points = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
+color = Color(0, 0.6, 0.7, 0.42)
+metadata/_custom_type_script = "uid://ck5uniw0pl6u8"

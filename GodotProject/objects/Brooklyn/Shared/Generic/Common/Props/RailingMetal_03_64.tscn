@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/RailingMetal_03_64.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/Shared/Generic/Common/Props/RailingMetal_03_64.gd" type="Script" id="2"]
+
+
+[node name="RailingMetal_03_64" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

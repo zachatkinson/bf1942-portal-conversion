@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/StreetLightPoleElegant_01_Double_B.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Gibraltar/Shared/LightFixtures/StreetLightPoleElegant_01_Double_B.gd" type="Script" id="2"]
+
+
+[node name="StreetLightPoleElegant_01_Double_B" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/FlushMount_Rect_01_Flicker_nbrk.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Brooklyn/MP_Aftermath/Generic/Common/LightFixtures/FlushMount_Rect_01_Flicker_nbrk.gd" type="Script" id="2"]
+
+
+[node name="FlushMount_Rect_01_Flicker_nbrk" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

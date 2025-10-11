@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource path="res://raw/models/WarTorn_06.glb" type="PackedScene" id="1"]
+[ext_resource path="res://scripts/Tajikistan/MP_Tungsten/Uncategorized/WarTorn_06.gd" type="Script" id="2"]
+
+
+[node name="WarTorn_06" type="Node3D"]
+script = ExtResource("2")
+
+[node name="Mesh" parent="." instance=ExtResource("1")]

@@ -1,0 +1,80 @@
+{
+    "Portal_Dynamic": [
+        {
+            "name": "box",
+            "type": "Portal_COM_CardboardBoxes_01_M",
+            "right": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "up": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "front": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "position": {
+                "x": 123,
+                "y": 456,
+                "z": 789
+            }
+        }
+    ],
+    "Static": [
+        {
+            "name": "MP_Abbasid_Terrain",
+            "type": "MP_Abbasid_Terrain",
+            "right": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "up": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "front": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "id": "Static/MP_Abbasid_Terrain"
+        },
+        {
+            "name": "MP_Abbasid_Assets",
+            "type": "MP_Abbasid_Assets",
+            "right": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "up": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "front": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "id": "Static/MP_Abbasid_Assets"
+        }
+    ]
+}

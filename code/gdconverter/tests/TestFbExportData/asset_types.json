@@ -1,0 +1,104 @@
+{
+    "AssetTypes": [
+        {
+            "type": "CardboardBoxes_01_M",
+            "constants": [
+                {
+                    "name": "asset",
+                    "type": "string",
+                    "value": "CardboardBoxes_01_M"
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "value": "spatial"
+                }
+            ],
+            "properties": []
+        },
+        {
+            "type": "AI_WaypointPath",
+            "constants": [
+                {
+                    "name": "mesh",
+                    "type": "string",
+                    "value": "AI_WaypointPath"
+                },
+                {
+                    "name": "category",
+                    "type": "string",
+                    "value": "spatial"
+                }
+            ],
+            "properties": [
+                {
+                    "name": "ObjId",
+                    "type": "int"
+                },
+                {
+                    "name": "Waypoints",
+                    "type": "WaypointPath",
+                    "default": ""
+                }
+            ],
+            "levelRestrictions": []
+        },
+        {
+            "type": "WaypointPath",
+            "constants": [
+                {
+                    "name": "category",
+                    "type": "string",
+                    "value": "waypointpath"
+                }
+            ],
+            "properties": [
+                {
+                    "name": "points",
+                    "type": "vector[]",
+                    "default": []
+                }
+            ]
+        },
+        {
+            "type": "PolygonVolume",
+            "constants": [
+                {
+                    "name": "category",
+                    "type": "string",
+                    "value": "polygonvolume"
+                }
+            ],
+            "properties": [
+                {
+                    "name": "points",
+                    "type": "vector[]",
+                    "default": []
+                },
+                {
+                    "name": "height",
+                    "type": "float",
+                    "default": 0
+                }
+            ]
+        },
+        {
+            "type": "OBBVolume",
+            "directory": "",
+            "constants": [
+                {
+                    "name": "category",
+                    "type": "string",
+                    "value": "obbvolume"
+                }
+            ],
+            "properties": [
+                {
+                    "name": "size",
+                    "type": "vector",
+                    "default": []
+                }
+            ]
+        }
+    ]
+}
