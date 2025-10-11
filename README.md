@@ -1,22 +1,56 @@
-# BF1942 to Portal Conversion Project
+# Battlefield to Portal Conversion Project
 
-Automated conversion pipeline for bringing classic Battlefield 1942 maps into Battlefield 2042 Portal.
+![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
+![Conversion Accuracy](https://img.shields.io/badge/conversion%20accuracy-95.3%25-success.svg)
+![Last Commit](https://img.shields.io/github/last-commit/zachatkinson/bf1942-portal-conversion)
+
+Automated conversion pipeline for bringing classic Battlefield maps into Battlefield 6 Portal. Currently supports Battlefield 1942 with extensible architecture for all Battlefield games.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Conversion Results](#conversion-results-kursk-example)
+- [Architecture](#architecture)
+- [Supported Maps](#supported-maps)
+- [Advanced Usage](#advanced-usage)
+- [Known Limitations](#known-limitations)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Overview
 
-This project converts Battlefield 1942 maps to BF2042 Portal format, preserving gameplay layout, spawn points, and asset placement while mapping classic assets to modern Portal equivalents.
+This project converts classic Battlefield game maps to BF6 Portal format, preserving gameplay layout, spawn points, and asset placement while mapping classic assets to modern Portal equivalents.
 
-**Status**: ✅ Production-ready with 95.3% conversion accuracy
+**Current Status**: ✅ Battlefield 1942 production-ready with 95.3% conversion accuracy
+
+**Roadmap**: Support for all Battlefield games:
+- ✅ **Battlefield 1942** (Base + Road to Rome + Secret Weapons)
+- 🔜 **Battlefield Vietnam**
+- 🔜 **Battlefield 2** (Base + Special Forces + Armored Fury + Euro Force)
+- 🔜 **Battlefield 2142**
+- 🔜 **Bad Company 1 & 2**
+- 🔜 **Battlefield 3**
+- 🔜 **Battlefield 4**
+- 🔜 **Battlefield Hardline**
+- 🔜 **Battlefield 1**
+- 🔜 **Battlefield V**
+- 🔜 **Battlefield 2042**
 
 ## Features
 
-- **Automated Conversion Pipeline**: Single command converts any BF1942 map
-- **Intelligent Asset Mapping**: 3-tier fallback system with 733 BF1942 → Portal mappings
+- **Automated Conversion Pipeline**: Single command converts any supported Battlefield map
+- **Intelligent Asset Mapping**: Multi-tier fallback system with 733+ asset mappings
 - **Terrain-Aware Placement**: Mesh-based height sampling with bilinear interpolation
 - **Type-Smart Fallbacks**: Trees map to trees, buildings to buildings (not generic props)
 - **Multi-Terrain Support**: Convert to any Portal base terrain (MP_Tungsten, MP_Battery, etc.)
 - **Orientation Detection**: Automatic map rotation calculation
-- **SOLID Architecture**: Modular, extensible, DRY codebase
+- **Multi-Game Engine Support**: Extensible architecture for all Battlefield engines
+- **SOLID Architecture**: Modular, clean interfaces make adding new games straightforward
 
 ## Quick Start
 
@@ -67,7 +101,8 @@ Output: `GodotProject/levels/Kursk.tscn`
 ```
 tools/bfportal/
 ├── core/           # Interfaces, exceptions, data models
-├── engines/        # Game engine parsers (BF1942 Refractor)
+├── engines/        # Game engine parsers (Refractor, Frostbite, etc.)
+│   └── refractor/  # BF1942 + BFV implementation
 ├── mappers/        # Asset mapping with intelligent fallbacks
 ├── terrain/        # Mesh-based terrain provider
 ├── transforms/     # Coordinate systems and offsetting
@@ -75,6 +110,12 @@ tools/bfportal/
 ├── orientation/    # Map orientation detection
 └── validation/     # Map validation tools
 ```
+
+**Multi-Game Architecture**: The `IGameEngine` interface allows easy addition of new Battlefield games. Each game engine implements:
+- Map file parsing (RFA, LVL, etc.)
+- Coordinate system handling
+- Asset extraction
+- Game-specific logic (conquest points, spawns, etc.)
 
 ### Key Components
 
@@ -93,12 +134,18 @@ tools/bfportal/
 
 ## Supported Maps
 
-- ✅ **Kursk** (completed, tested)
+### Battlefield 1942
+
+- ✅ **Kursk** (completed, tested in Portal)
 - 🔜 Wake Island
 - 🔜 El Alamein
 - 🔜 Stalingrad
 - 🔜 Guadalcanal
-- 🔜 All other BF1942 maps
+- 🔜 All other BF1942 base maps + expansions
+
+### Other Battlefield Games
+
+Coming soon - the architecture is designed to easily add parsers for other Battlefield engines.
 
 ## Advanced Usage
 
@@ -149,7 +196,37 @@ Built with:
 - **SOLID Principles**: Single Responsibility, Dependency Inversion
 - **Clean Interfaces**: `IGameEngine`, `IAssetMapper`, `ITerrainProvider`
 - **Type Safety**: Full Python type hints throughout
-- **Extensibility**: Easy to add support for BF:Vietnam, BF2, etc.
+- **Extensibility**: Easy to add support for all Battlefield games via engine abstraction
+
+### Development Tools
+
+This project uses modern Python tooling for code quality:
+
+**Ruff** - Fast Python linter and formatter (10-100x faster than Black/flake8):
+```bash
+# Install ruff
+pip install ruff
+
+# Format code
+ruff format tools/
+
+# Lint code
+ruff check tools/
+
+# Auto-fix issues
+ruff check --fix tools/
+```
+
+**mypy** - Static type checker:
+```bash
+# Install mypy
+pip install mypy
+
+# Type check codebase
+mypy tools/
+```
+
+All configuration is in `pyproject.toml`.
 
 ### Run Conversion with Debug Output
 
@@ -175,7 +252,7 @@ python3 tools/portal_convert.py --map Kursk --base-terrain MP_Tungsten 2>&1 | te
 
 This conversion toolset is provided as-is for educational and modding purposes.
 
-Battlefield 1942 and Battlefield 2042 are trademarks of Electronic Arts Inc.
+Battlefield 1942 and Battlefield 6 are trademarks of Electronic Arts Inc.
 
 ## Credits
 

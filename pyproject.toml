@@ -1,0 +1,78 @@
+[project]
+name = "bf1942-portal-conversion"
+version = "1.0.0"
+description = "Automated conversion pipeline for bringing classic Battlefield 1942 maps into Battlefield 6 Portal"
+authors = [{name = "Zach Atkinson"}]
+requires-python = ">=3.8"
+
+[tool.ruff]
+# Enable pycodestyle (`E`), Pyflakes (`F`), and isort (`I`)
+select = ["E", "F", "I", "N", "W", "UP", "B", "A", "C4", "PIE", "SIM"]
+ignore = [
+    "E501",  # Line too long (handled by formatter)
+    "N802",  # Function name should be lowercase (some Portal SDK conventions)
+]
+
+# Same as Black.
+line-length = 100
+
+# Assume Python 3.8+
+target-version = "py38"
+
+# Exclude common directories
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "python",  # Portal SDK Python runtime
+    "build",
+    "dist",
+    "__pycache__",
+    "*.egg-info",
+    "bf1942_source",  # Extracted game files
+    "GodotProject/raw",  # Binary .glb files
+]
+
+[tool.ruff.format]
+# Use double quotes for strings
+quote-style = "double"
+
+# Indent with spaces
+indent-style = "space"
+
+# Use `\n` line endings for all files
+line-ending = "lf"
+
+[tool.ruff.per-file-ignores]
+# Ignore import sorting in __init__.py files
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_equality = true
+
+# Exclude directories
+exclude = [
+    "bf1942_source/",
+    "GodotProject/raw/",
+    "python/",
+    "build/",
+    "dist/",
+]
+
+[[tool.mypy.overrides]]
+module = "pygltflib.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "PIL.*"
+ignore_missing_imports = true
