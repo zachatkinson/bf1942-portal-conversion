@@ -130,6 +130,7 @@ class TestTscnTransformParser:
 
         with pytest.raises(ValueError, match="Rotation matrix must have 9 values"):
             TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
+
     def test_format_invalid_position_length(self):
         """Test formatting fails with invalid position length."""
         rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
@@ -137,6 +138,7 @@ class TestTscnTransformParser:
 
         with pytest.raises(ValueError, match="Position must have 3 values"):
             TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
+
     def test_extract_from_line_with_transform(self):
         """Test extracting Transform3D from a .tscn line."""
         line = "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, 30)"
