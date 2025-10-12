@@ -1,14 +1,16 @@
 #!/bin/bash
-# Export a Godot .tscn map to Portal .spatial.json format
+# Export a Godot .tscn map to complete Portal experience format
 #
 # Usage:
-#   ./tools/export_map.sh <map_name>
+#   ./tools/export_map.sh <map_name> [options]
 #
-# Example:
+# Examples:
 #   ./tools/export_map.sh Kursk
+#   ./tools/export_map.sh Kursk --base-map MP_Outskirts --max-players 64
 #
-# This script provides a convenient wrapper around the gdconverter export tool.
-# It handles path resolution and provides clear feedback on success/failure.
+# This script is a wrapper around export_to_portal.py which:
+# 1. Exports .tscn to .spatial.json
+# 2. Creates complete Portal experience file ready for import
 
 set -e  # Exit on error
 
