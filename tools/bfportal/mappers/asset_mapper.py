@@ -140,10 +140,7 @@ class AssetMapper(IAssetMapper):
                 if fallback_type in self.portal_assets:
                     fallback_asset = self.portal_assets[fallback_type]
                     # Verify fallback is available on target map
-                    if (
-                        not fallback_asset.level_restrictions
-                        or context.target_base_map in fallback_asset.level_restrictions
-                    ):
+                    if self._is_asset_available_on_map(fallback_asset, context.target_base_map):
                         print(
                             f"  🔄 Using map-specific fallback: {fallback_type} "
                             f"for {source_asset} on {context.target_base_map}"
@@ -206,11 +203,7 @@ class AssetMapper(IAssetMapper):
             portal_asset = self.portal_assets[portal_type]
 
             # Check if asset is available (unrestricted or on target map)
-            available = (
-                not portal_asset.level_restrictions or target_map in portal_asset.level_restrictions
-            )
-
-            if available:
+            if self._is_asset_available_on_map(portal_asset, target_map):
                 category_mappings.append((bf_asset, mapping, portal_asset))
 
         # Sort by: 1) matching type keywords, 2) confidence score
@@ -241,29 +234,11 @@ class AssetMapper(IAssetMapper):
                     pass
                 else:
                     # Matches type keywords!
-                    if not portal_asset.level_restrictions:
-                        print(
-                            f"  ℹ️  Using unrestricted alternative: {portal_asset.type} "
-                            f"for {source_asset}"
-                        )
-                    else:
-                        print(
-                            f"  ℹ️  Using map-compatible alternative: {portal_asset.type} "
-                            f"for {source_asset} on {target_map}"
-                        )
+                    self._print_alternative_message(portal_asset, source_asset, target_map)
                     return portal_asset
             else:
                 # No type keywords - return best match by category
-                if not portal_asset.level_restrictions:
-                    print(
-                        f"  ℹ️  Using unrestricted alternative: {portal_asset.type} "
-                        f"for {source_asset}"
-                    )
-                else:
-                    print(
-                        f"  ℹ️  Using map-compatible alternative: {portal_asset.type} "
-                        f"for {source_asset} on {target_map}"
-                    )
+                self._print_alternative_message(portal_asset, source_asset, target_map)
                 return portal_asset
 
         # Step 2: If no mapped alternatives found, search entire Portal catalog for type matches
@@ -273,19 +248,11 @@ class AssetMapper(IAssetMapper):
                 portal_type_lower = portal_type.lower()
 
                 # Check if this Portal asset matches type keywords
-                if any(kw in portal_type_lower for kw in type_keywords):
-                    # Check if unrestricted
-                    if not portal_asset.level_restrictions:
-                        print(f"  ℹ️  Using catalog alternative: {portal_type} for {source_asset}")
-                        return portal_asset
-
-                    # Check if available on target map
-                    if target_map in portal_asset.level_restrictions:
-                        print(
-                            f"  ℹ️  Using catalog alternative: {portal_type} "
-                            f"for {source_asset} on {target_map}"
-                        )
-                        return portal_asset
+                if any(
+                    kw in portal_type_lower for kw in type_keywords
+                ) and self._is_asset_available_on_map(portal_asset, target_map):
+                    print(f"  ℹ️  Using catalog alternative: {portal_type} for {source_asset}")
+                    return portal_asset
 
         return None
 
@@ -318,6 +285,42 @@ class AssetMapper(IAssetMapper):
             "by_category": categories,
             "portal_assets_available": len(self.portal_assets),
         }
+
+    def _is_asset_available_on_map(self, portal_asset: PortalAsset, target_map: str) -> bool:
+        """Check if Portal asset is available on target map.
+
+        Args:
+            portal_asset: Portal asset to check
+            target_map: Target map name (e.g., 'MP_Tungsten')
+
+        Returns:
+            True if asset is unrestricted OR available on target map
+
+        Note:
+            DRY helper - eliminates repeated availability checking logic.
+        """
+        return not portal_asset.level_restrictions or target_map in portal_asset.level_restrictions
+
+    def _print_alternative_message(
+        self, portal_asset: PortalAsset, source_asset: str, target_map: str
+    ) -> None:
+        """Print message about using alternative asset.
+
+        Args:
+            portal_asset: The alternative Portal asset being used
+            source_asset: Original BF1942 asset name
+            target_map: Target map name
+
+        Note:
+            DRY helper - eliminates repeated print logic.
+        """
+        if not portal_asset.level_restrictions:
+            print(f"  ℹ️  Using unrestricted alternative: {portal_asset.type} for {source_asset}")
+        else:
+            print(
+                f"  ℹ️  Using map-compatible alternative: {portal_asset.type} "
+                f"for {source_asset} on {target_map}"
+            )
 
     def _is_terrain_element(self, source_asset: str) -> bool:
         """Check if asset is a terrain element that should be skipped.
@@ -388,22 +391,14 @@ class AssetMapper(IAssetMapper):
                 for portal_type, portal_asset in self.portal_assets.items():
                     portal_type_lower = portal_type.lower()
 
-                    if any(kw in portal_type_lower for kw in portal_keywords):
-                        # Check if unrestricted
-                        if not portal_asset.level_restrictions:
-                            print(
-                                f"  ℹ️  Using best-guess fallback: {portal_type} "
-                                f"for unmapped {source_asset}"
-                            )
-                            return portal_asset
-
-                        # Check if available on target map
-                        if target_map in portal_asset.level_restrictions:
-                            print(
-                                f"  ℹ️  Using best-guess fallback: {portal_type} "
-                                f"for unmapped {source_asset} on {target_map}"
-                            )
-                            return portal_asset
+                    if any(
+                        kw in portal_type_lower for kw in portal_keywords
+                    ) and self._is_asset_available_on_map(portal_asset, target_map):
+                        print(
+                            f"  ℹ️  Using best-guess fallback: {portal_type} "
+                            f"for unmapped {source_asset}"
+                        )
+                        return portal_asset
 
         # No reasonable guess found
         return None

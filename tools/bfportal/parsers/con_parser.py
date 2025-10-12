@@ -53,7 +53,7 @@ class ConParser(IParser):
             with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
         except Exception as e:
-            raise ParseError(f"Failed to read {file_path}: {e}")
+            raise ParseError(f"Failed to read {file_path}: {e}") from e
 
         # Parse the content
         objects = self._parse_objects(content)

@@ -12,7 +12,41 @@ if TYPE_CHECKING:
     import numpy as np
 
 
-class CustomHeightmapProvider(ITerrainProvider):
+class CenteredTerrainBoundsMixin:
+    """Mixin for terrain providers with centered, rectangular bounds.
+
+    DRY helper - eliminates repeated get_bounds() implementation across
+    providers that use centered terrain (origin at 0,0).
+
+    Requires the following attributes in the implementing class:
+    - terrain_width: float
+    - terrain_depth: float
+    - min_height: float
+    - max_height: float
+    """
+
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
+        """Get terrain bounds for centered rectangular terrain.
+
+        Returns:
+            Tuple of (min_point, max_point) for terrain centered at origin
+        """
+        # Type hints for mixin contract
+        terrain_width: float = self.terrain_width  # type: ignore
+        terrain_depth: float = self.terrain_depth  # type: ignore
+        min_height: float = self.min_height  # type: ignore
+        max_height: float = self.max_height  # type: ignore
+
+        half_width = terrain_width / 2
+        half_depth = terrain_depth / 2
+
+        return (
+            Vector3(-half_width, min_height, -half_depth),
+            Vector3(half_width, max_height, half_depth),
+        )
+
+
+class CustomHeightmapProvider(CenteredTerrainBoundsMixin, ITerrainProvider):
     """Terrain provider using custom heightmap data.
 
     Reads heightmap from PNG or raw file and provides height queries.
@@ -47,10 +81,10 @@ class CustomHeightmapProvider(ITerrainProvider):
             img = Image.open(heightmap_path).convert("L")  # Grayscale
             self.heightmap = img
             self.width, self.height = img.size
-        except ImportError:
-            raise TerrainError("PIL/Pillow not installed. Run: pip3 install Pillow")
+        except ImportError as e:
+            raise TerrainError("PIL/Pillow not installed. Run: pip3 install Pillow") from e
         except Exception as e:
-            raise TerrainError(f"Failed to load heightmap {heightmap_path}: {e}")
+            raise TerrainError(f"Failed to load heightmap {heightmap_path}: {e}") from e
 
     def get_height_at(self, x: float, z: float) -> float:
         """Query terrain height at world coordinates.
@@ -106,22 +140,8 @@ class CustomHeightmapProvider(ITerrainProvider):
 
         return height
 
-    def get_bounds(self) -> tuple[Vector3, Vector3]:
-        """Get terrain bounds.
 
-        Returns:
-            Tuple of (min_point, max_point)
-        """
-        half_width = self.terrain_width / 2
-        half_depth = self.terrain_depth / 2
-
-        return (
-            Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth),
-        )
-
-
-class TungstenTerrainProvider(ITerrainProvider):
+class TungstenTerrainProvider(CenteredTerrainBoundsMixin, ITerrainProvider):
     """Terrain provider for Portal's MP_Tungsten base map.
 
     Queries the Tungsten heightmap from Portal SDK static files.
@@ -184,22 +204,8 @@ class TungstenTerrainProvider(ITerrainProvider):
 
         return avg_height + variation
 
-    def get_bounds(self) -> tuple[Vector3, Vector3]:
-        """Get terrain bounds.
 
-        Returns:
-            Tuple of (min_point, max_point)
-        """
-        half_width = self.terrain_width / 2
-        half_depth = self.terrain_depth / 2
-
-        return (
-            Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth),
-        )
-
-
-class OutskirtsTerrainProvider(ITerrainProvider):
+class OutskirtsTerrainProvider(CenteredTerrainBoundsMixin, ITerrainProvider):
     """Terrain provider for Portal's MP_Outskirts base map.
 
     Queries the Outskirts heightmap from Portal SDK static files.
@@ -245,20 +251,6 @@ class OutskirtsTerrainProvider(ITerrainProvider):
         variation = math.sin(x * 0.02) * math.cos(z * 0.02) * 3.0
 
         return base_height + variation
-
-    def get_bounds(self) -> tuple[Vector3, Vector3]:
-        """Get terrain bounds.
-
-        Returns:
-            Tuple of (min_point, max_point)
-        """
-        half_width = self.terrain_width / 2
-        half_depth = self.terrain_depth / 2
-
-        return (
-            Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth),
-        )
 
 
 class MeshTerrainProvider(ITerrainProvider):
@@ -320,8 +312,8 @@ class MeshTerrainProvider(ITerrainProvider):
 
         try:
             import numpy as np
-        except ImportError:
-            raise TerrainError("NumPy required for mesh terrain. Run: pip3 install numpy")
+        except ImportError as e:
+            raise TerrainError("NumPy required for mesh terrain. Run: pip3 install numpy") from e
 
         try:
             with open(self.mesh_path, "rb") as f:
@@ -369,7 +361,7 @@ class MeshTerrainProvider(ITerrainProvider):
             return np.array(vertices)
 
         except Exception as e:
-            raise TerrainError(f"Failed to extract vertices from {self.mesh_path}: {e}")
+            raise TerrainError(f"Failed to extract vertices from {self.mesh_path}: {e}") from e
 
     def _build_height_grid(self) -> "np.ndarray":
         """Build 2D grid of heights for fast lookups.
