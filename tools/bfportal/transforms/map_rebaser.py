@@ -25,6 +25,11 @@ from ..core.interfaces import (
     Vector3,
 )
 
+# Constants for rebasing operations
+# Height difference tolerance when adjusting objects to new terrain
+# Objects more than this many meters off terrain height will be adjusted
+HEIGHT_ADJUSTMENT_TOLERANCE_M = 2.0
+
 
 class MapRebaser:
     """Handles switching between Portal base terrains.
@@ -107,7 +112,7 @@ class MapRebaser:
                 height_diff = abs(new_transform.position.y - terrain_height)
 
                 # If object is significantly above/below terrain, adjust
-                if height_diff > 2.0:  # 2m tolerance
+                if height_diff > HEIGHT_ADJUSTMENT_TOLERANCE_M:
                     new_transform.position.y = terrain_height
                     height_adjusted += 1
 

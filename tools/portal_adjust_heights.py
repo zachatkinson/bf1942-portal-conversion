@@ -32,6 +32,7 @@ from bfportal.terrain.terrain_provider import (
     OutskirtsTerrainProvider,
     TungstenTerrainProvider,
 )
+from bfportal.utils.tscn_utils import TscnTransformParser
 
 
 class PortalAdjustHeightsApp:
@@ -41,6 +42,7 @@ class PortalAdjustHeightsApp:
         """Initialize the app."""
         self.args: argparse.Namespace
         self.height_adjuster = HeightAdjuster()
+        self.transform_parser = TscnTransformParser()
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -186,16 +188,15 @@ Use Cases:
             Transform object or None if parsing fails
         """
         try:
-            values = [float(v.strip()) for v in transform_str.split(",")]
-            if len(values) >= 12:
-                position = Vector3(values[9], values[10], values[11])
-                # For simplicity, we don't extract rotation from matrix
-                rotation = Rotation(0, 0, 0)
-                return Transform(position, rotation)
-        except Exception:
-            pass
-
-        return None
+            rotation_matrix, position_list = self.transform_parser.parse(
+                f"Transform3D({transform_str})"
+            )
+            position = Vector3(position_list[0], position_list[1], position_list[2])
+            # For simplicity, we don't extract rotation from matrix
+            rotation = Rotation(0, 0, 0)
+            return Transform(position, rotation)
+        except (ValueError, IndexError):
+            return None
 
     def format_transform(self, transform: Transform, original_matrix: str) -> str:
         """Format transform back to Transform3D string.
@@ -208,17 +209,19 @@ Use Cases:
             Updated Transform3D string
         """
         try:
-            values = [float(v.strip()) for v in original_matrix.split(",")]
-            if len(values) >= 12:
-                # Preserve rotation matrix, update position
-                values[9] = transform.position.x
-                values[10] = transform.position.y
-                values[11] = transform.position.z
-                return ", ".join(str(v) for v in values)
-        except Exception:
-            pass
+            # Parse original transform to preserve rotation matrix
+            rotation_matrix, _ = self.transform_parser.parse(f"Transform3D({original_matrix})")
 
-        return original_matrix
+            # Create new position list
+            new_position = [transform.position.x, transform.position.y, transform.position.z]
+
+            # Format back to Transform3D string and extract just the values
+            full_str = self.transform_parser.format(rotation_matrix, new_position)
+            # Extract values from "Transform3D(...)" format
+            return full_str.replace("Transform3D(", "").replace(")", "")
+
+        except (ValueError, IndexError):
+            return original_matrix
 
     def adjust_heights_in_tscn(self, content: str, terrain) -> tuple[str, int]:
         """Adjust heights in .tscn content.
