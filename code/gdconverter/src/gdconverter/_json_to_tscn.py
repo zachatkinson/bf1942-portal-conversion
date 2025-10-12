@@ -11,7 +11,14 @@ from gdconverter import _property_utils as putils
 from gdconverter._meta import Config
 
 
-def create_level_tscns(levels: dict[str, jstype.Level], assets: jstype.Assets, rsrcs: jstype.Resources, asset_resources: jstype.Resources, dst_dir: str, overwrite_levels: bool) -> None:
+def create_level_tscns(
+    levels: dict[str, jstype.Level],
+    assets: jstype.Assets,
+    rsrcs: jstype.Resources,
+    asset_resources: jstype.Resources,
+    dst_dir: str,
+    overwrite_levels: bool,
+) -> None:
     """Create the given level tscn files
 
     Further reading: https://docs.godotengine.org/en/stable/contributing/development/file_formats/tscn.html"""
@@ -34,7 +41,13 @@ def create_level_tscns(levels: dict[str, jstype.Level], assets: jstype.Assets, r
 
 
 def create_godot_files_from_assets(
-    assets: jstype.Assets, raw_resources: jstype.Resources, asset_resources: jstype.Resources, dst_dir: str, config: Config, allow_missing_meshes: bool = False, skip_writing_files: bool = False
+    assets: jstype.Assets,
+    raw_resources: jstype.Resources,
+    asset_resources: jstype.Resources,
+    dst_dir: str,
+    config: Config,
+    allow_missing_meshes: bool = False,
+    skip_writing_files: bool = False,
 ) -> bool:
     missing_meshes: set[str] = set()
 
@@ -66,21 +79,31 @@ def create_godot_files_from_assets(
         elif category == const.CONST_CATEGORY_POLYGON_VOLUME:
             addon_path = "addons/bf_portal/portal_tools/types"
             asset.ext = ".tscn"
-            asset_rsrcs[".gd"] = jstype.create_resource(Path(f"{dst_dir}/{addon_path}/PolygonVolume/PolygonVolume.gd"))
-            asset_rsrcs[".tscn"] = jstype.create_resource(Path(f"{dst_dir}/{addon_path}/PolygonVolume/PolygonVolume.tscn"))
+            asset_rsrcs[".gd"] = jstype.create_resource(
+                Path(f"{dst_dir}/{addon_path}/PolygonVolume/PolygonVolume.gd")
+            )
+            asset_rsrcs[".tscn"] = jstype.create_resource(
+                Path(f"{dst_dir}/{addon_path}/PolygonVolume/PolygonVolume.tscn")
+            )
             asset_resources[asset_id] = asset_rsrcs
             continue
         elif category == const.CONST_CATEGORY_OBB_VOLUME:
             addon_path = "addons/bf_portal/portal_tools/types"
             asset.ext = ".tscn"
-            asset_rsrcs[".gd"] = jstype.create_resource(Path(f"{dst_dir}/{addon_path}/OBBVolume/OBBVolume.gd"))
-            asset_rsrcs[".tscn"] = jstype.create_resource(Path(f"{dst_dir}/{addon_path}/OBBVolume/OBBVolume.tscn"))
+            asset_rsrcs[".gd"] = jstype.create_resource(
+                Path(f"{dst_dir}/{addon_path}/OBBVolume/OBBVolume.gd")
+            )
+            asset_rsrcs[".tscn"] = jstype.create_resource(
+                Path(f"{dst_dir}/{addon_path}/OBBVolume/OBBVolume.tscn")
+            )
             asset_resources[asset_id] = asset_rsrcs
             continue
 
         dst = os.path.join(asset.dst, asset.id)
         project_dir = Path(dst.removeprefix(dst_dir + os.path.sep))
-        if project_dir.parts[0] == config.dst_assets.stem:  # assumption that all spatials will be present here
+        if (
+            project_dir.parts[0] == config.dst_assets.stem
+        ):  # assumption that all spatials will be present here
             dst_gd = Path(dst.replace(config.dst_assets.stem, config.dst_scripts.stem, 1) + ".gd")
             if skip_writing_files:
                 asset_rsrcs[".gd"] = jstype.create_resource(dst_gd)
@@ -110,7 +133,9 @@ def create_godot_files_from_assets(
     return True
 
 
-def add_levels_to_assets(assets: jstype.Assets, levels: jstype.Levels, dst_dir: str) -> jstype.Assets:
+def add_levels_to_assets(
+    assets: jstype.Assets, levels: jstype.Levels, dst_dir: str
+) -> jstype.Assets:
     def create_asset_from_level(name: str) -> jstype.Asset:
         asset = jstype.Asset()
 
@@ -143,7 +168,9 @@ def _get_tscn_type(asset: jstype.Asset) -> str:
     return const.PROP_TYPE_NODE3D
 
 
-def _create_tscn_sub_resource(assets: jstype.Assets, asset: jstype.Asset, root_node: str, root: str) -> tuple[str, str]:
+def _create_tscn_sub_resource(
+    assets: jstype.Assets, asset: jstype.Asset, root_node: str, root: str
+) -> tuple[str, str]:
     sub_type = const.PROP_TYPE_NODE3D
     if root_node == const.PROP_TYPE_PATH:
         sub_type = const.PROP_TYPE_CURVE
@@ -168,7 +195,9 @@ def _create_tscn_ext_resource(rsrc_id: int, rsrc: jstype.Resource, root: str) ->
 
 def _create_tscn_node(ext: str, node_id: int) -> str:
     if ext in [".fbx", ".glb"]:
-        return f'[{const.TYPE_NODE} name="Mesh" parent="." instance={const.CMPX_EXTRSRC}("{node_id}")]'
+        return (
+            f'[{const.TYPE_NODE} name="Mesh" parent="." instance={const.CMPX_EXTRSRC}("{node_id}")]'
+        )
     if ext == ".gd":
         return f'script = {const.CMPX_EXTRSRC}("{node_id}")'
     return ""
@@ -179,7 +208,9 @@ def _create_tscn_scene(ext_resources: Sized) -> str:
     return f"[{const.TYPE_SCENE} load_steps={load_steps} format={const.FORMAT}]\n\n"
 
 
-def _create_root_node(node_name: str = const.PROP_TYPE_NODE3D, node_type: str = const.PROP_TYPE_NODE3D) -> str:
+def _create_root_node(
+    node_name: str = const.PROP_TYPE_NODE3D, node_type: str = const.PROP_TYPE_NODE3D
+) -> str:
     return f'[{const.TYPE_NODE} name="{node_name}" type="{node_type}"]'
 
 
@@ -214,7 +245,13 @@ def _create_gd_file(asset: jstype.Asset, dst: Path) -> Path | None:
     return dst
 
 
-def _create_asset_tscn(assets: jstype.Assets, asset: jstype.Asset, rsrcs: jstype.ResourceExtAndBlob, root: str, dst: Path) -> Path | None:
+def _create_asset_tscn(
+    assets: jstype.Assets,
+    asset: jstype.Asset,
+    rsrcs: jstype.ResourceExtAndBlob,
+    root: str,
+    dst: Path,
+) -> Path | None:
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     with open(dst, "w", encoding="utf-8") as tscn_file:
         ext_resources: list[str] = []
@@ -295,7 +332,10 @@ def _resolve_ref_properties(instances: list[jstype.Instance]) -> None:
                 ref_id = prop.get_val()
                 if ref_id in id_to_rel_path:
                     prop.set_val(id_to_rel_path[ref_id])
-            elif isinstance(prop, jtype.PropertyArray) and prop.elem_type_class is jtype.PropertyReference:
+            elif (
+                isinstance(prop, jtype.PropertyArray)
+                and prop.elem_type_class is jtype.PropertyReference
+            ):
                 arr_val = prop.get_val()
                 if isinstance(arr_val, Iterable):
                     for elem_prop in arr_val:
@@ -305,7 +345,13 @@ def _resolve_ref_properties(instances: list[jstype.Instance]) -> None:
                             elem_prop.set_val(id_to_rel_path[ref_id])
 
 
-def _create_instance_nodes(instances: list[jstype.Instance], assets: jstype.Assets, rsrcs: jstype.Resources, parent: str, ext_rsrcs: jstype.InstanceResource) -> list[list[str]]:
+def _create_instance_nodes(
+    instances: list[jstype.Instance],
+    assets: jstype.Assets,
+    rsrcs: jstype.Resources,
+    parent: str,
+    ext_rsrcs: jstype.InstanceResource,
+) -> list[list[str]]:
     nodes: list[list[str]] = []
     _resolve_name_conflicts(instances)
     _resolve_ref_properties(instances)
@@ -322,7 +368,9 @@ def _create_instance_nodes(instances: list[jstype.Instance], assets: jstype.Asse
         # The callback should decide whether the reference is returned as heading or added as a raw property
         ext_rsrc_hearder = ""
         if asset_category and asset_category in j2tcallback.JSON_TO_TSCN_EXT_RSRC_CALLBACKS:
-            ext_rsrc_hearder = j2tcallback.JSON_TO_TSCN_EXT_RSRC_CALLBACKS[asset_category](inst, rsrcs, assets, ext_rsrcs)
+            ext_rsrc_hearder = j2tcallback.JSON_TO_TSCN_EXT_RSRC_CALLBACKS[asset_category](
+                inst, rsrcs, assets, ext_rsrcs
+            )
 
         # Godot needs a list of NodePath (aka reference properties) in the first line of the node
         ref_props = inst.get_ref_props().keys()
@@ -332,7 +380,9 @@ def _create_instance_nodes(instances: list[jstype.Instance], assets: jstype.Asse
         node: list[str] = []
 
         node_type = f' type="{inst.tscn_type}"' if inst.tscn_type != "" else ""
-        node_paths = f" {const.PROP_NODE_PATHS}=PackedStringArray({ref_props_str})" if ref_props else ""
+        node_paths = (
+            f" {const.PROP_NODE_PATHS}=PackedStringArray({ref_props_str})" if ref_props else ""
+        )
         node_heading = f'[{const.TYPE_NODE} name="{inst.name}"{node_type} parent="{parent}"{node_paths} {ext_rsrc_hearder}]'
 
         node.append(node_heading)
@@ -342,12 +392,16 @@ def _create_instance_nodes(instances: list[jstype.Instance], assets: jstype.Asse
     return nodes
 
 
-def _create_level_nodes(level_name: str, json_level: jstype.Level, assets: jstype.Assets, rsrcs: jstype.Resources) -> tuple[list[list[str]], jstype.InstanceResource]:
+def _create_level_nodes(
+    level_name: str, json_level: jstype.Level, assets: jstype.Assets, rsrcs: jstype.Resources
+) -> tuple[list[list[str]], jstype.InstanceResource]:
     level_nodes: list[list[str]] = []
     ext_rsrcs: jstype.InstanceResource = {}
     level_nodes.append([_create_root_node(level_name)])
     for layer in json_level.layers:
-        level_nodes.append([f'[{const.TYPE_NODE} name="{layer.id}" type="{const.PROP_TYPE_NODE3D}" parent="."]'])
+        level_nodes.append(
+            [f'[{const.TYPE_NODE} name="{layer.id}" type="{const.PROP_TYPE_NODE3D}" parent="."]']
+        )
         layer_nodes = _create_instance_nodes(layer.insts, assets, rsrcs, layer.id, ext_rsrcs)
         level_nodes.extend(layer_nodes)
     return level_nodes, ext_rsrcs

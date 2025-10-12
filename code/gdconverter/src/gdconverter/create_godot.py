@@ -39,7 +39,9 @@ def create_godot(fb_export_data_dir: str, output_dir: str, overwrite_levels: boo
     def level_file_callback(src_file: Path, dst_file: Path) -> None:
         _utils.process_level_file(src_file, dst_file, levels)
 
-    _utils.walk_src(config.src_resources, config.dst_resources, file_callback=resource_file_callback)
+    _utils.walk_src(
+        config.src_resources, config.dst_resources, file_callback=resource_file_callback
+    )
     _utils.walk_src(config.src_levels, config.dst_levels, file_callback=level_file_callback)
 
     j2t.add_levels_to_assets(assets, levels, output_dir)
@@ -48,22 +50,30 @@ def create_godot(fb_export_data_dir: str, output_dir: str, overwrite_levels: boo
         try:
             shutil.rmtree(config.dst_assets)
         except PermissionError:
-            _logging.log_error(f"Cannot remove path (is it being used by another process?): {config.dst_assets}")
+            _logging.log_error(
+                f"Cannot remove path (is it being used by another process?): {config.dst_assets}"
+            )
             return False
 
     if config.dst_scripts.exists():
         try:
             shutil.rmtree(config.dst_scripts)
         except PermissionError:
-            _logging.log_error(f"Cannot remove path (is it being used by another process?): {config.dst_scripts}")
+            _logging.log_error(
+                f"Cannot remove path (is it being used by another process?): {config.dst_scripts}"
+            )
             return False
 
-    if not j2t.create_godot_files_from_assets(assets, raw_resources, asset_resources, output_dir, config):
+    if not j2t.create_godot_files_from_assets(
+        assets, raw_resources, asset_resources, output_dir, config
+    ):
         _logging.log_error("Error encountered while creating godot files from assets")
         return False
     jparser.resolve_property_types_levels(levels, assets)
 
-    j2t.create_level_tscns(levels, assets, raw_resources, asset_resources, output_dir, overwrite_levels)
+    j2t.create_level_tscns(
+        levels, assets, raw_resources, asset_resources, output_dir, overwrite_levels
+    )
 
     return True
 
@@ -72,7 +82,9 @@ def _main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("FB_EXPORT_DATA", type=str, help="Path to FbExportData directory")
     parser.add_argument("OUTPUT_DIR", type=str, help="Path where godot project will be created")
-    parser.add_argument("--overwrite-levels", action="store_true", help="Overwriting existing levels in project")
+    parser.add_argument(
+        "--overwrite-levels", action="store_true", help="Overwriting existing levels in project"
+    )
     args = parser.parse_args()
 
     fb_export_data_dir = args.FB_EXPORT_DATA

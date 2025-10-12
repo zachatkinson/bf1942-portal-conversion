@@ -80,7 +80,9 @@ def process_asset_types(config: Config, assets: jstype.Assets) -> bool:
     json_types: dict[str, Any] = json.loads(config.src_types.read_text())
     asset_types = json_types.get(const.TYPES_KEY_ID, None)
     if asset_types is None:
-        _logging.log_error(f"Asset types malformed. Expected {const.TYPES_KEY_ID} object to be present")
+        _logging.log_error(
+            f"Asset types malformed. Expected {const.TYPES_KEY_ID} object to be present"
+        )
         return False
 
     level_to_theater: dict[str, str] = {}
@@ -98,8 +100,14 @@ def process_asset_types(config: Config, assets: jstype.Assets) -> bool:
     for gd_type in const.TYPES_CUSTOM_TYPES:
         custom_types.add(gd_type)
     for asset_type in asset_types:
-        dst_file = os.path.join(config.dst_assets, _get_level_directory(asset_type, level_to_theater), asset_type.get(const.ASSET_KEY_DIRECTORY, ""))
-        asset = jparser.parse_asset_data(asset_type, custom_types, error_callback=lambda msg: _logging.log_error(msg))
+        dst_file = os.path.join(
+            config.dst_assets,
+            _get_level_directory(asset_type, level_to_theater),
+            asset_type.get(const.ASSET_KEY_DIRECTORY, ""),
+        )
+        asset = jparser.parse_asset_data(
+            asset_type, custom_types, error_callback=lambda msg: _logging.log_error(msg)
+        )
         if not asset:
             _logging.log_error("Failed to parse asset")
             return False
@@ -135,12 +143,18 @@ def _get_level_directory(asset_type: dict[str, Any], level_to_theater: dict[str,
     directory = asset_type.get(const.ASSET_KEY_DIRECTORY, "")
     directory = directory.lower()
     if len(restrictions) == 0:
-        if "entities" not in directory and "gameplay" not in directory and "global" not in directory:
+        if (
+            "entities" not in directory
+            and "gameplay" not in directory
+            and "global" not in directory
+        ):
             return "Global/"
         else:
             return ""
 
-    theaters = list(set([level_to_theater[level] for level in restrictions if level in level_to_theater]))
+    theaters = list(
+        set([level_to_theater[level] for level in restrictions if level in level_to_theater])
+    )
     if len(theaters) == 1:
         theater_name = theaters[0]
         if len(restrictions) == 1:

@@ -10,7 +10,12 @@ JSON_VECTOR_X = {"x": Decimal(1.0), "y": Decimal(0.0), "z": Decimal(0.0)}
 JSON_VECTOR_Y = {"x": Decimal(0.0), "y": Decimal(1.0), "z": Decimal(0.0)}
 JSON_VECTOR_Z = {"x": Decimal(0.0), "y": Decimal(0.0), "z": Decimal(1.0)}
 JSON_VECTOR_ZERO = {"x": Decimal(0.0), "y": Decimal(0.0), "z": Decimal(0.0)}
-JSON_TRANSFORM_IDENTITY = {"x": JSON_VECTOR_X, "y": JSON_VECTOR_Y, "z": JSON_VECTOR_Z, "p": JSON_VECTOR_ZERO}
+JSON_TRANSFORM_IDENTITY = {
+    "x": JSON_VECTOR_X,
+    "y": JSON_VECTOR_Y,
+    "z": JSON_VECTOR_Z,
+    "p": JSON_VECTOR_ZERO,
+}
 
 TSCN_VECTOR_X = [Decimal(1.0), Decimal(0.0), Decimal(0.0)]
 TSCN_VECTOR_Y = [Decimal(0.0), Decimal(1.0), Decimal(0.0)]
@@ -70,7 +75,9 @@ def transform_flat_to_json(arr: jtypes.TransformFlat, name: str) -> jtypes.JsonT
     return matrix_as_json
 
 
-def pos_to_parent_space(pos: jtypes.JsonVector3, parent: jtypes.JsonTransform) -> jtypes.JsonVector3:
+def pos_to_parent_space(
+    pos: jtypes.JsonVector3, parent: jtypes.JsonTransform
+) -> jtypes.JsonVector3:
     transform = {
         "right": JSON_VECTOR_X,
         "up": JSON_VECTOR_Y,
@@ -81,7 +88,9 @@ def pos_to_parent_space(pos: jtypes.JsonVector3, parent: jtypes.JsonTransform) -
     return parent_space["position"]
 
 
-def object_to_parent_space(transform: jtypes.JsonTransform, parent: jtypes.JsonTransform) -> jtypes.JsonTransform:
+def object_to_parent_space(
+    transform: jtypes.JsonTransform, parent: jtypes.JsonTransform
+) -> jtypes.JsonTransform:
     transform_matrix = [
         json_to_vector3(transform["right"]) + [Decimal(0.0)],
         json_to_vector3(transform["up"]) + [Decimal(0.0)],

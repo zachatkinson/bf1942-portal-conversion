@@ -4,8 +4,8 @@
 Single Responsibility: Only compares source map data vs output .tscn data.
 """
 
-from typing import List, Tuple
 from dataclasses import dataclass
+from typing import List, Tuple
 
 from ..core.interfaces import MapData, Vector3
 from .tscn_reader import TscnNode
@@ -14,6 +14,7 @@ from .tscn_reader import TscnNode
 @dataclass
 class MapComparison:
     """Result of comparing source and output maps."""
+
     source_team1_spawn_count: int
     output_team1_spawn_count: int
     source_team2_spawn_count: int
@@ -26,8 +27,8 @@ class MapComparison:
     def has_spawn_mismatch(self) -> bool:
         """Check if spawn counts match."""
         return (
-            self.source_team1_spawn_count != self.output_team1_spawn_count or
-            self.source_team2_spawn_count != self.output_team2_spawn_count
+            self.source_team1_spawn_count != self.output_team1_spawn_count
+            or self.source_team2_spawn_count != self.output_team2_spawn_count
         )
 
     def has_capture_point_mismatch(self) -> bool:
@@ -74,7 +75,7 @@ class MapComparator:
             source_capture_point_count=len(source_data.capture_points),
             output_capture_point_count=output_capture_points,
             source_object_count=len(source_data.game_objects),
-            output_object_count=output_object_count
+            output_object_count=output_object_count,
         )
 
     def _count_team_spawns(self, nodes: List[TscnNode], team: int) -> int:
@@ -89,10 +90,7 @@ class MapComparator:
         Returns:
             Count of spawns
         """
-        return sum(
-            1 for node in nodes
-            if f'SpawnPoint_{team}_' in node.name
-        )
+        return sum(1 for node in nodes if f"SpawnPoint_{team}_" in node.name)
 
     def _count_capture_points(self, nodes: List[TscnNode]) -> int:
         """Count capture points (excluding static props).
@@ -106,9 +104,9 @@ class MapComparator:
             Count of capture points
         """
         return sum(
-            1 for node in nodes
-            if node.name.startswith('CapturePoint_')
-            and 'parent="Static"' not in node.raw_content
+            1
+            for node in nodes
+            if node.name.startswith("CapturePoint_") and 'parent="Static"' not in node.raw_content
         )
 
     def calculate_position_centroid(self, nodes: List[TscnNode]) -> Vector3:
@@ -145,15 +143,11 @@ class MapComparator:
         positions = [node.position for node in nodes]
 
         min_point = Vector3(
-            min(p.x for p in positions),
-            min(p.y for p in positions),
-            min(p.z for p in positions)
+            min(p.x for p in positions), min(p.y for p in positions), min(p.z for p in positions)
         )
 
         max_point = Vector3(
-            max(p.x for p in positions),
-            max(p.y for p in positions),
-            max(p.z for p in positions)
+            max(p.x for p in positions), max(p.y for p in positions), max(p.z for p in positions)
         )
 
         return (min_point, max_point)

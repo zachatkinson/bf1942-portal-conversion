@@ -13,7 +13,6 @@ Date: 2025-01-11
 
 from pathlib import Path
 
-
 HQ_AREA_TEMPLATE = """
 [node name="HQ_Team{team}" instance=ExtResource("2") parent="TEAM_{team}_HQ"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
@@ -31,7 +30,7 @@ def add_hq_areas(input_path: Path, output_path: Path) -> None:
     """
     print(f"Reading: {input_path}")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -46,7 +45,7 @@ def add_hq_areas(input_path: Path, output_path: Path) -> None:
         if 'name="SpawnPoint_1_8"' in line:
             # Skip to end of this node (find next blank line or next node)
             i += 1
-            while i < len(lines) and lines[i].strip() and not lines[i].startswith('[node'):
+            while i < len(lines) and lines[i].strip() and not lines[i].startswith("[node"):
                 modified_lines.append(lines[i])
                 i += 1
 
@@ -59,7 +58,7 @@ def add_hq_areas(input_path: Path, output_path: Path) -> None:
         elif 'name="SpawnPoint_2_8"' in line:
             # Skip to end of this node
             i += 1
-            while i < len(lines) and lines[i].strip() and not lines[i].startswith('[node'):
+            while i < len(lines) and lines[i].strip() and not lines[i].startswith("[node"):
                 modified_lines.append(lines[i])
                 i += 1
 
@@ -71,7 +70,7 @@ def add_hq_areas(input_path: Path, output_path: Path) -> None:
         i += 1
 
     # Write output
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"\nAdded {hq_areas_added} HQ area volumes")
@@ -102,6 +101,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

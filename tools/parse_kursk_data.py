@@ -14,20 +14,21 @@ Output:
 import json
 import re
 import sys
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
-from dataclasses import dataclass, asdict
+from typing import Dict, List, Optional
 
 
 @dataclass
 class Vector3:
     """3D vector for positions."""
+
     x: float
     y: float
     z: float
 
     @classmethod
-    def from_string(cls, coord_string: str) -> 'Vector3':
+    def from_string(cls, coord_string: str) -> "Vector3":
         """Parse BF1942 position string (x/y/z format).
 
         Args:
@@ -40,14 +41,10 @@ class Vector3:
             ValueError: If format is invalid
         """
         try:
-            parts = coord_string.strip().split('/')
+            parts = coord_string.strip().split("/")
             if len(parts) != 3:
                 raise ValueError(f"Expected 3 coordinates, got {len(parts)}")
-            return cls(
-                x=float(parts[0]),
-                y=float(parts[1]),
-                z=float(parts[2])
-            )
+            return cls(x=float(parts[0]), y=float(parts[1]), z=float(parts[2]))
         except (ValueError, IndexError) as e:
             raise ValueError(f"Invalid position format '{coord_string}': {e}")
 
@@ -55,12 +52,13 @@ class Vector3:
 @dataclass
 class Rotation:
     """Euler rotation angles."""
+
     pitch: float
     yaw: float
     roll: float
 
     @classmethod
-    def from_string(cls, rotation_string: str) -> 'Rotation':
+    def from_string(cls, rotation_string: str) -> "Rotation":
         """Parse BF1942 rotation string (pitch/yaw/roll format).
 
         Args:
@@ -73,14 +71,10 @@ class Rotation:
             ValueError: If format is invalid
         """
         try:
-            parts = rotation_string.strip().split('/')
+            parts = rotation_string.strip().split("/")
             if len(parts) != 3:
                 raise ValueError(f"Expected 3 rotation angles, got {len(parts)}")
-            return cls(
-                pitch=float(parts[0]),
-                yaw=float(parts[1]),
-                roll=float(parts[2])
-            )
+            return cls(pitch=float(parts[0]), yaw=float(parts[1]), roll=float(parts[2]))
         except (ValueError, IndexError) as e:
             raise ValueError(f"Invalid rotation format '{rotation_string}': {e}")
 
@@ -88,6 +82,7 @@ class Rotation:
 @dataclass
 class GameObject:
     """Generic game object with position and properties."""
+
     object_type: str
     position: Vector3
     rotation: Optional[Rotation] = None
@@ -123,7 +118,7 @@ class ConFileParser:
         if not self.file_path.exists():
             raise FileNotFoundError(f"File not found: {self.file_path}")
 
-        with open(self.file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        with open(self.file_path, encoding="utf-8", errors="ignore") as f:
             self.lines = [line.rstrip() for line in f]
 
     def parse(self) -> List[GameObject]:
@@ -160,11 +155,16 @@ class ConFileParser:
         """
         # Skip empty lines and comments
         stripped = line.strip()
-        if not stripped or stripped.startswith('rem') or stripped.startswith('if') or stripped.startswith('endIf'):
+        if (
+            not stripped
+            or stripped.startswith("rem")
+            or stripped.startswith("if")
+            or stripped.startswith("endIf")
+        ):
             return
 
         # Object creation: Object.create <type>
-        create_match = re.match(r'Object\.create\s+(\w+)', stripped)
+        create_match = re.match(r"Object\.create\s+(\w+)", stripped)
         if create_match:
             # Save previous object if exists
             if self.current_object:
@@ -173,12 +173,12 @@ class ConFileParser:
             # Start new object
             object_type = create_match.group(1)
             self.current_object = {
-                'object_type': object_type,
-                'position': None,
-                'rotation': None,
-                'team': None,
-                'os_id': None,
-                'properties': {}
+                "object_type": object_type,
+                "position": None,
+                "rotation": None,
+                "team": None,
+                "os_id": None,
+                "properties": {},
             }
             return
 
@@ -187,35 +187,35 @@ class ConFileParser:
             return
 
         # Position: Object.absolutePosition x/y/z
-        pos_match = re.match(r'Object\.absolutePosition\s+([\d\.\-/]+)', stripped)
+        pos_match = re.match(r"Object\.absolutePosition\s+([\d\.\-/]+)", stripped)
         if pos_match:
-            self.current_object['position'] = Vector3.from_string(pos_match.group(1))
+            self.current_object["position"] = Vector3.from_string(pos_match.group(1))
             return
 
         # Rotation: Object.rotation pitch/yaw/roll
-        rot_match = re.match(r'Object\.rotation\s+([\d\.\-/]+)', stripped)
+        rot_match = re.match(r"Object\.rotation\s+([\d\.\-/]+)", stripped)
         if rot_match:
-            self.current_object['rotation'] = Rotation.from_string(rot_match.group(1))
+            self.current_object["rotation"] = Rotation.from_string(rot_match.group(1))
             return
 
         # Team: Object.setTeam N
-        team_match = re.match(r'Object\.setTeam\s+(\d+)', stripped)
+        team_match = re.match(r"Object\.setTeam\s+(\d+)", stripped)
         if team_match:
-            self.current_object['team'] = int(team_match.group(1))
+            self.current_object["team"] = int(team_match.group(1))
             return
 
         # OS ID: Object.setOSId N
-        osid_match = re.match(r'Object\.setOSId\s+(\d+)', stripped)
+        osid_match = re.match(r"Object\.setOSId\s+(\d+)", stripped)
         if osid_match:
-            self.current_object['os_id'] = int(osid_match.group(1))
+            self.current_object["os_id"] = int(osid_match.group(1))
             return
 
         # Generic property: Object.property value
-        prop_match = re.match(r'Object\.(\w+)\s+(.+)', stripped)
+        prop_match = re.match(r"Object\.(\w+)\s+(.+)", stripped)
         if prop_match:
             prop_name = prop_match.group(1)
             prop_value = prop_match.group(2).strip()
-            self.current_object['properties'][prop_name] = prop_value
+            self.current_object["properties"][prop_name] = prop_value
             return
 
     def to_game_objects(self) -> List[GameObject]:
@@ -227,18 +227,20 @@ class ConFileParser:
         game_objects = []
 
         for obj_data in self.objects:
-            if obj_data['position'] is None:
+            if obj_data["position"] is None:
                 # Skip objects without positions
                 continue
 
-            game_objects.append(GameObject(
-                object_type=obj_data['object_type'],
-                position=obj_data['position'],
-                rotation=obj_data['rotation'],
-                team=obj_data['team'],
-                os_id=obj_data['os_id'],
-                properties=obj_data['properties']
-            ))
+            game_objects.append(
+                GameObject(
+                    object_type=obj_data["object_type"],
+                    position=obj_data["position"],
+                    rotation=obj_data["rotation"],
+                    team=obj_data["team"],
+                    os_id=obj_data["os_id"],
+                    properties=obj_data["properties"],
+                )
+            )
 
         return game_objects
 
@@ -263,7 +265,7 @@ class KurskDataExtractor:
         Returns:
             List of control point dictionaries
         """
-        control_points_file = self.kursk_dir / 'Conquest' / 'ControlPoints.con'
+        control_points_file = self.kursk_dir / "Conquest" / "ControlPoints.con"
 
         if not control_points_file.exists():
             print(f"WARNING: {control_points_file} not found")
@@ -275,15 +277,17 @@ class KurskDataExtractor:
 
         control_points = []
         for obj_data in objects:
-            if obj_data['position']:
+            if obj_data["position"]:
                 cp_dict = {
-                    'name': obj_data['object_type'],
-                    'position': asdict(Vector3.from_string(
-                        f"{obj_data['position'].x}/{obj_data['position'].y}/{obj_data['position'].z}"
-                    )),
-                    'team': obj_data.get('team', 0),
-                    'os_id': obj_data.get('os_id'),
-                    'properties': obj_data.get('properties', {})
+                    "name": obj_data["object_type"],
+                    "position": asdict(
+                        Vector3.from_string(
+                            f"{obj_data['position'].x}/{obj_data['position'].y}/{obj_data['position'].z}"
+                        )
+                    ),
+                    "team": obj_data.get("team", 0),
+                    "os_id": obj_data.get("os_id"),
+                    "properties": obj_data.get("properties", {}),
                 }
                 control_points.append(cp_dict)
 
@@ -295,7 +299,7 @@ class KurskDataExtractor:
         Returns:
             List of vehicle spawner dictionaries
         """
-        spawns_file = self.kursk_dir / 'Conquest' / 'ObjectSpawns.con'
+        spawns_file = self.kursk_dir / "Conquest" / "ObjectSpawns.con"
 
         if not spawns_file.exists():
             print(f"WARNING: {spawns_file} not found")
@@ -307,16 +311,16 @@ class KurskDataExtractor:
 
         vehicle_spawners = []
         for obj_data in parser.objects:
-            if not obj_data['position']:
+            if not obj_data["position"]:
                 continue
 
             spawner_dict = {
-                'bf1942_type': obj_data['object_type'],
-                'position': asdict(obj_data['position']),
-                'rotation': asdict(obj_data['rotation']) if obj_data['rotation'] else None,
-                'team': obj_data['team'],
-                'os_id': obj_data['os_id'],
-                'properties': obj_data['properties']
+                "bf1942_type": obj_data["object_type"],
+                "position": asdict(obj_data["position"]),
+                "rotation": asdict(obj_data["rotation"]) if obj_data["rotation"] else None,
+                "team": obj_data["team"],
+                "os_id": obj_data["os_id"],
+                "properties": obj_data["properties"],
             }
             vehicle_spawners.append(spawner_dict)
 
@@ -337,19 +341,21 @@ class KurskDataExtractor:
         print(f"  Found {len(vehicle_spawners)} vehicle spawners")
 
         return {
-            'map_name': 'Kursk',
-            'source_game': 'Battlefield 1942',
-            'target_game': 'Battlefield 6 Portal',
-            'extraction_date': '2025-10-10',
-            'control_points': control_points,
-            'vehicle_spawners': vehicle_spawners,
-            'statistics': {
-                'total_control_points': len(control_points),
-                'total_vehicle_spawners': len(vehicle_spawners),
-                'axis_spawners': len([s for s in vehicle_spawners if s.get('team') == 1]),
-                'allies_spawners': len([s for s in vehicle_spawners if s.get('team') == 2]),
-                'neutral_spawners': len([s for s in vehicle_spawners if s.get('team') is None or s.get('team') == 0])
-            }
+            "map_name": "Kursk",
+            "source_game": "Battlefield 1942",
+            "target_game": "Battlefield 6 Portal",
+            "extraction_date": "2025-10-10",
+            "control_points": control_points,
+            "vehicle_spawners": vehicle_spawners,
+            "statistics": {
+                "total_control_points": len(control_points),
+                "total_vehicle_spawners": len(vehicle_spawners),
+                "axis_spawners": len([s for s in vehicle_spawners if s.get("team") == 1]),
+                "allies_spawners": len([s for s in vehicle_spawners if s.get("team") == 2]),
+                "neutral_spawners": len(
+                    [s for s in vehicle_spawners if s.get("team") is None or s.get("team") == 0]
+                ),
+            },
         }
 
 
@@ -357,7 +363,16 @@ def main():
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent
-    kursk_dir = project_root / 'bf1942_source' / 'extracted' / 'Bf1942' / 'Archives' / 'bf1942' / 'Levels' / 'Kursk'
+    kursk_dir = (
+        project_root
+        / "bf1942_source"
+        / "extracted"
+        / "Bf1942"
+        / "Archives"
+        / "bf1942"
+        / "Levels"
+        / "Kursk"
+    )
 
     if not kursk_dir.exists():
         print(f"ERROR: Kursk directory not found: {kursk_dir}")
@@ -368,13 +383,13 @@ def main():
     data = extractor.extract_all()
 
     # Save to JSON
-    output_file = project_root / 'tools' / 'kursk_extracted_data.json'
-    with open(output_file, 'w', encoding='utf-8') as f:
+    output_file = project_root / "tools" / "kursk_extracted_data.json"
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-    print(f"\n✅ Data extracted successfully!")
+    print("\n✅ Data extracted successfully!")
     print(f"📄 Saved to: {output_file}")
-    print(f"\nStatistics:")
+    print("\nStatistics:")
     print(f"  Control Points: {data['statistics']['total_control_points']}")
     print(f"  Vehicle Spawners: {data['statistics']['total_vehicle_spawners']}")
     print(f"    - Axis: {data['statistics']['axis_spawners']}")

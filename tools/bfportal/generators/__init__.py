@@ -2,4 +2,4 @@
 
 from .tscn_generator import TscnGenerator
 
-__all__ = ['TscnGenerator']
+__all__ = ["TscnGenerator"]

@@ -38,11 +38,19 @@ def log_debug(msg: str) -> None:
 
 def log_debug_object(obj: Any, indent: int = 0) -> None:
     """Log object structure, indenting by the given amount"""
-    avars = [(attr, getattr(obj, attr)) for attr in dir(obj) if not callable(getattr(obj, attr)) and not attr.startswith("__")]
+    avars = [
+        (attr, getattr(obj, attr))
+        for attr in dir(obj)
+        if not callable(getattr(obj, attr)) and not attr.startswith("__")
+    ]
     for avar in avars:
         log_debug("\t" * indent + str(avar[0]) + ":")
         try:
-            log_debug("\t" * (indent + 1) + str(vars(avar[1])) if isinstance(avar[1], object) else str(avar[1]))
+            log_debug(
+                "\t" * (indent + 1) + str(vars(avar[1]))
+                if isinstance(avar[1], object)
+                else str(avar[1])
+            )
         except Exception:  # pylint: disable=broad-exception-caught
             log_debug("\t" * (indent + 1) + str(avar[1]))
 
@@ -52,7 +60,11 @@ def log_debug_asset(asset: Any) -> None:
     if not DEBUG_ASSET:
         return
     log_debug("=" * 80)
-    attrs = [(attr, getattr(asset, attr)) for attr in dir(asset) if not callable(getattr(asset, attr)) and not attr.startswith("__")]
+    attrs = [
+        (attr, getattr(asset, attr))
+        for attr in dir(asset)
+        if not callable(getattr(asset, attr)) and not attr.startswith("__")
+    ]
     for attr in attrs:
         log_debug(attr[0] + " :")
         if not isinstance(attr[1], dict):

@@ -13,15 +13,18 @@ When you want to move a converted map from one Portal base to another
 This is DIFFERENT from the initial BF1942 → Portal conversion.
 """
 
-from pathlib import Path
-from typing import List, Dict
 import re
+from pathlib import Path
+from typing import Dict, List
 
 from ..core.interfaces import (
-    Transform, Vector3, GameObject, MapData,
-    ITerrainProvider, ICoordinateOffset, IBoundsValidator
+    GameObject,
+    IBoundsValidator,
+    ICoordinateOffset,
+    ITerrainProvider,
+    Transform,
+    Vector3,
 )
-from ..core.exceptions import ValidationError
 
 
 class MapRebaser:
@@ -32,10 +35,12 @@ class MapRebaser:
     maintaining relative positions.
     """
 
-    def __init__(self,
-                 terrain_provider: ITerrainProvider,
-                 offset_calculator: ICoordinateOffset,
-                 bounds_validator: IBoundsValidator):
+    def __init__(
+        self,
+        terrain_provider: ITerrainProvider,
+        offset_calculator: ICoordinateOffset,
+        bounds_validator: IBoundsValidator,
+    ):
         """Initialize rebaser.
 
         Args:
@@ -47,11 +52,9 @@ class MapRebaser:
         self.offset_calc = offset_calculator
         self.bounds_validator = bounds_validator
 
-    def rebase_map(self,
-                   input_tscn: Path,
-                   output_tscn: Path,
-                   new_base_terrain: str,
-                   new_map_center: Vector3) -> Dict:
+    def rebase_map(
+        self, input_tscn: Path, output_tscn: Path, new_base_terrain: str, new_map_center: Vector3
+    ) -> Dict:
         """Rebase a Portal map to a different base terrain.
 
         Args:
@@ -69,7 +72,7 @@ class MapRebaser:
         """
         print("=" * 70)
         print(f"Rebasing Map: {input_tscn.name}")
-        print(f"  From: Current base terrain")
+        print("  From: Current base terrain")
         print(f"  To:   {new_base_terrain}")
         print("=" * 70)
 
@@ -79,8 +82,10 @@ class MapRebaser:
 
         # Calculate current centroid
         current_centroid = self.offset_calc.calculate_centroid(objects)
-        print(f"📍 Current centroid: ({current_centroid.x:.1f}, "
-              f"{current_centroid.y:.1f}, {current_centroid.z:.1f})")
+        print(
+            f"📍 Current centroid: ({current_centroid.x:.1f}, "
+            f"{current_centroid.y:.1f}, {current_centroid.z:.1f})"
+        )
 
         # Calculate offset to new center
         offset = self.offset_calc.calculate_offset(current_centroid, new_map_center)
@@ -98,8 +103,7 @@ class MapRebaser:
             # Adjust height for new terrain
             try:
                 terrain_height = self.terrain.get_height_at(
-                    new_transform.position.x,
-                    new_transform.position.z
+                    new_transform.position.x, new_transform.position.z
                 )
                 height_diff = abs(new_transform.position.y - terrain_height)
 
@@ -112,13 +116,15 @@ class MapRebaser:
                 print(f"  ⚠️  Cannot query height for {obj.name}: {e}")
                 out_of_bounds += 1
 
-            rebased_objects.append(GameObject(
-                name=obj.name,
-                asset_type=obj.asset_type,  # Already Portal asset!
-                transform=new_transform,
-                team=obj.team,
-                properties=obj.properties
-            ))
+            rebased_objects.append(
+                GameObject(
+                    name=obj.name,
+                    asset_type=obj.asset_type,  # Already Portal asset!
+                    transform=new_transform,
+                    team=obj.team,
+                    properties=obj.properties,
+                )
+            )
 
         print(f"✅ Re-centered and adjusted {len(rebased_objects)} objects")
         print(f"   - Height adjusted: {height_adjusted}")
@@ -128,14 +134,10 @@ class MapRebaser:
         self._generate_tscn(rebased_objects, output_tscn, new_base_terrain)
 
         stats = {
-            'total_objects': len(rebased_objects),
-            'height_adjusted': height_adjusted,
-            'out_of_bounds': out_of_bounds,
-            'offset_applied': {
-                'x': offset.x,
-                'y': offset.y,
-                'z': offset.z
-            }
+            "total_objects": len(rebased_objects),
+            "height_adjusted": height_adjusted,
+            "out_of_bounds": out_of_bounds,
+            "offset_applied": {"x": offset.x, "y": offset.y, "z": offset.z},
         }
 
         return stats
@@ -155,7 +157,7 @@ class MapRebaser:
         """
         objects = []
 
-        with open(tscn_path, 'r') as f:
+        with open(tscn_path) as f:
             content = f.read()
 
         # Extract node sections with transforms
@@ -165,12 +167,12 @@ class MapRebaser:
 
         for name, transform_str in matches:
             # Skip special nodes (HQs, spawns, combat area, etc.)
-            if any(skip in name for skip in ['HQ', 'Spawn', 'Combat', 'Static', 'Terrain']):
+            if any(skip in name for skip in ["HQ", "Spawn", "Combat", "Static", "Terrain"]):
                 continue
 
             # Parse transform matrix
             try:
-                values = [float(v.strip()) for v in transform_str.split(',')]
+                values = [float(v.strip()) for v in transform_str.split(",")]
                 if len(values) >= 12:
                     # Transform3D format: (right.x, up.x, forward.x,
                     #                      right.y, up.y, forward.y,
@@ -181,24 +183,28 @@ class MapRebaser:
                     # Extract rotation from matrix (simplified)
                     # For rebasing, we mainly care about position
                     from ..core.interfaces import Rotation, Team
+
                     rotation = Rotation(0, 0, 0)  # Preserve as-is
 
                     transform = Transform(position, rotation)
 
-                    objects.append(GameObject(
-                        name=name,
-                        asset_type=name.split('_')[0],  # Approximate
-                        transform=transform,
-                        team=Team.NEUTRAL,  # Unknown from .tscn
-                        properties={}
-                    ))
+                    objects.append(
+                        GameObject(
+                            name=name,
+                            asset_type=name.split("_")[0],  # Approximate
+                            transform=transform,
+                            team=Team.NEUTRAL,  # Unknown from .tscn
+                            properties={},
+                        )
+                    )
             except Exception as e:
                 print(f"  ⚠️  Failed to parse transform for {name}: {e}")
 
         return objects
 
-    def _generate_tscn(self, objects: List[GameObject], output_path: Path,
-                      base_terrain: str) -> None:
+    def _generate_tscn(
+        self, objects: List[GameObject], output_path: Path, base_terrain: str
+    ) -> None:
         """Generate new .tscn file with rebased objects.
 
         Args:
@@ -212,11 +218,11 @@ class MapRebaser:
         """
         # TODO: Implement full .tscn generation
         # For now, just create a placeholder
-        with open(output_path, 'w') as f:
-            f.write(f"[gd_scene format=3]\n\n")
-            f.write(f"[node name=\"{output_path.stem}\" type=\"Node3D\"]\n\n")
+        with open(output_path, "w") as f:
+            f.write("[gd_scene format=3]\n\n")
+            f.write(f'[node name="{output_path.stem}" type="Node3D"]\n\n')
             f.write(f"# Rebased to {base_terrain}\n")
             f.write(f"# Total objects: {len(objects)}\n")
 
         print(f"✅ Generated rebased map: {output_path}")
-        print(f"   ⚠️  NOTE: This is a placeholder. Use full TscnGenerator for production.")
+        print("   ⚠️  NOTE: This is a placeholder. Use full TscnGenerator for production.")

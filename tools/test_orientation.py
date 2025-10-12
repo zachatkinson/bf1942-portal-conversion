@@ -9,8 +9,8 @@ Usage:
     python tools/test_orientation.py
 """
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 def apply_axis_transform(x, y, z, transform_type):
@@ -25,14 +25,14 @@ def apply_axis_transform(x, y, z, transform_type):
         Tuple of (new_x, new_y, new_z)
     """
     transforms = {
-        'original': (x, y, z),
-        'swap_xz': (z, y, x),              # Swap X and Z axes
-        'negate_x': (-x, y, z),            # Mirror X axis
-        'negate_z': (x, y, -z),            # Mirror Z axis
-        'negate_xz': (-x, y, -z),          # Mirror both X and Z
-        'rotate_90': (-z, y, x),           # Rotate 90° clockwise (top view)
-        'rotate_180': (-x, y, -z),         # Rotate 180°
-        'rotate_270': (z, y, -x),          # Rotate 270° (or -90°)
+        "original": (x, y, z),
+        "swap_xz": (z, y, x),  # Swap X and Z axes
+        "negate_x": (-x, y, z),  # Mirror X axis
+        "negate_z": (x, y, -z),  # Mirror Z axis
+        "negate_xz": (-x, y, -z),  # Mirror both X and Z
+        "rotate_90": (-z, y, x),  # Rotate 90° clockwise (top view)
+        "rotate_180": (-x, y, -z),  # Rotate 180°
+        "rotate_270": (z, y, -x),  # Rotate 270° (or -90°)
     }
 
     return transforms.get(transform_type, (x, y, z))
@@ -40,11 +40,11 @@ def apply_axis_transform(x, y, z, transform_type):
 
 def parse_transform3d(transform_str):
     """Parse Transform3D to extract position."""
-    match = re.search(r'Transform3D\(([^)]+)\)', transform_str)
+    match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
         return None
 
-    values = [float(x.strip()) for x in match.group(1).split(',')]
+    values = [float(x.strip()) for x in match.group(1).split(",")]
     if len(values) != 12:
         return None
 
@@ -62,12 +62,16 @@ def main():
     print()
 
     # Read current HQ positions
-    with open(kursk_tscn, 'r') as f:
+    with open(kursk_tscn) as f:
         content = f.read()
 
     # Extract TEAM_1_HQ and TEAM_2_HQ transforms
-    team1_match = re.search(r'\[node name="TEAM_1_HQ".*?\ntransform = (Transform3D\([^)]+\))', content, re.DOTALL)
-    team2_match = re.search(r'\[node name="TEAM_2_HQ".*?\ntransform = (Transform3D\([^)]+\))', content, re.DOTALL)
+    team1_match = re.search(
+        r'\[node name="TEAM_1_HQ".*?\ntransform = (Transform3D\([^)]+\))', content, re.DOTALL
+    )
+    team2_match = re.search(
+        r'\[node name="TEAM_2_HQ".*?\ntransform = (Transform3D\([^)]+\))', content, re.DOTALL
+    )
 
     if not team1_match or not team2_match:
         print("Error: Could not find team HQs")
@@ -86,8 +90,16 @@ def main():
     print("=" * 70)
     print()
 
-    transforms = ['original', 'swap_xz', 'negate_x', 'negate_z', 'negate_xz',
-                  'rotate_90', 'rotate_180', 'rotate_270']
+    transforms = [
+        "original",
+        "swap_xz",
+        "negate_x",
+        "negate_z",
+        "negate_xz",
+        "rotate_90",
+        "rotate_180",
+        "rotate_270",
+    ]
 
     for transform in transforms:
         new_t1 = apply_axis_transform(*team1_pos, transform)

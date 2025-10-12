@@ -8,14 +8,22 @@ to customize game-specific behavior.
 
 from abc import abstractmethod
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import List
 
 from ...core.interfaces import (
-    IGameEngine, ICoordinateSystem, MapData, GameObject, SpawnPoint,
-    CapturePoint, Transform, Vector3, Rotation, Team, MapBounds
+    CapturePoint,
+    GameObject,
+    ICoordinateSystem,
+    IGameEngine,
+    MapBounds,
+    MapData,
+    Rotation,
+    SpawnPoint,
+    Team,
+    Transform,
+    Vector3,
 )
-from ...core.exceptions import ParseError
-from ...parsers.con_parser import ConParser, ConFileSet
+from ...parsers.con_parser import ConFileSet, ConParser
 
 
 class RefractorCoordinateSystem(ICoordinateSystem):
@@ -88,17 +96,14 @@ class RefractorEngine(IGameEngine):
     @abstractmethod
     def get_game_name(self) -> str:
         """Return the game name (e.g., 'BF1942')."""
-        pass
 
     @abstractmethod
     def get_engine_version(self) -> str:
         """Return the engine version (e.g., 'Refractor 1.0')."""
-        pass
 
     @abstractmethod
     def get_game_mode_default(self) -> str:
         """Return default game mode for this game (e.g., 'Conquest')."""
-        pass
 
     # ========================================================================
     # Template Method (Defines algorithm, subclasses customize steps)
@@ -150,11 +155,7 @@ class RefractorEngine(IGameEngine):
         print(f"📦 Game objects: {len(game_objects)}")
 
         # Step 6: Calculate map bounds
-        bounds = self._calculate_bounds(
-            team1_spawns + team2_spawns,
-            capture_points,
-            game_objects
-        )
+        bounds = self._calculate_bounds(team1_spawns + team2_spawns, capture_points, game_objects)
 
         # Step 7: Create MapData
         map_data = MapData(
@@ -168,13 +169,13 @@ class RefractorEngine(IGameEngine):
             game_objects=game_objects,
             bounds=bounds,
             metadata={
-                'game': self.get_game_name(),
-                'engine': self.get_engine_version(),
-                'source_path': str(map_path)
-            }
+                "game": self.get_game_name(),
+                "engine": self.get_engine_version(),
+                "source_path": str(map_path),
+            },
         )
 
-        print(f"✅ Map parsing complete")
+        print("✅ Map parsing complete")
         return map_data
 
     def get_coordinate_system(self) -> ICoordinateSystem:
@@ -185,7 +186,7 @@ class RefractorEngine(IGameEngine):
     # Hook Methods (Subclasses CAN override for customization)
     # ========================================================================
 
-    def _is_spawn_point(self, obj_name: str, obj_type: str = '') -> bool:
+    def _is_spawn_point(self, obj_name: str, obj_type: str = "") -> bool:
         """Check if object name or type indicates a spawn point.
 
         Single Responsibility: Only checks spawn point identification logic.
@@ -198,24 +199,25 @@ class RefractorEngine(IGameEngine):
             True if this is a spawn point
         """
         # Exclude control points first
-        if 'cpoint' in obj_name:
+        if "cpoint" in obj_name:
             return False
 
         # Check if type is SpawnPoint (template) or contains SpawnPoint
-        if obj_type and 'spawnpoint' in obj_type:
+        if obj_type and "spawnpoint" in obj_type:
             return True
 
         # Check name for spawn point pattern
-        if 'spawn' in obj_name and 'point' in obj_name:
+        if "spawn" in obj_name and "point" in obj_name:
             return True
 
         # Check for spawn instance pattern: name_groupnum_spawnnum (e.g., openbasecammo_4_13)
         # These are instances created from SpawnPoint templates but have instance name as type
         import re
-        if re.search(r'_\d+_\d+$', obj_name):
+
+        if re.search(r"_\d+_\d+$", obj_name):
             # Has pattern like _X_Y at end, likely a spawn instance
             # Also check if it has spawn-related keywords
-            if 'spawn' in obj_name or 'open' in obj_name or 'base' in obj_name:
+            if "spawn" in obj_name or "open" in obj_name or "base" in obj_name:
                 return True
 
         return False
@@ -232,14 +234,14 @@ class RefractorEngine(IGameEngine):
             'team1', 'team2', or 'neutral'
         """
         # Team-specific spawns
-        if 'axis' in obj_name or '_1_' in obj_name:
-            return 'team1'
-        if 'allies' in obj_name or '_2_' in obj_name:
-            return 'team2'
+        if "axis" in obj_name or "_1_" in obj_name:
+            return "team1"
+        if "allies" in obj_name or "_2_" in obj_name:
+            return "team2"
 
         # Neutral spawns (open bases, capture points)
         # Pattern: _3_, _4_, 'open', etc.
-        return 'neutral'
+        return "neutral"
 
     def _should_include_spawn_for_team(self, ownership: str, requested_team: Team) -> bool:
         """Determine if spawn should be included for requested team.
@@ -256,11 +258,11 @@ class RefractorEngine(IGameEngine):
         """
         # Neutral spawns belong to capture points, NOT team HQs
         # They will be handled separately in _parse_capture_points
-        if ownership == 'neutral':
+        if ownership == "neutral":
             return False
-        if ownership == 'team1' and requested_team == Team.TEAM_1:
+        if ownership == "team1" and requested_team == Team.TEAM_1:
             return True
-        if ownership == 'team2' and requested_team == Team.TEAM_2:
+        if ownership == "team2" and requested_team == Team.TEAM_2:
             return True
 
         return False
@@ -281,9 +283,9 @@ class RefractorEngine(IGameEngine):
         parsed_files = con_files.parse_all()
 
         for filename, parsed_data in parsed_files.items():
-            for obj in parsed_data['objects']:
-                obj_name = obj.get('name', '').lower()
-                obj_type = obj.get('type', '').lower()
+            for obj in parsed_data["objects"]:
+                obj_name = obj.get("name", "").lower()
+                obj_type = obj.get("type", "").lower()
 
                 # Step 1: Check if this is a spawn point
                 if not self._is_spawn_point(obj_name, obj_type):
@@ -299,20 +301,23 @@ class RefractorEngine(IGameEngine):
                 # Step 4: Extract transform and create spawn point
                 transform = self.con_parser.parse_transform(obj)
                 if transform:
-                    spawns.append(SpawnPoint(
-                        name=obj.get('name', f"Spawn_{team.value}_{len(spawns)+1}"),
-                        transform=transform,
-                        team=team
-                    ))
+                    spawns.append(
+                        SpawnPoint(
+                            name=obj.get("name", f"Spawn_{team.value}_{len(spawns) + 1}"),
+                            transform=transform,
+                            team=team,
+                        )
+                    )
 
         # Warn if too few spawns
         if len(spawns) < 4:
-            print(f"  ⚠️  Only {len(spawns)} spawns found for team {team.value}. Portal requires minimum 4.")
+            print(
+                f"  ⚠️  Only {len(spawns)} spawns found for team {team.value}. Portal requires minimum 4."
+            )
 
         return spawns
 
-    def _parse_hq(self, con_files: ConFileSet, team: Team,
-                 spawns: List[SpawnPoint]) -> Transform:
+    def _parse_hq(self, con_files: ConFileSet, team: Team, spawns: List[SpawnPoint]) -> Transform:
         """Parse HQ position from spawn centroid.
 
         Args:
@@ -337,14 +342,11 @@ class RefractorEngine(IGameEngine):
 
             return Transform(
                 position=Vector3(total_x / count, total_y / count, total_z / count),
-                rotation=Rotation(0, 0, 0)
+                rotation=Rotation(0, 0, 0),
             )
 
         # Fallback: Default position (shouldn't happen if spawns are parsed correctly)
-        return Transform(
-            position=Vector3(0, 0, 0),
-            rotation=Rotation(0, 0, 0)
-        )
+        return Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0))
 
     def _parse_capture_points(self, con_files: ConFileSet) -> List[CapturePoint]:
         """Parse capture points and their associated spawns.
@@ -360,37 +362,42 @@ class RefractorEngine(IGameEngine):
 
         # Step 1: Find all control points
         for filename, parsed_data in parsed_files.items():
-            for obj in parsed_data['objects']:
-                obj_name = obj.get('name', '').lower()
-                obj_type = obj.get('type', '').lower()
+            for obj in parsed_data["objects"]:
+                obj_name = obj.get("name", "").lower()
+                obj_type = obj.get("type", "").lower()
 
                 # Check if this is a control point by type (not name pattern)
-                if obj_type != 'controlpoint':
+                if obj_type != "controlpoint":
                     continue
 
                 # Skip HQ bases - those are handled by _parse_hq()
-                if 'base' in obj_name and ('axis' in obj_name or 'allies' in obj_name or '_1_' in obj_name or '_2_' in obj_name):
+                if "base" in obj_name and (
+                    "axis" in obj_name
+                    or "allies" in obj_name
+                    or "_1_" in obj_name
+                    or "_2_" in obj_name
+                ):
                     continue
 
                 # This is a neutral/contestable capture point
                 transform = self.con_parser.parse_transform(obj)
                 if transform:
                     # Default radius (can be overridden in subclasses)
-                    radius = float(obj.get('properties', {}).get('radius', 50.0))
+                    radius = float(obj.get("properties", {}).get("radius", 50.0))
 
                     cp = CapturePoint(
-                        name=obj.get('name', f'CP_{len(capture_points)+1}'),
+                        name=obj.get("name", f"CP_{len(capture_points) + 1}"),
                         transform=transform,
                         radius=radius,
-                        control_area=[]  # TODO: Parse control area polygon
+                        control_area=[],  # TODO: Parse control area polygon
                     )
                     capture_points.append(cp)
 
         # Step 2: Find neutral spawns and associate them with capture points
         for filename, parsed_data in parsed_files.items():
-            for obj in parsed_data['objects']:
-                obj_name = obj.get('name', '').lower()
-                obj_type = obj.get('type', '').lower()
+            for obj in parsed_data["objects"]:
+                obj_name = obj.get("name", "").lower()
+                obj_type = obj.get("type", "").lower()
 
                 # Check if this is a spawn point
                 if not self._is_spawn_point(obj_name, obj_type):
@@ -398,13 +405,14 @@ class RefractorEngine(IGameEngine):
 
                 # Check if it's a neutral spawn
                 ownership = self._classify_spawn_ownership(obj_name)
-                if ownership != 'neutral':
+                if ownership != "neutral":
                     continue
 
                 # Extract spawn group number (e.g., _3_, _4_)
                 # This tells us which capture point it belongs to
                 import re
-                match = re.search(r'_(\d+)_', obj_name)
+
+                match = re.search(r"_(\d+)_", obj_name)
                 if not match:
                     continue
 
@@ -417,9 +425,9 @@ class RefractorEngine(IGameEngine):
                     if transform:
                         # Create spawn point (belongs to both teams when captured)
                         spawn = SpawnPoint(
-                            name=obj.get('name', f"NeutralSpawn_{group_num}"),
+                            name=obj.get("name", f"NeutralSpawn_{group_num}"),
                             transform=transform,
-                            team=Team.NEUTRAL
+                            team=Team.NEUTRAL,
                         )
                         # Add to both team spawn lists for this capture point
                         capture_points[cp_index].team1_spawns.append(spawn)
@@ -438,7 +446,7 @@ class RefractorEngine(IGameEngine):
                 # Update CP transform to be at centroid of its spawns
                 cp.transform = Transform(
                     position=Vector3(total_x / count, total_y / count, total_z / count),
-                    rotation=cp.transform.rotation  # Keep original rotation
+                    rotation=cp.transform.rotation,  # Keep original rotation
                 )
 
         return capture_points
@@ -456,28 +464,33 @@ class RefractorEngine(IGameEngine):
         parsed_files = con_files.parse_all()
 
         for filename, parsed_data in parsed_files.items():
-            for obj in parsed_data['objects']:
+            for obj in parsed_data["objects"]:
                 # Skip spawners and control points (already handled)
-                if obj['type'] in ['ObjectSpawner', 'ControlPoint']:
+                if obj["type"] in ["ObjectSpawner", "ControlPoint"]:
                     continue
 
                 transform = self.con_parser.parse_transform(obj)
                 if transform:
                     team = self.con_parser.parse_team(obj)
 
-                    game_objects.append(GameObject(
-                        name=obj['name'],
-                        asset_type=obj['type'],
-                        transform=transform,
-                        team=team,
-                        properties=obj['properties']
-                    ))
+                    game_objects.append(
+                        GameObject(
+                            name=obj["name"],
+                            asset_type=obj["type"],
+                            transform=transform,
+                            team=team,
+                            properties=obj["properties"],
+                        )
+                    )
 
         return game_objects
 
-    def _calculate_bounds(self, spawns: List[SpawnPoint],
-                         capture_points: List[CapturePoint],
-                         objects: List[GameObject]) -> MapBounds:
+    def _calculate_bounds(
+        self,
+        spawns: List[SpawnPoint],
+        capture_points: List[CapturePoint],
+        objects: List[GameObject],
+    ) -> MapBounds:
         """Calculate map bounds from all objects.
 
         Args:
@@ -506,7 +519,7 @@ class RefractorEngine(IGameEngine):
                 min_point=Vector3(-1000, 0, -1000),
                 max_point=Vector3(1000, 200, 1000),
                 combat_area_polygon=[],
-                height=200
+                height=200,
             )
 
         # Calculate min/max
@@ -531,5 +544,5 @@ class RefractorEngine(IGameEngine):
             min_point=Vector3(min_x, min_y, min_z),
             max_point=Vector3(max_x, max_y, max_z),
             combat_area_polygon=[],  # TODO: Generate polygon from bounds
-            height=max_y - min_y + 100  # Add 100m vertical buffer
+            height=max_y - min_y + 100,  # Add 100m vertical buffer
         )

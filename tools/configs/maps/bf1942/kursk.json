@@ -1,0 +1,23 @@
+{
+  "name": "Kursk",
+  "game": "BF1942",
+  "expansion": "base",
+  "theme": "open_terrain",
+  "recommended_base_terrain": "MP_Tungsten",
+  "size": "large",
+  "dimensions": {
+    "width": 2048,
+    "height": 2048
+  },
+  "heightmap": {
+    "path": "GodotProject/terrain/Kursk_heightmap.png",
+    "min_height": 73.0,
+    "max_height": 217.0
+  },
+  "teams": {
+    "team1": "Germany",
+    "team2": "Soviet Union"
+  },
+  "game_modes": ["Conquest"],
+  "notes": "Open terrain battle, famous tank engagement. Best suited for MP_Tungsten base."
+}

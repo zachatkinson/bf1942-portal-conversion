@@ -22,11 +22,11 @@ from typing import Tuple
 
 def parse_transform3d(transform_str: str) -> Tuple[list, list]:
     """Parse Transform3D into rotation matrix and position."""
-    match = re.search(r'Transform3D\(([^)]+)\)', transform_str)
+    match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
-        raise ValueError(f"Invalid Transform3D format")
+        raise ValueError("Invalid Transform3D format")
 
-    values = [float(x.strip()) for x in match.group(1).split(',')]
+    values = [float(x.strip()) for x in match.group(1).split(",")]
     if len(values) != 12:
         raise ValueError(f"Expected 12 values, got {len(values)}")
 
@@ -52,7 +52,7 @@ def adjust_spawn_heights(input_path: Path, output_path: Path, height_offset: flo
     print(f"Reading: {input_path}")
     print(f"Spawn point height offset: {height_offset:+.2f}m")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -65,7 +65,7 @@ def adjust_spawn_heights(input_path: Path, output_path: Path, height_offset: flo
             in_spawn_point = True
 
         # Reset when we leave spawn point section
-        elif '[node name=' in line and 'SpawnPoint' not in line:
+        elif "[node name=" in line and "SpawnPoint" not in line:
             in_spawn_point = False
 
         # Adjust spawn point transform
@@ -74,11 +74,7 @@ def adjust_spawn_heights(input_path: Path, output_path: Path, height_offset: flo
                 rotation, position = parse_transform3d(line)
 
                 # Adjust Y coordinate
-                new_position = [
-                    position[0],
-                    position[1] + height_offset,
-                    position[2]
-                ]
+                new_position = [position[0], position[1] + height_offset, position[2]]
 
                 new_transform = format_transform3d(rotation, new_position)
                 new_line = f"transform = {new_transform}\n"
@@ -91,7 +87,7 @@ def adjust_spawn_heights(input_path: Path, output_path: Path, height_offset: flo
 
         modified_lines.append(line)
 
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"\nModified {spawn_points_modified} spawn point heights")
@@ -140,6 +136,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

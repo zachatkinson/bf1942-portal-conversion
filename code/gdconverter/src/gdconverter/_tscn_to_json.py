@@ -44,7 +44,9 @@ def process_scene_file(src_file: Path, dst_file: Path, assets: jstype.Assets) ->
     return True
 
 
-def _create_scene(tscn_instances: dict[str, list[ttype.Instance]], assets: jstype.Assets, filepath: Path) -> ttype.Scene | None:
+def _create_scene(
+    tscn_instances: dict[str, list[ttype.Instance]], assets: jstype.Assets, filepath: Path
+) -> ttype.Scene | None:
     scene = ttype.Scene()
     scene.filepath = filepath
     # convert instances to appropriate types
@@ -70,7 +72,9 @@ def _create_scene(tscn_instances: dict[str, list[ttype.Instance]], assets: jstyp
     return scene
 
 
-def _check_restrictions(scene: ttype.Scene, assets: jstype.Assets, level_name: str) -> dict[str, list[str]]:
+def _check_restrictions(
+    scene: ttype.Scene, assets: jstype.Assets, level_name: str
+) -> dict[str, list[str]]:
     errors: dict[str, list[str]] = {}
     if "autotest" in level_name.lower():
         return errors
@@ -96,7 +100,9 @@ def _check_restrictions(scene: ttype.Scene, assets: jstype.Assets, level_name: s
 def _log_restrictions(nonusable: dict[str, list[str]], level_name: str) -> None:
     type_count = len(nonusable)
     object_count = sum([len(objects) for objects in nonusable.values()])
-    _logging.log_warning(f"Encountered {type_count} type{'s' if type_count > 1 else ''} from {object_count} object{'s' if object_count > 1 else ''} not usable in the current level {level_name}:\n")
+    _logging.log_warning(
+        f"Encountered {type_count} type{'s' if type_count > 1 else ''} from {object_count} object{'s' if object_count > 1 else ''} not usable in the current level {level_name}:\n"
+    )
     for type, instances in nonusable.items():
         instances_str = "\n".join([f"\t{instance}" for instance in instances])
         _logging.log_warning(f"Type: {type}\n{instances_str}\n")
@@ -212,13 +218,17 @@ def _get_flattened_complex(attr_value: ttype.Complex, scene: ttype.Scene) -> Any
         ext_rsrc = scene.ext_resources.get(inst_id, None)
         if ext_rsrc is None:
             error_value = f"value {inst_id}" if inst_id != "" else "empty value"
-            _logging.log_error(f"Parsing {const.CMPX_EXTRSRC} with {error_value} yielded no results")
+            _logging.log_error(
+                f"Parsing {const.CMPX_EXTRSRC} with {error_value} yielded no results"
+            )
         return ext_rsrc.path if ext_rsrc else ""
     return attr_value.params
 
 
 # int value can be enum or int/float. Verify the attribute type from asset info
-def _get_flattened_enum(attr_name: str, attr_value: ttype.Enum, json_type: jstype.Asset | None) -> Any:
+def _get_flattened_enum(
+    attr_name: str, attr_value: ttype.Enum, json_type: jstype.Asset | None
+) -> Any:
     prop = json_type.props.get(attr_name, None) if json_type else None
     if isinstance(prop, jtype.PropertySelection):
         selections = prop.get_selections()
@@ -241,7 +251,9 @@ def _get_flattened_value(attr_value: object, scene: ttype.Scene) -> Any:
 
 
 # attributes are named values, including simple values, arrays, or complex values
-def _get_flattened_attr(attr_name: str, attr_value: object, scene: ttype.Scene, json_type: jstype.Asset | None) -> Any:
+def _get_flattened_attr(
+    attr_name: str, attr_value: object, scene: ttype.Scene, json_type: jstype.Asset | None
+) -> Any:
     if isinstance(attr_value, ttype.Enum):
         return _get_flattened_enum(attr_name, attr_value, json_type)
     if isinstance(attr_value, ttype.Array):
@@ -278,7 +290,9 @@ def _add_flattened_nodes(scene: ttype.Scene, assets: jstype.Assets) -> None:
 
         if "type" not in flattened_node:
             # no type was able to be deduced, set a default to handle it
-            _logging.log_warning(f"Unable to get type from node {flattened_node['name']}. Defaulting to {const.PROP_TYPE_NODE3D}")
+            _logging.log_warning(
+                f"Unable to get type from node {flattened_node['name']}. Defaulting to {const.PROP_TYPE_NODE3D}"
+            )
             flattened_node["type"] = const.PROP_TYPE_NODE3D
 
         gd_transform = flattened_node.pop("transform", putils.TSCN_TRANSFORM_IDENTITY)
@@ -310,8 +324,17 @@ def _flatten_node_names(scene: ttype.Scene) -> None:
         if "id" not in node or node["id"] == "":
             node["id"] = node_name
         elif node["id"] in scene.flattened_id_to_name:
-            _logging.log_warning("Duplicate id found: " + node["id"] + " in node " + node_name + " and " + scene.flattened_id_to_name[node["id"]])
-            _logging.log_warning("It will receive a new id using its absolute path. Any previous reference can be broken")
+            _logging.log_warning(
+                "Duplicate id found: "
+                + node["id"]
+                + " in node "
+                + node_name
+                + " and "
+                + scene.flattened_id_to_name[node["id"]]
+            )
+            _logging.log_warning(
+                "It will receive a new id using its absolute path. Any previous reference can be broken"
+            )
             node["id"] = node_name
         scene.flattened_id_to_name[node["id"]] = node_name
         scene.flattened_name_to_id[node_name] = str(node["id"])
@@ -323,7 +346,9 @@ def _resolve_node_rel_path(scene: ttype.Scene, rel_path: str, node: Any) -> str 
     scene_name = scene.filepath.stem
     while resolved.startswith(".."):
         if "parent" not in curr:
-            _logging.log_error(f"Node {curr.name} has node_paths reference {rel_path} but no parent attribute")
+            _logging.log_error(
+                f"Node {curr.name} has node_paths reference {rel_path} but no parent attribute"
+            )
             return None
         resolved = resolved[3:]
         parent = curr["parent"]
@@ -331,12 +356,16 @@ def _resolve_node_rel_path(scene: ttype.Scene, rel_path: str, node: Any) -> str 
             curr = None
             break
         if parent not in scene.flattened_name_to_node:
-            _logging.log_error(f"Node {curr.name} has parent attribute {parent} which is not found in scene {scene_name}")
+            _logging.log_error(
+                f"Node {curr.name} has parent attribute {parent} which is not found in scene {scene_name}"
+            )
             return None
         curr = scene.flattened_name_to_node[parent]
     abs_path = str(curr["id"]) + "/" + resolved if curr else resolved
     if abs_path not in scene.flattened_name_to_node:
-        _logging.log_error(f"Node {node['name']} has node_paths reference {rel_path} which is not found in scene {scene_name}")
+        _logging.log_error(
+            f"Node {node['name']} has node_paths reference {rel_path} which is not found in scene {scene_name}"
+        )
         return None
     return scene.flattened_name_to_id.get(abs_path, abs_path)
 
@@ -358,7 +387,9 @@ def _resolve_node_refs(scene: ttype.Scene, assets: jstype.Assets) -> None:
             node_paths = node[const.PROP_NODE_PATHS]
             for path_prop in node_paths:
                 if path_prop not in node:
-                    _logging.log_warning(f"Node has node_paths attribute {path_prop} but no corresponding attribute")
+                    _logging.log_warning(
+                        f"Node has node_paths attribute {path_prop} but no corresponding attribute"
+                    )
                     continue
                 rel_path = node[path_prop]
                 if isinstance(rel_path, list):
@@ -372,7 +403,9 @@ def _resolve_node_refs(scene: ttype.Scene, assets: jstype.Assets) -> None:
                         node_type = node["type"].lower()
                         node_name = node["name"]
                         if node_type not in assets:
-                            _logging.log_error(f"Attempting to resolve node {node_name} whose type does not exist: {node_type}")
+                            _logging.log_error(
+                                f"Attempting to resolve node {node_name} whose type does not exist: {node_type}"
+                            )
                             continue
                         node_prop = assets[node_type].props.get(path_prop, None)
                         if node_prop is not None and isinstance(node_prop, jtype.PropertyArray):
@@ -396,7 +429,9 @@ def _resolve_node_refs(scene: ttype.Scene, assets: jstype.Assets) -> None:
                     references.append(path_prop)
                     _add_node_ref(scene, node, path_prop, node[path_prop])
                 else:
-                    _logging.log_error(f"Node has node_paths attribute {path_prop} with invalid type {type(rel_path)}")
+                    _logging.log_error(
+                        f"Node has node_paths attribute {path_prop} with invalid type {type(rel_path)}"
+                    )
             del node[const.PROP_NODE_PATHS]
         if len(references) != 0:
             node["linked"] = references
@@ -410,7 +445,9 @@ def _add_flattened_sub_resource(scene: ttype.Scene) -> None:
 
             name = attr_value.params[0]
             if name not in scene.sub_resources:
-                _logging.log_error(f"Node {node.name} references an unidentified sub resource: {name}")
+                _logging.log_error(
+                    f"Node {node.name} references an unidentified sub resource: {name}"
+                )
                 continue
 
             sub_rsrc = scene.sub_resources[name]

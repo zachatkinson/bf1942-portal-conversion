@@ -30,12 +30,12 @@ def parse_transform3d(transform_str: str) -> Tuple[list, list]:
         - position is list of 3 floats [x, y, z]
     """
     # Extract numbers from Transform3D(...) - handle scientific notation
-    match = re.search(r'Transform3D\(([^)]+)\)', transform_str)
+    match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
         raise ValueError(f"Invalid Transform3D format: {transform_str}")
 
     # Split by comma and convert to floats (handles scientific notation like 4.8e-05)
-    values = [float(x.strip()) for x in match.group(1).split(',')]
+    values = [float(x.strip()) for x in match.group(1).split(",")]
 
     if len(values) != 12:
         raise ValueError(f"Expected 12 values in Transform3D, got {len(values)}")
@@ -78,7 +78,7 @@ def apply_offset_to_transform(transform_line: str, offset: Tuple[float, float, f
 
     try:
         # Find the Transform3D part
-        transform_match = re.search(r'transform = (Transform3D\([^\)]+\))', transform_line)
+        transform_match = re.search(r"transform = (Transform3D\([^\)]+\))", transform_line)
         if not transform_match:
             return transform_line
 
@@ -86,11 +86,7 @@ def apply_offset_to_transform(transform_line: str, offset: Tuple[float, float, f
         rotation, position = parse_transform3d(transform_str)
 
         # Apply offset
-        new_position = [
-            position[0] + offset[0],
-            position[1] + offset[1],
-            position[2] + offset[2]
-        ]
+        new_position = [position[0] + offset[0], position[1] + offset[1], position[2] + offset[2]]
 
         new_transform = format_transform3d(rotation, new_position)
 
@@ -118,16 +114,14 @@ def calculate_kursk_offset() -> Tuple[float, float, float]:
         Tuple of (x_offset, y_offset, z_offset)
     """
     x_center = (437.315 + 639.658) / 2  # 538.4865
-    z_center = (238.39 + 849.956) / 2   # 544.173
+    z_center = (238.39 + 849.956) / 2  # 544.173
 
     # Negative because we're subtracting to move to origin
     return (-x_center, 0.0, -z_center)
 
 
 def apply_offset_to_tscn(
-    input_path: Path,
-    output_path: Path,
-    offset: Tuple[float, float, float]
+    input_path: Path, output_path: Path, offset: Tuple[float, float, float]
 ) -> None:
     """
     Apply coordinate offset to all transform nodes in .tscn file.
@@ -140,7 +134,7 @@ def apply_offset_to_tscn(
     print(f"Reading: {input_path}")
     print(f"Offset: ({offset[0]:.2f}, {offset[1]:.2f}, {offset[2]:.2f})")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -155,7 +149,7 @@ def apply_offset_to_tscn(
         else:
             modified_lines.append(line)
 
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"Modified {transforms_modified} transform nodes")
@@ -191,6 +185,7 @@ def main():
     if output_tscn.exists():
         print(f"Creating backup: {backup_tscn}")
         import shutil
+
         shutil.copy2(output_tscn, backup_tscn)
 
     # Apply offset

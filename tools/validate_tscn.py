@@ -15,16 +15,17 @@ Usage:
     python tools/validate_tscn.py GodotProject/levels/Kursk.tscn
 """
 
-import sys
 import re
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
+import sys
 from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Set
 
 
 @dataclass
 class ValidationResult:
     """Result of a validation check."""
+
     passed: bool
     message: str
     severity: str = "ERROR"  # ERROR, WARNING, INFO
@@ -52,7 +53,7 @@ class TscnValidator:
         if not self.tscn_path.exists():
             raise FileNotFoundError(f"File not found: {self.tscn_path}")
 
-        with open(self.tscn_path, 'r', encoding='utf-8') as f:
+        with open(self.tscn_path, encoding="utf-8") as f:
             self.content = f.read()
 
     def add_result(self, passed: bool, message: str, severity: str = "ERROR") -> None:
@@ -90,15 +91,27 @@ class TscnValidator:
 
         # Team 1
         if len(team1_spawns) >= min_spawns:
-            self.add_result(True, f"✓ Team 1 has {len(team1_spawns)} spawn points (minimum: {min_spawns})", "INFO")
+            self.add_result(
+                True,
+                f"✓ Team 1 has {len(team1_spawns)} spawn points (minimum: {min_spawns})",
+                "INFO",
+            )
         else:
-            self.add_result(False, f"✗ Team 1 has only {len(team1_spawns)} spawn points (minimum: {min_spawns})")
+            self.add_result(
+                False, f"✗ Team 1 has only {len(team1_spawns)} spawn points (minimum: {min_spawns})"
+            )
 
         # Team 2
         if len(team2_spawns) >= min_spawns:
-            self.add_result(True, f"✓ Team 2 has {len(team2_spawns)} spawn points (minimum: {min_spawns})", "INFO")
+            self.add_result(
+                True,
+                f"✓ Team 2 has {len(team2_spawns)} spawn points (minimum: {min_spawns})",
+                "INFO",
+            )
         else:
-            self.add_result(False, f"✗ Team 2 has only {len(team2_spawns)} spawn points (minimum: {min_spawns})")
+            self.add_result(
+                False, f"✗ Team 2 has only {len(team2_spawns)} spawn points (minimum: {min_spawns})"
+            )
 
     def validate_obj_ids(self) -> None:
         """Validate ObjIds are unique and non-negative."""
@@ -107,7 +120,7 @@ class TscnValidator:
         negative_ids = []
 
         # Find all ObjId declarations
-        for match in re.finditer(r'ObjId = (-?\d+)', self.content):
+        for match in re.finditer(r"ObjId = (-?\d+)", self.content):
             obj_id = int(match.group(1))
 
             if obj_id < 0:
@@ -135,16 +148,16 @@ class TscnValidator:
         invalid_found = False
 
         # Find all Transform3D declarations
-        for match in re.finditer(r'transform = Transform3D\(([^)]+)\)', self.content):
+        for match in re.finditer(r"transform = Transform3D\(([^)]+)\)", self.content):
             values_str = match.group(1)
 
             # Check for NaN
-            if 'nan' in values_str.lower() or 'inf' in values_str.lower():
+            if "nan" in values_str.lower() or "inf" in values_str.lower():
                 nan_found = True
 
             # Try parsing values
             try:
-                values = [float(v.strip()) for v in values_str.split(',')]
+                values = [float(v.strip()) for v in values_str.split(",")]
                 if len(values) != 12:
                     invalid_found = True
             except ValueError:
@@ -171,18 +184,22 @@ class TscnValidator:
             # Basic validation: should not be empty and should start with valid characters
             if not path:
                 invalid_paths.append("(empty)")
-            elif path.startswith(' ') or path.endswith(' '):
+            elif path.startswith(" ") or path.endswith(" "):
                 invalid_paths.append(f"'{path}' (has whitespace)")
 
         if not invalid_paths:
             self.add_result(True, "✓ All NodePaths are valid", "INFO")
         else:
-            self.add_result(False, f"✗ Invalid NodePaths found: {invalid_paths[:5]}")  # Show first 5
+            self.add_result(
+                False, f"✗ Invalid NodePaths found: {invalid_paths[:5]}"
+            )  # Show first 5
 
     def validate_external_resources(self) -> None:
         """Validate external resources are declared correctly."""
         # Find all ext_resource declarations
-        ext_resources = re.findall(r'\[ext_resource type="([^"]+)" path="([^"]+)" id="(\d+)"\]', self.content)
+        ext_resources = re.findall(
+            r'\[ext_resource type="([^"]+)" path="([^"]+)" id="(\d+)"\]', self.content
+        )
 
         resource_ids: Set[int] = set()
         duplicate_res_ids = []
@@ -195,7 +212,9 @@ class TscnValidator:
                 resource_ids.add(res_id_int)
 
         if not duplicate_res_ids:
-            self.add_result(True, f"✓ {len(resource_ids)} external resources with unique IDs", "INFO")
+            self.add_result(
+                True, f"✓ {len(resource_ids)} external resources with unique IDs", "INFO"
+            )
         else:
             self.add_result(False, f"✗ Duplicate resource IDs: {duplicate_res_ids}")
 
@@ -205,7 +224,7 @@ class TscnValidator:
             if resource_ids == expected_ids:
                 self.add_result(True, "✓ Resource IDs are sequential (1..N)", "INFO")
             else:
-                self.add_result(False, f"✗ Resource IDs are not sequential", "WARNING")
+                self.add_result(False, "✗ Resource IDs are not sequential", "WARNING")
 
     def validate_gameplay_objects(self) -> None:
         """Validate gameplay objects are present."""
@@ -232,13 +251,13 @@ class TscnValidator:
     def validate_file_structure(self) -> None:
         """Validate basic file structure."""
         # Check for header
-        if self.content.startswith('[gd_scene'):
+        if self.content.startswith("[gd_scene"):
             self.add_result(True, "✓ Valid Godot scene header", "INFO")
         else:
             self.add_result(False, "✗ Invalid or missing scene header")
 
         # Check format version
-        format_match = re.search(r'format=(\d+)', self.content)
+        format_match = re.search(r"format=(\d+)", self.content)
         if format_match:
             format_version = int(format_match.group(1))
             if format_version == 3:
@@ -336,6 +355,7 @@ def main():
     except Exception as e:
         print(f"\n❌ ERROR: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 

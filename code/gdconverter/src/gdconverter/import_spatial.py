@@ -32,7 +32,15 @@ def import_spatial(fb_export_data_dir: Path, output_dir: Path, spatial: Path) ->
 
     j2t.add_levels_to_assets(assets, levels, str(output_dir))
 
-    if not j2t.create_godot_files_from_assets(assets, raw_resources, asset_resources, str(output_dir), config, allow_missing_meshes=True, skip_writing_files=True):
+    if not j2t.create_godot_files_from_assets(
+        assets,
+        raw_resources,
+        asset_resources,
+        str(output_dir),
+        config,
+        allow_missing_meshes=True,
+        skip_writing_files=True,
+    ):
         _logging.log_error("Error encountered while creating godot files from assets")
         return False
     jparser.resolve_property_types_levels(levels, assets)

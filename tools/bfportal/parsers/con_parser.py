@@ -7,10 +7,10 @@
 
 import re
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
-from ..core.interfaces import IParser, Vector3, Rotation, Transform, Team
 from ..core.exceptions import ParseError
+from ..core.interfaces import IParser, Rotation, Team, Transform, Vector3
 
 
 class ConParser(IParser):
@@ -32,7 +32,7 @@ class ConParser(IParser):
         Returns:
             True if file has .con extension
         """
-        return file_path.suffix.lower() == '.con'
+        return file_path.suffix.lower() == ".con"
 
     def parse(self, file_path: Path) -> Dict:
         """Parse .con file and return structured data.
@@ -50,7 +50,7 @@ class ConParser(IParser):
             raise ParseError(f"File not found: {file_path}")
 
         try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
         except Exception as e:
             raise ParseError(f"Failed to read {file_path}: {e}")
@@ -58,11 +58,7 @@ class ConParser(IParser):
         # Parse the content
         objects = self._parse_objects(content)
 
-        return {
-            'file': str(file_path),
-            'objects': objects,
-            'raw_content': content
-        }
+        return {"file": str(file_path), "objects": objects, "raw_content": content}
 
     def _parse_objects(self, content: str) -> List[Dict]:
         """Parse object definitions from .con file content.
@@ -76,38 +72,34 @@ class ConParser(IParser):
         objects = []
         current_object = None
 
-        for line in content.split('\n'):
+        for line in content.split("\n"):
             line = line.strip()
 
             # Skip empty lines and comments
-            if not line or line.startswith('rem ') or line.startswith('//'):
+            if not line or line.startswith("rem ") or line.startswith("//"):
                 continue
 
             # ObjectTemplate.create <type> <name> (template definition)
-            create_match = re.match(r'ObjectTemplate\.create\s+(\w+)\s+(\w+)', line)
+            create_match = re.match(r"ObjectTemplate\.create\s+(\w+)\s+(\w+)", line)
             if create_match:
                 if current_object:
                     objects.append(current_object)
 
                 object_type, object_name = create_match.groups()
-                current_object = {
-                    'name': object_name,
-                    'type': object_type,
-                    'properties': {}
-                }
+                current_object = {"name": object_name, "type": object_type, "properties": {}}
                 continue
 
             # Object.create <name> (instance definition - use name as type)
-            instance_match = re.match(r'Object\.create\s+(\w+)', line)
+            instance_match = re.match(r"Object\.create\s+(\w+)", line)
             if instance_match:
                 if current_object:
                     objects.append(current_object)
 
                 object_name = instance_match.group(1)
                 current_object = {
-                    'name': object_name,
-                    'type': object_name,  # Use instance name as type
-                    'properties': {}
+                    "name": object_name,
+                    "type": object_name,  # Use instance name as type
+                    "properties": {},
                 }
                 continue
 
@@ -129,57 +121,65 @@ class ConParser(IParser):
             obj: Object dictionary to update
         """
         # ObjectTemplate.setPosition x/y/z
-        pos_match = re.match(r'ObjectTemplate\.setPosition\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)', line)
+        pos_match = re.match(
+            r"ObjectTemplate\.setPosition\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)", line
+        )
         if pos_match:
             x, y, z = map(float, pos_match.groups())
-            obj['position'] = {'x': x, 'y': y, 'z': z}
+            obj["position"] = {"x": x, "y": y, "z": z}
             return
 
         # Object.absolutePosition x/y/z (BF1942 instance format)
-        abs_pos_match = re.match(r'Object\.absolutePosition\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)', line)
+        abs_pos_match = re.match(
+            r"Object\.absolutePosition\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)", line
+        )
         if abs_pos_match:
             x, y, z = map(float, abs_pos_match.groups())
-            obj['position'] = {'x': x, 'y': y, 'z': z}
+            obj["position"] = {"x": x, "y": y, "z": z}
             return
 
         # ObjectTemplate.setRotation pitch/yaw/roll
-        rot_match = re.match(r'ObjectTemplate\.setRotation\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)', line)
+        rot_match = re.match(
+            r"ObjectTemplate\.setRotation\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)", line
+        )
         if rot_match:
             pitch, yaw, roll = map(float, rot_match.groups())
-            obj['rotation'] = {'pitch': pitch, 'yaw': yaw, 'roll': roll}
+            obj["rotation"] = {"pitch": pitch, "yaw": yaw, "roll": roll}
             return
 
         # Object.rotation pitch/yaw/roll (BF1942 instance format)
-        inst_rot_match = re.match(r'Object\.rotation\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)', line)
+        inst_rot_match = re.match(
+            r"Object\.rotation\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)", line
+        )
         if inst_rot_match:
             pitch, yaw, roll = map(float, inst_rot_match.groups())
-            obj['rotation'] = {'pitch': pitch, 'yaw': yaw, 'roll': roll}
+            obj["rotation"] = {"pitch": pitch, "yaw": yaw, "roll": roll}
             return
 
         # ObjectTemplate.setTeam <team>
-        team_match = re.match(r'ObjectTemplate\.setTeam\s+(\d+)', line)
+        team_match = re.match(r"ObjectTemplate\.setTeam\s+(\d+)", line)
         if team_match:
-            obj['team'] = int(team_match.group(1))
+            obj["team"] = int(team_match.group(1))
             return
 
         # Object.setTeam <team> (BF1942 instance format)
-        inst_team_match = re.match(r'Object\.setTeam\s+(\d+)', line)
+        inst_team_match = re.match(r"Object\.setTeam\s+(\d+)", line)
         if inst_team_match:
-            obj['team'] = int(inst_team_match.group(1))
+            obj["team"] = int(inst_team_match.group(1))
             return
 
         # Generic property: ObjectTemplate.<property> <value>
-        prop_match = re.match(r'ObjectTemplate\.(\w+)\s+(.+)', line)
+        prop_match = re.match(r"ObjectTemplate\.(\w+)\s+(.+)", line)
         if prop_match:
             prop_name, prop_value = prop_match.groups()
-            obj['properties'][prop_name] = prop_value.strip()
+            obj["properties"][prop_name] = prop_value.strip()
             return
 
         # Generic property: Object.<property> <value> (BF1942 instance format)
-        inst_prop_match = re.match(r'Object\.(\w+)\s+(.+)', line)
+        inst_prop_match = re.match(r"Object\.(\w+)\s+(.+)", line)
         if inst_prop_match:
             prop_name, prop_value = inst_prop_match.groups()
-            obj['properties'][prop_name] = prop_value.strip()
+            obj["properties"][prop_name] = prop_value.strip()
 
     def parse_transform(self, obj_dict: Dict) -> Optional[Transform]:
         """Extract Transform from parsed object dictionary.
@@ -190,24 +190,18 @@ class ConParser(IParser):
         Returns:
             Transform if position/rotation found, None otherwise
         """
-        pos_dict = obj_dict.get('position')
-        rot_dict = obj_dict.get('rotation')
+        pos_dict = obj_dict.get("position")
+        rot_dict = obj_dict.get("rotation")
 
         if not pos_dict:
             return None
 
-        position = Vector3(
-            pos_dict.get('x', 0),
-            pos_dict.get('y', 0),
-            pos_dict.get('z', 0)
-        )
+        position = Vector3(pos_dict.get("x", 0), pos_dict.get("y", 0), pos_dict.get("z", 0))
 
         rotation = Rotation(0, 0, 0)
         if rot_dict:
             rotation = Rotation(
-                rot_dict.get('pitch', 0),
-                rot_dict.get('yaw', 0),
-                rot_dict.get('roll', 0)
+                rot_dict.get("pitch", 0), rot_dict.get("yaw", 0), rot_dict.get("roll", 0)
             )
 
         return Transform(position, rotation)
@@ -221,7 +215,7 @@ class ConParser(IParser):
         Returns:
             Team enum value
         """
-        team_id = obj_dict.get('team', 0)
+        team_id = obj_dict.get("team", 0)
 
         if team_id == 1:
             return Team.TEAM_1
@@ -253,7 +247,7 @@ class ConFileSet:
 
         # Find all .con files recursively
         if map_dir.exists():
-            self.con_files = list(map_dir.rglob('*.con'))
+            self.con_files = list(map_dir.rglob("*.con"))
 
     def find_file(self, pattern: str) -> Optional[Path]:
         """Find a .con file matching a pattern.
@@ -301,8 +295,8 @@ class ConFileSet:
         for con_file in self.con_files:
             try:
                 parsed = self.parser.parse(con_file)
-                for obj in parsed['objects']:
-                    if obj['type'] == object_type:
+                for obj in parsed["objects"]:
+                    if obj["type"] == object_type:
                         results.append(obj)
             except ParseError:
                 continue

@@ -26,7 +26,9 @@ from pathlib import Path
 from typing import Tuple
 
 
-def apply_axis_transform(x: float, y: float, z: float, transform_type: str) -> Tuple[float, float, float]:
+def apply_axis_transform(
+    x: float, y: float, z: float, transform_type: str
+) -> Tuple[float, float, float]:
     """
     Apply axis transformation to coordinates.
 
@@ -38,13 +40,13 @@ def apply_axis_transform(x: float, y: float, z: float, transform_type: str) -> T
         Tuple of (new_x, new_y, new_z)
     """
     transforms = {
-        'swap_xz': (z, y, x),              # Swap X and Z axes
-        'negate_x': (-x, y, z),            # Mirror X axis
-        'negate_z': (x, y, -z),            # Mirror Z axis
-        'negate_xz': (-x, y, -z),          # Mirror both X and Z
-        'rotate_90': (-z, y, x),           # Rotate 90° clockwise (top view)
-        'rotate_180': (-x, y, -z),         # Rotate 180°
-        'rotate_270': (z, y, -x),          # Rotate 270° (or -90°)
+        "swap_xz": (z, y, x),  # Swap X and Z axes
+        "negate_x": (-x, y, z),  # Mirror X axis
+        "negate_z": (x, y, -z),  # Mirror Z axis
+        "negate_xz": (-x, y, -z),  # Mirror both X and Z
+        "rotate_90": (-z, y, x),  # Rotate 90° clockwise (top view)
+        "rotate_180": (-x, y, -z),  # Rotate 180°
+        "rotate_270": (z, y, -x),  # Rotate 270° (or -90°)
     }
 
     if transform_type not in transforms:
@@ -65,11 +67,11 @@ def parse_transform3d(transform_str: str) -> Tuple[list, list]:
         - rotation_matrix is list of 9 floats
         - position is list of 3 floats [x, y, z]
     """
-    match = re.search(r'Transform3D\(([^)]+)\)', transform_str)
+    match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
         raise ValueError(f"Invalid Transform3D format: {transform_str}")
 
-    values = [float(x.strip()) for x in match.group(1).split(',')]
+    values = [float(x.strip()) for x in match.group(1).split(",")]
 
     if len(values) != 12:
         raise ValueError(f"Expected 12 values in Transform3D, got {len(values)}")
@@ -94,8 +96,8 @@ def transform_rotation_matrix(rotation: list, transform_type: str) -> list:
         Transformed rotation matrix
     """
     # Convert to column vectors (right, up, forward)
-    right = [rotation[0], rotation[3], rotation[6]]    # First column
-    up = [rotation[1], rotation[4], rotation[7]]       # Second column
+    right = [rotation[0], rotation[3], rotation[6]]  # First column
+    up = [rotation[1], rotation[4], rotation[7]]  # Second column
     forward = [rotation[2], rotation[5], rotation[8]]  # Third column
 
     # Apply transformation to each vector
@@ -105,9 +107,15 @@ def transform_rotation_matrix(rotation: list, transform_type: str) -> list:
 
     # Convert back to row-major matrix
     return [
-        new_right[0], new_up[0], new_forward[0],
-        new_right[1], new_up[1], new_forward[1],
-        new_right[2], new_up[2], new_forward[2],
+        new_right[0],
+        new_up[0],
+        new_forward[0],
+        new_right[1],
+        new_up[1],
+        new_forward[1],
+        new_right[2],
+        new_up[2],
+        new_forward[2],
     ]
 
 
@@ -142,7 +150,7 @@ def apply_transform_to_line(line: str, transform_type: str) -> str:
         return line
 
     try:
-        transform_match = re.search(r'transform = (Transform3D\([^)]+\))', line)
+        transform_match = re.search(r"transform = (Transform3D\([^)]+\))", line)
         if not transform_match:
             return line
 
@@ -165,11 +173,7 @@ def apply_transform_to_line(line: str, transform_type: str) -> str:
         return line
 
 
-def apply_transform_to_tscn(
-    input_path: Path,
-    output_path: Path,
-    transform_type: str
-) -> None:
+def apply_transform_to_tscn(input_path: Path, output_path: Path, transform_type: str) -> None:
     """
     Apply axis transformation to all transform nodes in .tscn file.
 
@@ -181,7 +185,7 @@ def apply_transform_to_tscn(
     print(f"Reading: {input_path}")
     print(f"Transform: {transform_type}")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -196,7 +200,7 @@ def apply_transform_to_tscn(
         else:
             modified_lines.append(line)
 
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"Modified {transforms_modified} transform nodes")
@@ -222,8 +226,15 @@ def main():
 
     transform_type = sys.argv[1]
 
-    valid_transforms = ['swap_xz', 'rotate_90', 'rotate_180', 'rotate_270',
-                        'negate_x', 'negate_z', 'negate_xz']
+    valid_transforms = [
+        "swap_xz",
+        "rotate_90",
+        "rotate_180",
+        "rotate_270",
+        "negate_x",
+        "negate_z",
+        "negate_xz",
+    ]
 
     if transform_type not in valid_transforms:
         print(f"Error: Unknown transform type '{transform_type}'")
@@ -248,6 +259,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
 
     # Apply transformation

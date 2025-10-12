@@ -30,11 +30,11 @@ def parse_transform3d(transform_str: str) -> Tuple[list, list]:
     Returns:
         Tuple of (rotation_matrix, position)
     """
-    match = re.search(r'Transform3D\(([^)]+)\)', transform_str)
+    match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
         raise ValueError(f"Invalid Transform3D format: {transform_str}")
 
-    values = [float(x.strip()) for x in match.group(1).split(',')]
+    values = [float(x.strip()) for x in match.group(1).split(",")]
 
     if len(values) != 12:
         raise ValueError(f"Expected 12 values in Transform3D, got {len(values)}")
@@ -76,7 +76,7 @@ def adjust_height_in_line(line: str, height_offset: float) -> str:
         return line
 
     try:
-        transform_match = re.search(r'transform = (Transform3D\([^)]+\))', line)
+        transform_match = re.search(r"transform = (Transform3D\([^)]+\))", line)
         if not transform_match:
             return line
 
@@ -84,11 +84,7 @@ def adjust_height_in_line(line: str, height_offset: float) -> str:
         rotation, position = parse_transform3d(transform_str)
 
         # Adjust Y coordinate (index 1)
-        new_position = [
-            position[0],
-            position[1] + height_offset,
-            position[2]
-        ]
+        new_position = [position[0], position[1] + height_offset, position[2]]
 
         new_transform = format_transform3d(rotation, new_position)
 
@@ -100,11 +96,7 @@ def adjust_height_in_line(line: str, height_offset: float) -> str:
         return line
 
 
-def adjust_heights_in_tscn(
-    input_path: Path,
-    output_path: Path,
-    height_offset: float
-) -> None:
+def adjust_heights_in_tscn(input_path: Path, output_path: Path, height_offset: float) -> None:
     """
     Apply height offset to all transform nodes in .tscn file.
 
@@ -116,7 +108,7 @@ def adjust_heights_in_tscn(
     print(f"Reading: {input_path}")
     print(f"Height offset: +{height_offset:.2f}m")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -137,7 +129,7 @@ def adjust_heights_in_tscn(
         else:
             modified_lines.append(line)
 
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"Modified {transforms_modified} transform nodes")
@@ -188,6 +180,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

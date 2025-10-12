@@ -26,7 +26,7 @@ def remove_base_capture_points(input_path: Path, output_path: Path) -> None:
     """
     print(f"Reading: {input_path}")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -41,7 +41,7 @@ def remove_base_capture_points(input_path: Path, output_path: Path) -> None:
             continue
 
         # Stop skipping when we hit the next node
-        if skip_until_next_node and line.startswith('[node name='):
+        if skip_until_next_node and line.startswith("[node name="):
             skip_until_next_node = False
 
         # Skip lines while we're in a capture point node to remove
@@ -51,11 +51,11 @@ def remove_base_capture_points(input_path: Path, output_path: Path) -> None:
         modified_lines.append(line)
 
     # Write output
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"\nRemoved {points_removed} base capture points")
-    print(f"Remaining: CapturePoint_3 (Lumber Mill) and CapturePoint_4 (Central Ammo)")
+    print("Remaining: CapturePoint_3 (Lumber Mill) and CapturePoint_4 (Central Ammo)")
     print(f"Output written to: {output_path}")
 
 
@@ -88,6 +88,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

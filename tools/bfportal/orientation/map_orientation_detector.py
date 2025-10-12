@@ -40,11 +40,7 @@ class MapOrientationDetector(IOrientationDetector):
         if not positions:
             # No objects - assume square
             return OrientationAnalysis(
-                orientation=Orientation.SQUARE,
-                width_x=0,
-                depth_z=0,
-                ratio=1.0,
-                confidence='low'
+                orientation=Orientation.SQUARE, width_x=0, depth_z=0, ratio=1.0, confidence="low"
             )
 
         # Calculate bounds
@@ -60,7 +56,7 @@ class MapOrientationDetector(IOrientationDetector):
                 width_x=width_x,
                 depth_z=depth_z,
                 ratio=1.0,
-                confidence='low'
+                confidence="low",
             )
 
         # Calculate ratio (always >= 1.0)
@@ -73,18 +69,18 @@ class MapOrientationDetector(IOrientationDetector):
 
         # Determine confidence based on ratio
         if ratio >= 1.5:
-            confidence = 'high'
+            confidence = "high"
         elif ratio >= self.threshold:
-            confidence = 'medium'
+            confidence = "medium"
         else:
-            confidence = 'low'
+            confidence = "low"
 
         return OrientationAnalysis(
             orientation=orientation,
             width_x=width_x,
             depth_z=depth_z,
             ratio=ratio,
-            confidence=confidence
+            confidence=confidence,
         )
 
     def get_bounds(self) -> Tuple[float, float, float, float]:

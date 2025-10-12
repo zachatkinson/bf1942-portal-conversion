@@ -69,7 +69,11 @@ def convert_paths(args: ConvertPathsArgs) -> bool:
             has_missing_types = True
             continue
         asset = assets[type_name]
-        expected_path = "res://" + asset.dst.removeprefix(str(temp_output) + os.path.sep).replace("\\", "/") + f"/{asset.id}"
+        expected_path = (
+            "res://"
+            + asset.dst.removeprefix(str(temp_output) + os.path.sep).replace("\\", "/")
+            + f"/{asset.id}"
+        )
         if type_name == "volume":
             expected_path = expected_path.replace(config.dst_assets.stem, config.dst_scripts.stem)
         elif type_name == "polygonvolume":
@@ -78,13 +82,23 @@ def convert_paths(args: ConvertPathsArgs) -> bool:
             expected_path = "res://addons/bf_portal/portal_tools/types/OBBVolume/OBBVolume"
         actual_path = "res://" + str(Path(ext_resource.path).with_suffix("")).replace("\\", "/")
 
-        path_mismatch = expected_path != actual_path if not args.ignore_case else expected_path.lower() != actual_path.lower()
+        path_mismatch = (
+            expected_path != actual_path
+            if not args.ignore_case
+            else expected_path.lower() != actual_path.lower()
+        )
         if path_mismatch:
-            _logging.log_warning(f"{args.tscn_file.name}: Type does not use correct path:\n" + f"\tCorrect: {expected_path}\n" + f"\tFound:   {actual_path}")
+            _logging.log_warning(
+                f"{args.tscn_file.name}: Type does not use correct path:\n"
+                + f"\tCorrect: {expected_path}\n"
+                + f"\tFound:   {actual_path}"
+            )
             fixes[actual_path] = expected_path
 
     if has_missing_types:
-        _logging.log_error("Types in tscn found to be missing. This is considered a failed conversion.")
+        _logging.log_error(
+            "Types in tscn found to be missing. This is considered a failed conversion."
+        )
         if args.error_missing_types:
             _logging.log_error("Will not attempt conversion since error_missing_types is enabled")
             return False
@@ -102,11 +116,23 @@ def convert_paths(args: ConvertPathsArgs) -> bool:
 
 
 def _main() -> None:
-    parser = argparse.ArgumentParser(description="Given a tscn, update its tscn references to correctly point to new ones")
+    parser = argparse.ArgumentParser(
+        description="Given a tscn, update its tscn references to correctly point to new ones"
+    )
     parser.add_argument("SCENE_FILE", type=str, help="Scene (.tscn) file to export")
     parser.add_argument("FB_EXPORT_DATA", type=str, help="Path to FbExportData directory")
-    parser.add_argument("--dry-run", required=False, action="store_true", help="Show would would change but don't write to any files")
-    parser.add_argument("--error-missing-types", required=False, action="store_true", help="Missing types results in an error")
+    parser.add_argument(
+        "--dry-run",
+        required=False,
+        action="store_true",
+        help="Show would would change but don't write to any files",
+    )
+    parser.add_argument(
+        "--error-missing-types",
+        required=False,
+        action="store_true",
+        help="Missing types results in an error",
+    )
     args = parser.parse_args()
 
     convert_args = ConvertPathsArgs()

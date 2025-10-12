@@ -199,7 +199,9 @@ def test_attrs(
         "",
     ],
 )
-def test_environment_variables_disable_color(monkeypatch: pytest.MonkeyPatch, test_env_var: str, test_value: str) -> None:
+def test_environment_variables_disable_color(
+    monkeypatch: pytest.MonkeyPatch, test_env_var: str, test_value: str
+) -> None:
     """Assert nothing applied when this env var set, regardless of value"""
     monkeypatch.setenv(test_env_var, test_value)
     assert colored("text", color="cyan") == "text"
@@ -214,7 +216,9 @@ def test_environment_variables_disable_color(monkeypatch: pytest.MonkeyPatch, te
         "0",
     ],
 )
-def test_environment_variables_force_color(monkeypatch: pytest.MonkeyPatch, test_value: str) -> None:
+def test_environment_variables_force_color(
+    monkeypatch: pytest.MonkeyPatch, test_value: str
+) -> None:
     """Assert color applied when this env var is present and not an empty string,
     regardless of value"""
     monkeypatch.setenv("FORCE_COLOR", test_value)

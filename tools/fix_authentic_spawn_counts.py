@@ -16,7 +16,6 @@ Date: 2025-01-11
 """
 
 from pathlib import Path
-import re
 
 
 def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
@@ -32,7 +31,7 @@ def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
     """
     print(f"Reading: {input_path}")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -41,8 +40,13 @@ def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
 
     # Track which spawns to remove
     remove_spawns = {
-        'SpawnPoint_1_6', 'SpawnPoint_1_7', 'SpawnPoint_1_8',  # Axis: remove 6-8
-        'SpawnPoint_2_5', 'SpawnPoint_2_6', 'SpawnPoint_2_7', 'SpawnPoint_2_8'  # Allies: remove 5-8
+        "SpawnPoint_1_6",
+        "SpawnPoint_1_7",
+        "SpawnPoint_1_8",  # Axis: remove 6-8
+        "SpawnPoint_2_5",
+        "SpawnPoint_2_6",
+        "SpawnPoint_2_7",
+        "SpawnPoint_2_8",  # Allies: remove 5-8
     }
 
     i = 0
@@ -64,7 +68,7 @@ def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
 
         # If we're skipping, check if we hit the next node
         if skip_until_next_node:
-            if line.startswith('[node name=') or line.startswith('[ext_resource'):
+            if line.startswith("[node name=") or line.startswith("[ext_resource"):
                 skip_until_next_node = False
             else:
                 i += 1
@@ -76,22 +80,26 @@ def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
     # Now update the InfantrySpawns array references in each HQ
     final_lines = []
     for line in modified_lines:
-        if 'InfantrySpawns = [NodePath' in line and 'TEAM_1_HQ' in ''.join(modified_lines[max(0, modified_lines.index(line)-10):modified_lines.index(line)]):
+        if "InfantrySpawns = [NodePath" in line and "TEAM_1_HQ" in "".join(
+            modified_lines[max(0, modified_lines.index(line) - 10) : modified_lines.index(line)]
+        ):
             # Team 1 should only have spawn points 1-5
             line = 'InfantrySpawns = [NodePath("SpawnPoint_1_1"), NodePath("SpawnPoint_1_2"), NodePath("SpawnPoint_1_3"), NodePath("SpawnPoint_1_4"), NodePath("SpawnPoint_1_5")]\n'
-        elif 'InfantrySpawns = [NodePath' in line and 'TEAM_2_HQ' in ''.join(modified_lines[max(0, modified_lines.index(line)-10):modified_lines.index(line)]):
+        elif "InfantrySpawns = [NodePath" in line and "TEAM_2_HQ" in "".join(
+            modified_lines[max(0, modified_lines.index(line) - 10) : modified_lines.index(line)]
+        ):
             # Team 2 should only have spawn points 1-4
             line = 'InfantrySpawns = [NodePath("SpawnPoint_2_1"), NodePath("SpawnPoint_2_2"), NodePath("SpawnPoint_2_3"), NodePath("SpawnPoint_2_4")]\n'
 
         final_lines.append(line)
 
     # Write output
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(final_lines)
 
     print(f"\nRemoved {spawns_removed} extra spawn points")
-    print(f"Team 1 (Axis): Now has 5 spawn points (authentic)")
-    print(f"Team 2 (Allies): Now has 4 spawn points (authentic)")
+    print("Team 1 (Axis): Now has 5 spawn points (authentic)")
+    print("Team 2 (Allies): Now has 4 spawn points (authentic)")
     print(f"Output written to: {output_path}")
 
 
@@ -124,6 +132,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

@@ -24,13 +24,14 @@ Usage:
 """
 
 import math
-from typing import Tuple, List
 from dataclasses import dataclass
+from typing import List, Tuple
 
 
 @dataclass
 class Vector3:
     """3D vector for positions and directions."""
+
     x: float
     y: float
     z: float
@@ -53,8 +54,9 @@ class RotationMatrix:
         up: Up vector (Y-axis)
         forward: Forward vector (Z-axis)
     """
-    right: Vector3    # X-axis basis vector
-    up: Vector3       # Y-axis basis vector
+
+    right: Vector3  # X-axis basis vector
+    up: Vector3  # Y-axis basis vector
     forward: Vector3  # Z-axis basis vector
 
     def to_flat_list(self) -> List[float]:
@@ -64,9 +66,15 @@ class RotationMatrix:
             List of 9 floats: [rx, ux, fx, ry, uy, fy, rz, uz, fz]
         """
         return [
-            self.right.x, self.up.x, self.forward.x,
-            self.right.y, self.up.y, self.forward.y,
-            self.right.z, self.up.z, self.forward.z
+            self.right.x,
+            self.up.x,
+            self.forward.x,
+            self.right.y,
+            self.up.y,
+            self.forward.y,
+            self.right.z,
+            self.up.z,
+            self.forward.z,
         ]
 
     def is_orthonormal(self, tolerance: float = 1e-4) -> bool:
@@ -78,6 +86,7 @@ class RotationMatrix:
         Returns:
             True if matrix is orthonormal within tolerance
         """
+
         # Check each basis vector is unit length
         def length(v: Vector3) -> float:
             return math.sqrt(v.x**2 + v.y**2 + v.z**2)
@@ -113,9 +122,15 @@ class RotationMatrix:
             True if any element is NaN
         """
         values = [
-            self.right.x, self.right.y, self.right.z,
-            self.up.x, self.up.y, self.up.z,
-            self.forward.x, self.forward.y, self.forward.z
+            self.right.x,
+            self.right.y,
+            self.right.z,
+            self.up.x,
+            self.up.y,
+            self.up.z,
+            self.forward.x,
+            self.forward.y,
+            self.forward.z,
         ]
         return any(math.isnan(v) for v in values)
 
@@ -133,10 +148,7 @@ def degrees_to_radians(degrees: float) -> float:
 
 
 def euler_to_transform3d(
-    pitch: float,
-    yaw: float,
-    roll: float,
-    position: Tuple[float, float, float] = (0.0, 0.0, 0.0)
+    pitch: float, yaw: float, roll: float, position: Tuple[float, float, float] = (0.0, 0.0, 0.0)
 ) -> Tuple[RotationMatrix, Vector3]:
     """Convert BF1942 Euler angles to Godot Transform3D components.
 
@@ -192,26 +204,26 @@ def euler_to_transform3d(
     rotation = RotationMatrix(
         right=Vector3(right_x, right_y, right_z),
         up=Vector3(up_x, up_y, up_z),
-        forward=Vector3(forward_x, forward_y, forward_z)
+        forward=Vector3(forward_x, forward_y, forward_z),
     )
 
     # Validate matrix
     if rotation.has_nan():
-        raise ValueError(f"Rotation matrix contains NaN values for Euler angles: pitch={pitch}, yaw={yaw}, roll={roll}")
+        raise ValueError(
+            f"Rotation matrix contains NaN values for Euler angles: pitch={pitch}, yaw={yaw}, roll={roll}"
+        )
 
     if not rotation.is_orthonormal():
-        raise ValueError(f"Rotation matrix is not orthonormal for Euler angles: pitch={pitch}, yaw={yaw}, roll={roll}")
+        raise ValueError(
+            f"Rotation matrix is not orthonormal for Euler angles: pitch={pitch}, yaw={yaw}, roll={roll}"
+        )
 
     pos = Vector3(position[0], position[1], position[2])
 
     return rotation, pos
 
 
-def format_transform3d(
-    rotation: RotationMatrix,
-    position: Vector3,
-    precision: int = 6
-) -> str:
+def format_transform3d(rotation: RotationMatrix, position: Vector3, precision: int = 6) -> str:
     """Format rotation matrix and position as Godot Transform3D string.
 
     Args:
@@ -234,21 +246,16 @@ def format_transform3d(
     rounded = [round(v, precision) for v in matrix_values]
 
     # Add position
-    rounded.extend([
-        round(position.x, precision),
-        round(position.y, precision),
-        round(position.z, precision)
-    ])
+    rounded.extend(
+        [round(position.x, precision), round(position.y, precision), round(position.z, precision)]
+    )
 
     # Format as Transform3D string
     values_str = ", ".join(str(v) for v in rounded)
     return f"Transform3D({values_str})"
 
 
-def format_identity_transform(
-    position: Tuple[float, float, float],
-    precision: int = 6
-) -> str:
+def format_identity_transform(position: Tuple[float, float, float], precision: int = 6) -> str:
     """Create an identity rotation Transform3D (no rotation).
 
     Args:
@@ -279,15 +286,11 @@ def validate_position(position: Tuple[float, float, float]) -> bool:
     Returns:
         True if position is valid
     """
-    return all(
-        not math.isnan(v) and not math.isinf(v)
-        for v in position
-    )
+    return all(not math.isnan(v) and not math.isinf(v) for v in position)
 
 
 def convert_bf1942_to_godot(
-    bf1942_position: Tuple[float, float, float],
-    bf1942_rotation: Tuple[float, float, float]
+    bf1942_position: Tuple[float, float, float], bf1942_rotation: Tuple[float, float, float]
 ) -> str:
     """Convert BF1942 position and rotation to Godot Transform3D string.
 
@@ -315,10 +318,7 @@ def convert_bf1942_to_godot(
 
     # Convert Euler to matrix
     rotation, position = euler_to_transform3d(
-        pitch=pitch,
-        yaw=yaw,
-        roll=roll,
-        position=bf1942_position
+        pitch=pitch, yaw=yaw, roll=roll, position=bf1942_position
     )
 
     # Format as Transform3D string
@@ -327,9 +327,9 @@ def convert_bf1942_to_godot(
 
 # Convenience functions for common scenarios
 
+
 def convert_vehicle_spawner(
-    position: Tuple[float, float, float],
-    rotation: Tuple[float, float, float]
+    position: Tuple[float, float, float], rotation: Tuple[float, float, float]
 ) -> str:
     """Convert vehicle spawner transform.
 
@@ -355,10 +355,7 @@ def convert_control_point(position: Tuple[float, float, float]) -> str:
     return format_identity_transform(position)
 
 
-def convert_spawn_point(
-    position: Tuple[float, float, float],
-    facing_angle: float = 0.0
-) -> str:
+def convert_spawn_point(position: Tuple[float, float, float], facing_angle: float = 0.0) -> str:
     """Convert infantry spawn point with facing direction.
 
     Args:
@@ -369,12 +366,7 @@ def convert_spawn_point(
         Transform3D string
     """
     # Spawn points typically only need yaw rotation
-    rotation, pos = euler_to_transform3d(
-        pitch=0.0,
-        yaw=facing_angle,
-        roll=0.0,
-        position=position
-    )
+    rotation, pos = euler_to_transform3d(pitch=0.0, yaw=facing_angle, roll=0.0, position=position)
     return format_transform3d(rotation, pos)
 
 
@@ -388,7 +380,7 @@ if __name__ == "__main__":
     print("\nTest 1: Identity rotation (no rotation)")
     rotation, pos = euler_to_transform3d(0, 0, 0, position=(100, 50, 200))
     transform = format_transform3d(rotation, pos)
-    print(f"  Input: pitch=0, yaw=0, roll=0, pos=(100, 50, 200)")
+    print("  Input: pitch=0, yaw=0, roll=0, pos=(100, 50, 200)")
     print(f"  Output: {transform}")
     print(f"  Orthonormal: {rotation.is_orthonormal()}")
 
@@ -396,7 +388,7 @@ if __name__ == "__main__":
     print("\nTest 2: 90-degree yaw rotation")
     rotation, pos = euler_to_transform3d(0, 90, 0, position=(0, 0, 0))
     transform = format_transform3d(rotation, pos)
-    print(f"  Input: pitch=0, yaw=90, roll=0, pos=(0, 0, 0)")
+    print("  Input: pitch=0, yaw=90, roll=0, pos=(0, 0, 0)")
     print(f"  Output: {transform}")
     print(f"  Orthonormal: {rotation.is_orthonormal()}")
 
@@ -404,7 +396,7 @@ if __name__ == "__main__":
     print("\nTest 3: 45-degree yaw rotation")
     rotation, pos = euler_to_transform3d(0, 45, 0, position=(500, 80, 400))
     transform = format_transform3d(rotation, pos)
-    print(f"  Input: pitch=0, yaw=45, roll=0, pos=(500, 80, 400)")
+    print("  Input: pitch=0, yaw=45, roll=0, pos=(500, 80, 400)")
     print(f"  Output: {transform}")
     print(f"  Orthonormal: {rotation.is_orthonormal()}")
 
@@ -412,7 +404,7 @@ if __name__ == "__main__":
     print("\nTest 4: Complex rotation (pitch + yaw + roll)")
     rotation, pos = euler_to_transform3d(15, 45, 10, position=(100, 50, 200))
     transform = format_transform3d(rotation, pos)
-    print(f"  Input: pitch=15, yaw=45, roll=10, pos=(100, 50, 200)")
+    print("  Input: pitch=15, yaw=45, roll=10, pos=(100, 50, 200)")
     print(f"  Output: {transform}")
     print(f"  Orthonormal: {rotation.is_orthonormal()}")
 

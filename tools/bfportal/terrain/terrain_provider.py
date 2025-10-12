@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Terrain providers for height queries."""
 
+import struct
 from pathlib import Path
 from typing import Tuple
-import struct
 
+from ..core.exceptions import OutOfBoundsError, TerrainError
 from ..core.interfaces import ITerrainProvider, Vector3
-from ..core.exceptions import TerrainError, OutOfBoundsError
 
 
 class CustomHeightmapProvider(ITerrainProvider):
@@ -16,9 +16,12 @@ class CustomHeightmapProvider(ITerrainProvider):
     Used for BF1942 heightmaps converted to image format.
     """
 
-    def __init__(self, heightmap_path: Path,
-                 terrain_size: Tuple[float, float],
-                 height_range: Tuple[float, float]):
+    def __init__(
+        self,
+        heightmap_path: Path,
+        terrain_size: Tuple[float, float],
+        height_range: Tuple[float, float],
+    ):
         """Initialize heightmap provider.
 
         Args:
@@ -37,13 +40,12 @@ class CustomHeightmapProvider(ITerrainProvider):
         # Load heightmap
         try:
             from PIL import Image
-            img = Image.open(heightmap_path).convert('L')  # Grayscale
+
+            img = Image.open(heightmap_path).convert("L")  # Grayscale
             self.heightmap = img
             self.width, self.height = img.size
         except ImportError:
-            raise TerrainError(
-                "PIL/Pillow not installed. Run: pip3 install Pillow"
-            )
+            raise TerrainError("PIL/Pillow not installed. Run: pip3 install Pillow")
         except Exception as e:
             raise TerrainError(f"Failed to load heightmap {heightmap_path}: {e}")
 
@@ -100,7 +102,7 @@ class CustomHeightmapProvider(ITerrainProvider):
 
         return (
             Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth)
+            Vector3(half_width, self.max_height, half_depth),
         )
 
 
@@ -123,7 +125,7 @@ class TungstenTerrainProvider(ITerrainProvider):
 
         # Try to find Tungsten terrain heightmap
         # Portal SDK structure: GodotProject/static/MP_Tungsten_Terrain.tscn
-        terrain_path = portal_sdk_root / 'GodotProject' / 'static' / 'MP_Tungsten_Terrain.tscn'
+        terrain_path = portal_sdk_root / "GodotProject" / "static" / "MP_Tungsten_Terrain.tscn"
 
         if not terrain_path.exists():
             raise TerrainError(
@@ -138,7 +140,7 @@ class TungstenTerrainProvider(ITerrainProvider):
         self.min_height = 50.0  # Estimated
         self.max_height = 250.0  # Estimated
 
-        print(f"⚠️  Using estimated Tungsten terrain dimensions:")
+        print("⚠️  Using estimated Tungsten terrain dimensions:")
         print(f"   Width: {self.terrain_width}m, Depth: {self.terrain_depth}m")
         print(f"   Height range: {self.min_height}m - {self.max_height}m")
 
@@ -162,6 +164,7 @@ class TungstenTerrainProvider(ITerrainProvider):
 
         # Add some variation based on position (temporary)
         import math
+
         variation = math.sin(x * 0.01) * math.cos(z * 0.01) * 20.0
 
         return avg_height + variation
@@ -177,7 +180,7 @@ class TungstenTerrainProvider(ITerrainProvider):
 
         return (
             Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth)
+            Vector3(half_width, self.max_height, half_depth),
         )
 
 
@@ -222,6 +225,7 @@ class OutskirtsTerrainProvider(ITerrainProvider):
         # TODO: Query actual Outskirts heightmap
         # Urban terrain is mostly flat with slight variations
         import math
+
         base_height = 5.0  # Slight elevation
         variation = math.sin(x * 0.02) * math.cos(z * 0.02) * 3.0
 
@@ -238,7 +242,7 @@ class OutskirtsTerrainProvider(ITerrainProvider):
 
         return (
             Vector3(-half_width, self.min_height, -half_depth),
-            Vector3(half_width, self.max_height, half_depth)
+            Vector3(half_width, self.max_height, half_depth),
         )
 
 
@@ -272,7 +276,7 @@ class MeshTerrainProvider(ITerrainProvider):
         self.vertices = self._extract_vertices()
 
         # Calculate terrain mesh center and bounds from actual vertex positions
-        import numpy as np
+
         self.mesh_center_x = self.vertices[:, 0].mean()
         self.mesh_center_z = self.vertices[:, 2].mean()
         self.mesh_min_x = self.vertices[:, 0].min()
@@ -288,7 +292,7 @@ class MeshTerrainProvider(ITerrainProvider):
         self.min_height = self.vertices[:, 1].min()
         self.max_height = self.vertices[:, 1].max()
 
-    def _extract_vertices(self) -> 'np.ndarray':
+    def _extract_vertices(self) -> "np.ndarray":
         """Extract vertex positions from GLB mesh.
 
         Returns:
@@ -297,7 +301,6 @@ class MeshTerrainProvider(ITerrainProvider):
         Raises:
             TerrainError: If GLB parsing fails
         """
-        import struct
         import json
 
         try:
@@ -306,46 +309,46 @@ class MeshTerrainProvider(ITerrainProvider):
             raise TerrainError("NumPy required for mesh terrain. Run: pip3 install numpy")
 
         try:
-            with open(self.mesh_path, 'rb') as f:
+            with open(self.mesh_path, "rb") as f:
                 # Read GLB header
                 magic = f.read(4)
-                if magic != b'glTF':
+                if magic != b"glTF":
                     raise TerrainError(f"Invalid GLB file: {self.mesh_path}")
 
-                version = struct.unpack('<I', f.read(4))[0]
-                length = struct.unpack('<I', f.read(4))[0]
+                version = struct.unpack("<I", f.read(4))[0]
+                length = struct.unpack("<I", f.read(4))[0]
 
                 # Read JSON chunk
-                json_length = struct.unpack('<I', f.read(4))[0]
+                json_length = struct.unpack("<I", f.read(4))[0]
                 json_type = f.read(4)
-                if json_type != b'JSON':
+                if json_type != b"JSON":
                     raise TerrainError("Expected JSON chunk in GLB")
 
-                json_data = f.read(json_length).decode('utf-8')
+                json_data = f.read(json_length).decode("utf-8")
                 gltf = json.loads(json_data)
 
                 # Read binary chunk
-                bin_length = struct.unpack('<I', f.read(4))[0]
+                bin_length = struct.unpack("<I", f.read(4))[0]
                 bin_type = f.read(4)
-                if bin_type != b'BIN\x00':
+                if bin_type != b"BIN\x00":
                     raise TerrainError("Expected BIN chunk in GLB")
 
                 binary_data = f.read(bin_length)
 
             # Extract position accessor (first VEC3 accessor)
-            accessor = gltf['accessors'][0]
-            if accessor['type'] != 'VEC3':
+            accessor = gltf["accessors"][0]
+            if accessor["type"] != "VEC3":
                 raise TerrainError("First accessor is not VEC3 (positions)")
 
-            buffer_view = gltf['bufferViews'][accessor['bufferView']]
-            offset = buffer_view.get('byteOffset', 0)
-            count = accessor['count']
+            buffer_view = gltf["bufferViews"][accessor["bufferView"]]
+            offset = buffer_view.get("byteOffset", 0)
+            count = accessor["count"]
 
             # Parse vertices (3 floats per vertex)
             vertices = []
             for i in range(count):
                 pos = offset + (i * 12)  # 3 floats * 4 bytes each
-                x, y, z = struct.unpack('<fff', binary_data[pos:pos+12])
+                x, y, z = struct.unpack("<fff", binary_data[pos : pos + 12])
                 vertices.append([x, y, z])
 
             return np.array(vertices)
@@ -353,7 +356,7 @@ class MeshTerrainProvider(ITerrainProvider):
         except Exception as e:
             raise TerrainError(f"Failed to extract vertices from {self.mesh_path}: {e}")
 
-    def _build_height_grid(self) -> 'np.ndarray':
+    def _build_height_grid(self) -> "np.ndarray":
         """Build 2D grid of heights for fast lookups.
 
         Projects 3D vertices onto 2D grid and stores maximum height at each cell.
@@ -390,7 +393,7 @@ class MeshTerrainProvider(ITerrainProvider):
 
         return grid
 
-    def _fill_grid_gaps(self, grid: 'np.ndarray') -> None:
+    def _fill_grid_gaps(self, grid: "np.ndarray") -> None:
         """Fill NaN values in grid using nearest neighbor propagation.
 
         Modifies grid in-place.
@@ -409,14 +412,14 @@ class MeshTerrainProvider(ITerrainProvider):
                     if np.isnan(grid[i, j]):
                         # Get valid neighbors
                         neighbors = []
-                        if i > 0 and not np.isnan(grid[i-1, j]):
-                            neighbors.append(grid[i-1, j])
-                        if i < self.grid_resolution - 1 and not np.isnan(grid[i+1, j]):
-                            neighbors.append(grid[i+1, j])
-                        if j > 0 and not np.isnan(grid[i, j-1]):
-                            neighbors.append(grid[i, j-1])
-                        if j < self.grid_resolution - 1 and not np.isnan(grid[i, j+1]):
-                            neighbors.append(grid[i, j+1])
+                        if i > 0 and not np.isnan(grid[i - 1, j]):
+                            neighbors.append(grid[i - 1, j])
+                        if i < self.grid_resolution - 1 and not np.isnan(grid[i + 1, j]):
+                            neighbors.append(grid[i + 1, j])
+                        if j > 0 and not np.isnan(grid[i, j - 1]):
+                            neighbors.append(grid[i, j - 1])
+                        if j < self.grid_resolution - 1 and not np.isnan(grid[i, j + 1]):
+                            neighbors.append(grid[i, j + 1])
 
                         if neighbors:
                             grid[i, j] = np.mean(neighbors)
@@ -497,7 +500,7 @@ class MeshTerrainProvider(ITerrainProvider):
         """
         return (
             Vector3(self.mesh_min_x, self.min_height, self.mesh_min_z),
-            Vector3(self.mesh_max_x, self.max_height, self.mesh_max_z)
+            Vector3(self.mesh_max_x, self.max_height, self.mesh_max_z),
         )
 
 
@@ -511,15 +514,15 @@ class TerrainEstimator:
     # Terrain height estimates for Portal base maps
     # Format: 'map_name': (min_height, max_height, recommended_fixed_height)
     TERRAIN_ESTIMATES = {
-        'MP_Battery': (24.0, 255.0, 140.0),      # Hilly coastal terrain
-        'MP_Tungsten': (50.0, 250.0, 150.0),    # Moderate hills
-        'MP_Outskirts': (0.0, 50.0, 25.0),      # Flat urban terrain
-        'MP_Aftermath': (0.0, 80.0, 40.0),      # Urban with slight elevation
-        'MP_Dumbo': (0.0, 100.0, 50.0),         # Mixed urban/natural
-        'MP_Capstone': (0.0, 120.0, 60.0),      # Moderate terrain
-        'MP_FireStorm': (0.0, 150.0, 75.0),     # Varied terrain
-        'MP_Limestone': (0.0, 100.0, 50.0),     # Moderate elevation
-        'MP_Abbasid': (0.0, 80.0, 40.0),        # Urban terrain
+        "MP_Battery": (24.0, 255.0, 140.0),  # Hilly coastal terrain
+        "MP_Tungsten": (50.0, 250.0, 150.0),  # Moderate hills
+        "MP_Outskirts": (0.0, 50.0, 25.0),  # Flat urban terrain
+        "MP_Aftermath": (0.0, 80.0, 40.0),  # Urban with slight elevation
+        "MP_Dumbo": (0.0, 100.0, 50.0),  # Mixed urban/natural
+        "MP_Capstone": (0.0, 120.0, 60.0),  # Moderate terrain
+        "MP_FireStorm": (0.0, 150.0, 75.0),  # Varied terrain
+        "MP_Limestone": (0.0, 100.0, 50.0),  # Moderate elevation
+        "MP_Abbasid": (0.0, 80.0, 40.0),  # Urban terrain
     }
 
     @classmethod
@@ -618,7 +621,7 @@ class FixedHeightProvider(ITerrainProvider):
 
         return (
             Vector3(-half_width, self.fixed_height, -half_depth),
-            Vector3(half_width, self.fixed_height, half_depth)
+            Vector3(half_width, self.fixed_height, half_depth),
         )
 
 
@@ -629,8 +632,7 @@ class HeightAdjuster:
     Open/Closed Principle: Works with any ITerrainProvider implementation.
     """
 
-    def adjust_height(self, transform, terrain: ITerrainProvider,
-                     ground_offset: float = 0.0):
+    def adjust_height(self, transform, terrain: ITerrainProvider, ground_offset: float = 0.0):
         """Adjust object height to sit on terrain.
 
         Args:
@@ -647,23 +649,17 @@ class HeightAdjuster:
         from ..core.interfaces import Transform
 
         try:
-            terrain_height = terrain.get_height_at(
-                transform.position.x,
-                transform.position.z
-            )
+            terrain_height = terrain.get_height_at(transform.position.x, transform.position.z)
 
             # Create new position with adjusted height
             from ..core.interfaces import Vector3
+
             new_position = Vector3(
-                transform.position.x,
-                terrain_height + ground_offset,
-                transform.position.z
+                transform.position.x, terrain_height + ground_offset, transform.position.z
             )
 
             return Transform(
-                position=new_position,
-                rotation=transform.rotation,
-                scale=transform.scale
+                position=new_position, rotation=transform.rotation, scale=transform.scale
             )
 
         except OutOfBoundsError:

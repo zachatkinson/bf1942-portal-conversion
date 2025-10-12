@@ -66,7 +66,9 @@ class PropertyReference(PropertyString):
 
     def to_gd_prop(self, attr: str = const.PROP_KEY_DEF) -> str:
         val = self.to_gd(attr)
-        undefined_ref = f"# Skip reference prop which will be added by Godot\n# @export var {self.id} = {val}"
+        undefined_ref = (
+            f"# Skip reference prop which will be added by Godot\n# @export var {self.id} = {val}"
+        )
         known_type = f"@export var {self.id} : {self.type}"
         return undefined_ref if self.type == "reference" else known_type
 
@@ -135,7 +137,7 @@ class PropertyVector(Property):
         val = getattr(self, attr)
         type_str = "Vector3" if len(val) == 3 else "Vector2\n"
         as_list = [str(n) for n in val]
-        return f'{self.id} = {type_str}({", ".join(as_list)})'
+        return f"{self.id} = {type_str}({', '.join(as_list)})"
 
     def set_val(self, value: Any) -> Self:
         if isinstance(value, PropertyVector):
@@ -173,7 +175,12 @@ class PropertyVector(Property):
 
 
 class PropertyTransform(Property):
-    IDENTITY = [PropertyVector(PropertyVector.X), PropertyVector(PropertyVector.Y), PropertyVector(PropertyVector.Z), PropertyVector(PropertyVector.ZERO)]
+    IDENTITY = [
+        PropertyVector(PropertyVector.X),
+        PropertyVector(PropertyVector.Y),
+        PropertyVector(PropertyVector.Z),
+        PropertyVector(PropertyVector.ZERO),
+    ]
 
     # Values don't matter. Just need a dictionary with the keys.
     KEY_TYPES_LIST = [
@@ -194,7 +201,9 @@ class PropertyTransform(Property):
         if isinstance(value, list):
             setattr(self, const.PROP_KEY_VAL, value)
         elif isinstance(value, dict):
-            for keys_list, keys_set in zip(PropertyTransform.KEY_TYPES_LIST, PropertyTransform.KEY_TYPES_SET, strict=False):
+            for keys_list, keys_set in zip(
+                PropertyTransform.KEY_TYPES_LIST, PropertyTransform.KEY_TYPES_SET, strict=False
+            ):
                 if len(keys_set & value.keys()) != len(keys_set):
                     continue
                 self.axes = keys_list
@@ -248,7 +257,9 @@ class PropertyObject(Property):
         setattr(self, const.PROP_KEY_DEF, "")
 
     def to_gd_prop(self, attr: str = const.PROP_KEY_DEF) -> str:
-        return f"\n@export(NodePath) var {self.id}\nonready var {self.id}_node = get_node({self.id})\n"
+        return (
+            f"\n@export(NodePath) var {self.id}\nonready var {self.id}_node = get_node({self.id})\n"
+        )
 
 
 class PropertyArray(Property):
@@ -260,10 +271,19 @@ class PropertyArray(Property):
         setattr(self, const.PROP_KEY_DEF, [])
 
     def set_val(self, value: Any) -> Self:
-        if self.elem_type_class and isinstance(value, list) and len(value) > 0 and not isinstance(value[0], Property):
+        if (
+            self.elem_type_class
+            and isinstance(value, list)
+            and len(value) > 0
+            and not isinstance(value[0], Property)
+        ):
             props = []
             for elem in value:
-                prop = PropertyReference(self.elem_type) if self.elem_type_class is PropertyReference else self.elem_type_class()
+                prop = (
+                    PropertyReference(self.elem_type)
+                    if self.elem_type_class is PropertyReference
+                    else self.elem_type_class()
+                )
                 prop.set_val(elem)
                 props.append(prop)
             setattr(self, const.PROP_KEY_VAL, props)
@@ -305,7 +325,9 @@ class PropertyDefault(Property):
         return f"@export var {self.id} : {self.type}"
 
 
-def create_property(type_name: str, prop_name: str | None = None, custom_types: set[str] | None = None) -> Property:
+def create_property(
+    type_name: str, prop_name: str | None = None, custom_types: set[str] | None = None
+) -> Property:
     prop: Property | None = None
     if len(type_name) > 2 and type_name[-2:] == "[]":
         arr = True

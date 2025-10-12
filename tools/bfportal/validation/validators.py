@@ -5,18 +5,18 @@ Each validator is responsible for validating ONE specific aspect of the conversi
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Optional
 from dataclasses import dataclass
+from typing import List, Optional
 
-from ..core.interfaces import Vector3
 from ..terrain.terrain_provider import ITerrainProvider
-from .tscn_reader import TscnNode
 from .map_comparator import MapComparison
+from .tscn_reader import TscnNode
 
 
 @dataclass
 class ValidationIssue:
     """Represents a validation issue found during checking."""
+
     severity: str  # 'error', 'warning', 'info'
     category: str  # 'positioning', 'height', 'rotation', 'bounds', 'missing'
     message: str
@@ -38,7 +38,6 @@ class IValidator(ABC):
         Returns:
             List of ValidationIssue objects
         """
-        pass
 
 
 class SpawnCountValidator(IValidator):
@@ -61,23 +60,27 @@ class SpawnCountValidator(IValidator):
 
         # Check Team 1 spawns
         if self.comparison.source_team1_spawn_count != self.comparison.output_team1_spawn_count:
-            issues.append(ValidationIssue(
-                severity='error',
-                category='missing',
-                message='Team 1 spawn count mismatch',
-                expected_value=str(self.comparison.source_team1_spawn_count),
-                actual_value=str(self.comparison.output_team1_spawn_count)
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="missing",
+                    message="Team 1 spawn count mismatch",
+                    expected_value=str(self.comparison.source_team1_spawn_count),
+                    actual_value=str(self.comparison.output_team1_spawn_count),
+                )
+            )
 
         # Check Team 2 spawns
         if self.comparison.source_team2_spawn_count != self.comparison.output_team2_spawn_count:
-            issues.append(ValidationIssue(
-                severity='error',
-                category='missing',
-                message='Team 2 spawn count mismatch',
-                expected_value=str(self.comparison.source_team2_spawn_count),
-                actual_value=str(self.comparison.output_team2_spawn_count)
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="missing",
+                    message="Team 2 spawn count mismatch",
+                    expected_value=str(self.comparison.source_team2_spawn_count),
+                    actual_value=str(self.comparison.output_team2_spawn_count),
+                )
+            )
 
         return issues
 
@@ -101,13 +104,15 @@ class CapturePointValidator(IValidator):
         issues = []
 
         if self.comparison.has_capture_point_mismatch():
-            issues.append(ValidationIssue(
-                severity='error',
-                category='missing',
-                message='Capture point count mismatch',
-                expected_value=str(self.comparison.source_capture_point_count),
-                actual_value=str(self.comparison.output_capture_point_count)
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="missing",
+                    message="Capture point count mismatch",
+                    expected_value=str(self.comparison.source_capture_point_count),
+                    actual_value=str(self.comparison.output_capture_point_count),
+                )
+            )
 
         return issues
 
@@ -145,13 +150,15 @@ class PositioningValidator(IValidator):
 
         # Check if centered
         if abs(avg_x) > self.tolerance or abs(avg_z) > self.tolerance:
-            issues.append(ValidationIssue(
-                severity='warning',
-                category='positioning',
-                message='Map not centered at origin',
-                expected_value='(~0, ~0)',
-                actual_value=f'({avg_x:.1f}, {avg_z:.1f})'
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="warning",
+                    category="positioning",
+                    message="Map not centered at origin",
+                    expected_value="(~0, ~0)",
+                    actual_value=f"({avg_x:.1f}, {avg_z:.1f})",
+                )
+            )
 
         return issues
 
@@ -167,7 +174,7 @@ class HeightValidator(IValidator):
         nodes: List[TscnNode],
         terrain_provider: Optional[ITerrainProvider],
         tolerance: float = 2.0,
-        expected_offset: float = 1.0
+        expected_offset: float = 1.0,
     ):
         """Initialize validator.
 
@@ -190,7 +197,7 @@ class HeightValidator(IValidator):
             return issues
 
         # Validate spawn heights
-        spawns = [n for n in self.nodes if 'SpawnPoint' in n.name]
+        spawns = [n for n in self.nodes if "SpawnPoint" in n.name]
 
         height_errors = 0
         for spawn in spawns:
@@ -204,14 +211,16 @@ class HeightValidator(IValidator):
                 if height_diff > self.tolerance:
                     height_errors += 1
                     if height_errors <= 3:  # Only report first 3
-                        issues.append(ValidationIssue(
-                            severity='warning',
-                            category='height',
-                            message='Spawn height mismatch',
-                            object_name=spawn.name,
-                            expected_value=f'{expected_height:.1f}m',
-                            actual_value=f'{pos.y:.1f}m'
-                        ))
+                        issues.append(
+                            ValidationIssue(
+                                severity="warning",
+                                category="height",
+                                message="Spawn height mismatch",
+                                object_name=spawn.name,
+                                expected_value=f"{expected_height:.1f}m",
+                                actual_value=f"{pos.y:.1f}m",
+                            )
+                        )
             except Exception:
                 # Out of bounds or error - skip
                 pass
@@ -242,18 +251,20 @@ class BoundsValidator(IValidator):
         out_of_bounds = []
         for node in self.nodes:
             pos = node.position
-            distance = (pos.x**2 + pos.z**2)**0.5
+            distance = (pos.x**2 + pos.z**2) ** 0.5
 
             if distance > self.max_distance:
                 out_of_bounds.append(node.name)
 
         if out_of_bounds:
-            issues.append(ValidationIssue(
-                severity='warning',
-                category='bounds',
-                message=f'{len(out_of_bounds)} objects outside expected bounds',
-                actual_value=f'Max distance: {self.max_distance}m'
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="warning",
+                    category="bounds",
+                    message=f"{len(out_of_bounds)} objects outside expected bounds",
+                    actual_value=f"Max distance: {self.max_distance}m",
+                )
+            )
 
         return issues
 
@@ -287,12 +298,14 @@ class OrientationValidator(IValidator):
 
         # If ALL objects are identity, that might indicate orientation issues
         if rotated_count == 0 and identity_count > 10:
-            issues.append(ValidationIssue(
-                severity='info',
-                category='rotation',
-                message='No objects have rotation - verify orientations are correct',
-                actual_value=f'{identity_count} objects all have identity rotation'
-            ))
+            issues.append(
+                ValidationIssue(
+                    severity="info",
+                    category="rotation",
+                    message="No objects have rotation - verify orientations are correct",
+                    actual_value=f"{identity_count} objects all have identity rotation",
+                )
+            )
 
         return issues
 
@@ -310,9 +323,13 @@ class OrientationValidator(IValidator):
 
         # Check if it's identity matrix (1,0,0, 0,1,0, 0,0,1)
         return (
-            abs(matrix[0] - 1.0) < 0.01 and abs(matrix[4] - 1.0) < 0.01 and
-            abs(matrix[8] - 1.0) < 0.01 and
-            abs(matrix[1]) < 0.01 and abs(matrix[2]) < 0.01 and
-            abs(matrix[3]) < 0.01 and abs(matrix[5]) < 0.01 and
-            abs(matrix[6]) < 0.01 and abs(matrix[7]) < 0.01
+            abs(matrix[0] - 1.0) < 0.01
+            and abs(matrix[4] - 1.0) < 0.01
+            and abs(matrix[8] - 1.0) < 0.01
+            and abs(matrix[1]) < 0.01
+            and abs(matrix[2]) < 0.01
+            and abs(matrix[3]) < 0.01
+            and abs(matrix[5]) < 0.01
+            and abs(matrix[6]) < 0.01
+            and abs(matrix[7]) < 0.01
         )

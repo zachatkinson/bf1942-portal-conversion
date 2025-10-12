@@ -5,7 +5,7 @@ Single Responsibility: Only detects orientation of Portal terrain heightmaps.
 """
 
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 from ..terrain.terrain_provider import ITerrainProvider
 from .interfaces import IOrientationDetector, Orientation, OrientationAnalysis
@@ -23,7 +23,7 @@ class TerrainOrientationDetector(IOrientationDetector):
         terrain_provider: Optional[ITerrainProvider] = None,
         heightmap_path: Optional[Path] = None,
         terrain_size: Tuple[float, float] = (2048.0, 2048.0),
-        threshold: float = 1.2
+        threshold: float = 1.2,
     ):
         """Initialize detector.
 
@@ -56,7 +56,7 @@ class TerrainOrientationDetector(IOrientationDetector):
                 width_x=width_x,
                 depth_z=depth_z,
                 ratio=1.0,
-                confidence='low'
+                confidence="low",
             )
 
         # Calculate ratio (always >= 1.0)
@@ -70,21 +70,21 @@ class TerrainOrientationDetector(IOrientationDetector):
         # Most Portal terrains are square (2048x2048), so if ratio is close to 1.0,
         # we have low confidence in detecting orientation
         if abs(ratio - 1.0) < 0.1:
-            confidence = 'low'
+            confidence = "low"
             orientation = Orientation.SQUARE
         elif ratio >= 1.5:
-            confidence = 'high'
+            confidence = "high"
         elif ratio >= self.threshold:
-            confidence = 'medium'
+            confidence = "medium"
         else:
-            confidence = 'low'
+            confidence = "low"
 
         return OrientationAnalysis(
             orientation=orientation,
             width_x=width_x,
             depth_z=depth_z,
             ratio=ratio,
-            confidence=confidence
+            confidence=confidence,
         )
 
     def get_bounds(self) -> Tuple[float, float, float, float]:

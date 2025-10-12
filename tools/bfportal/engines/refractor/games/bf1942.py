@@ -5,10 +5,7 @@ Battlefield 1942 (2002) - Refractor Engine 1.0
 """
 
 from pathlib import Path
-from typing import List
 
-from ....core.interfaces import SpawnPoint, Team
-from ....parsers.con_parser import ConFileSet
 from ..refractor_base import RefractorEngine
 
 
@@ -45,12 +42,12 @@ class BF1942Engine(RefractorEngine):
         """
         path_str = str(map_path).lower()
 
-        if 'xpack1' in path_str or 'road_to_rome' in path_str:
-            return 'xpack1_rtr'
-        elif 'xpack2' in path_str or 'secret_weapons' in path_str:
-            return 'xpack2_sw'
+        if "xpack1" in path_str or "road_to_rome" in path_str:
+            return "xpack1_rtr"
+        elif "xpack2" in path_str or "secret_weapons" in path_str:
+            return "xpack2_sw"
         else:
-            return 'base'
+            return "base"
 
 
 class BFVietnamEngine(RefractorEngine):

@@ -11,10 +11,9 @@ Author: BF1942 Portal Conversion Project
 Date: 2025-10-11
 """
 
-import re
 import math
+import re
 from pathlib import Path
-from typing import Tuple
 
 
 def format_transform3d(rotation: list, position: list) -> str:
@@ -49,11 +48,7 @@ def generate_spawn_point_transform(index: int, total: int, radius: float = 10.0)
     sin_a = math.sin(angle)
 
     # Rotation matrix for facing direction
-    rotation = [
-        cos_a, 0, sin_a,
-        0, 1, 0,
-        -sin_a, 0, cos_a
-    ]
+    rotation = [cos_a, 0, sin_a, 0, 1, 0, -sin_a, 0, cos_a]
 
     return format_transform3d(rotation, [x, y, z])
 
@@ -68,7 +63,7 @@ def reset_spawn_points(input_path: Path, output_path: Path) -> None:
     """
     print(f"Reading: {input_path}")
 
-    with open(input_path, 'r') as f:
+    with open(input_path) as f:
         lines = f.readlines()
 
     modified_lines = []
@@ -82,12 +77,12 @@ def reset_spawn_points(input_path: Path, output_path: Path) -> None:
             if 'parent="TEAM_1_HQ"' in line:
                 current_parent = "TEAM_1_HQ"
                 # Extract spawn point number
-                match = re.search(r'SpawnPoint_1_(\d+)', line)
+                match = re.search(r"SpawnPoint_1_(\d+)", line)
                 if match:
                     spawn_point_index = int(match.group(1)) - 1  # Convert to 0-based
             elif 'parent="TEAM_2_HQ"' in line:
                 current_parent = "TEAM_2_HQ"
-                match = re.search(r'SpawnPoint_2_(\d+)', line)
+                match = re.search(r"SpawnPoint_2_(\d+)", line)
                 if match:
                     spawn_point_index = int(match.group(1)) - 1
 
@@ -101,17 +96,17 @@ def reset_spawn_points(input_path: Path, output_path: Path) -> None:
             continue
 
         # Reset parent tracking when leaving spawn point section
-        if '[node name=' in line and 'SpawnPoint' not in line:
+        if "[node name=" in line and "SpawnPoint" not in line:
             current_parent = None
 
         modified_lines.append(line)
 
     # Write output
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         f.writelines(modified_lines)
 
     print(f"\nReset {spawn_points_fixed} spawn point positions")
-    print(f"Spawn points now in 10m radius circle around each HQ")
+    print("Spawn points now in 10m radius circle around each HQ")
     print(f"Output written to: {output_path}")
 
 
@@ -139,6 +134,7 @@ def main():
     # Create backup
     print(f"Creating backup: {backup_tscn}")
     import shutil
+
     shutil.copy2(input_tscn, backup_tscn)
     print()
 

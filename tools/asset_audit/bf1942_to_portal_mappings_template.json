@@ -1,0 +1,7477 @@
+{
+  "_metadata": {
+    "description": "BF1942 to BF6 Portal Asset Mappings",
+    "total_bf1942_assets": 733,
+    "status": "TODO - Map each asset to Portal equivalent"
+  },
+  "vehicles": {
+    "Carrier_AA_Base": {
+      "bf1942_type": "Carrier_AA_Base",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Plane_1": {
+      "bf1942_type": "Em_ScrapMetal_Plane_1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Plane_2": {
+      "bf1942_type": "Em_ScrapMetal_Plane_2",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Plane_3": {
+      "bf1942_type": "Em_ScrapMetal_Plane_3",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "EnterpriseAirplaneSupplyDepot": {
+      "bf1942_type": "EnterpriseAirplaneSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "Flettner_RotaryPlane_M1": {
+      "bf1942_type": "Flettner_RotaryPlane_M1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppCameraPC01": {
+      "bf1942_type": "KruppCameraPC01",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "PlaneFireArmInfo": {
+      "bf1942_type": "PlaneFireArmInfo",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "Radar_AA_Allies_Carriage": {
+      "bf1942_type": "Radar_AA_Allies_Carriage",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Radar_AA_Allies_carriage_m1": {
+      "bf1942_type": "Radar_AA_Allies_carriage_m1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherCameraPC01": {
+      "bf1942_type": "RocketLauncherCameraPC01",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShipLadder01": {
+      "bf1942_type": "ShipLadder01",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "ShipLadder02": {
+      "bf1942_type": "ShipLadder02",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 11,
+      "notes": ""
+    },
+    "ShipLadder03": {
+      "bf1942_type": "ShipLadder03",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "ShipLadder04": {
+      "bf1942_type": "ShipLadder04",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "ShipStair01": {
+      "bf1942_type": "ShipStair01",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "ShokakuAirplaneSupplyDepot": {
+      "bf1942_type": "ShokakuAirplaneSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "StrategicAreas": {
+      "bf1942_type": "StrategicAreas",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Berlin",
+        "Bocage"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "TankFireArmInfo": {
+      "bf1942_type": "TankFireArmInfo",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "e_WaterTouchPlane": {
+      "bf1942_type": "e_WaterTouchPlane",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "e_waterBoatSvall": {
+      "bf1942_type": "e_waterBoatSvall",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "e_waterBoatSvallNarrow": {
+      "bf1942_type": "e_waterBoatSvallNarrow",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_wdustPlane": {
+      "bf1942_type": "e_wdustPlane",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "e_wdustPlaneL": {
+      "bf1942_type": "e_wdustPlaneL",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "pak40_carriage_M1": {
+      "bf1942_type": "pak40_carriage_M1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "tank_MGun_mount_M1": {
+      "bf1942_type": "tank_MGun_mount_M1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "traincart_m1": {
+      "bf1942_type": "traincart_m1",
+      "portal_equivalent": "TODO",
+      "category": "vehicle",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    }
+  },
+  "static_objects": {
+    "1P_M3A1_Driver_M1": {
+      "bf1942_type": "1P_M3A1_Driver_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "1P_Willy_str_M1": {
+      "bf1942_type": "1P_Willy_str_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AA_AllCockpitInternal": {
+      "bf1942_type": "AA_AllCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AA_AlliesSeat": {
+      "bf1942_type": "AA_AlliesSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AA_Allies_Camera": {
+      "bf1942_type": "AA_Allies_Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AA_Allies_Entry": {
+      "bf1942_type": "AA_Allies_Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ANDCompositeObjective": {
+      "bf1942_type": "ANDCompositeObjective",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Eagles_Nest",
+        "Essen"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "AT25BodyInfo": {
+      "bf1942_type": "AT25BodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Allies_EastAirfield_Spawn": {
+      "bf1942_type": "Allies_EastAirfield_Spawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Allies_WestAirfield_Spawn": {
+      "bf1942_type": "Allies_WestAirfield_Spawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Ammobox": {
+      "bf1942_type": "Ammobox",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "AmmoboxSupplyDepot": {
+      "bf1942_type": "AmmoboxSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "AmmoboxVehicleSupplyDepot": {
+      "bf1942_type": "AmmoboxVehicleSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "AnimatedBundle": {
+      "bf1942_type": "AnimatedBundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 10,
+      "notes": ""
+    },
+    "AnimatedFlag": {
+      "bf1942_type": "AnimatedFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 687,
+      "notes": ""
+    },
+    "AnimatedFrFlag": {
+      "bf1942_type": "AnimatedFrFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Santo_Croce"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AnimatedGeFlag": {
+      "bf1942_type": "AnimatedGeFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 24,
+      "notes": ""
+    },
+    "AnimatedItFlag": {
+      "bf1942_type": "AnimatedItFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea",
+        "Anzio",
+        "baytown"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "AnimatedSoFlag": {
+      "bf1942_type": "AnimatedSoFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Berlin",
+        "Kharkov",
+        "Kursk"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "AnimatedUSFlag": {
+      "bf1942_type": "AnimatedUSFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Wake",
+        "salerno",
+        "Essen"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "AnimatedUkFlag": {
+      "bf1942_type": "AnimatedUkFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Bocage"
+      ],
+      "usage_count": 15,
+      "notes": ""
+    },
+    "AnimatedUsFlag": {
+      "bf1942_type": "AnimatedUsFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Bocage",
+        "Anzio",
+        "Eagles_Nest"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "AnimatedjapFlag": {
+      "bf1942_type": "AnimatedjapFlag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Wake"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "AreaObject": {
+      "bf1942_type": "AreaObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Berlin",
+        "Bocage"
+      ],
+      "usage_count": 84,
+      "notes": ""
+    },
+    "Attach_L_Hand": {
+      "bf1942_type": "Attach_L_Hand",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "Attach_R_Hand": {
+      "bf1942_type": "Attach_R_Hand",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "B17_Wreck1_m1": {
+      "bf1942_type": "B17_Wreck1_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "B17_Wreck2_m1": {
+      "bf1942_type": "B17_Wreck2_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "B17_Wreck3_m1": {
+      "bf1942_type": "B17_Wreck3_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "BigTent_m1": {
+      "bf1942_type": "BigTent_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BlackMedal_Str_M1": {
+      "bf1942_type": "BlackMedal_Str_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_Cockpit_M1": {
+      "bf1942_type": "BrittJeep_Cockpit_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_Hull_L1": {
+      "bf1942_type": "BrittJeep_Hull_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_Hull_M1": {
+      "bf1942_type": "BrittJeep_Hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_LWheel_M1": {
+      "bf1942_type": "BrittJeep_LWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_RWheel_M1": {
+      "bf1942_type": "BrittJeep_RWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "BrittJeep_rotate_M1": {
+      "bf1942_type": "BrittJeep_rotate_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Bundle": {
+      "bf1942_type": "Bundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 43,
+      "notes": ""
+    },
+    "CDNRaftBodyInfo": {
+      "bf1942_type": "CDNRaftBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftComplex": {
+      "bf1942_type": "CDNRaftComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftDriverSeat": {
+      "bf1942_type": "CDNRaftDriverSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftEngineInfo": {
+      "bf1942_type": "CDNRaftEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftEngineModel": {
+      "bf1942_type": "CDNRaftEngineModel",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftPassengerCamera": {
+      "bf1942_type": "CDNRaftPassengerCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftPassengerInfo": {
+      "bf1942_type": "CDNRaftPassengerInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftPassengerPCO2": {
+      "bf1942_type": "CDNRaftPassengerPCO2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftPassengerSeat": {
+      "bf1942_type": "CDNRaftPassengerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftPropeller": {
+      "bf1942_type": "CDNRaftPropeller",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftSimple": {
+      "bf1942_type": "CDNRaftSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaftWingInfo": {
+      "bf1942_type": "CDNRaftWingInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaft_Camera": {
+      "bf1942_type": "CDNRaft_Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaft_Engine": {
+      "bf1942_type": "CDNRaft_Engine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaft_Entry": {
+      "bf1942_type": "CDNRaft_Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "CDNRaft_Floater": {
+      "bf1942_type": "CDNRaft_Floater",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "CDNRaft_Rudder_Aft": {
+      "bf1942_type": "CDNRaft_Rudder_Aft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "CDNRaft_Rudder_Stern": {
+      "bf1942_type": "CDNRaft_Rudder_Stern",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Camera": {
+      "bf1942_type": "Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 27,
+      "notes": ""
+    },
+    "ClimbingNet_3mx4m": {
+      "bf1942_type": "ClimbingNet_3mx4m",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "ClimbingNet_6m": {
+      "bf1942_type": "ClimbingNet_6m",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "ClimbingNet_6mx11m": {
+      "bf1942_type": "ClimbingNet_6mx11m",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Coaxial_Browning": {
+      "bf1942_type": "Coaxial_Browning",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Conditions": {
+      "bf1942_type": "Conditions",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Stalingrad"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "DestroyTargetObjective": {
+      "bf1942_type": "DestroyTargetObjective",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Eagles_Nest",
+        "Essen"
+      ],
+      "usage_count": 21,
+      "notes": ""
+    },
+    "EastAirfield_SoldierSpawn": {
+      "bf1942_type": "EastAirfield_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "EffectBundle": {
+      "bf1942_type": "EffectBundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "Em_ScrapMetal_RadarDish_wreck1": {
+      "bf1942_type": "Em_ScrapMetal_RadarDish_wreck1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapMetal_RadarDish_wreck2": {
+      "bf1942_type": "Em_ScrapMetal_RadarDish_wreck2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapMetal_RadarSupport_wreck": {
+      "bf1942_type": "Em_ScrapMetal_RadarSupport_wreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Tail_Flettner": {
+      "bf1942_type": "Em_ScrapMetal_Tail_Flettner",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Tail_Ju88A": {
+      "bf1942_type": "Em_ScrapMetal_Tail_Ju88A",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapMetal_Wing_Ju88A": {
+      "bf1942_type": "Em_ScrapMetal_Wing_Ju88A",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_SpawnAmmobox": {
+      "bf1942_type": "Em_SpawnAmmobox",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_WillyDamage": {
+      "bf1942_type": "Em_WillyDamage",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Emitter": {
+      "bf1942_type": "Emitter",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 12,
+      "notes": ""
+    },
+    "Engine": {
+      "bf1942_type": "Engine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 15,
+      "notes": ""
+    },
+    "EnterpriseBodyInfo": {
+      "bf1942_type": "EnterpriseBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "EnterpriseEngineInfo": {
+      "bf1942_type": "EnterpriseEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "EnterpriseSimple": {
+      "bf1942_type": "EnterpriseSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_AABattery1": {
+      "bf1942_type": "Enterprise_AABattery1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_AABattery2": {
+      "bf1942_type": "Enterprise_AABattery2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_AABattery3": {
+      "bf1942_type": "Enterprise_AABattery3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_AABattery4": {
+      "bf1942_type": "Enterprise_AABattery4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Bridge": {
+      "bf1942_type": "Enterprise_Bridge",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Camera": {
+      "bf1942_type": "Enterprise_Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Engine": {
+      "bf1942_type": "Enterprise_Engine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Entry": {
+      "bf1942_type": "Enterprise_Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Floater": {
+      "bf1942_type": "Enterprise_Floater",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "Enterprise_HullWing": {
+      "bf1942_type": "Enterprise_HullWing",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_Rudder1": {
+      "bf1942_type": "Enterprise_Rudder1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_hull_L1": {
+      "bf1942_type": "Enterprise_hull_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_hull_M1": {
+      "bf1942_type": "Enterprise_hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_rad": {
+      "bf1942_type": "Enterprise_rad",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Enterprise_rod": {
+      "bf1942_type": "Enterprise_rod",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "EntryPoint": {
+      "bf1942_type": "EntryPoint",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 14,
+      "notes": ""
+    },
+    "Essen_SiloWreckBodyInfo": {
+      "bf1942_type": "Essen_SiloWreckBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Essen_SilosBodyInfo": {
+      "bf1942_type": "Essen_SilosBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FireArms": {
+      "bf1942_type": "FireArms",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 18,
+      "notes": ""
+    },
+    "Flag": {
+      "bf1942_type": "Flag",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 58,
+      "notes": ""
+    },
+    "FlettnerBodyInfo": {
+      "bf1942_type": "FlettnerBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "FlettnerCamera": {
+      "bf1942_type": "FlettnerCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerCockpitExternal": {
+      "bf1942_type": "FlettnerCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerCockpitInternal": {
+      "bf1942_type": "FlettnerCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerComplex": {
+      "bf1942_type": "FlettnerComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerDummyRudder": {
+      "bf1942_type": "FlettnerDummyRudder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerEngineInfo": {
+      "bf1942_type": "FlettnerEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "FlettnerEntry": {
+      "bf1942_type": "FlettnerEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "FlettnerInvisibleWheel": {
+      "bf1942_type": "FlettnerInvisibleWheel",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "FlettnerMG": {
+      "bf1942_type": "FlettnerMG",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerRudder": {
+      "bf1942_type": "FlettnerRudder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerSeat": {
+      "bf1942_type": "FlettnerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerSimple": {
+      "bf1942_type": "FlettnerSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerWheelFront": {
+      "bf1942_type": "FlettnerWheelFront",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerWheelLeft": {
+      "bf1942_type": "FlettnerWheelLeft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerWheelRight": {
+      "bf1942_type": "FlettnerWheelRight",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerWingInfo": {
+      "bf1942_type": "FlettnerWingInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerWreck": {
+      "bf1942_type": "FlettnerWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Cockpit_M1": {
+      "bf1942_type": "Flettner_Cockpit_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Engine": {
+      "bf1942_type": "Flettner_Engine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Flap_m1": {
+      "bf1942_type": "Flettner_Flap_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_FrontWheel_M1": {
+      "bf1942_type": "Flettner_FrontWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_HoverEngine": {
+      "bf1942_type": "Flettner_HoverEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_HoveringEngineBundle": {
+      "bf1942_type": "Flettner_HoveringEngineBundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Hull_L1": {
+      "bf1942_type": "Flettner_Hull_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Hull_Wreck_M1": {
+      "bf1942_type": "Flettner_Hull_Wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_LWheel_M1": {
+      "bf1942_type": "Flettner_LWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_LeftRotor": {
+      "bf1942_type": "Flettner_LeftRotor",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_RWheel_M1": {
+      "bf1942_type": "Flettner_RWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_RightRotor": {
+      "bf1942_type": "Flettner_RightRotor",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Rotary_Blurred": {
+      "bf1942_type": "Flettner_Rotary_Blurred",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Rotary_M1": {
+      "bf1942_type": "Flettner_Rotary_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_Rotary_Static": {
+      "bf1942_type": "Flettner_Rotary_Static",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_TailEngine": {
+      "bf1942_type": "Flettner_TailEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Flettner_Wreck_tail_M1": {
+      "bf1942_type": "Flettner_Wreck_tail_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Flettner_hull_m1": {
+      "bf1942_type": "Flettner_hull_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FloatingBundle": {
+      "bf1942_type": "FloatingBundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "GreyHound_Turret_M1": {
+      "bf1942_type": "GreyHound_Turret_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyHound_Turret_Rotate_M1": {
+      "bf1942_type": "GreyHound_Turret_Rotate_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyHound_Wreck_M1": {
+      "bf1942_type": "GreyHound_Wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBackSpringL": {
+      "bf1942_type": "GreyhoundBackSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBackSpringLDummy": {
+      "bf1942_type": "GreyhoundBackSpringLDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBackSpringR": {
+      "bf1942_type": "GreyhoundBackSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBackSpringRDummy": {
+      "bf1942_type": "GreyhoundBackSpringRDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBodyInfo": {
+      "bf1942_type": "GreyhoundBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "GreyhoundBrowningSeat": {
+      "bf1942_type": "GreyhoundBrowningSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBrowning_Holder": {
+      "bf1942_type": "GreyhoundBrowning_Holder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundBrowning_PCO1": {
+      "bf1942_type": "GreyhoundBrowning_PCO1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundCamera": {
+      "bf1942_type": "GreyhoundCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundCamera2": {
+      "bf1942_type": "GreyhoundCamera2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundCockpitExternal": {
+      "bf1942_type": "GreyhoundCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundCockpitInternal": {
+      "bf1942_type": "GreyhoundCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundComplex": {
+      "bf1942_type": "GreyhoundComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundEngine": {
+      "bf1942_type": "GreyhoundEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundEngineInfo": {
+      "bf1942_type": "GreyhoundEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundEntry": {
+      "bf1942_type": "GreyhoundEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "GreyhoundFrontSpringL": {
+      "bf1942_type": "GreyhoundFrontSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundFrontSpringR": {
+      "bf1942_type": "GreyhoundFrontSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundFrontWheelL": {
+      "bf1942_type": "GreyhoundFrontWheelL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundFrontWheelR": {
+      "bf1942_type": "GreyhoundFrontWheelR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundSimple": {
+      "bf1942_type": "GreyhoundSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundSteeringInfo": {
+      "bf1942_type": "GreyhoundSteeringInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "GreyhoundTurretInfo": {
+      "bf1942_type": "GreyhoundTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "GreyhoundWreck": {
+      "bf1942_type": "GreyhoundWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Greyhound_Browning_console": {
+      "bf1942_type": "Greyhound_Browning_console",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Greyhound_Hull_M1": {
+      "bf1942_type": "Greyhound_Hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Greyhound_LWheel_M1": {
+      "bf1942_type": "Greyhound_LWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Greyhound_RWheel_M1": {
+      "bf1942_type": "Greyhound_RWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Helipad_M1": {
+      "bf1942_type": "Helipad_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "HiryuAirCraftSoldierSpawn": {
+      "bf1942_type": "HiryuAirCraftSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "HiryuComplex": {
+      "bf1942_type": "HiryuComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "HiryuDaihatsuSoldierSpawn": {
+      "bf1942_type": "HiryuDaihatsuSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "HiryuDriverSoldierSpawn": {
+      "bf1942_type": "HiryuDriverSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "HornetComplex": {
+      "bf1942_type": "HornetComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Hornet_AirCraftSoldierSpawn": {
+      "bf1942_type": "Hornet_AirCraftSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Hornet_DriverSoldierSpawn": {
+      "bf1942_type": "Hornet_DriverSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Hornet_LcvpSoldierSpawn": {
+      "bf1942_type": "Hornet_LcvpSoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Ju88ABodyInfo": {
+      "bf1942_type": "Ju88ABodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "Ju88ABodyWingVertical": {
+      "bf1942_type": "Ju88ABodyWingVertical",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ABombRack": {
+      "bf1942_type": "Ju88ABombRack",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ACockpitExternal": {
+      "bf1942_type": "Ju88ACockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ACockpitInternal": {
+      "bf1942_type": "Ju88ACockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88AComplex": {
+      "bf1942_type": "Ju88AComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ADorsalTurretInfo": {
+      "bf1942_type": "Ju88ADorsalTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88AEngineInfo": {
+      "bf1942_type": "Ju88AEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Ju88ANoseTurretInfo": {
+      "bf1942_type": "Ju88ANoseTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88APropellerBlurred": {
+      "bf1942_type": "Ju88APropellerBlurred",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88APropellerStatic": {
+      "bf1942_type": "Ju88APropellerStatic",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ARearTopCamera": {
+      "bf1942_type": "Ju88ARearTopCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88ASimple": {
+      "bf1942_type": "Ju88ASimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88AWingInfo": {
+      "bf1942_type": "Ju88AWingInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 9,
+      "notes": ""
+    },
+    "Ju88AWreck": {
+      "bf1942_type": "Ju88AWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Body_Wing": {
+      "bf1942_type": "Ju88A_Body_Wing",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Camera": {
+      "bf1942_type": "Ju88A_Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Camera3": {
+      "bf1942_type": "Ju88A_Camera3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_EngineLeft": {
+      "bf1942_type": "Ju88A_EngineLeft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_EngineRight": {
+      "bf1942_type": "Ju88A_EngineRight",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Entry": {
+      "bf1942_type": "Ju88A_Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "Ju88A_FlapLeftInner": {
+      "bf1942_type": "Ju88A_FlapLeftInner",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapLeftMiddle": {
+      "bf1942_type": "Ju88A_FlapLeftMiddle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapLeftOuter": {
+      "bf1942_type": "Ju88A_FlapLeftOuter",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapRightInner": {
+      "bf1942_type": "Ju88A_FlapRightInner",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapRightMiddle": {
+      "bf1942_type": "Ju88A_FlapRightMiddle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapRightOuter": {
+      "bf1942_type": "Ju88A_FlapRightOuter",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapTailLeft": {
+      "bf1942_type": "Ju88A_FlapTailLeft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_FlapTailRight": {
+      "bf1942_type": "Ju88A_FlapTailRight",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Gear_Back": {
+      "bf1942_type": "Ju88A_Gear_Back",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Gear_Back_Turn": {
+      "bf1942_type": "Ju88A_Gear_Back_Turn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Gear_Left": {
+      "bf1942_type": "Ju88A_Gear_Left",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Gear_Right": {
+      "bf1942_type": "Ju88A_Gear_Right",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_PilotSeat": {
+      "bf1942_type": "Ju88A_PilotSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Pilots_LeftHand": {
+      "bf1942_type": "Ju88A_Pilots_LeftHand",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Pilots_RightHand": {
+      "bf1942_type": "Ju88A_Pilots_RightHand",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Rudder": {
+      "bf1942_type": "Ju88A_Rudder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Wheel_Back": {
+      "bf1942_type": "Ju88A_Wheel_Back",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Wheel_Left": {
+      "bf1942_type": "Ju88A_Wheel_Left",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_Wheel_Right": {
+      "bf1942_type": "Ju88A_Wheel_Right",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_Cockpit_M1": {
+      "bf1942_type": "Junker_Cockpit_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapLeftMiddle_M1": {
+      "bf1942_type": "Junker_FlapLeftMiddle_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapLeftOuter_M1": {
+      "bf1942_type": "Junker_FlapLeftOuter_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapRightMiddle_M1": {
+      "bf1942_type": "Junker_FlapRightMiddle_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapRightOuter_M1": {
+      "bf1942_type": "Junker_FlapRightOuter_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapTailLeft_M1": {
+      "bf1942_type": "Junker_FlapTailLeft_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_FlapTailRight_M1": {
+      "bf1942_type": "Junker_FlapTailRight_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_Fus_M1": {
+      "bf1942_type": "Junker_Fus_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_GearBack_M1": {
+      "bf1942_type": "Junker_GearBack_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_GearLeft_M1": {
+      "bf1942_type": "Junker_GearLeft_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_GearRight_M1": {
+      "bf1942_type": "Junker_GearRight_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_Propeller_M1": {
+      "bf1942_type": "Junker_Propeller_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_Rim42_M1": {
+      "bf1942_type": "Junker_Rim42_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_Rudder_M1": {
+      "bf1942_type": "Junker_Rudder_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_WheelBack_M1": {
+      "bf1942_type": "Junker_WheelBack_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_WheelLeft_M1": {
+      "bf1942_type": "Junker_WheelLeft_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_WheelRight_M1": {
+      "bf1942_type": "Junker_WheelRight_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_fus_L1": {
+      "bf1942_type": "Junker_fus_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_wreck_fus_M1": {
+      "bf1942_type": "Junker_wreck_fus_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Junker_wreck_tail_M1": {
+      "bf1942_type": "Junker_wreck_tail_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Junker_wreck_wing_M1": {
+      "bf1942_type": "Junker_wreck_wing_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "KruppBackSpringL": {
+      "bf1942_type": "KruppBackSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppBackSpringLDummy": {
+      "bf1942_type": "KruppBackSpringLDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppBackSpringR": {
+      "bf1942_type": "KruppBackSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppBackSpringRDummy": {
+      "bf1942_type": "KruppBackSpringRDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppBodyInfo": {
+      "bf1942_type": "KruppBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "KruppCamera": {
+      "bf1942_type": "KruppCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppCockpitExternal": {
+      "bf1942_type": "KruppCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppCockpitInternal": {
+      "bf1942_type": "KruppCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppComplex": {
+      "bf1942_type": "KruppComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppEngine": {
+      "bf1942_type": "KruppEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppEngineInfo": {
+      "bf1942_type": "KruppEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppEntry": {
+      "bf1942_type": "KruppEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "KruppFrontSpringL": {
+      "bf1942_type": "KruppFrontSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppFrontSpringR": {
+      "bf1942_type": "KruppFrontSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppFrontWheelL": {
+      "bf1942_type": "KruppFrontWheelL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppFrontWheelR": {
+      "bf1942_type": "KruppFrontWheelR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppHighRSteering": {
+      "bf1942_type": "KruppHighRSteering",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppHorizontalPCO1": {
+      "bf1942_type": "KruppHorizontalPCO1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppHorn": {
+      "bf1942_type": "KruppHorn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppLowSteering": {
+      "bf1942_type": "KruppLowSteering",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppPassengerPCO": {
+      "bf1942_type": "KruppPassengerPCO",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppPassengerSeat": {
+      "bf1942_type": "KruppPassengerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppSeat": {
+      "bf1942_type": "KruppSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppSimple": {
+      "bf1942_type": "KruppSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppSteering": {
+      "bf1942_type": "KruppSteering",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppSteeringDummy": {
+      "bf1942_type": "KruppSteeringDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppSteeringInfo": {
+      "bf1942_type": "KruppSteeringInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "KruppTurretInfo": {
+      "bf1942_type": "KruppTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "KruppVerticalPC01": {
+      "bf1942_type": "KruppVerticalPC01",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "KruppWreck": {
+      "bf1942_type": "KruppWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_Cockpit_M1": {
+      "bf1942_type": "Krupp_Cockpit_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_Hull_M1": {
+      "bf1942_type": "Krupp_Hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Krupp_LWheel_M1": {
+      "bf1942_type": "Krupp_LWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_RWheel_M1": {
+      "bf1942_type": "Krupp_RWheel_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_wreck_M1": {
+      "bf1942_type": "Krupp_wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "LandingGear": {
+      "bf1942_type": "LandingGear",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "LensFlare": {
+      "bf1942_type": "LensFlare",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 30,
+      "notes": ""
+    },
+    "LodObject": {
+      "bf1942_type": "LodObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 32,
+      "notes": ""
+    },
+    "M1919A4": {
+      "bf1942_type": "M1919A4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M1919A4_Base_M1": {
+      "bf1942_type": "M1919A4_Base_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M1919A4_Horz_Rot": {
+      "bf1942_type": "M1919A4_Horz_Rot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M1919A4_Support": {
+      "bf1942_type": "M1919A4_Support",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M1919A4_Vert_Rot": {
+      "bf1942_type": "M1919A4_Vert_Rot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M3A1TrackL": {
+      "bf1942_type": "M3A1TrackL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M3A1_Wheel1_M1": {
+      "bf1942_type": "M3A1_Wheel1_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1BodyInfo": {
+      "bf1942_type": "M4A1BodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1BrowningConsoleInfo": {
+      "bf1942_type": "M4A1BrowningConsoleInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "M4A1BrowningHolderInfo": {
+      "bf1942_type": "M4A1BrowningHolderInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1BrowningSeat": {
+      "bf1942_type": "M4A1BrowningSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Browning_Holder": {
+      "bf1942_type": "M4A1Browning_Holder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Browning_PCO1": {
+      "bf1942_type": "M4A1Browning_PCO1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Camera": {
+      "bf1942_type": "M4A1Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Camera2": {
+      "bf1942_type": "M4A1Camera2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1CockpitExternal": {
+      "bf1942_type": "M4A1CockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1CockpitInternal": {
+      "bf1942_type": "M4A1CockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Complex": {
+      "bf1942_type": "M4A1Complex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Engine": {
+      "bf1942_type": "M4A1Engine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1EngineInfo": {
+      "bf1942_type": "M4A1EngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Entry": {
+      "bf1942_type": "M4A1Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 10,
+      "notes": ""
+    },
+    "M4A1MortarBipod": {
+      "bf1942_type": "M4A1MortarBipod",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarCamera": {
+      "bf1942_type": "M4A1MortarCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarFirearm": {
+      "bf1942_type": "M4A1MortarFirearm",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarPCO": {
+      "bf1942_type": "M4A1MortarPCO",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarPad": {
+      "bf1942_type": "M4A1MortarPad",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarSeat": {
+      "bf1942_type": "M4A1MortarSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarSupport": {
+      "bf1942_type": "M4A1MortarSupport",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarVertical": {
+      "bf1942_type": "M4A1MortarVertical",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Mortar_Horiz_Rot": {
+      "bf1942_type": "M4A1Mortar_Horiz_Rot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1PassangerCamera": {
+      "bf1942_type": "M4A1PassangerCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1PassengerInfo": {
+      "bf1942_type": "M4A1PassengerInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1PassengerSeat": {
+      "bf1942_type": "M4A1PassengerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1Seat": {
+      "bf1942_type": "M4A1Seat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Simple": {
+      "bf1942_type": "M4A1Simple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Spring1": {
+      "bf1942_type": "M4A1Spring1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1SupplyDepot": {
+      "bf1942_type": "M4A1SupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1VehicleSupplyDepot": {
+      "bf1942_type": "M4A1VehicleSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1Wheel1": {
+      "bf1942_type": "M4A1Wheel1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "M4A1Wreck": {
+      "bf1942_type": "M4A1Wreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Browning_console": {
+      "bf1942_type": "M4A1_Browning_console",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Hull_L1": {
+      "bf1942_type": "M4A1_Hull_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Hull_M1": {
+      "bf1942_type": "M4A1_Hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Passanger_PCO2": {
+      "bf1942_type": "M4A1_Passanger_PCO2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Passanger_PCO3": {
+      "bf1942_type": "M4A1_Passanger_PCO3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_SoldierSpawn": {
+      "bf1942_type": "M4A1_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1_Wreck_M1": {
+      "bf1942_type": "M4A1_Wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MG42": {
+      "bf1942_type": "MG42",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Mortar_Bipod_M1": {
+      "bf1942_type": "Mortar_Bipod_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Mortar_Pad_M1": {
+      "bf1942_type": "Mortar_Pad_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Mortar_Rotate_M1": {
+      "bf1942_type": "Mortar_Rotate_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerBodyInfo": {
+      "bf1942_type": "MunitionsPanzerBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerBrowningConsole": {
+      "bf1942_type": "MunitionsPanzerBrowningConsole",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerBrowningHolder": {
+      "bf1942_type": "MunitionsPanzerBrowningHolder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerBrowningSeat": {
+      "bf1942_type": "MunitionsPanzerBrowningSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerBrowningShield": {
+      "bf1942_type": "MunitionsPanzerBrowningShield",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerCamera": {
+      "bf1942_type": "MunitionsPanzerCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerCamera2": {
+      "bf1942_type": "MunitionsPanzerCamera2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerCockpitExternal": {
+      "bf1942_type": "MunitionsPanzerCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerCockpitInternal": {
+      "bf1942_type": "MunitionsPanzerCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerComplex": {
+      "bf1942_type": "MunitionsPanzerComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerEngine": {
+      "bf1942_type": "MunitionsPanzerEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerEngineInfo": {
+      "bf1942_type": "MunitionsPanzerEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerEntry": {
+      "bf1942_type": "MunitionsPanzerEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 12,
+      "notes": ""
+    },
+    "MunitionsPanzerPassengerInfo": {
+      "bf1942_type": "MunitionsPanzerPassengerInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "MunitionsPanzerSimple": {
+      "bf1942_type": "MunitionsPanzerSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerSupplyDepot": {
+      "bf1942_type": "MunitionsPanzerSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerVehicleSupplyDepot": {
+      "bf1942_type": "MunitionsPanzerVehicleSupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzerWreck": {
+      "bf1942_type": "MunitionsPanzerWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Browning_PCO1": {
+      "bf1942_type": "MunitionsPanzer_Browning_PCO1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Hull_L1": {
+      "bf1942_type": "MunitionsPanzer_Hull_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Hull_M1": {
+      "bf1942_type": "MunitionsPanzer_Hull_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_PassangerCamera": {
+      "bf1942_type": "MunitionsPanzer_PassangerCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "MunitionsPanzer_PassangerSeat": {
+      "bf1942_type": "MunitionsPanzer_PassangerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 4,
+      "notes": ""
+    },
+    "MunitionsPanzer_Passenger_PCO1": {
+      "bf1942_type": "MunitionsPanzer_Passenger_PCO1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Passenger_PCO2": {
+      "bf1942_type": "MunitionsPanzer_Passenger_PCO2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Passenger_PCO3": {
+      "bf1942_type": "MunitionsPanzer_Passenger_PCO3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Passenger_PCO4": {
+      "bf1942_type": "MunitionsPanzer_Passenger_PCO4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Shield_M1": {
+      "bf1942_type": "MunitionsPanzer_Shield_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_SoldierSpawn": {
+      "bf1942_type": "MunitionsPanzer_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "MunitionsPanzer_Wreck_M1": {
+      "bf1942_type": "MunitionsPanzer_Wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ObjectiveInfo": {
+      "bf1942_type": "ObjectiveInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Eagles_Nest",
+        "Essen"
+      ],
+      "usage_count": 35,
+      "notes": ""
+    },
+    "PAK40_wheel1_m1": {
+      "bf1942_type": "PAK40_wheel1_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "PAK40_wheel2_m1": {
+      "bf1942_type": "PAK40_wheel2_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40BodyInfo": {
+      "bf1942_type": "Pak40BodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Pak40Camera": {
+      "bf1942_type": "Pak40Camera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40CockpitExternal": {
+      "bf1942_type": "Pak40CockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40CockpitInternal": {
+      "bf1942_type": "Pak40CockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Entry": {
+      "bf1942_type": "Pak40Entry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40HandleGrip1": {
+      "bf1942_type": "Pak40HandleGrip1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40HandleGrip2": {
+      "bf1942_type": "Pak40HandleGrip2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Mount": {
+      "bf1942_type": "Pak40Mount",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Seat": {
+      "bf1942_type": "Pak40Seat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Slider": {
+      "bf1942_type": "Pak40Slider",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Wheel1": {
+      "bf1942_type": "Pak40Wheel1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Wheel2": {
+      "bf1942_type": "Pak40Wheel2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "PanzerIVTrackL": {
+      "bf1942_type": "PanzerIVTrackL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "PanzerIVTrackR": {
+      "bf1942_type": "PanzerIVTrackR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawnObject_BodyInfo": {
+      "bf1942_type": "ParaTrooperSpawnObject_BodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_1": {
+      "bf1942_type": "ParaTrooperSpawn_1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_2": {
+      "bf1942_type": "ParaTrooperSpawn_2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_3": {
+      "bf1942_type": "ParaTrooperSpawn_3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_4": {
+      "bf1942_type": "ParaTrooperSpawn_4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_5": {
+      "bf1942_type": "ParaTrooperSpawn_5",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ParaTrooperSpawn_6": {
+      "bf1942_type": "ParaTrooperSpawn_6",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pegasus_Bridge_M1": {
+      "bf1942_type": "Pegasus_Bridge_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pegasus_Full_M1": {
+      "bf1942_type": "Pegasus_Full_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pegasus_Ladder": {
+      "bf1942_type": "Pegasus_Ladder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Pegasus_Ladder_M1": {
+      "bf1942_type": "Pegasus_Ladder_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "PlayerControlObject": {
+      "bf1942_type": "PlayerControlObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 48,
+      "notes": ""
+    },
+    "Prerequisites": {
+      "bf1942_type": "Prerequisites",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Stalingrad"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Projectile": {
+      "bf1942_type": "Projectile",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "Radar_AA_AllCockpitExternal": {
+      "bf1942_type": "Radar_AA_AllCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_Cannon": {
+      "bf1942_type": "Radar_AA_Allies_Cannon",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_Crank": {
+      "bf1942_type": "Radar_AA_Allies_Crank",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_Pipe": {
+      "bf1942_type": "Radar_AA_Allies_Pipe",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_Roll": {
+      "bf1942_type": "Radar_AA_Allies_Roll",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_RotatingCrank": {
+      "bf1942_type": "Radar_AA_Allies_RotatingCrank",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_cannon_m1": {
+      "bf1942_type": "Radar_AA_Allies_cannon_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_crank_m1": {
+      "bf1942_type": "Radar_AA_Allies_crank_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_pipe_m1": {
+      "bf1942_type": "Radar_AA_Allies_pipe_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_roll_m1": {
+      "bf1942_type": "Radar_AA_Allies_roll_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_aa_Allies_base_M1": {
+      "bf1942_type": "Radar_aa_Allies_base_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RotationalBundle": {
+      "bf1942_type": "RotationalBundle",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 47,
+      "notes": ""
+    },
+    "SeatObject": {
+      "bf1942_type": "SeatObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 21,
+      "notes": ""
+    },
+    "SextonBodyInfo": {
+      "bf1942_type": "SextonBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonCamera": {
+      "bf1942_type": "SextonCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonCannon": {
+      "bf1942_type": "SextonCannon",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonCannonBase": {
+      "bf1942_type": "SextonCannonBase",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonCockpitExternal": {
+      "bf1942_type": "SextonCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonCockpitInternal": {
+      "bf1942_type": "SextonCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonComplex": {
+      "bf1942_type": "SextonComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonEngine": {
+      "bf1942_type": "SextonEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonEntry": {
+      "bf1942_type": "SextonEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "SextonSimple": {
+      "bf1942_type": "SextonSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelL1": {
+      "bf1942_type": "SextonWheelL1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelL2": {
+      "bf1942_type": "SextonWheelL2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelL3": {
+      "bf1942_type": "SextonWheelL3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "SextonWheelL3Dummy": {
+      "bf1942_type": "SextonWheelL3Dummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "SextonWheelL3DummySmoke": {
+      "bf1942_type": "SextonWheelL3DummySmoke",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelL4": {
+      "bf1942_type": "SextonWheelL4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "SextonWheelR1": {
+      "bf1942_type": "SextonWheelR1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelR2": {
+      "bf1942_type": "SextonWheelR2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelR3": {
+      "bf1942_type": "SextonWheelR3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "SextonWheelR3Dummy": {
+      "bf1942_type": "SextonWheelR3Dummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "SextonWheelR3DummySmoke": {
+      "bf1942_type": "SextonWheelR3DummySmoke",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonWheelR4": {
+      "bf1942_type": "SextonWheelR4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "SextonWreck": {
+      "bf1942_type": "SextonWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuAABattery1": {
+      "bf1942_type": "ShokakuAABattery1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuAABattery2": {
+      "bf1942_type": "ShokakuAABattery2",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuAABattery3": {
+      "bf1942_type": "ShokakuAABattery3",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuAABattery4": {
+      "bf1942_type": "ShokakuAABattery4",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuBodyInfo": {
+      "bf1942_type": "ShokakuBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "ShokakuCamera": {
+      "bf1942_type": "ShokakuCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuEngine": {
+      "bf1942_type": "ShokakuEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuEngineInfo": {
+      "bf1942_type": "ShokakuEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuEntry": {
+      "bf1942_type": "ShokakuEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuFloater": {
+      "bf1942_type": "ShokakuFloater",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 8,
+      "notes": ""
+    },
+    "ShokakuHullWing": {
+      "bf1942_type": "ShokakuHullWing",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuRadar": {
+      "bf1942_type": "ShokakuRadar",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuRudder": {
+      "bf1942_type": "ShokakuRudder",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ShokakuSimple": {
+      "bf1942_type": "ShokakuSimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Shokaku_L1": {
+      "bf1942_type": "Shokaku_L1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Shokaku_Radar_m1": {
+      "bf1942_type": "Shokaku_Radar_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Shokaku_m1": {
+      "bf1942_type": "Shokaku_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SimpleObject": {
+      "bf1942_type": "SimpleObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 221,
+      "notes": ""
+    },
+    "Siren": {
+      "bf1942_type": "Siren",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Sky_Anzio_m1": {
+      "bf1942_type": "Sky_Anzio_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Anzio"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Battleaxe_m1": {
+      "bf1942_type": "Sky_Battleaxe_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Gazala"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Berlin_m1": {
+      "bf1942_type": "Sky_Berlin_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Berlin"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Bocage_m1": {
+      "bf1942_type": "Sky_Bocage_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Bocage",
+        "Coral_sea"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Sky_Bulge_m1": {
+      "bf1942_type": "Sky_Bulge_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Cassino_M1": {
+      "bf1942_type": "Sky_Cassino_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "cassino"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Elala_m1": {
+      "bf1942_type": "Sky_Elala_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "El_Alamein"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Essen_m1": {
+      "bf1942_type": "Sky_Essen_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Essen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Gazala_m1": {
+      "bf1942_type": "Sky_Gazala_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battleaxe"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Gothic_m1": {
+      "bf1942_type": "Sky_Gothic_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Gothic_Line"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Guada_m1": {
+      "bf1942_type": "Sky_Guada_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "GuadalCanal"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Husky_m1": {
+      "bf1942_type": "Sky_Husky_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "husky"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_IwoJima_m1": {
+      "bf1942_type": "Sky_IwoJima_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Iwo_Jima"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Kbely_M1": {
+      "bf1942_type": "Sky_Kbely_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Kbely_Airfield"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Kharkov_m1": {
+      "bf1942_type": "Sky_Kharkov_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Kharkov"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Kursk_m1": {
+      "bf1942_type": "Sky_Kursk_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Market_m1": {
+      "bf1942_type": "Sky_Market_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Market_Garden",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Sky_Midway_m1": {
+      "bf1942_type": "Sky_Midway_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Midway"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Omaha_m1": {
+      "bf1942_type": "Sky_Omaha_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Omaha_Beach"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Peenemunde_m1": {
+      "bf1942_type": "Sky_Peenemunde_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Peenemunde"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Salerno_m1": {
+      "bf1942_type": "Sky_Salerno_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "salerno",
+        "Hellendoorn"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Sky_SantoCroce_m1": {
+      "bf1942_type": "Sky_SantoCroce_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Santo_Croce"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Stalingrad_m1": {
+      "bf1942_type": "Sky_Stalingrad_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Stalingrad"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Tobruk_m1": {
+      "bf1942_type": "Sky_Tobruk_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Tobruk"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_Wake_m1": {
+      "bf1942_type": "Sky_Wake_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Invasion_of_the_Philippines",
+        "Wake"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Sky_aredoubt_m1": {
+      "bf1942_type": "Sky_aredoubt_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Eagles_Nest"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_baytown_m1": {
+      "bf1942_type": "Sky_baytown_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "baytown"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_elala_m1": {
+      "bf1942_type": "Sky_elala_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "aberdeen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_mimo_m1": {
+      "bf1942_type": "Sky_mimo_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Mimoyecques"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sky_telemark_M1": {
+      "bf1942_type": "Sky_telemark_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Telemark"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SmallTent_m1": {
+      "bf1942_type": "SmallTent_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SonarObject": {
+      "bf1942_type": "SonarObject",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Spring": {
+      "bf1942_type": "Spring",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 24,
+      "notes": ""
+    },
+    "SpringInfo": {
+      "bf1942_type": "SpringInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 15,
+      "notes": ""
+    },
+    "Strategies": {
+      "bf1942_type": "Strategies",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 19,
+      "notes": ""
+    },
+    "SupplyDepot": {
+      "bf1942_type": "SupplyDepot",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 11,
+      "notes": ""
+    },
+    "T_Stone_aa_m1": {
+      "bf1942_type": "T_Stone_aa_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "T_Stone_jc_m1": {
+      "bf1942_type": "T_Stone_jc_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "T_Stone_nw_m1": {
+      "bf1942_type": "T_Stone_nw_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "T_Stone_sa_m1": {
+      "bf1942_type": "T_Stone_sa_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "T_Stone_tg_m1": {
+      "bf1942_type": "T_Stone_tg_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "TimerObjective": {
+      "bf1942_type": "TimerObjective",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Eagles_Nest",
+        "Essen"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "Trainbridge_m1": {
+      "bf1942_type": "Trainbridge_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Vehicle_M1919A4_Info": {
+      "bf1942_type": "Vehicle_M1919A4_Info",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Vehicle_MG42_Info": {
+      "bf1942_type": "Vehicle_MG42_Info",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "WestAirfield_SoldierSpawn": {
+      "bf1942_type": "WestAirfield_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyBackSpringL": {
+      "bf1942_type": "WillyBackSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyBackSpringR": {
+      "bf1942_type": "WillyBackSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyBodyInfo": {
+      "bf1942_type": "WillyBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "WillyCamera": {
+      "bf1942_type": "WillyCamera",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyCockpitExternal": {
+      "bf1942_type": "WillyCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyCockpitInternal": {
+      "bf1942_type": "WillyCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyComplex": {
+      "bf1942_type": "WillyComplex",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyEngine": {
+      "bf1942_type": "WillyEngine",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyEngineInfo": {
+      "bf1942_type": "WillyEngineInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyEntry": {
+      "bf1942_type": "WillyEntry",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "WillyFrontSpringL": {
+      "bf1942_type": "WillyFrontSpringL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyFrontSpringR": {
+      "bf1942_type": "WillyFrontSpringR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyFrontWheelL": {
+      "bf1942_type": "WillyFrontWheelL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyFrontWheelR": {
+      "bf1942_type": "WillyFrontWheelR",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyHorn": {
+      "bf1942_type": "WillyHorn",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyPassengerPCO": {
+      "bf1942_type": "WillyPassengerPCO",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyPassengerSeat": {
+      "bf1942_type": "WillyPassengerSeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillySeat": {
+      "bf1942_type": "WillySeat",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillySimple": {
+      "bf1942_type": "WillySimple",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillySteeringDummy": {
+      "bf1942_type": "WillySteeringDummy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillySteeringInfo": {
+      "bf1942_type": "WillySteeringInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyTurretInfo": {
+      "bf1942_type": "WillyTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "WillyWreck": {
+      "bf1942_type": "WillyWreck",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Wing": {
+      "bf1942_type": "Wing",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea",
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 18,
+      "notes": ""
+    },
+    "Wreck_Willy_M1": {
+      "bf1942_type": "Wreck_Willy_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Wreck_corsair2_m1": {
+      "bf1942_type": "Wreck_corsair2_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Wreck_hanomag_m1": {
+      "bf1942_type": "Wreck_hanomag_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Wreck_mustang2_m1": {
+      "bf1942_type": "Wreck_mustang2_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Wreck_spitfire_2_m1": {
+      "bf1942_type": "Wreck_spitfire_2_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Wreck_spitfire_3_m1": {
+      "bf1942_type": "Wreck_spitfire_3_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "bf1942": {
+      "bf1942_type": "bf1942",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 36,
+      "notes": ""
+    },
+    "browning": {
+      "bf1942_type": "browning",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "cloud": {
+      "bf1942_type": "cloud",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 34,
+      "notes": ""
+    },
+    "coastbridge_m1": {
+      "bf1942_type": "coastbridge_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "conditions": {
+      "bf1942_type": "conditions",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 18,
+      "notes": ""
+    },
+    "e_ExFumeFact": {
+      "bf1942_type": "e_ExFumeFact",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "e_ExplGas": {
+      "bf1942_type": "e_ExplGas",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_MuzzB17": {
+      "bf1942_type": "e_MuzzB17",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "e_MuzzHeavy": {
+      "bf1942_type": "e_MuzzHeavy",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_MuzzPanz": {
+      "bf1942_type": "e_MuzzPanz",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "e_MuzzPriest": {
+      "bf1942_type": "e_MuzzPriest",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_PanzShootTrail": {
+      "bf1942_type": "e_PanzShootTrail",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "e_ScrapMetalSmoke": {
+      "bf1942_type": "e_ScrapMetalSmoke",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "e_scrapmetal": {
+      "bf1942_type": "e_scrapmetal",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_shell792mm": {
+      "bf1942_type": "e_shell792mm",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_waterBackBig": {
+      "bf1942_type": "e_waterBackBig",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "e_waterbackraft": {
+      "bf1942_type": "e_waterbackraft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_waterfrontBig": {
+      "bf1942_type": "e_waterfrontBig",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "e_wdustWheelF": {
+      "bf1942_type": "e_wdustWheelF",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 16,
+      "notes": ""
+    },
+    "e_wdustWheelFL": {
+      "bf1942_type": "e_wdustWheelFL",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 16,
+      "notes": ""
+    },
+    "enterprise_hatch_m1": {
+      "bf1942_type": "enterprise_hatch_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "enterprise_rad_m1": {
+      "bf1942_type": "enterprise_rad_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "enterprise_rod_m1": {
+      "bf1942_type": "enterprise_rod_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "helirepairpoint": {
+      "bf1942_type": "helirepairpoint",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ladder_5m_m1": {
+      "bf1942_type": "ladder_5m_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Coral_sea"
+      ],
+      "usage_count": 7,
+      "notes": ""
+    },
+    "landrep1_supplyExterior": {
+      "bf1942_type": "landrep1_supplyExterior",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "landrep1_supplyInterior": {
+      "bf1942_type": "landrep1_supplyInterior",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodCDNRaft": {
+      "bf1942_type": "lodCDNRaft",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodFlettner": {
+      "bf1942_type": "lodFlettner",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodFlettnerCockpit": {
+      "bf1942_type": "lodFlettnerCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodFlettner_Rotary": {
+      "bf1942_type": "lodFlettner_Rotary",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "lodGreyhound": {
+      "bf1942_type": "lodGreyhound",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodGreyhoundCockpit": {
+      "bf1942_type": "lodGreyhoundCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodHiryu": {
+      "bf1942_type": "lodHiryu",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodHornet": {
+      "bf1942_type": "lodHornet",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodJu88A": {
+      "bf1942_type": "lodJu88A",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodJu88ACockpit": {
+      "bf1942_type": "lodJu88ACockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodJu88APropeller": {
+      "bf1942_type": "lodJu88APropeller",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "lodKrupp": {
+      "bf1942_type": "lodKrupp",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodKruppCockpit": {
+      "bf1942_type": "lodKruppCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodKruppSteering": {
+      "bf1942_type": "lodKruppSteering",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodM4A1": {
+      "bf1942_type": "lodM4A1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodM4A1Cockpit": {
+      "bf1942_type": "lodM4A1Cockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodMunitionsPanzer": {
+      "bf1942_type": "lodMunitionsPanzer",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodMunitionsPanzerCockpit": {
+      "bf1942_type": "lodMunitionsPanzerCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodPak40Cockpit": {
+      "bf1942_type": "lodPak40Cockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodRadar_AA_AllCockpit": {
+      "bf1942_type": "lodRadar_AA_AllCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodSextonCockpit": {
+      "bf1942_type": "lodSextonCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodWilly": {
+      "bf1942_type": "lodWilly",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "lodWillyCockpit": {
+      "bf1942_type": "lodWillyCockpit",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "lodlandrep1_supply": {
+      "bf1942_type": "lodlandrep1_supply",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "mililocker_m1": {
+      "bf1942_type": "mililocker_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "militable_m1": {
+      "bf1942_type": "militable_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "pak40_1P": {
+      "bf1942_type": "pak40_1P",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "pak40_mount_M1": {
+      "bf1942_type": "pak40_mount_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "pak40_slider_M1": {
+      "bf1942_type": "pak40_slider_M1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "prerequisites": {
+      "bf1942_type": "prerequisites",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 18,
+      "notes": ""
+    },
+    "repairpoint": {
+      "bf1942_type": "repairpoint",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "rooflamp1_m1": {
+      "bf1942_type": "rooflamp1_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "smallcrane_m1": {
+      "bf1942_type": "smallcrane_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "traincrane_m1": {
+      "bf1942_type": "traincrane_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "trainplatform_m1": {
+      "bf1942_type": "trainplatform_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "trainstation_m1": {
+      "bf1942_type": "trainstation_m1",
+      "portal_equivalent": "TODO",
+      "category": "unknown",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    }
+  },
+  "buildings": {
+    "Allies_Factory_AISpawn": {
+      "bf1942_type": "Allies_Factory_AISpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Allies_Factory_AI_Spawn_Bundle": {
+      "bf1942_type": "Allies_Factory_AI_Spawn_Bundle",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Allies_Factory_Camera": {
+      "bf1942_type": "Allies_Factory_Camera",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Allies_Factory_Entry": {
+      "bf1942_type": "Allies_Factory_Entry",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Allies_Factory_Seat": {
+      "bf1942_type": "Allies_Factory_Seat",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Allies_Factory_Spawn": {
+      "bf1942_type": "Allies_Factory_Spawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 6,
+      "notes": ""
+    },
+    "Britain_Factory_L1": {
+      "bf1942_type": "Britain_Factory_L1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Britain_Factory_M1": {
+      "bf1942_type": "Britain_Factory_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Britain_Factory_Wreck_m1": {
+      "bf1942_type": "Britain_Factory_Wreck_m1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Britain_Factory_wreck_smoke2_M1": {
+      "bf1942_type": "Britain_Factory_wreck_smoke2_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Britain_Factory_wreck_smoke_M1": {
+      "bf1942_type": "Britain_Factory_wreck_smoke_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_BritainFactory_LargeSmokeStack2": {
+      "bf1942_type": "Em_BritainFactory_LargeSmokeStack2",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_BritainFactory_SmallSmokeStack": {
+      "bf1942_type": "Em_BritainFactory_SmallSmokeStack",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FactoryBodyInfo": {
+      "bf1942_type": "FactoryBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "FactoryComplex": {
+      "bf1942_type": "FactoryComplex",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FactoryComplexAI": {
+      "bf1942_type": "FactoryComplexAI",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FactorySimple": {
+      "bf1942_type": "FactorySimple",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "FactoryWreck": {
+      "bf1942_type": "FactoryWreck",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 3,
+      "notes": ""
+    },
+    "Factory_ObjectiveComplex": {
+      "bf1942_type": "Factory_ObjectiveComplex",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Factory_SoldierSpawn": {
+      "bf1942_type": "Factory_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundTower": {
+      "bf1942_type": "GreyhoundTower",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTowerComplex": {
+      "bf1942_type": "RadarTowerComplex",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTowerSimple": {
+      "bf1942_type": "RadarTowerSimple",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTowerSonar": {
+      "bf1942_type": "RadarTowerSonar",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "RadarTowerWreck": {
+      "bf1942_type": "RadarTowerWreck",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Bunker": {
+      "bf1942_type": "RadarTower_Bunker",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "RadarTower_Bunker_M1": {
+      "bf1942_type": "RadarTower_Bunker_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Bunker_wreck": {
+      "bf1942_type": "RadarTower_Bunker_wreck",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Bunker_wreck_M1": {
+      "bf1942_type": "RadarTower_Bunker_wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_E_AISpawn": {
+      "bf1942_type": "RadarTower_E_AISpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_E_SoldierSpawn": {
+      "bf1942_type": "RadarTower_E_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "RadarTower_Radar": {
+      "bf1942_type": "RadarTower_Radar",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Radar_M1": {
+      "bf1942_type": "RadarTower_Radar_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Radar_wreck1_M1": {
+      "bf1942_type": "RadarTower_Radar_wreck1_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_Radar_wreck2_M1": {
+      "bf1942_type": "RadarTower_Radar_wreck2_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_SE_AISpawn": {
+      "bf1942_type": "RadarTower_SE_AISpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_SE_SoldierSpawn": {
+      "bf1942_type": "RadarTower_SE_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "RadarTower_SW_AISpawn": {
+      "bf1942_type": "RadarTower_SW_AISpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_SW_SoldierSpawn": {
+      "bf1942_type": "RadarTower_SW_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "RadarTower_Stand": {
+      "bf1942_type": "RadarTower_Stand",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "RadarTower_Stand_M1": {
+      "bf1942_type": "RadarTower_Stand_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_W_AISpawn": {
+      "bf1942_type": "RadarTower_W_AISpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_W_SoldierSpawn": {
+      "bf1942_type": "RadarTower_W_SoldierSpawn",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "RadarTower_stand_wreck_M1": {
+      "bf1942_type": "RadarTower_stand_wreck_M1",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodFactory_Objective": {
+      "bf1942_type": "lodFactory_Objective",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodRadarTower": {
+      "bf1942_type": "lodRadarTower",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 5,
+      "notes": ""
+    },
+    "lodfactory": {
+      "bf1942_type": "lodfactory",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodfactoryAI": {
+      "bf1942_type": "lodfactoryAI",
+      "portal_equivalent": "TODO",
+      "category": "building",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    }
+  },
+  "props": {
+    "Em_ScrapRocketPlatform_Barrel": {
+      "bf1942_type": "Em_ScrapRocketPlatform_Barrel",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapRocketPlatform_Base": {
+      "bf1942_type": "Em_ScrapRocketPlatform_Base",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Em_ScrapRocketPlatform_Seat": {
+      "bf1942_type": "Em_ScrapRocketPlatform_Seat",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "FlettnerRocketLauncher": {
+      "bf1942_type": "FlettnerRocketLauncher",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyHound_Barrel_M1": {
+      "bf1942_type": "GreyHound_Barrel_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_RocketLauncher": {
+      "bf1942_type": "Krupp_RocketLauncher",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_Rocket_Barrels_M1": {
+      "bf1942_type": "Krupp_Rocket_Barrels_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_Rocket_Base_M1": {
+      "bf1942_type": "Krupp_Rocket_Base_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Krupp_Rocket_Seat_M1": {
+      "bf1942_type": "Krupp_Rocket_Seat_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M4A1MortarBarrel": {
+      "bf1942_type": "M4A1MortarBarrel",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Mortar_Barrel_M1": {
+      "bf1942_type": "Mortar_Barrel_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherBodyInfo": {
+      "bf1942_type": "RocketLauncherBodyInfo",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherCockpitExternal": {
+      "bf1942_type": "RocketLauncherCockpitExternal",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherCockpitInternal": {
+      "bf1942_type": "RocketLauncherCockpitInternal",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherEntry": {
+      "bf1942_type": "RocketLauncherEntry",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherHorizontalPCO1": {
+      "bf1942_type": "RocketLauncherHorizontalPCO1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherPassengerSeat": {
+      "bf1942_type": "RocketLauncherPassengerSeat",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncherTurretInfo": {
+      "bf1942_type": "RocketLauncherTurretInfo",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "RocketLauncherVerticalPC01": {
+      "bf1942_type": "RocketLauncherVerticalPC01",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncher_Platform_M1": {
+      "bf1942_type": "RocketLauncher_Platform_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketLauncher_RocketLauncher": {
+      "bf1942_type": "RocketLauncher_RocketLauncher",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketPlatformComplex": {
+      "bf1942_type": "RocketPlatformComplex",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketPlatformWreck": {
+      "bf1942_type": "RocketPlatformWreck",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketStation_Cannons_M1": {
+      "bf1942_type": "RocketStation_Cannons_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketStation_Platform_M1": {
+      "bf1942_type": "RocketStation_Platform_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketStation_base_M1": {
+      "bf1942_type": "RocketStation_base_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RocketStation_seat_M1": {
+      "bf1942_type": "RocketStation_seat_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_rocketFume": {
+      "bf1942_type": "e_rocketFume",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodRocketLauncherCockpit": {
+      "bf1942_type": "lodRocketLauncherCockpit",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "lodRocketPlatform": {
+      "bf1942_type": "lodRocketPlatform",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "pak40_barrel_M1": {
+      "bf1942_type": "pak40_barrel_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "stecrate1_M1": {
+      "bf1942_type": "stecrate1_M1",
+      "portal_equivalent": "TODO",
+      "category": "prop",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    }
+  },
+  "weapons": {
+    "GreyHound_GunRotate_M1": {
+      "bf1942_type": "GreyHound_GunRotate_M1",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "GreyhoundGunBarrel": {
+      "bf1942_type": "GreyhoundGunBarrel",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "GreyhoundGunBase": {
+      "bf1942_type": "GreyhoundGunBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_BellyGun": {
+      "bf1942_type": "Ju88A_BellyGun",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_BellyGunner_PCO": {
+      "bf1942_type": "Ju88A_BellyGunner_PCO",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_BellyGunner_WeaponBase": {
+      "bf1942_type": "Ju88A_BellyGunner_WeaponBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunnerSeat": {
+      "bf1942_type": "Ju88A_NoseGunnerSeat",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_Camera": {
+      "bf1942_type": "Ju88A_NoseGunner_Camera",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_Gun": {
+      "bf1942_type": "Ju88A_NoseGunner_Gun",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_LeftFoot": {
+      "bf1942_type": "Ju88A_NoseGunner_LeftFoot",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_PCO": {
+      "bf1942_type": "Ju88A_NoseGunner_PCO",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_RightFoot": {
+      "bf1942_type": "Ju88A_NoseGunner_RightFoot",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_NoseGunner_WeaponBase": {
+      "bf1942_type": "Ju88A_NoseGunner_WeaponBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunnerSeat": {
+      "bf1942_type": "Ju88A_RearGunnerSeat",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_CameraBase": {
+      "bf1942_type": "Ju88A_RearGunner_CameraBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_LeftGun": {
+      "bf1942_type": "Ju88A_RearGunner_LeftGun",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_LeftGunBase": {
+      "bf1942_type": "Ju88A_RearGunner_LeftGunBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_PCO": {
+      "bf1942_type": "Ju88A_RearGunner_PCO",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_RightGun": {
+      "bf1942_type": "Ju88A_RearGunner_RightGun",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_RightGunBase": {
+      "bf1942_type": "Ju88A_RearGunner_RightGunBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Ju88A_RearGunner_WeaponBase": {
+      "bf1942_type": "Ju88A_RearGunner_WeaponBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Junker_GunB_M1": {
+      "bf1942_type": "Junker_GunB_M1",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Landmine_Launcher": {
+      "bf1942_type": "Landmine_Launcher",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "M3A1_MGun_Console_M1": {
+      "bf1942_type": "M3A1_MGun_Console_M1",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Pak40Gun": {
+      "bf1942_type": "Pak40Gun",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "RadarTower_L_Gunpod_M1": {
+      "bf1942_type": "RadarTower_L_Gunpod_M1",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Radar_AA_Allies_GunBarrel": {
+      "bf1942_type": "Radar_AA_Allies_GunBarrel",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonGunBase": {
+      "bf1942_type": "SextonGunBase",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonGunInfo": {
+      "bf1942_type": "SextonGunInfo",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "SextonGunnerCamera": {
+      "bf1942_type": "SextonGunnerCamera",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "SextonGunnerSeat": {
+      "bf1942_type": "SextonGunnerSeat",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Sexton_Gunner_PCO1": {
+      "bf1942_type": "Sexton_Gunner_PCO1",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Liberation_of_Caen"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "WillyGunnerCamera": {
+      "bf1942_type": "WillyGunnerCamera",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Raid_on_Agheila"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "e_MuzzAAgunB": {
+      "bf1942_type": "e_MuzzAAgunB",
+      "portal_equivalent": "TODO",
+      "category": "weapon",
+      "found_in_maps": [
+        "Battle_of_Britain"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    }
+  },
+  "kits": {},
+  "spawners": {
+    "ControlPoint": {
+      "bf1942_type": "ControlPoint",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battleaxe",
+        "Bocage"
+      ],
+      "usage_count": 487,
+      "notes": ""
+    },
+    "ControlPointInfo": {
+      "bf1942_type": "ControlPointInfo",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Bocage",
+        "Omaha_Beach",
+        "Santo_Croce"
+      ],
+      "usage_count": 88,
+      "notes": ""
+    },
+    "ControlPointTemplates": {
+      "bf1942_type": "ControlPointTemplates",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Midway"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "Enterprise_lcvpSpawner": {
+      "bf1942_type": "Enterprise_lcvpSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "HiryuAichivalSpawner": {
+      "bf1942_type": "HiryuAichivalSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "HiryuZeroSpawner": {
+      "bf1942_type": "HiryuZeroSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Hornet_corsairSpawner": {
+      "bf1942_type": "Hornet_corsairSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "Hornet_sbdSpawner": {
+      "bf1942_type": "Hornet_sbdSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 1,
+      "notes": ""
+    },
+    "ObjectSpawner": {
+      "bf1942_type": "ObjectSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 1673,
+      "notes": ""
+    },
+    "ShokakuDaiHatsuSpawner": {
+      "bf1942_type": "ShokakuDaiHatsuSpawner",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Coral_sea"
+      ],
+      "usage_count": 2,
+      "notes": ""
+    },
+    "SpawnPoint": {
+      "bf1942_type": "SpawnPoint",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Battle_of_Britain",
+        "Battle_of_the_Bulge",
+        "Battleaxe"
+      ],
+      "usage_count": 5295,
+      "notes": ""
+    },
+    "controlpoint": {
+      "bf1942_type": "controlpoint",
+      "portal_equivalent": "TODO",
+      "category": "spawner",
+      "found_in_maps": [
+        "Battle_of_the_Bulge",
+        "Battleaxe",
+        "Berlin"
+      ],
+      "usage_count": 200,
+      "notes": ""
+    }
+  },
+  "unknown": {}
+}

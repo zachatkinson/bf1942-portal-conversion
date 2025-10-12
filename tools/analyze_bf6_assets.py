@@ -14,9 +14,9 @@ Output:
 
 import json
 import sys
-from pathlib import Path
-from typing import Dict, List, Set
 from collections import defaultdict
+from pathlib import Path
+from typing import Dict, List
 
 
 def load_asset_types(json_path: str) -> List[Dict]:
@@ -32,10 +32,10 @@ def load_asset_types(json_path: str) -> List[Dict]:
         FileNotFoundError: If json file doesn't exist
         json.JSONDecodeError: If JSON is malformed
     """
-    with open(json_path, 'r', encoding='utf-8') as f:
+    with open(json_path, encoding="utf-8") as f:
         data = json.load(f)
 
-    return data.get('AssetTypes', [])
+    return data.get("AssetTypes", [])
 
 
 def categorize_assets(assets: List[Dict]) -> Dict[str, List[Dict]]:
@@ -50,25 +50,25 @@ def categorize_assets(assets: List[Dict]) -> Dict[str, List[Dict]]:
     categories = defaultdict(list)
 
     for asset in assets:
-        asset_type = asset.get('type', 'Unknown')
-        directory = asset.get('directory', 'Uncategorized')
-        level_restrictions = asset.get('levelRestrictions', [])
+        asset_type = asset.get("type", "Unknown")
+        directory = asset.get("directory", "Uncategorized")
+        level_restrictions = asset.get("levelRestrictions", [])
 
         # Extract category from directory path
-        if '/' in directory:
-            main_category = directory.split('/')[0]
+        if "/" in directory:
+            main_category = directory.split("/")[0]
         else:
             main_category = directory
 
         # Store asset with useful metadata
         asset_info = {
-            'type': asset_type,
-            'directory': directory,
-            'category': main_category,
-            'restricted': len(level_restrictions) > 0,
-            'available_on': level_restrictions if level_restrictions else ['ALL'],
-            'constants': asset.get('constants', []),
-            'properties': asset.get('properties', [])
+            "type": asset_type,
+            "directory": directory,
+            "category": main_category,
+            "restricted": len(level_restrictions) > 0,
+            "available_on": level_restrictions if level_restrictions else ["ALL"],
+            "constants": asset.get("constants", []),
+            "properties": asset.get("properties", []),
         }
 
         categories[main_category].append(asset_info)
@@ -86,16 +86,14 @@ def find_vehicle_spawners(assets: List[Dict]) -> List[Dict]:
         List of vehicle spawner assets
     """
     spawners = []
-    keywords = ['spawner', 'spawn', 'vehicle']
+    keywords = ["spawner", "spawn", "vehicle"]
 
     for asset in assets:
-        asset_type = asset.get('type', '').lower()
-        directory = asset.get('directory', '').lower()
+        asset_type = asset.get("type", "").lower()
+        directory = asset.get("directory", "").lower()
 
         # Check if this is a spawner
-        if any(keyword in asset_type for keyword in keywords):
-            spawners.append(asset)
-        elif 'vehicle' in directory or 'spawner' in directory:
+        if any(keyword in asset_type for keyword in keywords) or "vehicle" in directory or "spawner" in directory:
             spawners.append(asset)
 
     return spawners
@@ -111,15 +109,13 @@ def find_terrain_assets(assets: List[Dict]) -> List[Dict]:
         List of terrain assets
     """
     terrain = []
-    keywords = ['terrain', 'landscape', 'ground', 'heightmap']
+    keywords = ["terrain", "landscape", "ground", "heightmap"]
 
     for asset in assets:
-        asset_type = asset.get('type', '').lower()
-        directory = asset.get('directory', '').lower()
+        asset_type = asset.get("type", "").lower()
+        directory = asset.get("directory", "").lower()
 
-        if any(keyword in asset_type for keyword in keywords):
-            terrain.append(asset)
-        elif any(keyword in directory for keyword in keywords):
+        if any(keyword in asset_type for keyword in keywords) or any(keyword in directory for keyword in keywords):
             terrain.append(asset)
 
     return terrain
@@ -136,18 +132,23 @@ def find_gameplay_objects(assets: List[Dict]) -> List[Dict]:
     """
     gameplay = []
     keywords = [
-        'hq', 'headquarters', 'spawner', 'spawnpoint',
-        'capturepoint', 'capture', 'objective',
-        'combatarea', 'areaTrigger', 'trigger'
+        "hq",
+        "headquarters",
+        "spawner",
+        "spawnpoint",
+        "capturepoint",
+        "capture",
+        "objective",
+        "combatarea",
+        "areaTrigger",
+        "trigger",
     ]
 
     for asset in assets:
-        asset_type = asset.get('type', '').lower()
-        directory = asset.get('directory', '').lower()
+        asset_type = asset.get("type", "").lower()
+        directory = asset.get("directory", "").lower()
 
-        if any(keyword in asset_type for keyword in keywords):
-            gameplay.append(asset)
-        elif 'gameplay' in directory:
+        if any(keyword in asset_type for keyword in keywords) or "gameplay" in directory:
             gameplay.append(asset)
 
     return gameplay
@@ -165,7 +166,7 @@ def find_unrestricted_assets(assets: List[Dict]) -> List[Dict]:
     unrestricted = []
 
     for asset in assets:
-        level_restrictions = asset.get('levelRestrictions', [])
+        level_restrictions = asset.get("levelRestrictions", [])
         if not level_restrictions:
             unrestricted.append(asset)
 
@@ -184,7 +185,7 @@ def analyze_level_restrictions(assets: List[Dict]) -> Dict[str, int]:
     level_counts = defaultdict(int)
 
     for asset in assets:
-        level_restrictions = asset.get('levelRestrictions', [])
+        level_restrictions = asset.get("levelRestrictions", [])
         if level_restrictions:
             for level in level_restrictions:
                 level_counts[level] += 1
@@ -204,25 +205,25 @@ def generate_statistics(assets: List[Dict]) -> Dict:
     total_assets = len(assets)
 
     # Count by restriction status
-    unrestricted = len([a for a in assets if not a.get('levelRestrictions', [])])
+    unrestricted = len([a for a in assets if not a.get("levelRestrictions", [])])
     restricted = total_assets - unrestricted
 
     # Count by category
     categories = set()
     for asset in assets:
-        directory = asset.get('directory', '')
-        if '/' in directory:
-            categories.add(directory.split('/')[0])
+        directory = asset.get("directory", "")
+        if "/" in directory:
+            categories.add(directory.split("/")[0])
         else:
             categories.add(directory)
 
     return {
-        'total_assets': total_assets,
-        'unrestricted_assets': unrestricted,
-        'restricted_assets': restricted,
-        'restriction_percentage': round((restricted / total_assets) * 100, 2),
-        'unique_categories': len(categories),
-        'category_names': sorted(categories)
+        "total_assets": total_assets,
+        "unrestricted_assets": unrestricted,
+        "restricted_assets": restricted,
+        "restriction_percentage": round((restricted / total_assets) * 100, 2),
+        "unique_categories": len(categories),
+        "category_names": sorted(categories),
     }
 
 
@@ -230,7 +231,7 @@ def main():
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent
-    asset_json_path = project_root / 'FbExportData' / 'asset_types.json'
+    asset_json_path = project_root / "FbExportData" / "asset_types.json"
 
     if not asset_json_path.exists():
         print(f"ERROR: {asset_json_path} not found")
@@ -272,30 +273,34 @@ def main():
     print("BF6 PORTAL ASSET SUMMARY")
     print("=" * 70)
     print(f"Total Assets:           {stats['total_assets']:,}")
-    print(f"Unrestricted:           {stats['unrestricted_assets']:,} ({100 - stats['restriction_percentage']:.1f}%)")
-    print(f"Restricted:             {stats['restricted_assets']:,} ({stats['restriction_percentage']:.1f}%)")
+    print(
+        f"Unrestricted:           {stats['unrestricted_assets']:,} ({100 - stats['restriction_percentage']:.1f}%)"
+    )
+    print(
+        f"Restricted:             {stats['restricted_assets']:,} ({stats['restriction_percentage']:.1f}%)"
+    )
     print(f"Categories:             {stats['unique_categories']}")
     print()
     print("Top 10 Categories:")
-    for i, (cat, assets_list) in enumerate(sorted(categorized.items(),
-                                                    key=lambda x: len(x[1]),
-                                                    reverse=True)[:10], 1):
+    for i, (cat, assets_list) in enumerate(
+        sorted(categorized.items(), key=lambda x: len(x[1]), reverse=True)[:10], 1
+    ):
         print(f"  {i:2}. {cat:30} {len(assets_list):5,} assets")
     print("=" * 70)
 
     # Save categorized data
-    output_path = project_root / 'tools' / 'bf6_assets_by_category.json'
+    output_path = project_root / "tools" / "bf6_assets_by_category.json"
     output_data = {
-        'statistics': stats,
-        'categories': {cat: len(assets_list) for cat, assets_list in categorized.items()},
-        'vehicle_spawners': [v['type'] for v in vehicle_spawners],
-        'terrain_assets': [t['type'] for t in terrain_assets],
-        'gameplay_objects': [g['type'] for g in gameplay_objects],
-        'unrestricted_count': len(unrestricted),
-        'level_restrictions': level_restrictions
+        "statistics": stats,
+        "categories": {cat: len(assets_list) for cat, assets_list in categorized.items()},
+        "vehicle_spawners": [v["type"] for v in vehicle_spawners],
+        "terrain_assets": [t["type"] for t in terrain_assets],
+        "gameplay_objects": [g["type"] for g in gameplay_objects],
+        "unrestricted_count": len(unrestricted),
+        "level_restrictions": level_restrictions,
     }
 
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2)
 
     print(f"\nSaved analysis to: {output_path}")

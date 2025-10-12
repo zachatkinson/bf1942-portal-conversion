@@ -13,7 +13,9 @@ def test_polygon_volume(tmp_path: Path) -> None:
     test_type = "PolygonVolume"
     mock = setup_mock_project(tmp_path, [test_type])
     assert mock is not None
-    assert len(os.listdir(mock.gd_proj)) == 0, f"Expected no files to have been created for {test_type}"
+    assert len(os.listdir(mock.gd_proj)) == 0, (
+        f"Expected no files to have been created for {test_type}"
+    )
 
     example_level = TEST_GD_LEVELS / "test_polygon_volume.tscn"
     assert example_level.exists()
@@ -45,7 +47,9 @@ def test_polygon_volume(tmp_path: Path) -> None:
     imported_level_path = mock.gd_proj / "levels" / example_level.name
     assert imported_level_path.exists()
 
-    exported_level_path = export_tscn(imported_level_path, mock.fb_data, mock.export.with_name("export_again"))
+    exported_level_path = export_tscn(
+        imported_level_path, mock.fb_data, mock.export.with_name("export_again")
+    )
     assert exported_level_path.exists()
     exported_data = json.loads(exported_level_path.read_text())
 
@@ -61,7 +65,9 @@ def test_obb_volume(tmp_path: Path) -> None:
     test_type = "OBBVolume"
     mock = setup_mock_project(tmp_path, [test_type])
     assert mock is not None
-    assert len(os.listdir(mock.gd_proj)) == 0, f"Expected no files to have been created for {test_type}"
+    assert len(os.listdir(mock.gd_proj)) == 0, (
+        f"Expected no files to have been created for {test_type}"
+    )
 
     example_level = TEST_GD_LEVELS / "test_obb_volume.tscn"
     assert example_level.exists()
@@ -91,7 +97,9 @@ def test_obb_volume(tmp_path: Path) -> None:
     imported_level_path = mock.gd_proj / "levels" / example_level.name
     assert imported_level_path.exists()
 
-    exported_level_path = export_tscn(imported_level_path, mock.fb_data, mock.export.with_name("export_again"))
+    exported_level_path = export_tscn(
+        imported_level_path, mock.fb_data, mock.export.with_name("export_again")
+    )
     assert exported_level_path.exists()
     exported_data = json.loads(exported_level_path.read_text())
 

@@ -13,14 +13,13 @@ References:
     - https://bfmods.com (BF1942 modding community)
 """
 
+import logging
 import struct
-import os
 import sys
 from pathlib import Path
-from typing import List, Tuple, Optional
-import logging
+from typing import List, Optional
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -34,8 +33,8 @@ class RFAHeader:
             data: Raw header bytes from RFA file
         """
         # RFA files start with a magic signature
-        self.magic = struct.unpack('<I', data[0:4])[0]
-        self.version = struct.unpack('<I', data[4:8])[0]
+        self.magic = struct.unpack("<I", data[0:4])[0]
+        self.version = struct.unpack("<I", data[4:8])[0]
         logger.debug(f"RFA Magic: {hex(self.magic)}, Version: {self.version}")
 
 
@@ -122,7 +121,7 @@ class RFAExtractor:
 
         logger.info(f"Extracting {self.rfa_path} to {output_dir}")
 
-        with open(self.rfa_path, 'rb') as f:
+        with open(self.rfa_path, "rb") as f:
             self.header = self._read_header(f)
             self._parse_file_table(f)
 
@@ -132,7 +131,7 @@ class RFAExtractor:
             return False
 
         # Extract each file
-        with open(self.rfa_path, 'rb') as f:
+        with open(self.rfa_path, "rb") as f:
             for entry in self.file_entries:
                 self._extract_file(f, entry, output_path)
 
@@ -156,6 +155,7 @@ class RFAExtractor:
         if entry.is_compressed:
             try:
                 import lzo
+
                 data = lzo.decompress(data, entry.size)
             except ImportError:
                 logger.error("python-lzo not installed. Install with: pip install python-lzo")
@@ -165,7 +165,7 @@ class RFAExtractor:
                 logger.error(f"Failed to decompress {entry.filename}: {e}")
                 return
 
-        with open(file_output, 'wb') as out:
+        with open(file_output, "wb") as out:
             out.write(data)
 
         logger.debug(f"Extracted: {entry.filename}")
@@ -176,7 +176,7 @@ class RFAExtractor:
         Returns:
             List of file paths within archive
         """
-        with open(self.rfa_path, 'rb') as f:
+        with open(self.rfa_path, "rb") as f:
             self.header = self._read_header(f)
             self._parse_file_table(f)
 

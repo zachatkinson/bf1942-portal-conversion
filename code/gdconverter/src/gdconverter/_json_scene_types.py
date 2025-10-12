@@ -41,7 +41,12 @@ class Instance:
         self.props: dict[str, jtype.Property] = {}
 
     def get_ref_props(self) -> dict[str, jtype.Property]:
-        return {k: v for k, v in self.props.items() if isinstance(v, jtype.PropertyReference) or (isinstance(v, jtype.PropertyArray) and v.elem_type_class is jtype.PropertyReference)}
+        return {
+            k: v
+            for k, v in self.props.items()
+            if isinstance(v, jtype.PropertyReference)
+            or (isinstance(v, jtype.PropertyArray) and v.elem_type_class is jtype.PropertyReference)
+        }
 
 
 class Layer:

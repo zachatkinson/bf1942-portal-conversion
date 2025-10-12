@@ -1,0 +1,18 @@
+{
+  "name": "BF1942",
+  "engine": "Refractor 1.0",
+  "engine_type": "refractor",
+  "version": "1.6",
+  "era": "WW2",
+  "expansions": [
+    "base",
+    "xpack1_rtr",
+    "xpack2_sw"
+  ],
+  "coordinate_system": {
+    "axis_up": "Y",
+    "handedness": "right",
+    "units": "meters",
+    "scale_factor": 1.0
+  }
+}

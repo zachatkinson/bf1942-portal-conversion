@@ -35,7 +35,7 @@ def parse_scene(src_file: Path) -> dict[str, list[ttype.Instance]] | None:
             attr_list = line
         else:
             _logging.log_error("ERROR: Orphan attribute that does not have an owner instance:")
-            _logging.log_error(f"{src_file.name}:{i+1}\t{line.strip()}")
+            _logging.log_error(f"{src_file.name}:{i + 1}\t{line.strip()}")
             return None
         # If we encounter an struct, it can span multiple lines.
         # Keep track of the current struct, if any.
@@ -189,7 +189,9 @@ def _is_object_open(attr_list: str) -> bool:
     return attr_match is not None
 
 
-def _parse_struct_data(attr_list: str, curr_struct: ttype.Struct | None) -> tuple[ttype.Struct, bool]:
+def _parse_struct_data(
+    attr_list: str, curr_struct: ttype.Struct | None
+) -> tuple[ttype.Struct, bool]:
     """return (attr_list, attr_name, attr_value). attr_name is the same as struct name"""
     curr_struct = curr_struct if curr_struct else ttype.Struct("")
     attr_list = attr_list.strip()

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Configuration data structures for games and maps."""
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
-import json
+from typing import Dict, List
 
 
 @dataclass
 class GameConfig:
     """Configuration for a Battlefield game."""
+
     name: str  # e.g., "BF1942"
     engine: str  # e.g., "Refractor 1.0"
     engine_type: str  # e.g., "refractor", "frostbite"
@@ -21,6 +22,7 @@ class GameConfig:
 @dataclass
 class MapConfig:
     """Configuration for a specific map."""
+
     name: str  # e.g., "Kursk"
     game: str  # e.g., "BF1942"
     expansion: str  # e.g., "base", "xpack1_rtr"
@@ -34,6 +36,7 @@ class MapConfig:
 @dataclass
 class ConversionConfig:
     """Configuration for the conversion process."""
+
     base_terrain: str  # Target Portal base terrain
     target_map_center: Dict[str, float]  # {"x": 0, "y": 0, "z": 0}
     scale_factor: float = 1.0
@@ -59,16 +62,16 @@ class ConfigLoader:
             FileNotFoundError: If config file not found
             ValueError: If config is invalid
         """
-        with open(config_path, 'r') as f:
+        with open(config_path) as f:
             data = json.load(f)
 
         return GameConfig(
-            name=data['name'],
-            engine=data['engine'],
-            engine_type=data['engine_type'],
-            version=data['version'],
-            era=data['era'],
-            expansions=data.get('expansions', [])
+            name=data["name"],
+            engine=data["engine"],
+            engine_type=data["engine_type"],
+            version=data["version"],
+            era=data["era"],
+            expansions=data.get("expansions", []),
         )
 
     @staticmethod
@@ -85,18 +88,18 @@ class ConfigLoader:
             FileNotFoundError: If config file not found
             ValueError: If config is invalid
         """
-        with open(config_path, 'r') as f:
+        with open(config_path) as f:
             data = json.load(f)
 
         return MapConfig(
-            name=data['name'],
-            game=data['game'],
-            expansion=data.get('expansion', 'base'),
-            theme=data['theme'],
-            recommended_base_terrain=data['recommended_base_terrain'],
-            size=data['size'],
-            dimensions=data['dimensions'],
-            notes=data.get('notes', '')
+            name=data["name"],
+            game=data["game"],
+            expansion=data.get("expansion", "base"),
+            theme=data["theme"],
+            recommended_base_terrain=data["recommended_base_terrain"],
+            size=data["size"],
+            dimensions=data["dimensions"],
+            notes=data.get("notes", ""),
         )
 
     @staticmethod
@@ -113,14 +116,14 @@ class ConfigLoader:
             FileNotFoundError: If config file not found
             ValueError: If config is invalid
         """
-        with open(config_path, 'r') as f:
+        with open(config_path) as f:
             data = json.load(f)
 
         return ConversionConfig(
-            base_terrain=data['base_terrain'],
-            target_map_center=data['target_map_center'],
-            scale_factor=data.get('scale_factor', 1.0),
-            height_adjustment=data.get('height_adjustment', True),
-            validate_bounds=data.get('validate_bounds', True),
-            debug_mode=data.get('debug_mode', False)
+            base_terrain=data["base_terrain"],
+            target_map_center=data["target_map_center"],
+            scale_factor=data.get("scale_factor", 1.0),
+            height_adjustment=data.get("height_adjustment", True),
+            validate_bounds=data.get("validate_bounds", True),
+            debug_mode=data.get("debug_mode", False),
         )

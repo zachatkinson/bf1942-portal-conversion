@@ -65,9 +65,13 @@ def setup_mock_project(tmp_path: Path, type_names: list[str]) -> MockProject | N
 
     assets: jstype.Assets = {}
 
-    assert _utils.process_asset_types(config, assets), "Error encountered while processing asset types"
+    assert _utils.process_asset_types(config, assets), (
+        "Error encountered while processing asset types"
+    )
 
-    if not j2t.create_godot_files_from_assets(assets, {}, {}, str(gd_proj), config, allow_missing_meshes=True):
+    if not j2t.create_godot_files_from_assets(
+        assets, {}, {}, str(gd_proj), config, allow_missing_meshes=True
+    ):
         raise AssertionError("Failed to create godot files")
 
     mock_project = MockProject()

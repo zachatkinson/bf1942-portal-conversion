@@ -106,7 +106,9 @@ def _create_instance_node_volume(instance: jstype.Instance) -> None:
         del instance.props["height"]
 
 
-def _get_instance_ext_rsrc(instance: jstype.Instance, rsrcs: jstype.Resources, assets: jstype.Assets) -> jstype.Resource | None:
+def _get_instance_ext_rsrc(
+    instance: jstype.Instance, rsrcs: jstype.Resources, assets: jstype.Assets
+) -> jstype.Resource | None:
     """Filter resources to only include ext_resource used by level scenes
     Returns dst path of the ext_resource file
     """
@@ -124,7 +126,12 @@ def _get_instance_ext_rsrc(instance: jstype.Instance, rsrcs: jstype.Resources, a
     return None
 
 
-def _get_or_add_ext_rsrc(instance: jstype.Instance, rsrcs: jstype.Resources, assets: jstype.Assets, inst_type_ext_rsrcs: jstype.InstanceResource) -> int:
+def _get_or_add_ext_rsrc(
+    instance: jstype.Instance,
+    rsrcs: jstype.Resources,
+    assets: jstype.Assets,
+    inst_type_ext_rsrcs: jstype.InstanceResource,
+) -> int:
     """Lookup existing mapping from instance type to ext_rsrc id
     Add new ext_rsrc if no existing mapping is found and the type uses ext_resource
     Return id of the ext_resrc
@@ -141,14 +148,24 @@ def _get_or_add_ext_rsrc(instance: jstype.Instance, rsrcs: jstype.Resources, ass
     return ext_rsrc_id
 
 
-def _write_ext_rsrc_spatial(instance: jstype.Instance, rsrcs: jstype.Resources, assets: jstype.Assets, inst_type_ext_rsrcs: jstype.InstanceResource) -> str:
+def _write_ext_rsrc_spatial(
+    instance: jstype.Instance,
+    rsrcs: jstype.Resources,
+    assets: jstype.Assets,
+    inst_type_ext_rsrcs: jstype.InstanceResource,
+) -> str:
     ext_rsrc_id = _get_or_add_ext_rsrc(instance, rsrcs, assets, inst_type_ext_rsrcs)
     if ext_rsrc_id < 0:
         return ""
     return f'instance={const.CMPX_EXTRSRC}("{ext_rsrc_id}")'
 
 
-def _write_ext_rsrc_volume(instance: jstype.Instance, rsrcs: jstype.Resources, assets: jstype.Assets, inst_type_ext_rsrcs: jstype.InstanceResource) -> str:
+def _write_ext_rsrc_volume(
+    instance: jstype.Instance,
+    rsrcs: jstype.Resources,
+    assets: jstype.Assets,
+    inst_type_ext_rsrcs: jstype.InstanceResource,
+) -> str:
     ext_rsrc_id = _get_or_add_ext_rsrc(instance, rsrcs, assets, inst_type_ext_rsrcs)
     if ext_rsrc_id < 0:
         return ""

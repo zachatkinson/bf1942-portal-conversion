@@ -17,7 +17,11 @@ for g_prop, g_val in const.PROP_INJECTED_KEYS.items():
     const.PROP_INJECTED_KEYS[g_prop] = g_jprop
 
 
-def parse_asset_data(asset_data: dict[str, Any], custom_types: set[str], error_callback: Callable[[str], None] | None = None) -> jstype.Asset | None:
+def parse_asset_data(
+    asset_data: dict[str, Any],
+    custom_types: set[str],
+    error_callback: Callable[[str], None] | None = None,
+) -> jstype.Asset | None:
     if const.ASSET_KEY_ID not in asset_data:
         if error_callback:
             error_callback("ERROR: Asset type is missing")
@@ -62,12 +66,18 @@ def parse_level(level_filepath: str) -> jstype.Level:
     return jstype.Level(level_data)
 
 
-def resolve_property_types_levels(levels: dict[str, jstype.Level], assets: dict[str, jstype.Asset]) -> None:
+def resolve_property_types_levels(
+    levels: dict[str, jstype.Level], assets: dict[str, jstype.Asset]
+) -> None:
     for level in levels.values():
         _resolve_property_types_level(level, assets)
 
 
-def _parse_asset_props(props_data: list[dict[str, Any]], custom_types: set[str], error_callback: Callable[[str], None] | None = None) -> dict[str, Any]:
+def _parse_asset_props(
+    props_data: list[dict[str, Any]],
+    custom_types: set[str],
+    error_callback: Callable[[str], None] | None = None,
+) -> dict[str, Any]:
     props = {}
     for prop_data in props_data:
         if const.PROP_KEY_ID not in prop_data:
@@ -86,7 +96,9 @@ def _parse_asset_props(props_data: list[dict[str, Any]], custom_types: set[str],
             if key not in prop_data:
                 continue
             if not hasattr(new_prop, key):
-                _logging.log_warning("WARNING: Property type " + new_prop.type + " does not contain field " + key)
+                _logging.log_warning(
+                    "WARNING: Property type " + new_prop.type + " does not contain field " + key
+                )
             setattr(new_prop, key, prop_data[key])
         props[prop_id] = new_prop
     return props
@@ -102,7 +114,9 @@ def _resolve_property(value: Any, prop_type: jtype.Property) -> jtype.Property:
     return jprop
 
 
-def _resolve_property_types_instance(inst: jstype.Instance, assets: dict[str, jstype.Asset]) -> None:
+def _resolve_property_types_instance(
+    inst: jstype.Instance, assets: dict[str, jstype.Asset]
+) -> None:
     if _logging.VERBOSE:
         _logging.log_debug("")
         _logging.log_debug("\t\tresolve_property_types instance =")

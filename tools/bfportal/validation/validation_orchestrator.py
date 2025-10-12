@@ -10,16 +10,16 @@ from typing import List, Optional, Tuple
 
 from ..core.interfaces import MapData
 from ..terrain.terrain_provider import ITerrainProvider
-from .tscn_reader import TscnReader, TscnNode
 from .map_comparator import MapComparator, MapComparison
+from .tscn_reader import TscnNode, TscnReader
 from .validators import (
-    ValidationIssue,
-    SpawnCountValidator,
-    CapturePointValidator,
-    PositioningValidator,
-    HeightValidator,
     BoundsValidator,
-    OrientationValidator
+    CapturePointValidator,
+    HeightValidator,
+    OrientationValidator,
+    PositioningValidator,
+    SpawnCountValidator,
+    ValidationIssue,
 )
 
 
@@ -35,7 +35,7 @@ class ValidationOrchestrator:
         source_data: MapData,
         output_tscn_path: Path,
         terrain_provider: Optional[ITerrainProvider] = None,
-        terrain_size: float = 2048.0
+        terrain_size: float = 2048.0,
     ):
         """Initialize orchestrator.
 
@@ -78,14 +78,18 @@ class ValidationOrchestrator:
         # Step 2: Compare source vs output
         print("🔍 Comparing source vs output...")
         comparison = self.map_comparator.compare(self.source_data, output_nodes)
-        print(f"   Source: {comparison.source_team1_spawn_count} T1 spawns, "
-              f"{comparison.source_team2_spawn_count} T2 spawns, "
-              f"{comparison.source_capture_point_count} CPs, "
-              f"{comparison.source_object_count} objects")
-        print(f"   Output: {comparison.output_team1_spawn_count} T1 spawns, "
-              f"{comparison.output_team2_spawn_count} T2 spawns, "
-              f"{comparison.output_capture_point_count} CPs, "
-              f"{len(output_nodes)} nodes")
+        print(
+            f"   Source: {comparison.source_team1_spawn_count} T1 spawns, "
+            f"{comparison.source_team2_spawn_count} T2 spawns, "
+            f"{comparison.source_capture_point_count} CPs, "
+            f"{comparison.source_object_count} objects"
+        )
+        print(
+            f"   Output: {comparison.output_team1_spawn_count} T1 spawns, "
+            f"{comparison.output_team2_spawn_count} T2 spawns, "
+            f"{comparison.output_capture_point_count} CPs, "
+            f"{len(output_nodes)} nodes"
+        )
         print()
 
         # Step 3: Run validators
@@ -95,7 +99,7 @@ class ValidationOrchestrator:
         self._print_report()
 
         # Check if validation passed
-        has_errors = any(issue.severity == 'error' for issue in self.issues)
+        has_errors = any(issue.severity == "error" for issue in self.issues)
         return (not has_errors, self.issues)
 
     def _run_validators(self, comparison: MapComparison, output_nodes: List[TscnNode]):
@@ -114,11 +118,17 @@ class ValidationOrchestrator:
         spawn_issues = spawn_validator.validate()
         self.issues.extend(spawn_issues)
         if not spawn_issues:
-            print(f"   ✅ Team 1 spawns: {comparison.output_team1_spawn_count}/{comparison.source_team1_spawn_count}")
-            print(f"   ✅ Team 2 spawns: {comparison.output_team2_spawn_count}/{comparison.source_team2_spawn_count}")
+            print(
+                f"   ✅ Team 1 spawns: {comparison.output_team1_spawn_count}/{comparison.source_team1_spawn_count}"
+            )
+            print(
+                f"   ✅ Team 2 spawns: {comparison.output_team2_spawn_count}/{comparison.source_team2_spawn_count}"
+            )
         else:
             for issue in spawn_issues:
-                print(f"   ❌ {issue.message}: expected {issue.expected_value}, got {issue.actual_value}")
+                print(
+                    f"   ❌ {issue.message}: expected {issue.expected_value}, got {issue.actual_value}"
+                )
 
         # Capture point validation
         print("🔍 Validating capture points...")
@@ -126,10 +136,14 @@ class ValidationOrchestrator:
         cp_issues = cp_validator.validate()
         self.issues.extend(cp_issues)
         if not cp_issues:
-            print(f"   ✅ Capture points: {comparison.output_capture_point_count}/{comparison.source_capture_point_count}")
+            print(
+                f"   ✅ Capture points: {comparison.output_capture_point_count}/{comparison.source_capture_point_count}"
+            )
         else:
             for issue in cp_issues:
-                print(f"   ❌ {issue.message}: expected {issue.expected_value}, got {issue.actual_value}")
+                print(
+                    f"   ❌ {issue.message}: expected {issue.expected_value}, got {issue.actual_value}"
+                )
 
         # Positioning validation
         print("🔍 Validating coordinate positioning...")
@@ -141,7 +155,9 @@ class ValidationOrchestrator:
             print(f"   ✅ Map centered at ({centroid.x:.1f}, {centroid.z:.1f})")
         else:
             for issue in pos_issues:
-                print(f"   ⚠️  {issue.message}: expected {issue.expected_value}, got {issue.actual_value}")
+                print(
+                    f"   ⚠️  {issue.message}: expected {issue.expected_value}, got {issue.actual_value}"
+                )
 
         # Height validation
         if self.terrain_provider:
@@ -150,8 +166,8 @@ class ValidationOrchestrator:
             height_issues = height_validator.validate()
             self.issues.extend(height_issues)
 
-            spawns = [n for n in output_nodes if 'SpawnPoint' in n.name]
-            error_count = sum(1 for i in height_issues if i.severity in ['error', 'warning'])
+            spawns = [n for n in output_nodes if "SpawnPoint" in n.name]
+            error_count = sum(1 for i in height_issues if i.severity in ["error", "warning"])
 
             if error_count == 0:
                 print(f"   ✅ All {len(spawns)} spawn heights validated")
@@ -180,8 +196,7 @@ class ValidationOrchestrator:
         self.issues.extend(orient_issues)
 
         identity_count = sum(
-            1 for node in output_nodes
-            if orient_validator._is_identity_matrix(node.rotation_matrix)
+            1 for node in output_nodes if orient_validator._is_identity_matrix(node.rotation_matrix)
         )
         rotated_count = len(output_nodes) - identity_count
         print(f"   ℹ️  {identity_count} objects with no rotation, {rotated_count} rotated")
@@ -196,9 +211,9 @@ class ValidationOrchestrator:
         print("VALIDATION REPORT")
         print("=" * 70)
 
-        errors = [i for i in self.issues if i.severity == 'error']
-        warnings = [i for i in self.issues if i.severity == 'warning']
-        info = [i for i in self.issues if i.severity == 'info']
+        errors = [i for i in self.issues if i.severity == "error"]
+        warnings = [i for i in self.issues if i.severity == "warning"]
+        info = [i for i in self.issues if i.severity == "info"]
 
         if errors:
             print(f"\n❌ ERRORS ({len(errors)}):")

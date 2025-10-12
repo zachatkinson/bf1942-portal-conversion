@@ -3,7 +3,7 @@
 
 from typing import List
 
-from ..core.interfaces import ICoordinateOffset, GameObject, Transform, Vector3
+from ..core.interfaces import GameObject, ICoordinateOffset, Transform, Vector3
 
 
 class CoordinateOffset(ICoordinateOffset):
@@ -59,7 +59,7 @@ class CoordinateOffset(ICoordinateOffset):
         return Vector3(
             target_center.x - source_center.x,
             0,  # Don't offset Y, handle via terrain adjustment
-            target_center.z - source_center.z
+            target_center.z - source_center.z,
         )
 
     def apply_offset(self, transform: Transform, offset: Vector3) -> Transform:
@@ -75,15 +75,11 @@ class CoordinateOffset(ICoordinateOffset):
         new_position = Vector3(
             transform.position.x + offset.x,
             transform.position.y + offset.y,  # Usually 0
-            transform.position.z + offset.z
+            transform.position.z + offset.z,
         )
 
         # Return new transform, preserving rotation and scale
-        return Transform(
-            position=new_position,
-            rotation=transform.rotation,
-            scale=transform.scale
-        )
+        return Transform(position=new_position, rotation=transform.rotation, scale=transform.scale)
 
     def apply_scale(self, transform: Transform, scale_factor: float) -> Transform:
         """Apply scale factor to a transform (for large→small map conversions).
@@ -98,11 +94,7 @@ class CoordinateOffset(ICoordinateOffset):
         new_position = Vector3(
             transform.position.x * scale_factor,
             transform.position.y,  # Don't scale height
-            transform.position.z * scale_factor
+            transform.position.z * scale_factor,
         )
 
-        return Transform(
-            position=new_position,
-            rotation=transform.rotation,
-            scale=transform.scale
-        )
+        return Transform(position=new_position, rotation=transform.rotation, scale=transform.scale)

@@ -18,22 +18,23 @@ Output:
 
 import json
 import sys
-from pathlib import Path
-from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Tuple
 
 # Import coordinate transformation utilities
 from coordinate_transform import (
     convert_bf1942_to_godot,
     convert_control_point,
     convert_spawn_point,
-    format_identity_transform
+    format_identity_transform,
 )
 
 
 @dataclass
 class ExtResource:
     """External resource reference in .tscn file."""
+
     id: int
     resource_type: str
     path: str
@@ -74,15 +75,19 @@ class TscnGenerator:
         if not self.mapping_db_path.exists():
             raise FileNotFoundError(f"Mapping database not found: {self.mapping_db_path}")
 
-        with open(self.kursk_data_path, 'r') as f:
+        with open(self.kursk_data_path) as f:
             self.kursk_data = json.load(f)
 
-        with open(self.mapping_db_path, 'r') as f:
+        with open(self.mapping_db_path) as f:
             self.mapping_db = json.load(f)
 
-        print(f"✅ Loaded Kursk data: {len(self.kursk_data['control_points'])} control points, "
-              f"{len(self.kursk_data['vehicle_spawners'])} vehicle spawners")
-        print(f"✅ Loaded mapping database: {len(self.mapping_db['vehicle_spawners'])} vehicle mappings")
+        print(
+            f"✅ Loaded Kursk data: {len(self.kursk_data['control_points'])} control points, "
+            f"{len(self.kursk_data['vehicle_spawners'])} vehicle spawners"
+        )
+        print(
+            f"✅ Loaded mapping database: {len(self.mapping_db['vehicle_spawners'])} vehicle mappings"
+        )
 
     def add_ext_resource(self, resource_type: str, path: str) -> int:
         """Add external resource and return its ID.
@@ -121,17 +126,14 @@ class TscnGenerator:
         Returns:
             Header section as string
         """
-        lines = [
-            f'[gd_scene load_steps={len(self.ext_resources) + 1} format=3]',
-            ''
-        ]
+        lines = [f"[gd_scene load_steps={len(self.ext_resources) + 1} format=3]", ""]
 
         # Add external resources
         for res in self.ext_resources:
             lines.append(res.format())
 
-        lines.append('')
-        return '\n'.join(lines)
+        lines.append("")
+        return "\n".join(lines)
 
     def generate_root_node(self) -> str:
         """Generate root node.
@@ -152,30 +154,34 @@ class TscnGenerator:
             HQ node section with spawn points
         """
         # Add HQ resource
-        hq_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/HQ_PlayerSpawner.tscn")
-        spawn_res_id = self.add_ext_resource("PackedScene", "res://objects/entities/SpawnPoint.tscn")
+        hq_res_id = self.add_ext_resource(
+            "PackedScene", "res://objects/Gameplay/Common/HQ_PlayerSpawner.tscn"
+        )
+        spawn_res_id = self.add_ext_resource(
+            "PackedScene", "res://objects/entities/SpawnPoint.tscn"
+        )
 
         obj_id = self.get_next_obj_id()
 
         # Generate spawn point paths
         spawn_paths = []
         for i in range(8):  # 8 spawn points per team
-            spawn_paths.append(f'NodePath("SpawnPoint_{team}_{i+1}")')
+            spawn_paths.append(f'NodePath("SpawnPoint_{team}_{i + 1}")')
 
-        spawn_paths_str = ', '.join(spawn_paths)
+        spawn_paths_str = ", ".join(spawn_paths)
 
         # HQ transform (identity rotation)
         hq_transform = format_identity_transform(base_position)
 
         lines = [
             f'[node name="TEAM_{team}_HQ" parent="." node_paths=PackedStringArray("HQArea", "InfantrySpawns") instance=ExtResource("{hq_res_id}")]',
-            f'transform = {hq_transform}',
-            f'Team = {team}',
-            'AltTeam = 0',
-            f'ObjId = {obj_id}',
+            f"transform = {hq_transform}",
+            f"Team = {team}",
+            "AltTeam = 0",
+            f"ObjId = {obj_id}",
             f'HQArea = NodePath("HQ_Team{team}")',
-            f'InfantrySpawns = [{spawn_paths_str}]',
-            ''
+            f"InfantrySpawns = [{spawn_paths_str}]",
+            "",
         ]
 
         # Generate spawn points in a circle around HQ
@@ -185,6 +191,7 @@ class TscnGenerator:
 
             # Calculate relative position
             import math
+
             rel_x = radius * math.cos(math.radians(angle))
             rel_z = radius * math.sin(math.radians(angle))
             rel_pos = (rel_x, 0, rel_z)
@@ -194,13 +201,15 @@ class TscnGenerator:
 
             spawn_transform = convert_spawn_point(rel_pos, facing_angle)
 
-            lines.extend([
-                f'[node name="SpawnPoint_{team}_{i+1}" parent="TEAM_{team}_HQ" instance=ExtResource("{spawn_res_id}")]',
-                f'transform = {spawn_transform}',
-                ''
-            ])
+            lines.extend(
+                [
+                    f'[node name="SpawnPoint_{team}_{i + 1}" parent="TEAM_{team}_HQ" instance=ExtResource("{spawn_res_id}")]',
+                    f"transform = {spawn_transform}",
+                    "",
+                ]
+            )
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def generate_capture_points(self) -> str:
         """Generate all capture points.
@@ -208,29 +217,33 @@ class TscnGenerator:
         Returns:
             Capture point nodes as string
         """
-        cp_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Conquest/CapturePoint.tscn")
+        cp_res_id = self.add_ext_resource(
+            "PackedScene", "res://objects/Gameplay/Conquest/CapturePoint.tscn"
+        )
 
         lines = []
 
-        for idx, cp_data in enumerate(self.kursk_data['control_points'], 1):
+        for idx, cp_data in enumerate(self.kursk_data["control_points"], 1):
             obj_id = 100 + idx  # Control points start at 100
 
-            pos = cp_data['position']
-            position = (pos['x'], pos['y'], pos['z'])
+            pos = cp_data["position"]
+            position = (pos["x"], pos["y"], pos["z"])
             transform = convert_control_point(position)
 
             # Determine team (0 = neutral, 1 = axis, 2 = allies)
-            team = cp_data.get('team') or 0
+            team = cp_data.get("team") or 0
 
-            lines.extend([
-                f'[node name="CapturePoint_{idx}" parent="." instance=ExtResource("{cp_res_id}")]',
-                f'transform = {transform}',
-                f'Team = {team}',
-                f'ObjId = {obj_id}',
-                ''
-            ])
+            lines.extend(
+                [
+                    f'[node name="CapturePoint_{idx}" parent="." instance=ExtResource("{cp_res_id}")]',
+                    f"transform = {transform}",
+                    f"Team = {team}",
+                    f"ObjId = {obj_id}",
+                    "",
+                ]
+            )
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def generate_vehicle_spawners(self) -> str:
         """Generate all vehicle spawners.
@@ -238,57 +251,61 @@ class TscnGenerator:
         Returns:
             Vehicle spawner nodes as string
         """
-        vehicle_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/VehicleSpawner.tscn")
+        vehicle_res_id = self.add_ext_resource(
+            "PackedScene", "res://objects/Gameplay/Common/VehicleSpawner.tscn"
+        )
 
         lines = []
 
-        for idx, spawner_data in enumerate(self.kursk_data['vehicle_spawners'], 1):
-            bf1942_type = spawner_data['bf1942_type']
+        for idx, spawner_data in enumerate(self.kursk_data["vehicle_spawners"], 1):
+            bf1942_type = spawner_data["bf1942_type"]
 
             # Look up mapping
-            mapping = self.mapping_db['vehicle_spawners'].get(bf1942_type)
+            mapping = self.mapping_db["vehicle_spawners"].get(bf1942_type)
             if not mapping:
                 print(f"⚠️  WARNING: No mapping found for {bf1942_type}, skipping")
                 continue
 
             # Determine BF6 vehicle template based on team
-            team = spawner_data.get('team')
+            team = spawner_data.get("team")
 
-            if 'bf6_vehicle_template_axis' in mapping and 'bf6_vehicle_template_allies' in mapping:
+            if "bf6_vehicle_template_axis" in mapping and "bf6_vehicle_template_allies" in mapping:
                 # Team-specific vehicle (tanks)
                 if team == 1:
-                    vehicle_template = mapping['bf6_vehicle_template_axis']
+                    vehicle_template = mapping["bf6_vehicle_template_axis"]
                 elif team == 2:
-                    vehicle_template = mapping['bf6_vehicle_template_allies']
+                    vehicle_template = mapping["bf6_vehicle_template_allies"]
                 else:
-                    vehicle_template = mapping['bf6_vehicle_template_axis']  # Default to axis
+                    vehicle_template = mapping["bf6_vehicle_template_axis"]  # Default to axis
             else:
                 # Generic vehicle
-                vehicle_template = mapping['bf6_vehicle_template']
+                vehicle_template = mapping["bf6_vehicle_template"]
 
             # Convert position and rotation
-            pos = spawner_data['position']
-            position = (pos['x'], pos['y'], pos['z'])
+            pos = spawner_data["position"]
+            position = (pos["x"], pos["y"], pos["z"])
 
-            if spawner_data.get('rotation'):
-                rot = spawner_data['rotation']
-                rotation = (rot['pitch'], rot['yaw'], rot['roll'])
+            if spawner_data.get("rotation"):
+                rot = spawner_data["rotation"]
+                rotation = (rot["pitch"], rot["yaw"], rot["roll"])
                 transform = convert_bf1942_to_godot(position, rotation)
             else:
                 transform = format_identity_transform(position)
 
             obj_id = 1000 + idx  # Vehicle spawners start at 1000
 
-            lines.extend([
-                f'[node name="VehicleSpawner_{idx}" parent="." instance=ExtResource("{vehicle_res_id}")]',
-                f'transform = {transform}',
-                f'Team = {team if team is not None else 0}',
-                f'ObjId = {obj_id}',
-                f'VehicleTemplate = "{vehicle_template}"',
-                ''
-            ])
+            lines.extend(
+                [
+                    f'[node name="VehicleSpawner_{idx}" parent="." instance=ExtResource("{vehicle_res_id}")]',
+                    f"transform = {transform}",
+                    f"Team = {team if team is not None else 0}",
+                    f"ObjId = {obj_id}",
+                    f'VehicleTemplate = "{vehicle_template}"',
+                    "",
+                ]
+            )
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def generate_combat_area(self) -> str:
         """Generate combat area boundary.
@@ -296,20 +313,22 @@ class TscnGenerator:
         Returns:
             Combat area node as string
         """
-        combat_area_res_id = self.add_ext_resource("PackedScene", "res://objects/Gameplay/Common/CombatArea.tscn")
+        combat_area_res_id = self.add_ext_resource(
+            "PackedScene", "res://objects/Gameplay/Common/CombatArea.tscn"
+        )
 
         # Calculate map bounds from Kursk data
         all_positions = []
 
         # Add control points
-        for cp in self.kursk_data['control_points']:
-            pos = cp['position']
-            all_positions.append((pos['x'], pos['z']))
+        for cp in self.kursk_data["control_points"]:
+            pos = cp["position"]
+            all_positions.append((pos["x"], pos["z"]))
 
         # Add vehicle spawners
-        for spawner in self.kursk_data['vehicle_spawners']:
-            pos = spawner['position']
-            all_positions.append((pos['x'], pos['z']))
+        for spawner in self.kursk_data["vehicle_spawners"]:
+            pos = spawner["position"]
+            all_positions.append((pos["x"], pos["z"]))
 
         # Calculate bounds
         x_coords = [p[0] for p in all_positions]
@@ -343,23 +362,23 @@ class TscnGenerator:
             (-half_width, -half_depth),
             (half_width, -half_depth),
             (half_width, half_depth),
-            (-half_width, half_depth)
+            (-half_width, half_depth),
         ]
 
-        points_str = ', '.join(f'{p[0]}, {p[1]}' for p in points)
+        points_str = ", ".join(f"{p[0]}, {p[1]}" for p in points)
 
         lines = [
             f'[node name="CombatArea" parent="." node_paths=PackedStringArray("CombatVolume") instance=ExtResource("{combat_area_res_id}")]',
-            f'transform = {center_transform}',
+            f"transform = {center_transform}",
             'CombatVolume = NodePath("CollisionPolygon3D")',
-            '',
+            "",
             '[node name="CollisionPolygon3D" type="Area3D" parent="CombatArea"]',
-            'height = 200.0',
-            f'points = PackedVector2Array({points_str})',
-            ''
+            "height = 200.0",
+            f"points = PackedVector2Array({points_str})",
+            "",
         ]
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def generate_static_layer(self) -> str:
         """Generate static terrain layer.
@@ -368,19 +387,21 @@ class TscnGenerator:
             Static layer node as string
         """
         # Use MP_Tungsten terrain - better match for Kursk's flat, open landscape
-        terrain_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Tungsten_Terrain.tscn")
+        terrain_res_id = self.add_ext_resource(
+            "PackedScene", "res://static/MP_Tungsten_Terrain.tscn"
+        )
         assets_res_id = self.add_ext_resource("PackedScene", "res://static/MP_Tungsten_Assets.tscn")
 
         lines = [
             '[node name="Static" type="Node3D" parent="."]',
-            '',
+            "",
             f'[node name="MP_Tungsten_Terrain" parent="Static" instance=ExtResource("{terrain_res_id}")]',
-            '',
+            "",
             f'[node name="MP_Tungsten_Assets" parent="Static" instance=ExtResource("{assets_res_id}")]',
-            ''
+            "",
         ]
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def generate_tscn(self, output_path: str) -> None:
         """Generate complete .tscn file.
@@ -394,13 +415,13 @@ class TscnGenerator:
         axis_base = None
         allies_base = None
 
-        for cp in self.kursk_data['control_points']:
-            if 'Axis' in cp['name']:
-                pos = cp['position']
-                axis_base = (pos['x'], pos['y'], pos['z'])
-            elif 'Allies' in cp['name']:
-                pos = cp['position']
-                allies_base = (pos['x'], pos['y'], pos['z'])
+        for cp in self.kursk_data["control_points"]:
+            if "Axis" in cp["name"]:
+                pos = cp["position"]
+                axis_base = (pos["x"], pos["y"], pos["z"])
+            elif "Allies" in cp["name"]:
+                pos = cp["position"]
+                allies_base = (pos["x"], pos["y"], pos["z"])
 
         if not axis_base or not allies_base:
             print("⚠️  WARNING: Could not find Axis/Allies base positions, using defaults")
@@ -412,7 +433,7 @@ class TscnGenerator:
 
         # 1. Root node
         sections.append(self.generate_root_node())
-        sections.append('')
+        sections.append("")
 
         # 2. Team HQs
         print("  → Generating Team 1 HQ (Axis)...")
@@ -438,13 +459,13 @@ class TscnGenerator:
         sections.append(self.generate_static_layer())
 
         # Combine all sections with header
-        full_content = self.generate_header() + '\n'.join(sections)
+        full_content = self.generate_header() + "\n".join(sections)
 
         # Write to file
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(full_content)
 
         print(f"\n✅ Generated {output_path}")
@@ -456,23 +477,23 @@ def main():
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent
-    kursk_data_path = project_root / 'tools' / 'kursk_extracted_data.json'
+    kursk_data_path = project_root / "tools" / "kursk_extracted_data.json"
 
     # Allow custom mapping database via command line argument
     # This enables future multi-era support (WW2, Vietnam, etc.)
-    if len(sys.argv) > 1 and sys.argv[1] == '--mapping':
+    if len(sys.argv) > 1 and sys.argv[1] == "--mapping":
         mapping_db_path = Path(sys.argv[2])
         print(f"Using custom mapping database: {mapping_db_path}")
     else:
-        mapping_db_path = project_root / 'tools' / 'object_mapping_database.json'
+        mapping_db_path = project_root / "tools" / "object_mapping_database.json"
 
     # Allow custom output path
-    if '--output' in sys.argv:
-        output_idx = sys.argv.index('--output')
+    if "--output" in sys.argv:
+        output_idx = sys.argv.index("--output")
         output_path = Path(sys.argv[output_idx + 1])
         print(f"Using custom output path: {output_path}")
     else:
-        output_path = project_root / 'GodotProject' / 'levels' / 'Kursk.tscn'
+        output_path = project_root / "GodotProject" / "levels" / "Kursk.tscn"
 
     print("=" * 70)
     print("Kursk .tscn Generator")
@@ -508,6 +529,7 @@ def main():
     except Exception as e:
         print(f"\n❌ ERROR: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 

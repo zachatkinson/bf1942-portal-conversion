@@ -5,9 +5,9 @@ Single Responsibility: Only reads and parses .tscn files.
 """
 
 import re
-from pathlib import Path
-from typing import List, Dict, Optional
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Optional
 
 from ..core.interfaces import Vector3
 
@@ -15,6 +15,7 @@ from ..core.interfaces import Vector3
 @dataclass
 class TscnNode:
     """Represents a node parsed from .tscn file."""
+
     name: str
     position: Vector3
     rotation_matrix: List[float]  # 3x3 rotation matrix (9 values)
@@ -51,14 +52,12 @@ class TscnReader:
         if not self.tscn_path.exists():
             raise FileNotFoundError(f"TSCN file not found: {self.tscn_path}")
 
-        with open(self.tscn_path, 'r') as f:
+        with open(self.tscn_path) as f:
             content = f.read()
 
         # Split into node blocks
         node_blocks = re.findall(
-            r'\[node name="([^"]+)"[^\]]*\](.*?)(?=\[node name=|\Z)',
-            content,
-            re.DOTALL
+            r'\[node name="([^"]+)"[^\]]*\](.*?)(?=\[node name=|\Z)', content, re.DOTALL
         )
 
         for node_name, node_content in node_blocks:
@@ -81,16 +80,13 @@ class TscnReader:
             TscnNode if transform found, None otherwise
         """
         # Extract transform
-        transform_match = re.search(
-            r'transform = Transform3D\(([^)]+)\)',
-            node_content
-        )
+        transform_match = re.search(r"transform = Transform3D\(([^)]+)\)", node_content)
 
         if not transform_match:
             return None
 
         # Parse transform values
-        values = [float(v.strip()) for v in transform_match.group(1).split(',')]
+        values = [float(v.strip()) for v in transform_match.group(1).split(",")]
 
         if len(values) != 12:
             return None
@@ -107,7 +103,7 @@ class TscnReader:
             position=position,
             rotation_matrix=rotation_matrix,
             properties=properties,
-            raw_content=node_content
+            raw_content=node_content,
         )
 
     def _extract_properties(self, node_content: str) -> Dict[str, any]:
@@ -124,19 +120,19 @@ class TscnReader:
         properties = {}
 
         # Extract Team property
-        team_match = re.search(r'Team = (\d+)', node_content)
+        team_match = re.search(r"Team = (\d+)", node_content)
         if team_match:
-            properties['team'] = int(team_match.group(1))
+            properties["team"] = int(team_match.group(1))
 
         # Extract ObjId property
-        objid_match = re.search(r'ObjId = (\d+)', node_content)
+        objid_match = re.search(r"ObjId = (\d+)", node_content)
         if objid_match:
-            properties['objid'] = int(objid_match.group(1))
+            properties["objid"] = int(objid_match.group(1))
 
         # Extract parent information
         parent_match = re.search(r'parent="([^"]+)"', node_content)
         if parent_match:
-            properties['parent'] = parent_match.group(1)
+            properties["parent"] = parent_match.group(1)
 
         return properties
 
@@ -161,7 +157,4 @@ class TscnReader:
         Returns:
             List of nodes for that team
         """
-        return [
-            node for node in self.nodes
-            if node.properties.get('team') == team
-        ]
+        return [node for node in self.nodes if node.properties.get("team") == team]
