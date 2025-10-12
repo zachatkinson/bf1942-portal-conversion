@@ -11,14 +11,11 @@ Tests cover:
 - Edge cases and error handling
 """
 
-import re
 from pathlib import Path
-from unittest.mock import MagicMock, Mock, mock_open, patch
 
 import pytest
 from bfportal.core.interfaces import Vector3
 from bfportal.validation.tscn_reader import TscnNode, TscnReader
-
 
 # ============================================================================
 # Fixtures

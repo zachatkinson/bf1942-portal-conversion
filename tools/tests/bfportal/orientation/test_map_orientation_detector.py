@@ -6,7 +6,6 @@ Comprehensive test coverage for orientation detection from map data.
 
 import sys
 from pathlib import Path
-from unittest.mock import Mock
 
 import pytest
 
@@ -24,9 +23,8 @@ from bfportal.core.interfaces import (
     Transform,
     Vector3,
 )
-from bfportal.orientation.interfaces import Orientation, OrientationAnalysis
+from bfportal.orientation.interfaces import Orientation
 from bfportal.orientation.map_orientation_detector import MapOrientationDetector
-
 
 # ============================================================================
 # Fixtures

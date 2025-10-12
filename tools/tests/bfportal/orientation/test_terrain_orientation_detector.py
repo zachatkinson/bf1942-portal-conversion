@@ -9,7 +9,6 @@ from unittest.mock import Mock
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 import pytest
-
 from bfportal.orientation import Orientation
 from bfportal.orientation.interfaces import OrientationAnalysis
 from bfportal.orientation.terrain_orientation_detector import TerrainOrientationDetector

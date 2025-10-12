@@ -3,9 +3,8 @@
 
 import json
 import sys
-from argparse import Namespace
 from pathlib import Path
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -18,7 +17,6 @@ from portal_validate import (
     ValidationResult,
     main,
 )
-
 
 # Fixtures
 
