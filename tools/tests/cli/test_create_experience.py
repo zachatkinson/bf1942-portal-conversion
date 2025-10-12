@@ -4,7 +4,7 @@
 import json
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -253,3 +253,90 @@ class TestMainFunction:
 
         # Assert
         assert result == 0
+
+    def test_main_lists_available_spatial_files_when_file_missing_returns_error(
+        self, tmp_path: Path, capsys
+    ):
+        """Test main lists available spatial files when requested file is missing."""
+        # Arrange
+        test_args = ["create_experience.py", "NonExistentMap"]
+        levels_dir = tmp_path / "FbExportData" / "levels"
+        levels_dir.mkdir(parents=True)
+        (levels_dir / "Kursk.spatial.json").write_text("{}")
+        (levels_dir / "ElAlamein.spatial.json").write_text("{}")
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch(
+                "create_experience.Path",
+                side_effect=lambda x: (
+                    tmp_path / x if x.startswith("FbExportData") else Path(x)
+                ),
+            ),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 1
+        captured = capsys.readouterr()
+        assert "Available spatial files:" in captured.err
+        assert "Kursk" in captured.err
+        assert "ElAlamein" in captured.err
+
+    def test_main_shows_export_hint_when_no_spatial_files_exist_returns_error(
+        self, tmp_path: Path, capsys
+    ):
+        """Test main shows export hint when levels directory has no spatial files."""
+        # Arrange
+        test_args = ["create_experience.py", "TestMap"]
+        levels_dir = tmp_path / "FbExportData" / "levels"
+        levels_dir.mkdir(parents=True)
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch(
+                "create_experience.Path",
+                side_effect=lambda x: (
+                    tmp_path / x if x.startswith("FbExportData") else Path(x)
+                ),
+            ),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 1
+        captured = capsys.readouterr()
+        assert "(none found)" in captured.err
+        assert "Did you export the map first?" in captured.err
+        assert "bash tools/export_map.sh TestMap" in captured.err
+
+    def test_main_handles_exception_during_creation_returns_error(
+        self, tmp_path: Path, capsys
+    ):
+        """Test main handles exceptions during experience creation with traceback."""
+        # Arrange
+        test_args = ["create_experience.py", "TestMap"]
+        spatial_path = tmp_path / "TestMap.spatial.json"
+        spatial_path.write_text("{}")
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch("create_experience.Path") as mock_path_cls,
+            patch(
+                "create_experience.create_experience_file",
+                side_effect=ValueError("Test exception"),
+            ),
+        ):
+            mock_path_instance = MagicMock(spec=Path)
+            mock_path_instance.exists.return_value = True
+            mock_path_cls.return_value = mock_path_instance
+            result = main()
+
+        # Assert
+        assert result == 1
+        captured = capsys.readouterr()
+        assert "Error: Test exception" in captured.err
+        assert "Traceback" in captured.err

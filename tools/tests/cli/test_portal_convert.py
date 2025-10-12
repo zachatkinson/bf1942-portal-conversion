@@ -403,7 +403,7 @@ class TestConvertMethod:
 
         map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
         map_path.mkdir(parents=True)
-        output_path = tmp_path / "GodotProject" / "levels" / "Kursk.tscn"
+        tmp_path / "GodotProject" / "levels" / "Kursk.tscn"
 
         # Create converter with mocked dependencies
         converter = _create_mock_converter(args, tmp_path)
@@ -603,6 +603,603 @@ class TestConvertMethod:
 
         # Assert
         assert result == 1
+
+
+class TestConvertWithCapturePoints:
+    """Tests for conversion with capture points containing spawns."""
+
+    def test_convert_offsets_capture_point_spawns_avoiding_duplicates(self, tmp_path: Path):
+        """Test conversion offsets capture point spawns and avoids duplicates."""
+        # Arrange
+        from bfportal.core.interfaces import (
+            CapturePoint,
+            MapBounds,
+            MapData,
+            Rotation,
+            SpawnPoint,
+            Team,
+            Transform,
+            Vector3,
+        )
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        spawn1 = SpawnPoint(
+            name="cp_spawn1",
+            team=Team.TEAM_1,
+            transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
+        )
+        spawn2 = SpawnPoint(
+            name="cp_spawn2",
+            team=Team.TEAM_2,
+            transform=Transform(position=Vector3(55, 0, 55), rotation=Rotation(0, 0, 0)),
+        )
+
+        cp1 = CapturePoint(
+            name="CP1",
+            transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
+            radius=30.0,
+            control_area=[Vector3(30, 0, 30), Vector3(70, 0, 30), Vector3(70, 0, 70), Vector3(30, 0, 70)],
+            team1_spawns=[spawn1],
+            team2_spawns=[spawn2],
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(100, 0, 100), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(-100, 0, -100), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[],
+            capture_points=[cp1],
+            bounds=MapBounds(
+                min_point=Vector3(-512, 0, -512),
+                max_point=Vector3(512, 100, 512),
+                combat_area_polygon=[
+                    Vector3(-512, 0, -512),
+                    Vector3(512, 0, -512),
+                    Vector3(512, 0, 512),
+                    Vector3(-512, 0, 512),
+                ],
+                height=100.0,
+            ),
+            metadata={},
+        )
+
+        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path.mkdir(parents=True)
+
+        converter = _create_mock_converter(args, tmp_path)
+        converter.engine.parse_map = MagicMock(return_value=mock_map_data)
+
+        # Mock coordinate offset methods with proper Vector3 returns
+        converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
+        converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
+        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+
+        # Mock height adjuster
+        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+
+        mock_source_analysis = MagicMock()
+        mock_source_analysis.orientation.value = "horizontal"
+        mock_source_analysis.width_x = 1024.0
+        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.ratio = 1.0
+
+        mock_dest_analysis = MagicMock()
+        mock_dest_analysis.orientation.value = "horizontal"
+        mock_dest_analysis.width_x = 2048.0
+        mock_dest_analysis.depth_z = 2048.0
+
+        mock_rotation_result = MagicMock()
+        mock_rotation_result.rotation_needed = False
+
+        # Act
+        with (
+            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
+            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
+            patch("portal_convert.TscnGenerator") as mock_generator_class,
+        ):
+            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_matcher_class.return_value.match.return_value = mock_rotation_result
+            mock_generator_class.return_value = MagicMock()
+
+            result = converter.convert()
+
+        # Assert
+        assert result == 0
+
+
+class TestConvertWithRotation:
+    """Tests for conversion with terrain rotation needed."""
+
+    def test_convert_applies_terrain_rotation_when_needed(self, tmp_path: Path):
+        """Test conversion applies terrain rotation to metadata when needed."""
+        # Arrange
+        from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(100, 0, 100), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(-100, 0, -100), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-512, 0, -512),
+                max_point=Vector3(512, 100, 512),
+                combat_area_polygon=[
+                    Vector3(-512, 0, -512),
+                    Vector3(512, 0, -512),
+                    Vector3(512, 0, 512),
+                    Vector3(-512, 0, 512),
+                ],
+                height=100.0,
+            ),
+            metadata={},
+        )
+
+        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path.mkdir(parents=True)
+
+        converter = _create_mock_converter(args, tmp_path)
+        converter.engine.parse_map = MagicMock(return_value=mock_map_data)
+
+        mock_source_analysis = MagicMock()
+        mock_source_analysis.orientation.value = "vertical"
+        mock_source_analysis.width_x = 1024.0
+        mock_source_analysis.depth_z = 2048.0
+        mock_source_analysis.ratio = 0.5
+
+        mock_dest_analysis = MagicMock()
+        mock_dest_analysis.orientation.value = "horizontal"
+        mock_dest_analysis.width_x = 2048.0
+        mock_dest_analysis.depth_z = 1024.0
+
+        mock_rotation_result = MagicMock()
+        mock_rotation_result.rotation_needed = True
+        mock_rotation_result.rotation_degrees = 90
+        mock_rotation_result.reasoning = "Source is vertical, destination is horizontal"
+
+        # Act
+        with (
+            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
+            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
+            patch("portal_convert.TscnGenerator") as mock_generator_class,
+        ):
+            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_matcher_class.return_value.match.return_value = mock_rotation_result
+            mock_generator_class.return_value = MagicMock()
+
+            result = converter.convert()
+
+        # Assert
+        assert result == 0
+        assert mock_map_data.metadata["terrain_rotation"] == 90
+
+
+class TestConvertAssetMapping:
+    """Tests for asset mapping during conversion."""
+
+    def test_convert_tracks_terrain_elements_separately(self, tmp_path: Path):
+        """Test conversion tracks skipped terrain elements separately from unmapped assets."""
+        # Arrange
+        from bfportal.core.interfaces import (
+            GameObject,
+            MapBounds,
+            MapData,
+            Rotation,
+            Team,
+            Transform,
+            Vector3,
+        )
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(100, 0, 100), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(-100, 0, -100), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[
+                GameObject(
+                    name="water1",
+                    asset_type="WaterPlane",
+                    transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
+                    team=Team.NEUTRAL,
+                    properties={},
+                ),
+                GameObject(
+                    name="water2",
+                    asset_type="WaterPlane",
+                    transform=Transform(position=Vector3(60, 0, 60), rotation=Rotation(0, 0, 0)),
+                    team=Team.NEUTRAL,
+                    properties={},
+                ),
+            ],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-512, 0, -512),
+                max_point=Vector3(512, 100, 512),
+                combat_area_polygon=[
+                    Vector3(-512, 0, -512),
+                    Vector3(512, 0, -512),
+                    Vector3(512, 0, 512),
+                    Vector3(-512, 0, 512),
+                ],
+                height=100.0,
+            ),
+            metadata={},
+        )
+
+        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path.mkdir(parents=True)
+
+        converter = _create_mock_converter(args, tmp_path)
+        converter.engine.parse_map = MagicMock(return_value=mock_map_data)
+        converter.asset_mapper.map_asset = MagicMock(return_value=None)
+        converter.asset_mapper._is_terrain_element = MagicMock(return_value=True)
+
+        # Mock coordinate offset methods with proper Vector3 returns
+        converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
+        converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
+        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+
+        # Mock height adjuster
+        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+
+        mock_source_analysis = MagicMock()
+        mock_source_analysis.orientation.value = "horizontal"
+        mock_source_analysis.width_x = 1024.0
+        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.ratio = 1.0
+
+        mock_dest_analysis = MagicMock()
+        mock_dest_analysis.orientation.value = "horizontal"
+        mock_dest_analysis.width_x = 2048.0
+        mock_dest_analysis.depth_z = 2048.0
+
+        mock_rotation_result = MagicMock()
+        mock_rotation_result.rotation_needed = False
+
+        # Act
+        with (
+            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
+            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
+            patch("portal_convert.TscnGenerator") as mock_generator_class,
+        ):
+            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_matcher_class.return_value.match.return_value = mock_rotation_result
+            mock_generator_class.return_value = MagicMock()
+
+            result = converter.convert()
+
+        # Assert
+        assert result == 0
+
+    def test_convert_handles_unmapped_assets_gracefully(self, tmp_path: Path):
+        """Test conversion handles unmapped assets gracefully."""
+        # Arrange
+        from bfportal.core.interfaces import (
+            GameObject,
+            MapBounds,
+            MapData,
+            Rotation,
+            Team,
+            Transform,
+            Vector3,
+        )
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(100, 0, 100), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(-100, 0, -100), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[
+                GameObject(
+                    name="unknown1",
+                    asset_type="UnknownAsset",
+                    transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
+                    team=Team.NEUTRAL,
+                    properties={},
+                ),
+            ],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-512, 0, -512),
+                max_point=Vector3(512, 100, 512),
+                combat_area_polygon=[
+                    Vector3(-512, 0, -512),
+                    Vector3(512, 0, -512),
+                    Vector3(512, 0, 512),
+                    Vector3(-512, 0, 512),
+                ],
+                height=100.0,
+            ),
+            metadata={},
+        )
+
+        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path.mkdir(parents=True)
+
+        converter = _create_mock_converter(args, tmp_path)
+        converter.engine.parse_map = MagicMock(return_value=mock_map_data)
+        converter.asset_mapper.map_asset = MagicMock(return_value=None)
+        converter.asset_mapper._is_terrain_element = MagicMock(return_value=False)
+
+        # Mock coordinate offset methods with proper Vector3 returns
+        converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
+        converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
+        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+
+        # Mock height adjuster
+        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+
+        mock_source_analysis = MagicMock()
+        mock_source_analysis.orientation.value = "horizontal"
+        mock_source_analysis.width_x = 1024.0
+        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.ratio = 1.0
+
+        mock_dest_analysis = MagicMock()
+        mock_dest_analysis.orientation.value = "horizontal"
+        mock_dest_analysis.width_x = 2048.0
+        mock_dest_analysis.depth_z = 2048.0
+
+        mock_rotation_result = MagicMock()
+        mock_rotation_result.rotation_needed = False
+
+        # Act
+        with (
+            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
+            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
+            patch("portal_convert.TscnGenerator") as mock_generator_class,
+        ):
+            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_matcher_class.return_value.match.return_value = mock_rotation_result
+            mock_generator_class.return_value = MagicMock()
+
+            result = converter.convert()
+
+        # Assert
+        assert result == 0
+
+    def test_convert_handles_asset_mapping_exception(self, tmp_path: Path):
+        """Test conversion handles exception during asset mapping."""
+        # Arrange
+        from bfportal.core.interfaces import (
+            GameObject,
+            MapBounds,
+            MapData,
+            Rotation,
+            Team,
+            Transform,
+            Vector3,
+        )
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(100, 0, 100), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(-100, 0, -100), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[
+                GameObject(
+                    name="broken",
+                    asset_type="BrokenAsset",
+                    transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
+                    team=Team.NEUTRAL,
+                    properties={},
+                ),
+            ],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-512, 0, -512),
+                max_point=Vector3(512, 100, 512),
+                combat_area_polygon=[
+                    Vector3(-512, 0, -512),
+                    Vector3(512, 0, -512),
+                    Vector3(512, 0, 512),
+                    Vector3(-512, 0, 512),
+                ],
+                height=100.0,
+            ),
+            metadata={},
+        )
+
+        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path.mkdir(parents=True)
+
+        converter = _create_mock_converter(args, tmp_path)
+        converter.engine.parse_map = MagicMock(return_value=mock_map_data)
+        converter.asset_mapper.map_asset = MagicMock(side_effect=Exception("Mapping error"))
+
+        # Mock coordinate offset methods with proper Vector3 returns
+        converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
+        converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
+        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+
+        # Mock height adjuster
+        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+
+        mock_source_analysis = MagicMock()
+        mock_source_analysis.orientation.value = "horizontal"
+        mock_source_analysis.width_x = 1024.0
+        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.ratio = 1.0
+
+        mock_dest_analysis = MagicMock()
+        mock_dest_analysis.orientation.value = "horizontal"
+        mock_dest_analysis.width_x = 2048.0
+        mock_dest_analysis.depth_z = 2048.0
+
+        mock_rotation_result = MagicMock()
+        mock_rotation_result.rotation_needed = False
+
+        # Act
+        with (
+            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
+            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
+            patch("portal_convert.TscnGenerator") as mock_generator_class,
+        ):
+            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_matcher_class.return_value.match.return_value = mock_rotation_result
+            mock_generator_class.return_value = MagicMock()
+
+            result = converter.convert()
+
+        # Assert
+        assert result == 0
+
+
+class TestGenerateTscn:
+    """Tests for _generate_tscn() method."""
+
+    def test_generate_tscn_creates_output_directory(self, tmp_path: Path):
+        """Test _generate_tscn creates output directory if it doesn't exist."""
+        # Arrange
+        from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-100, 0, -100),
+                max_point=Vector3(100, 50, 100),
+                combat_area_polygon=[],
+                height=50.0,
+            ),
+            metadata={},
+        )
+
+        converter = _create_mock_converter(args, tmp_path)
+        output_path = tmp_path / "new_dir" / "output.tscn"
+
+        # Act
+        with patch("portal_convert.TscnGenerator") as mock_generator_class:
+            mock_generator = MagicMock()
+            mock_generator_class.return_value = mock_generator
+
+            converter._generate_tscn(mock_map_data, output_path)
+
+        # Assert
+        assert output_path.parent.exists()
+
+    def test_generate_tscn_falls_back_on_generator_exception(self, tmp_path: Path):
+        """Test _generate_tscn falls back to basic stub when generator raises exception."""
+        # Arrange
+        from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
+
+        args = Namespace(
+            map="Kursk",
+            base_terrain="MP_Tungsten",
+            terrain_size=2048.0,
+            bf1942_root=None,
+            output=None,
+        )
+
+        mock_map_data = MapData(
+            map_name="Kursk",
+            game_mode="Conquest",
+            team1_hq=Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0)),
+            team2_hq=Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0)),
+            team1_spawns=[],
+            team2_spawns=[],
+            game_objects=[],
+            capture_points=[],
+            bounds=MapBounds(
+                min_point=Vector3(-100, 0, -100),
+                max_point=Vector3(100, 50, 100),
+                combat_area_polygon=[],
+                height=50.0,
+            ),
+            metadata={},
+        )
+
+        converter = _create_mock_converter(args, tmp_path)
+        output_path = tmp_path / "output.tscn"
+
+        # Act
+        with patch("portal_convert.TscnGenerator") as mock_generator_class:
+            mock_generator = MagicMock()
+            mock_generator.generate.side_effect = Exception("Generator failed")
+            mock_generator_class.return_value = mock_generator
+
+            converter._generate_tscn(mock_map_data, output_path)
+
+        # Assert
+        assert output_path.exists()
+        content = output_path.read_text()
+        assert "[gd_scene format=3]" in content
+        assert f'[node name="{mock_map_data.map_name}" type="Node3D"]' in content
 
 
 class TestMainFunction:

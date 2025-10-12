@@ -349,6 +349,194 @@ class TestMainFunction:
         # Assert
         assert result == 1
 
+    def test_prints_available_templates_when_template_not_found(
+        self, tmp_path: Path, capsys
+    ):
+        """Test main prints available templates when requested template not found."""
+        # Arrange
+        registry_data: dict[str, list | dict] = {
+            "maps": [],
+            "experience_templates": {
+                "template1": {},
+                "template2": {},
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "missing_template",
+        ]
+
+        # Act
+        with patch("sys.argv", test_args):
+            result = main()
+
+        captured = capsys.readouterr()
+
+        # Assert
+        assert result == 1
+        assert "template1" in captured.err
+        assert "template2" in captured.err
+
+    def test_warns_when_specific_maps_not_found_in_registry(
+        self, tmp_path: Path, capsys
+    ):
+        """Test main warns when specific maps requested but not found."""
+        # Arrange
+        spatial_dir = tmp_path / "FbExportData" / "levels"
+        spatial_dir.mkdir(parents=True)
+        spatial_path = spatial_dir / "Kursk.spatial.json"
+        spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "complete",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Test",
+                    "description": "Test",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+            "--maps",
+            "kursk",
+            "missing_map1",
+            "missing_map2",
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+        ):
+            result = main()
+
+        captured = capsys.readouterr()
+
+        # Assert
+        assert result == 0
+        assert "missing_map1" in captured.out
+        assert "missing_map2" in captured.out
+
+    def test_returns_error_when_no_maps_matched_criteria(self, tmp_path: Path):
+        """Test main returns error code when no maps match filter criteria."""
+        # Arrange
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "in_progress",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Test",
+                    "description": "Test",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {"status": "complete"},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 1
+
+    def test_uses_custom_output_path_when_provided(self, tmp_path: Path):
+        """Test main uses custom output path when --output specified."""
+        # Arrange
+        spatial_dir = tmp_path / "FbExportData" / "levels"
+        spatial_dir.mkdir(parents=True)
+        spatial_path = spatial_dir / "Kursk.spatial.json"
+        spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
+        custom_output = tmp_path / "custom" / "my_experience.json"
+        custom_output.parent.mkdir(parents=True)
+
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "complete",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Test Experience",
+                    "description": "Test",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {"status": "complete"},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+            "--output",
+            str(custom_output),
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 0
+        assert custom_output.exists()
+
     def test_returns_success_when_experience_created(self, tmp_path: Path):
         """Test main returns success code when experience is created."""
         # Arrange

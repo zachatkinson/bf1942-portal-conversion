@@ -372,8 +372,72 @@ Example: `feat: add RFA extraction for Kursk map data`
 
 ## Testing Strategy
 
-**Target Coverage:** 75%+ (commendable by industry standards)
-**Current Coverage:** 28% (tools/), 56% (tools/bfportal/)
+**Current Coverage:** 71% overall (2850/3996 statements)
+**Target Coverage:** 75-80% (industry best practice)
+
+### Test Coverage Philosophy
+
+#### Is 100% Coverage Worth It?
+
+**No** - 100% test coverage is generally **not the goal** for most software projects.
+
+**Industry Best Practices:**
+- **70-80% coverage**: Standard target for production code ✅
+- **80-90% coverage**: Excellent for critical business logic
+- **90-100% coverage**: Usually overkill, only for safety-critical systems (medical, aerospace)
+
+**Why Not 100%?**
+
+1. **Diminishing Returns**: The last 10-20% often costs as much effort as the first 80%
+2. **Coverage ≠ Quality**: 100% line coverage doesn't guarantee bug-free code
+   - Coverage only shows which lines were executed, not whether they work correctly
+   - Can still have logic errors, edge cases, integration issues
+3. **Untestable Code**: Some code paths are impractical or impossible to test:
+   - OS-specific error paths (Windows vs macOS vs Linux)
+   - External service failures (network timeouts, database crashes)
+   - Defensive error handling that "should never happen"
+   - Platform-specific edge cases
+4. **Opportunity Cost**: Time spent chasing 100% could be better spent on:
+   - Integration tests and end-to-end workflows
+   - Performance testing
+   - Documentation
+   - New features
+   - Security audits
+
+#### Strategic Coverage Targeting
+
+Focus testing efforts on **high-value, high-risk code**:
+
+**High Priority (Target 85-95%):**
+- Core conversion pipeline (parsers, mappers, generators)
+- User-facing CLI tools (portal_convert.py, portal_validate.py)
+- Complex business logic (coordinate transforms, asset mapping)
+- Error-prone areas (file I/O, parsing, validation)
+- Bug fixes (regression tests)
+
+**Medium Priority (Target 70-80%):**
+- Utility scripts (create_experience.py, export_to_portal.py)
+- Validation and comparison tools
+- Terrain and height calculation
+
+**Lower Priority (Target 40-60%):**
+- One-off analysis scripts (compare_terrains.py, scan_all_maps.py)
+- Diagnostic tools
+- Experimental features
+
+#### Coverage Quality Over Quantity
+
+**Good coverage** means:
+- Tests verify behavior, not implementation details
+- Tests are maintainable and clear (AAA pattern)
+- Tests catch real bugs before production
+- Tests document expected behavior
+
+**Bad coverage** means:
+- Tests that pass but don't verify anything meaningful
+- Brittle tests that break on refactoring
+- Tests that duplicate what other tests already verify
+- Tests chasing 100% without added value
 
 ### Testing Best Practices
 
