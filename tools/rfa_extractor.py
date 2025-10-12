@@ -153,7 +153,7 @@ class RFAExtractor:
 
         if entry.is_compressed:
             try:
-                import lzo
+                import lzo  # type: ignore[import-not-found]
 
                 data = lzo.decompress(data, entry.size)
             except ImportError:
