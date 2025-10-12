@@ -18,7 +18,6 @@ import base64
 import json
 import sys
 from pathlib import Path
-from typing import Optional
 
 
 def create_experience_file(
@@ -27,7 +26,7 @@ def create_experience_file(
     base_map: str,
     max_players_per_team: int,
     game_mode: str,
-    description: Optional[str] = None
+    description: str | None = None,
 ) -> Path:
     """
     Create a complete Portal experience file with embedded spatial data.
@@ -52,12 +51,12 @@ def create_experience_file(
 
     # Read the spatial.json file
     print(f"Reading spatial data from {spatial_path}...")
-    with open(spatial_path, 'r', encoding='utf-8') as f:
+    with open(spatial_path, encoding="utf-8") as f:
         spatial_data = f.read()
 
     # Base64 encode the spatial data
-    print(f"Encoding spatial data (base64)...")
-    spatial_base64 = base64.b64encode(spatial_data.encode('utf-8')).decode('utf-8')
+    print("Encoding spatial data (base64)...")
+    spatial_base64 = base64.b64encode(spatial_data.encode("utf-8")).decode("utf-8")
 
     # Create default description if none provided
     if description is None:
@@ -66,23 +65,22 @@ def create_experience_file(
             f"Features authentic spawn points, vehicle spawners, and gameplay objects."
         )
 
-    print(f"Creating experience structure...")
+    print("Creating experience structure...")
 
     # Create the complete experience structure following the official pattern
-    # Based on analysis of official example mods (AcePursuit, BombSquad, Exfil, Vertigo)
-    # ALL official examples include these universal mutator fields
+    # Using custom mode (ModBuilder_GameMode: 0) for full control and local testing
     experience = {
         "mutators": {
             "MaxPlayerCount_PerTeam": max_players_per_team,
             "AiMaxCount_PerTeam": 0,
             "AiSpawnType": 2,
-            "AI_ManDownExperienceType_PerTeam": 1,  # Universal field - AI respawn behavior
-            "ModBuilder_GameMode": 2,  # Universal field - game mode configuration
+            "AI_ManDownExperienceType_PerTeam": 1,  # AI respawn behavior
+            "ModBuilder_GameMode": 0,  # Custom mode - full control, local testing enabled
             "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
             "AimAssistSnapCapsuleRadiusMultiplier": 1,
             "FriendlyFireDamageReflectionMaxTeamKills": 2,
             "SpawnBalancing_GamemodeStartTimer": 0,
-            "SpawnBalancing_GamemodePlayerCountRatio": 0.75
+            "SpawnBalancing_GamemodePlayerCountRatio": 0.75,
         },
         "assetRestrictions": {},
         "name": f"{map_name} - BF1942 Classic",
@@ -101,20 +99,20 @@ def create_experience_file(
                     "processingStatus": 2,
                     "attachmentData": {
                         "original": spatial_base64,
-                        "compiled": ""  # Empty - Portal compiles server-side
+                        "compiled": "",  # Empty - Portal compiles server-side
                     },
                     "attachmentType": 1,
-                    "errors": []
-                }
+                    "errors": [],
+                },
             }
         ],
         "workspace": {},
         "teamComposition": [
             [1, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}]
+            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
         ],
         "gameMode": game_mode,
-        "attachments": []
+        "attachments": [],
     }
 
     # Create experiences directory if it doesn't exist
@@ -125,20 +123,22 @@ def create_experience_file(
     output_file = experiences_dir / f"{map_name}_Experience.json"
     print(f"Writing experience file to {output_file}...")
 
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(experience, f, indent=2)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"✅ Created {output_file}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"   Name: {experience['name']}")
     print(f"   Base map: {base_map}")
     print(f"   Game mode: {game_mode}")
-    print(f"   Max players: {max_players_per_team * 2} ({max_players_per_team}v{max_players_per_team})")
+    print(
+        f"   Max players: {max_players_per_team * 2} ({max_players_per_team}v{max_players_per_team})"
+    )
     print(f"   Spatial data: {len(spatial_data):,} bytes")
     print(f"   Encoded size: {len(spatial_base64):,} bytes")
     print(f"   Total file size: {output_file.stat().st_size:,} bytes")
-    print(f"{'='*60}\n")
+    print(f"{'=' * 60}\n")
 
     return output_file
 
@@ -179,24 +179,19 @@ Available base maps (choose terrain similar to your map):
   - MP_Dumbo        (Brooklyn - urban)
   - MP_FireStorm    (Turkmenistan - desert)
   - MP_Limestone    (Gibraltar - coastal)
-        """
+        """,
     )
 
-    parser.add_argument(
-        "map_name",
-        help="Name of the map (e.g., Kursk, El_Alamein)"
-    )
+    parser.add_argument("map_name", help="Name of the map (e.g., Kursk, El_Alamein)")
 
     parser.add_argument(
         "--spatial-path",
         type=Path,
-        help="Path to .spatial.json file (default: FbExportData/levels/<map_name>.spatial.json)"
+        help="Path to .spatial.json file (default: FbExportData/levels/<map_name>.spatial.json)",
     )
 
     parser.add_argument(
-        "--base-map",
-        default="MP_Tungsten",
-        help="Base map for terrain (default: MP_Tungsten)"
+        "--base-map", default="MP_Tungsten", help="Base map for terrain (default: MP_Tungsten)"
     )
 
     parser.add_argument(
@@ -204,20 +199,17 @@ Available base maps (choose terrain similar to your map):
         type=int,
         default=32,
         choices=[16, 32, 64],
-        help="Maximum players per team (default: 32, total 64 players)"
+        help="Maximum players per team (default: 32, total 64 players)",
     )
 
     parser.add_argument(
         "--game-mode",
         default="Conquest",
         choices=["Conquest", "Rush", "TeamDeathmatch", "Breakthrough"],
-        help="Game mode (default: Conquest)"
+        help="Game mode (default: Conquest)",
     )
 
-    parser.add_argument(
-        "--description",
-        help="Custom description for the experience"
-    )
+    parser.add_argument("--description", help="Custom description for the experience")
 
     args = parser.parse_args()
 
@@ -229,7 +221,7 @@ Available base maps (choose terrain similar to your map):
 
     if not spatial_path.exists():
         print(f"❌ Error: Spatial file not found: {spatial_path}\n", file=sys.stderr)
-        print(f"Available spatial files:", file=sys.stderr)
+        print("Available spatial files:", file=sys.stderr)
         levels_dir = Path("FbExportData/levels")
         if levels_dir.exists():
             spatial_files = list(levels_dir.glob("*.spatial.json"))
@@ -237,8 +229,8 @@ Available base maps (choose terrain similar to your map):
                 for f in sorted(spatial_files):
                     print(f"  - {f.stem}", file=sys.stderr)
             else:
-                print(f"  (none found)", file=sys.stderr)
-                print(f"\nDid you export the map first?", file=sys.stderr)
+                print("  (none found)", file=sys.stderr)
+                print("\nDid you export the map first?", file=sys.stderr)
                 print(f"Run: bash tools/export_map.sh {args.map_name}", file=sys.stderr)
         return 1
 
@@ -249,21 +241,22 @@ Available base maps (choose terrain similar to your map):
             base_map=args.base_map,
             max_players_per_team=args.max_players,
             game_mode=args.game_mode,
-            description=args.description
+            description=args.description,
         )
 
-        print(f"✅ SUCCESS! Ready to import to Portal\n")
-        print(f"Next steps:")
-        print(f"1. Go to portal.battlefield.com")
-        print(f"2. Click 'IMPORT' button")
+        print("✅ SUCCESS! Ready to import to Portal\n")
+        print("Next steps:")
+        print("1. Go to portal.battlefield.com")
+        print("2. Click 'IMPORT' button")
         print(f"3. Select: {experience_path.name}")
-        print(f"4. Your map will appear in the Map Rotation!")
+        print("4. Your map will appear in the Map Rotation!")
 
         return 0
 
     except Exception as e:
         print(f"\n❌ Error: {e}", file=sys.stderr)
         import traceback
+
         traceback.print_exc()
         return 1
 

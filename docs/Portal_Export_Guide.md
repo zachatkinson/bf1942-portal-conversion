@@ -236,8 +236,8 @@ A Portal "experience" is a complete game mode package including:
 - **Game settings** (player counts, rules)
 - **Custom spatial data** (your BF1942 map layout)
 
-> 📝 **Note:** The maps in this project use Portal's **Verified Modes** settings for Conquest (`ModBuilder_GameMode: 2`), not custom game mode logic. This provides the authentic BF1942 Conquest experience using BF6's official ruleset, matching the pattern used in official Portal examples like AcePursuit and BombSquad.
-> **Use:** Understanding the experience format and verified modes
+> 📝 **Note:** The maps in this project use **Custom Mode** (`ModBuilder_GameMode: 0`) to enable local testing and full control over Portal Builder settings. Custom mode supports Conquest gameplay while allowing you to test unpublished experiences and modify all game settings in the Portal UI.
+> **Use:** Understanding the experience format and custom mode benefits
 
 ### How Portal Processes Custom Spatial Data
 

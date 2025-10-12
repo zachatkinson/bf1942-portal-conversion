@@ -21,14 +21,9 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-from typing import Optional
 
 
-def export_tscn_to_spatial(
-    tscn_path: Path,
-    asset_dir: Path,
-    output_dir: Path
-) -> Path:
+def export_tscn_to_spatial(tscn_path: Path, asset_dir: Path, output_dir: Path) -> Path:
     """
     Export a .tscn file to .spatial.json using gdconverter.
 
@@ -53,7 +48,7 @@ def export_tscn_to_spatial(
     result = subprocess.run(
         [sys.executable, str(export_script), str(tscn_path), str(asset_dir), str(output_dir)],
         capture_output=True,
-        text=True
+        text=True,
     )
 
     if result.returncode != 0:
@@ -75,7 +70,7 @@ def create_experience_file(
     base_map: str,
     max_players_per_team: int,
     game_mode: str,
-    description: Optional[str] = None
+    description: str | None = None,
 ) -> Path:
     """
     Create a complete Portal experience file with embedded spatial data.
@@ -92,11 +87,11 @@ def create_experience_file(
         Path to the generated experience file
     """
     # Read the spatial.json file
-    with open(spatial_path, 'r', encoding='utf-8') as f:
+    with open(spatial_path, encoding="utf-8") as f:
         spatial_data = f.read()
 
     # Base64 encode the spatial data
-    spatial_base64 = base64.b64encode(spatial_data.encode('utf-8')).decode('utf-8')
+    spatial_base64 = base64.b64encode(spatial_data.encode("utf-8")).decode("utf-8")
 
     # Create default description if none provided
     if description is None:
@@ -106,19 +101,19 @@ def create_experience_file(
         )
 
     # Create the complete experience structure following the official pattern
-    # ALL official examples include these universal mutator fields
+    # Using custom mode (ModBuilder_GameMode: 0) for full control and local testing
     experience = {
         "mutators": {
             "MaxPlayerCount_PerTeam": max_players_per_team,
             "AiMaxCount_PerTeam": 0,
             "AiSpawnType": 2,
-            "AI_ManDownExperienceType_PerTeam": 1,  # Universal field - AI respawn behavior
-            "ModBuilder_GameMode": 2,  # Universal field - game mode configuration
+            "AI_ManDownExperienceType_PerTeam": 1,  # AI respawn behavior
+            "ModBuilder_GameMode": 0,  # Custom mode - full control, local testing enabled
             "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
             "AimAssistSnapCapsuleRadiusMultiplier": 1,
             "FriendlyFireDamageReflectionMaxTeamKills": 2,
             "SpawnBalancing_GamemodeStartTimer": 0,
-            "SpawnBalancing_GamemodePlayerCountRatio": 0.75
+            "SpawnBalancing_GamemodePlayerCountRatio": 0.75,
         },
         "assetRestrictions": {},
         "name": f"{map_name} - BF1942 Classic",
@@ -136,20 +131,20 @@ def create_experience_file(
                     "processingStatus": 2,
                     "attachmentData": {
                         "original": spatial_base64,
-                        "compiled": ""  # Empty - Portal compiles server-side
+                        "compiled": "",  # Empty - Portal compiles server-side
                     },
                     "attachmentType": 1,
-                    "errors": []
-                }
+                    "errors": [],
+                },
             }
         ],
         "workspace": {},
         "teamComposition": [
             [1, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}]
+            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
         ],
         "gameMode": game_mode,
-        "attachments": []
+        "attachments": [],
     }
 
     # Create experiences directory if it doesn't exist
@@ -158,7 +153,7 @@ def create_experience_file(
 
     # Write the experience file
     output_file = experiences_dir / f"{map_name}_Experience.json"
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(experience, f, indent=2)
 
     print(f"✅ Created {output_file}")
@@ -197,18 +192,15 @@ Available base maps (choose terrain similar to your map):
   - MP_Dumbo (Brooklyn - urban)
   - MP_FireStorm (Turkmenistan - desert)
   - MP_Limestone (Gibraltar - coastal)
-        """
+        """,
     )
 
-    parser.add_argument(
-        "map_name",
-        help="Name of the map to export (e.g., Kursk, El_Alamein)"
-    )
+    parser.add_argument("map_name", help="Name of the map to export (e.g., Kursk, El_Alamein)")
 
     parser.add_argument(
         "--base-map",
         default="MP_Tungsten",
-        help="Base map to use for terrain (default: MP_Tungsten)"
+        help="Base map to use for terrain (default: MP_Tungsten)",
     )
 
     parser.add_argument(
@@ -216,25 +208,22 @@ Available base maps (choose terrain similar to your map):
         type=int,
         default=32,
         choices=[16, 32, 64],
-        help="Maximum players per team (default: 32, total 64 players)"
+        help="Maximum players per team (default: 32, total 64 players)",
     )
 
     parser.add_argument(
         "--game-mode",
         default="Conquest",
         choices=["Conquest", "Rush", "TeamDeathmatch", "Breakthrough"],
-        help="Game mode (default: Conquest)"
+        help="Game mode (default: Conquest)",
     )
 
-    parser.add_argument(
-        "--description",
-        help="Custom description for the experience"
-    )
+    parser.add_argument("--description", help="Custom description for the experience")
 
     parser.add_argument(
         "--tscn-path",
         type=Path,
-        help="Custom path to .tscn file (default: GodotProject/levels/<map_name>.tscn)"
+        help="Custom path to .tscn file (default: GodotProject/levels/<map_name>.tscn)",
     )
 
     args = parser.parse_args()
@@ -249,7 +238,7 @@ Available base maps (choose terrain similar to your map):
 
     if not tscn_path.exists():
         print(f"❌ Error: Map file not found: {tscn_path}", file=sys.stderr)
-        print(f"\nAvailable maps:", file=sys.stderr)
+        print("\nAvailable maps:", file=sys.stderr)
         levels_dir = project_root / "GodotProject" / "levels"
         if levels_dir.exists():
             for tscn in sorted(levels_dir.glob("*.tscn")):
@@ -267,16 +256,16 @@ Available base maps (choose terrain similar to your map):
 
     try:
         # Step 1: Export .tscn to .spatial.json
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Step 1: Exporting {args.map_name}.tscn to .spatial.json")
-        print(f"{'='*60}\n")
+        print(f"{'=' * 60}\n")
 
         spatial_path = export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
         # Step 2: Create complete experience file
-        print(f"\n{'='*60}")
-        print(f"Step 2: Creating Portal experience file")
-        print(f"{'='*60}\n")
+        print(f"\n{'=' * 60}")
+        print("Step 2: Creating Portal experience file")
+        print(f"{'=' * 60}\n")
 
         experience_path = create_experience_file(
             map_name=args.map_name,
@@ -284,19 +273,19 @@ Available base maps (choose terrain similar to your map):
             base_map=args.base_map,
             max_players_per_team=args.max_players,
             game_mode=args.game_mode,
-            description=args.description
+            description=args.description,
         )
 
         # Success!
-        print(f"\n{'='*60}")
-        print(f"✅ SUCCESS! Ready to import to Portal")
-        print(f"{'='*60}\n")
+        print(f"\n{'=' * 60}")
+        print("✅ SUCCESS! Ready to import to Portal")
+        print(f"{'=' * 60}\n")
         print(f"Import file: {experience_path}")
-        print(f"\nNext steps:")
-        print(f"1. Go to portal.battlefield.com")
-        print(f"2. Click the 'IMPORT' button")
+        print("\nNext steps:")
+        print("1. Go to portal.battlefield.com")
+        print("2. Click the 'IMPORT' button")
         print(f"3. Select: {experience_path}")
-        print(f"4. Your map will appear in Map Rotation!")
+        print("4. Your map will appear in Map Rotation!")
 
         return 0
 
