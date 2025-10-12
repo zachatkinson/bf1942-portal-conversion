@@ -270,9 +270,7 @@ class TestMainFunction:
             patch("sys.argv", test_args),
             patch(
                 "create_experience.Path",
-                side_effect=lambda x: (
-                    tmp_path / x if x.startswith("FbExportData") else Path(x)
-                ),
+                side_effect=lambda x: (tmp_path / x if x.startswith("FbExportData") else Path(x)),
             ),
         ):
             result = main()
@@ -298,9 +296,7 @@ class TestMainFunction:
             patch("sys.argv", test_args),
             patch(
                 "create_experience.Path",
-                side_effect=lambda x: (
-                    tmp_path / x if x.startswith("FbExportData") else Path(x)
-                ),
+                side_effect=lambda x: (tmp_path / x if x.startswith("FbExportData") else Path(x)),
             ),
         ):
             result = main()
@@ -312,9 +308,7 @@ class TestMainFunction:
         assert "Did you export the map first?" in captured.err
         assert "bash tools/export_map.sh TestMap" in captured.err
 
-    def test_main_handles_exception_during_creation_returns_error(
-        self, tmp_path: Path, capsys
-    ):
+    def test_main_handles_exception_during_creation_returns_error(self, tmp_path: Path, capsys):
         """Test main handles exceptions during experience creation with traceback."""
         # Arrange
         test_args = ["create_experience.py", "TestMap"]

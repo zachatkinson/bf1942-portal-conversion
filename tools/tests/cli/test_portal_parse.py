@@ -394,9 +394,7 @@ class TestPortalParseAppFormatMapDataSummary:
         assert "Game Objects: 1" in summary
         assert "Building: 1" in summary
 
-    def test_format_map_data_summary_with_minimal_data_succeeds(
-        self, mock_map_data_minimal
-    ):
+    def test_format_map_data_summary_with_minimal_data_succeeds(self, mock_map_data_minimal):
         """Test formatting summary with minimal map data succeeds."""
         # Arrange
         app = PortalParseApp()
@@ -765,9 +763,7 @@ class TestPortalParseAppRun:
         assert result == 1
         assert "Unexpected error: Unexpected error" in captured.out
 
-    def test_run_outputs_json_format_when_specified(
-        self, tmp_path, mock_map_data, capsys
-    ):
+    def test_run_outputs_json_format_when_specified(self, tmp_path, mock_map_data, capsys):
         """Test run outputs JSON format when specified."""
         # Arrange
         map_path = tmp_path / "TestMap"
@@ -799,9 +795,7 @@ class TestPortalParseAppRun:
         assert result == 0
         assert '"name": "TestMap"' in captured.out
 
-    def test_run_writes_output_to_file_when_specified(
-        self, tmp_path, mock_map_data, capsys
-    ):
+    def test_run_writes_output_to_file_when_specified(self, tmp_path, mock_map_data, capsys):
         """Test run writes output to file when specified."""
         # Arrange
         map_path = tmp_path / "TestMap"

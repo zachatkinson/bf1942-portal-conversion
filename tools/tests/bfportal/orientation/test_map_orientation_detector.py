@@ -44,9 +44,7 @@ def empty_map_data():
         team2_spawns=[],
         capture_points=[],
         game_objects=[],
-        bounds=MapBounds(
-            Vector3(-500, 0, -500), Vector3(500, 100, 500), [], 100.0
-        ),
+        bounds=MapBounds(Vector3(-500, 0, -500), Vector3(500, 100, 500), [], 100.0),
         metadata={},
     )
 
@@ -86,9 +84,7 @@ def square_map_data():
         ],
         capture_points=[],
         game_objects=[],
-        bounds=MapBounds(
-            Vector3(-500, 0, -500), Vector3(1500, 100, 1500), [], 100.0
-        ),
+        bounds=MapBounds(Vector3(-500, 0, -500), Vector3(1500, 100, 1500), [], 100.0),
         metadata={},
     )
 
@@ -135,9 +131,7 @@ def north_south_map_data():
             )
         ],
         game_objects=[],
-        bounds=MapBounds(
-            Vector3(-500, 0, -500), Vector3(1500, 100, 2500), [], 100.0
-        ),
+        bounds=MapBounds(Vector3(-500, 0, -500), Vector3(1500, 100, 2500), [], 100.0),
         metadata={},
     )
 
@@ -185,9 +179,7 @@ def east_west_map_data():
                 {},
             )
         ],
-        bounds=MapBounds(
-            Vector3(-500, 0, -500), Vector3(3500, 100, 2000), [], 100.0
-        ),
+        bounds=MapBounds(Vector3(-500, 0, -500), Vector3(3500, 100, 2000), [], 100.0),
         metadata={},
     )
 
@@ -230,9 +222,7 @@ class TestMapOrientationDetectorInit:
 class TestMapOrientationDetectorDetectOrientation:
     """Tests for orientation detection."""
 
-    def test_detect_orientation_empty_map_returns_square_low_confidence(
-        self, empty_map_data
-    ):
+    def test_detect_orientation_empty_map_returns_square_low_confidence(self, empty_map_data):
         """Test detecting orientation with no objects returns square."""
         # Arrange
         detector = MapOrientationDetector(empty_map_data)
@@ -262,9 +252,7 @@ class TestMapOrientationDetectorDetectOrientation:
         assert result.ratio == 1.0
         assert result.confidence == "low"
 
-    def test_detect_orientation_north_south_returns_north_south(
-        self, north_south_map_data
-    ):
+    def test_detect_orientation_north_south_returns_north_south(self, north_south_map_data):
         """Test detecting north-south orientation."""
         # Arrange
         detector = MapOrientationDetector(north_south_map_data)
@@ -393,9 +381,7 @@ class TestMapOrientationDetectorDetectOrientation:
             team2_spawns=[],
             capture_points=[],
             game_objects=[],
-            bounds=MapBounds(
-                Vector3(0, 0, 0), Vector3(1200, 100, 1000), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(0, 0, 0), Vector3(1200, 100, 1000), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data, threshold=1.2)
@@ -431,9 +417,7 @@ class TestMapOrientationDetectorDetectOrientation:
             team2_spawns=[],
             capture_points=[],
             game_objects=[],
-            bounds=MapBounds(
-                Vector3(0, 0, 0), Vector3(1000, 100, 1600), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(0, 0, 0), Vector3(1000, 100, 1600), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data, threshold=1.2)
@@ -469,9 +453,7 @@ class TestMapOrientationDetectorDetectOrientation:
             team2_spawns=[],
             capture_points=[],
             game_objects=[],
-            bounds=MapBounds(
-                Vector3(0, 0, 0), Vector3(1100, 100, 1000), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(0, 0, 0), Vector3(1100, 100, 1000), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data, threshold=1.2)
@@ -521,9 +503,7 @@ class TestMapOrientationDetectorGetBounds:
         assert min_z == 0.0
         assert max_z == 1000.0
 
-    def test_get_bounds_north_south_map_returns_correct_bounds(
-        self, north_south_map_data
-    ):
+    def test_get_bounds_north_south_map_returns_correct_bounds(self, north_south_map_data):
         """Test getting bounds from north-south map."""
         # Arrange
         detector = MapOrientationDetector(north_south_map_data)
@@ -574,9 +554,7 @@ class TestMapOrientationDetectorGetBounds:
             team2_spawns=[],
             capture_points=[],
             game_objects=[],
-            bounds=MapBounds(
-                Vector3(-500, 0, -500), Vector3(500, 100, 500), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(-500, 0, -500), Vector3(500, 100, 500), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data)
@@ -886,9 +864,7 @@ class TestMapOrientationDetectorIntegration:
                     {},
                 ),
             ],
-            bounds=MapBounds(
-                Vector3(-1000, 0, -500), Vector3(1000, 100, 3500), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(-1000, 0, -500), Vector3(1000, 100, 3500), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data, threshold=1.2)
@@ -961,9 +937,7 @@ class TestMapOrientationDetectorIntegration:
                     {},
                 ),
             ],
-            bounds=MapBounds(
-                Vector3(-500, 0, -1000), Vector3(4500, 100, 1000), [], 100.0
-            ),
+            bounds=MapBounds(Vector3(-500, 0, -1000), Vector3(4500, 100, 1000), [], 100.0),
             metadata={},
         )
         detector = MapOrientationDetector(map_data, threshold=1.2)

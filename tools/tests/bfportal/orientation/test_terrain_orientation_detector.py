@@ -166,7 +166,9 @@ class TestTerrainOrientationDetectorDetectOrientation:
         assert result.ratio == 1.25
         assert result.confidence == "medium"
 
-    def test_detect_orientation_north_south_medium_ratio_returns_north_south_medium_confidence(self):
+    def test_detect_orientation_north_south_medium_ratio_returns_north_south_medium_confidence(
+        self,
+    ):
         """Test detect_orientation with medium N/S ratio returns NORTH_SOUTH with medium confidence."""
         # Arrange
         detector = TerrainOrientationDetector(terrain_size=(2000.0, 2500.0), threshold=1.2)

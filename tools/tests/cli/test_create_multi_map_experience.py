@@ -349,9 +349,7 @@ class TestMainFunction:
         # Assert
         assert result == 1
 
-    def test_prints_available_templates_when_template_not_found(
-        self, tmp_path: Path, capsys
-    ):
+    def test_prints_available_templates_when_template_not_found(self, tmp_path: Path, capsys):
         """Test main prints available templates when requested template not found."""
         # Arrange
         registry_data: dict[str, list | dict] = {
@@ -382,9 +380,7 @@ class TestMainFunction:
         assert "template1" in captured.err
         assert "template2" in captured.err
 
-    def test_warns_when_specific_maps_not_found_in_registry(
-        self, tmp_path: Path, capsys
-    ):
+    def test_warns_when_specific_maps_not_found_in_registry(self, tmp_path: Path, capsys):
         """Test main warns when specific maps requested but not found."""
         # Arrange
         spatial_dir = tmp_path / "FbExportData" / "levels"

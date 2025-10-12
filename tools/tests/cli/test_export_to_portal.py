@@ -244,7 +244,9 @@ class TestMainFunctionFromExportToPortal:
         with (
             patch("sys.argv", test_args),
             patch("export_to_portal.Path.cwd", return_value=tmp_path),
-            patch("export_to_portal.export_tscn_to_spatial", side_effect=RuntimeError("Test error")),
+            patch(
+                "export_to_portal.export_tscn_to_spatial", side_effect=RuntimeError("Test error")
+            ),
         ):
             result = main()
 

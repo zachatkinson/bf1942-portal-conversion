@@ -401,7 +401,16 @@ class TestConvertMethod:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
         tmp_path / "GodotProject" / "levels" / "Kursk.tscn"
 
@@ -412,12 +421,8 @@ class TestConvertMethod:
         converter.asset_mapper._is_terrain_element = MagicMock(return_value=False)
 
         # Mock coord_offset methods
-        converter.coord_offset.calculate_centroid = MagicMock(
-            return_value=Vector3(0, 0, 0)
-        )
-        converter.coord_offset.calculate_offset = MagicMock(
-            return_value=Vector3(0, 0, 0)
-        )
+        converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
+        converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(0, 0, 0))
         converter.coord_offset.apply_offset = MagicMock(
             side_effect=lambda transform, offset: transform
         )
@@ -569,7 +574,16 @@ class TestConvertMethod:
             output=None,
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -592,7 +606,16 @@ class TestConvertMethod:
             output=None,
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -645,7 +668,12 @@ class TestConvertWithCapturePoints:
             name="CP1",
             transform=Transform(position=Vector3(50, 0, 50), rotation=Rotation(0, 0, 0)),
             radius=30.0,
-            control_area=[Vector3(30, 0, 30), Vector3(70, 0, 30), Vector3(70, 0, 70), Vector3(30, 0, 70)],
+            control_area=[
+                Vector3(30, 0, 30),
+                Vector3(70, 0, 30),
+                Vector3(70, 0, 70),
+                Vector3(30, 0, 70),
+            ],
             team1_spawns=[spawn1],
             team2_spawns=[spawn2],
         )
@@ -673,7 +701,16 @@ class TestConvertWithCapturePoints:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -682,10 +719,14 @@ class TestConvertWithCapturePoints:
         # Mock coordinate offset methods with proper Vector3 returns
         converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
         converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
-        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+        converter.coord_offset.apply_offset = MagicMock(
+            side_effect=lambda transform, offset: transform
+        )
 
         # Mock height adjuster
-        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+        converter.height_adjuster.adjust_height = MagicMock(
+            side_effect=lambda transform, terrain, ground_offset: transform
+        )
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
@@ -708,8 +749,12 @@ class TestConvertWithCapturePoints:
             patch("portal_convert.OrientationMatcher") as mock_matcher_class,
             patch("portal_convert.TscnGenerator") as mock_generator_class,
         ):
-            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
-            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_map_detector_class.return_value.detect_orientation.return_value = (
+                mock_source_analysis
+            )
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = (
+                mock_dest_analysis
+            )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
             mock_generator_class.return_value = MagicMock()
 
@@ -758,7 +803,16 @@ class TestConvertWithRotation:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -787,8 +841,12 @@ class TestConvertWithRotation:
             patch("portal_convert.OrientationMatcher") as mock_matcher_class,
             patch("portal_convert.TscnGenerator") as mock_generator_class,
         ):
-            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
-            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_map_detector_class.return_value.detect_orientation.return_value = (
+                mock_source_analysis
+            )
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = (
+                mock_dest_analysis
+            )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
             mock_generator_class.return_value = MagicMock()
 
@@ -861,7 +919,16 @@ class TestConvertAssetMapping:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -872,10 +939,14 @@ class TestConvertAssetMapping:
         # Mock coordinate offset methods with proper Vector3 returns
         converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
         converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
-        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+        converter.coord_offset.apply_offset = MagicMock(
+            side_effect=lambda transform, offset: transform
+        )
 
         # Mock height adjuster
-        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+        converter.height_adjuster.adjust_height = MagicMock(
+            side_effect=lambda transform, terrain, ground_offset: transform
+        )
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
@@ -898,8 +969,12 @@ class TestConvertAssetMapping:
             patch("portal_convert.OrientationMatcher") as mock_matcher_class,
             patch("portal_convert.TscnGenerator") as mock_generator_class,
         ):
-            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
-            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_map_detector_class.return_value.detect_orientation.return_value = (
+                mock_source_analysis
+            )
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = (
+                mock_dest_analysis
+            )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
             mock_generator_class.return_value = MagicMock()
 
@@ -960,7 +1035,16 @@ class TestConvertAssetMapping:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -971,10 +1055,14 @@ class TestConvertAssetMapping:
         # Mock coordinate offset methods with proper Vector3 returns
         converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
         converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
-        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+        converter.coord_offset.apply_offset = MagicMock(
+            side_effect=lambda transform, offset: transform
+        )
 
         # Mock height adjuster
-        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+        converter.height_adjuster.adjust_height = MagicMock(
+            side_effect=lambda transform, terrain, ground_offset: transform
+        )
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
@@ -997,8 +1085,12 @@ class TestConvertAssetMapping:
             patch("portal_convert.OrientationMatcher") as mock_matcher_class,
             patch("portal_convert.TscnGenerator") as mock_generator_class,
         ):
-            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
-            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_map_detector_class.return_value.detect_orientation.return_value = (
+                mock_source_analysis
+            )
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = (
+                mock_dest_analysis
+            )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
             mock_generator_class.return_value = MagicMock()
 
@@ -1059,7 +1151,16 @@ class TestConvertAssetMapping:
             metadata={},
         )
 
-        map_path = tmp_path / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels" / "Kursk"
+        map_path = (
+            tmp_path
+            / "bf1942_source"
+            / "extracted"
+            / "Bf1942"
+            / "Archives"
+            / "bf1942"
+            / "Levels"
+            / "Kursk"
+        )
         map_path.mkdir(parents=True)
 
         converter = _create_mock_converter(args, tmp_path)
@@ -1069,10 +1170,14 @@ class TestConvertAssetMapping:
         # Mock coordinate offset methods with proper Vector3 returns
         converter.coord_offset.calculate_centroid = MagicMock(return_value=Vector3(0, 0, 0))
         converter.coord_offset.calculate_offset = MagicMock(return_value=Vector3(10, 0, 10))
-        converter.coord_offset.apply_offset = MagicMock(side_effect=lambda transform, offset: transform)
+        converter.coord_offset.apply_offset = MagicMock(
+            side_effect=lambda transform, offset: transform
+        )
 
         # Mock height adjuster
-        converter.height_adjuster.adjust_height = MagicMock(side_effect=lambda transform, terrain, ground_offset: transform)
+        converter.height_adjuster.adjust_height = MagicMock(
+            side_effect=lambda transform, terrain, ground_offset: transform
+        )
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
@@ -1095,8 +1200,12 @@ class TestConvertAssetMapping:
             patch("portal_convert.OrientationMatcher") as mock_matcher_class,
             patch("portal_convert.TscnGenerator") as mock_generator_class,
         ):
-            mock_map_detector_class.return_value.detect_orientation.return_value = mock_source_analysis
-            mock_terrain_detector_class.return_value.detect_orientation.return_value = mock_dest_analysis
+            mock_map_detector_class.return_value.detect_orientation.return_value = (
+                mock_source_analysis
+            )
+            mock_terrain_detector_class.return_value.detect_orientation.return_value = (
+                mock_dest_analysis
+            )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
             mock_generator_class.return_value = MagicMock()
 

@@ -340,9 +340,9 @@ class TestValidateRequiredNodes:
     def test_validates_fails_with_missing_static_layer(self, tmp_path: Path):
         """Test validation fails with missing Static layer."""
         # Arrange
-        content = '''[node name="TEAM_1_HQ" parent="."]
+        content = """[node name="TEAM_1_HQ" parent="."]
 [node name="TEAM_2_HQ" parent="."]
-[node name="CombatArea" parent="."]'''
+[node name="CombatArea" parent="."]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -361,7 +361,9 @@ class TestValidateRequiredNodes:
 class TestValidateSpawnPoints:
     """Tests for TscnValidator.validate_spawn_points() method."""
 
-    def test_validates_sufficient_spawn_points_for_both_teams(self, tmp_path: Path, valid_tscn_content):
+    def test_validates_sufficient_spawn_points_for_both_teams(
+        self, tmp_path: Path, valid_tscn_content
+    ):
         """Test validation passes with 4+ spawn points per team."""
         # Arrange
         validator = TscnValidator(str(tmp_path / "test.tscn"))
@@ -379,12 +381,12 @@ class TestValidateSpawnPoints:
     def test_validates_fails_with_insufficient_team_1_spawns(self, tmp_path: Path):
         """Test validation fails with < 4 team 1 spawn points."""
         # Arrange
-        content = '''[node name="SpawnPoint_1_1" parent="."]
+        content = """[node name="SpawnPoint_1_1" parent="."]
 [node name="SpawnPoint_1_2" parent="."]
 [node name="SpawnPoint_2_1" parent="."]
 [node name="SpawnPoint_2_2" parent="."]
 [node name="SpawnPoint_2_3" parent="."]
-[node name="SpawnPoint_2_4" parent="."]'''
+[node name="SpawnPoint_2_4" parent="."]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -399,11 +401,11 @@ class TestValidateSpawnPoints:
     def test_validates_fails_with_insufficient_team_2_spawns(self, tmp_path: Path):
         """Test validation fails with < 4 team 2 spawn points."""
         # Arrange
-        content = '''[node name="SpawnPoint_1_1" parent="."]
+        content = """[node name="SpawnPoint_1_1" parent="."]
 [node name="SpawnPoint_1_2" parent="."]
 [node name="SpawnPoint_1_3" parent="."]
 [node name="SpawnPoint_1_4" parent="."]
-[node name="SpawnPoint_2_1" parent="."]'''
+[node name="SpawnPoint_2_1" parent="."]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -670,7 +672,7 @@ class TestValidateNodePaths:
     def test_validates_limits_error_output_to_first_five(self, tmp_path: Path):
         """Test validation limits invalid path output to first 5."""
         # Arrange
-        content = '\n'.join([f'Path{i} = NodePath(" Path{i} ")' for i in range(10)])
+        content = "\n".join([f'Path{i} = NodePath(" Path{i} ")' for i in range(10)])
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -707,9 +709,9 @@ class TestValidateExternalResources:
     def test_validates_fails_with_duplicate_resource_ids(self, tmp_path: Path):
         """Test validation fails with duplicate resource IDs."""
         # Arrange
-        content = '''[ext_resource type="PackedScene" path="res://prefabs/HQ.tscn" id="1"]
+        content = """[ext_resource type="PackedScene" path="res://prefabs/HQ.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://prefabs/Spawn.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://prefabs/Combat.tscn" id="1"]'''
+[ext_resource type="PackedScene" path="res://prefabs/Combat.tscn" id="1"]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -724,9 +726,9 @@ class TestValidateExternalResources:
     def test_validates_warns_with_non_sequential_ids(self, tmp_path: Path):
         """Test validation warns with non-sequential resource IDs."""
         # Arrange
-        content = '''[ext_resource type="PackedScene" path="res://prefabs/HQ.tscn" id="1"]
+        content = """[ext_resource type="PackedScene" path="res://prefabs/HQ.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://prefabs/Spawn.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://prefabs/Combat.tscn" id="5"]'''
+[ext_resource type="PackedScene" path="res://prefabs/Combat.tscn" id="5"]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -794,8 +796,8 @@ class TestValidateGameplayObjects:
     def test_validates_warns_with_no_capture_points(self, tmp_path: Path):
         """Test validation warns with no capture points."""
         # Arrange
-        content = '''[node name="TEAM_1_HQ" parent="."]
-[node name="TEAM_2_HQ" parent="."]'''
+        content = """[node name="TEAM_1_HQ" parent="."]
+[node name="TEAM_2_HQ" parent="."]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -810,9 +812,9 @@ class TestValidateGameplayObjects:
     def test_validates_warns_with_no_vehicle_spawners(self, tmp_path: Path):
         """Test validation warns with no vehicle spawners."""
         # Arrange
-        content = '''[node name="TEAM_1_HQ" parent="."]
+        content = """[node name="TEAM_1_HQ" parent="."]
 [node name="TEAM_2_HQ" parent="."]
-[node name="CapturePoint_1" parent="."]'''
+[node name="CapturePoint_1" parent="."]"""
         validator = TscnValidator(str(tmp_path / "test.tscn"))
         validator.content = content
 
@@ -960,7 +962,9 @@ class TestHasErrors:
 class TestValidate:
     """Tests for TscnValidator.validate() method."""
 
-    def test_validates_runs_all_validation_methods(self, tmp_path: Path, valid_tscn_content, capsys):
+    def test_validates_runs_all_validation_methods(
+        self, tmp_path: Path, valid_tscn_content, capsys
+    ):
         """Test validate runs all validation methods."""
         # Arrange
         tscn_path = tmp_path / "test.tscn"
@@ -977,7 +981,9 @@ class TestValidate:
         assert "Validating:" in captured.out
         assert len(validator.results) > 0
 
-    def test_validates_returns_false_with_errors(self, tmp_path: Path, minimal_tscn_content, capsys):
+    def test_validates_returns_false_with_errors(
+        self, tmp_path: Path, minimal_tscn_content, capsys
+    ):
         """Test validate returns False when errors found."""
         # Arrange
         tscn_path = tmp_path / "test.tscn"
@@ -1126,7 +1132,9 @@ class TestMainFunction:
 
         assert exc_info.value.code == 0
 
-    def test_main_exits_with_error_code_on_validation_failure(self, tmp_path: Path, minimal_tscn_content):
+    def test_main_exits_with_error_code_on_validation_failure(
+        self, tmp_path: Path, minimal_tscn_content
+    ):
         """Test main exits with error code when validation fails."""
         # Arrange
         tscn_path = tmp_path / "test.tscn"

@@ -20,6 +20,7 @@ from portal_validate import (
 
 # Fixtures
 
+
 @pytest.fixture
 def valid_asset_catalog():
     """Create a valid asset catalog structure."""
@@ -30,7 +31,7 @@ def valid_asset_catalog():
                 "directory": "Test/Assets",
                 "constants": [],
                 "properties": [],
-                "levelRestrictions": []
+                "levelRestrictions": [],
             }
         ]
     }
@@ -94,6 +95,7 @@ def minimal_tscn_content():
 
 # Tests for ValidationResult dataclass
 
+
 class TestValidationResult:
     """Tests for ValidationResult dataclass."""
 
@@ -123,10 +125,7 @@ class TestValidationResult:
 
         # Act
         result = ValidationResult(
-            check_name=check_name,
-            passed=passed,
-            message=message,
-            severity=severity
+            check_name=check_name, passed=passed, message=message, severity=severity
         )
 
         # Assert
@@ -137,6 +136,7 @@ class TestValidationResult:
 
 
 # Tests for PortalMapValidator.__init__
+
 
 class TestPortalMapValidatorInit:
     """Tests for PortalMapValidator.__init__() initialization."""
@@ -172,6 +172,7 @@ class TestPortalMapValidatorInit:
 
 # Tests for PortalMapValidator._load_asset_catalog
 
+
 class TestLoadAssetCatalog:
     """Tests for PortalMapValidator._load_asset_catalog() method."""
 
@@ -205,10 +206,13 @@ class TestLoadAssetCatalog:
 
 # Tests for PortalMapValidator.validate_map
 
+
 class TestValidateMap:
     """Tests for PortalMapValidator.validate_map() method."""
 
-    def test_validates_map_successfully_with_valid_content(self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys):
+    def test_validates_map_successfully_with_valid_content(
+        self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test successful validation with valid .tscn file."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -227,7 +231,9 @@ class TestValidateMap:
         assert result is True
         assert len(validator.results) > 0
 
-    def test_validates_map_fails_with_errors(self, tmp_path: Path, minimal_tscn_content, valid_asset_catalog, capsys):
+    def test_validates_map_fails_with_errors(
+        self, tmp_path: Path, minimal_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test validation fails with invalid .tscn file."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -247,7 +253,9 @@ class TestValidateMap:
         errors = [r for r in validator.results if not r.passed and r.severity == "error"]
         assert len(errors) > 0
 
-    def test_clears_previous_results_on_new_validation(self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys):
+    def test_clears_previous_results_on_new_validation(
+        self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test results are cleared when validating a new map."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -268,6 +276,7 @@ class TestValidateMap:
 
 
 # Tests for PortalMapValidator._validate_structure
+
 
 class TestValidateStructure:
     """Tests for PortalMapValidator._validate_structure() method."""
@@ -318,18 +327,19 @@ class TestValidateStructure:
 
 # Tests for PortalMapValidator._validate_hqs
 
+
 class TestValidateHqs:
     """Tests for PortalMapValidator._validate_hqs() method."""
 
     def test_validates_hqs_passes_with_two_team_hqs(self, tmp_path: Path):
         """Test HQ validation passes with both team HQs present."""
         # Arrange
-        content = '''
+        content = """
 [node name="TEAM_1_HQ" parent="."]
 HQArea = NodePath("HQ_Team1")
 [node name="TEAM_2_HQ" parent="."]
 HQArea = NodePath("HQ_Team2")
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -342,10 +352,10 @@ HQArea = NodePath("HQ_Team2")
     def test_validates_hqs_fails_with_only_one_hq(self, tmp_path: Path):
         """Test HQ validation fails with only one HQ."""
         # Arrange
-        content = '''
+        content = """
 [node name="TEAM_1_HQ" parent="."]
 HQArea = NodePath("HQ_Team1")
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -360,11 +370,11 @@ HQArea = NodePath("HQ_Team1")
     def test_validates_hqs_warns_on_missing_hq_area_reference(self, tmp_path: Path):
         """Test HQ validation warns when HQArea reference missing."""
         # Arrange
-        content = '''
+        content = """
 [node name="TEAM_1_HQ" parent="."]
 [node name="TEAM_2_HQ" parent="."]
 HQArea = NodePath("HQ_Team2")
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -378,13 +388,14 @@ HQArea = NodePath("HQ_Team2")
 
 # Tests for PortalMapValidator._validate_spawns
 
+
 class TestValidateSpawns:
     """Tests for PortalMapValidator._validate_spawns() method."""
 
     def test_validates_spawns_passes_with_sufficient_spawns(self, tmp_path: Path):
         """Test spawn validation passes with 4+ spawns per team."""
         # Arrange
-        content = '''
+        content = """
 [node name="SpawnPoint_1_1" parent="."]
 [node name="SpawnPoint_1_2" parent="."]
 [node name="SpawnPoint_1_3" parent="."]
@@ -393,7 +404,7 @@ class TestValidateSpawns:
 [node name="SpawnPoint_2_2" parent="."]
 [node name="SpawnPoint_2_3" parent="."]
 [node name="SpawnPoint_2_4" parent="."]
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -408,14 +419,14 @@ class TestValidateSpawns:
     def test_validates_spawns_fails_with_insufficient_team1_spawns(self, tmp_path: Path):
         """Test spawn validation fails with < 4 team 1 spawns."""
         # Arrange
-        content = '''
+        content = """
 [node name="SpawnPoint_1_1" parent="."]
 [node name="SpawnPoint_1_2" parent="."]
 [node name="SpawnPoint_2_1" parent="."]
 [node name="SpawnPoint_2_2" parent="."]
 [node name="SpawnPoint_2_3" parent="."]
 [node name="SpawnPoint_2_4" parent="."]
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -430,13 +441,13 @@ class TestValidateSpawns:
     def test_validates_spawns_fails_with_insufficient_team2_spawns(self, tmp_path: Path):
         """Test spawn validation fails with < 4 team 2 spawns."""
         # Arrange
-        content = '''
+        content = """
 [node name="SpawnPoint_1_1" parent="."]
 [node name="SpawnPoint_1_2" parent="."]
 [node name="SpawnPoint_1_3" parent="."]
 [node name="SpawnPoint_1_4" parent="."]
 [node name="SpawnPoint_2_1" parent="."]
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -451,17 +462,18 @@ class TestValidateSpawns:
 
 # Tests for PortalMapValidator._validate_combat_area
 
+
 class TestValidateCombatArea:
     """Tests for PortalMapValidator._validate_combat_area() method."""
 
     def test_validates_combat_area_passes_with_complete_definition(self, tmp_path: Path):
         """Test combat area validation passes with complete definition."""
         # Arrange
-        content = '''
+        content = """
 [node name="CombatArea" parent="."]
 CombatVolume = NodePath("CollisionPolygon3D")
 points = PackedVector2Array([0, 0, 100, 0, 100, 100, 0, 100])
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -504,10 +516,10 @@ points = PackedVector2Array([0, 0, 100, 0, 100, 100, 0, 100])
     def test_validates_combat_area_warns_on_missing_polygon_points(self, tmp_path: Path):
         """Test combat area validation warns when polygon points missing."""
         # Arrange
-        content = '''
+        content = """
 [node name="CombatArea" parent="."]
 CombatVolume = NodePath("CollisionPolygon3D")
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -521,16 +533,17 @@ CombatVolume = NodePath("CollisionPolygon3D")
 
 # Tests for PortalMapValidator._validate_assets
 
+
 class TestValidateAssets:
     """Tests for PortalMapValidator._validate_assets() method."""
 
     def test_validates_assets_reports_no_custom_assets(self, tmp_path: Path):
         """Test asset validation reports no custom assets in empty map."""
         # Arrange
-        content = '''
+        content = """
 [node name="TEAM_1_HQ" parent="."]
 [node name="SpawnPoint_1_1" parent="."]
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -545,12 +558,12 @@ class TestValidateAssets:
     def test_validates_assets_reports_found_assets(self, tmp_path: Path):
         """Test asset validation reports found custom assets."""
         # Arrange
-        content = '''
+        content = """
 [node name="TEAM_1_HQ" parent="."]
 [node name="Building_01" parent="."]
 [node name="Tree_Pine_Large" parent="."]
 [node name="Rock_Granite_Medium" parent="."]
-'''
+"""
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -565,13 +578,14 @@ class TestValidateAssets:
 
 # Tests for PortalMapValidator._validate_bounds
 
+
 class TestValidateBounds:
     """Tests for PortalMapValidator._validate_bounds() method."""
 
     def test_validates_bounds_passes_with_polygon_defined(self, tmp_path: Path):
         """Test bounds validation passes when polygon is defined."""
         # Arrange
-        content = 'points = PackedVector2Array([0, 0, 100, 0, 100, 100, 0, 100])'
+        content = "points = PackedVector2Array([0, 0, 100, 0, 100, 100, 0, 100])"
         validator = PortalMapValidator(tmp_path)
 
         # Act
@@ -599,6 +613,7 @@ class TestValidateBounds:
 
 
 # Tests for PortalMapValidator._report_results
+
 
 class TestReportResults:
     """Tests for PortalMapValidator._report_results() method."""
@@ -666,6 +681,7 @@ class TestReportResults:
 
 # Tests for PortalValidateApp.parse_args
 
+
 class TestPortalValidateAppParseArgs:
     """Tests for PortalValidateApp.parse_args() method."""
 
@@ -730,10 +746,13 @@ class TestPortalValidateAppParseArgs:
 
 # Tests for PortalValidateApp.run
 
+
 class TestPortalValidateAppRun:
     """Tests for PortalValidateApp.run() method."""
 
-    def test_run_returns_success_with_valid_map(self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys):
+    def test_run_returns_success_with_valid_map(
+        self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test run returns success code with valid map."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -753,7 +772,9 @@ class TestPortalValidateAppRun:
         # Assert
         assert result == 0
 
-    def test_run_returns_error_with_invalid_map(self, tmp_path: Path, minimal_tscn_content, valid_asset_catalog, capsys):
+    def test_run_returns_error_with_invalid_map(
+        self, tmp_path: Path, minimal_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test run returns error code with invalid map."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -794,7 +815,9 @@ class TestPortalValidateAppRun:
         assert result == 1
         assert "Error: Map not found" in captured.out
 
-    def test_run_handles_exception_during_validation(self, tmp_path: Path, valid_tscn_content, capsys):
+    def test_run_handles_exception_during_validation(
+        self, tmp_path: Path, valid_tscn_content, capsys
+    ):
         """Test run handles exception during validation gracefully."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -810,7 +833,9 @@ class TestPortalValidateAppRun:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch.object(PortalMapValidator, "validate_map", side_effect=RuntimeError("Test error"))
+            patch.object(
+                PortalMapValidator, "validate_map", side_effect=RuntimeError("Test error")
+            ),
         ):
             result = app.run()
         captured = capsys.readouterr()
@@ -819,7 +844,9 @@ class TestPortalValidateAppRun:
         assert result == 1
         assert "Error validating" in captured.out
 
-    def test_run_validates_multiple_maps_and_reports_summary(self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys):
+    def test_run_validates_multiple_maps_and_reports_summary(
+        self, tmp_path: Path, valid_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test run validates multiple maps and reports summary."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -833,7 +860,13 @@ class TestPortalValidateAppRun:
         tscn_path2.write_text(valid_tscn_content)
 
         app = PortalValidateApp()
-        test_args = ["portal_validate.py", "--sdk-root", str(tmp_path), str(tscn_path1), str(tscn_path2)]
+        test_args = [
+            "portal_validate.py",
+            "--sdk-root",
+            str(tmp_path),
+            str(tscn_path1),
+            str(tscn_path2),
+        ]
 
         # Act
         with patch("sys.argv", test_args):
@@ -845,7 +878,9 @@ class TestPortalValidateAppRun:
         assert "Overall Summary: 2 map(s) validated" in captured.out
         assert "All maps passed validation" in captured.out
 
-    def test_run_validates_multiple_maps_with_failures(self, tmp_path: Path, valid_tscn_content, minimal_tscn_content, valid_asset_catalog, capsys):
+    def test_run_validates_multiple_maps_with_failures(
+        self, tmp_path: Path, valid_tscn_content, minimal_tscn_content, valid_asset_catalog, capsys
+    ):
         """Test run validates multiple maps with some failures."""
         # Arrange
         catalog_path = tmp_path / "FbExportData" / "asset_types.json"
@@ -859,7 +894,13 @@ class TestPortalValidateAppRun:
         tscn_path2.write_text(minimal_tscn_content)
 
         app = PortalValidateApp()
-        test_args = ["portal_validate.py", "--sdk-root", str(tmp_path), str(tscn_path1), str(tscn_path2)]
+        test_args = [
+            "portal_validate.py",
+            "--sdk-root",
+            str(tmp_path),
+            str(tscn_path1),
+            str(tscn_path2),
+        ]
 
         # Act
         with patch("sys.argv", test_args):
@@ -874,6 +915,7 @@ class TestPortalValidateAppRun:
 
 # Tests for main() function
 
+
 class TestMainFunction:
     """Tests for main() CLI entry point."""
 
@@ -886,7 +928,7 @@ class TestMainFunction:
         with (
             patch("sys.argv", test_args),
             patch.object(PortalValidateApp, "run", return_value=0),
-            pytest.raises(SystemExit) as exc_info
+            pytest.raises(SystemExit) as exc_info,
         ):
             main()
 
@@ -901,7 +943,7 @@ class TestMainFunction:
         with (
             patch("sys.argv", test_args),
             patch.object(PortalValidateApp, "run", return_value=1),
-            pytest.raises(SystemExit) as exc_info
+            pytest.raises(SystemExit) as exc_info,
         ):
             main()
 

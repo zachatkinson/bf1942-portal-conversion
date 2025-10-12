@@ -2,7 +2,7 @@
 """Tests for ValidationOrchestrator."""
 
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 from bfportal.core.interfaces import (
@@ -221,9 +221,7 @@ class TestValidateMethod:
         error_count = sum(1 for i in issues if i.severity in ["error", "warning"])
         assert error_count == 0
 
-    def test_validate_returns_failure_with_errors(
-        self, sample_map_data: MapData, tmp_path: Path
-    ):
+    def test_validate_returns_failure_with_errors(self, sample_map_data: MapData, tmp_path: Path):
         """Test validate returns failure when errors found."""
         # Arrange
         output_path = tmp_path / "test.tscn"
@@ -354,9 +352,7 @@ class TestRunValidators:
 class TestPrintReport:
     """Tests for ValidationOrchestrator._print_report() method."""
 
-    def test_print_report_with_no_issues(
-        self, sample_map_data: MapData, tmp_path: Path, capsys
-    ):
+    def test_print_report_with_no_issues(self, sample_map_data: MapData, tmp_path: Path, capsys):
         """Test _print_report with no issues."""
         # Arrange
         output_path = tmp_path / "test.tscn"
@@ -399,9 +395,7 @@ class TestPrintReport:
         assert "ERRORS (1)" in captured.out
         assert "Test error" in captured.out
 
-    def test_print_report_with_warnings(
-        self, sample_map_data: MapData, tmp_path: Path, capsys
-    ):
+    def test_print_report_with_warnings(self, sample_map_data: MapData, tmp_path: Path, capsys):
         """Test _print_report with warnings."""
         # Arrange
         from bfportal.validation.validators import ValidationIssue

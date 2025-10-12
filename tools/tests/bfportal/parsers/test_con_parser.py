@@ -693,7 +693,11 @@ class TestConFileSetParseAll:
             if "invalid" in str(file_path):
                 raise ParseError("Test error")
             # Parse valid file normally
-            return {"file": str(file_path), "objects": [{"name": "TestObj", "type": "Test", "properties": {}}], "raw_content": "ObjectTemplate.create Test TestObj"}
+            return {
+                "file": str(file_path),
+                "objects": [{"name": "TestObj", "type": "Test", "properties": {}}],
+                "raw_content": "ObjectTemplate.create Test TestObj",
+            }
 
         # Act
         with patch.object(fileset.parser, "parse", side_effect=mock_parse_with_error):
@@ -743,7 +747,11 @@ ObjectTemplate.create Vehicle Tank1
             if "invalid" in str(file_path):
                 raise ParseError("Test error")
             # Parse valid file normally
-            return {"file": str(file_path), "objects": [{"name": "TestObj", "type": "Test", "properties": {}}], "raw_content": "ObjectTemplate.create Test TestObj"}
+            return {
+                "file": str(file_path),
+                "objects": [{"name": "TestObj", "type": "Test", "properties": {}}],
+                "raw_content": "ObjectTemplate.create Test TestObj",
+            }
 
         # Act
         with patch.object(fileset.parser, "parse", side_effect=mock_parse_with_error):

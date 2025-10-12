@@ -84,7 +84,9 @@ def sample_heightmap_path(tmp_path: Path) -> Path:
 class TestConversionValidatorInit:
     """Tests for ConversionValidator.__init__() initialization."""
 
-    def test_initializes_validator_with_required_params(self, sample_source_path: Path, sample_output_path: Path):
+    def test_initializes_validator_with_required_params(
+        self, sample_source_path: Path, sample_output_path: Path
+    ):
         """Test successful validator initialization with required parameters."""
         # Arrange
         # (fixtures provide paths)
@@ -107,7 +109,9 @@ class TestConversionValidatorInit:
         # (fixtures provide paths)
 
         # Act
-        validator = ConversionValidator(sample_source_path, sample_output_path, sample_heightmap_path)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, sample_heightmap_path
+        )
 
         # Assert
         assert validator.heightmap_path == sample_heightmap_path
@@ -121,7 +125,9 @@ class TestConversionValidatorInit:
         custom_size = 4096.0
 
         # Act
-        validator = ConversionValidator(sample_source_path, sample_output_path, terrain_size=custom_size)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, terrain_size=custom_size
+        )
 
         # Assert
         assert validator.terrain_size == custom_size
@@ -134,7 +140,9 @@ class TestConversionValidatorInit:
         custom_range = (50.0, 300.0)
 
         # Act
-        validator = ConversionValidator(sample_source_path, sample_output_path, height_range=custom_range)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, height_range=custom_range
+        )
 
         # Assert
         assert validator.height_range == custom_range
@@ -147,7 +155,9 @@ class TestConversionValidatorInit:
         # (fixtures provide paths with existing heightmap)
 
         # Act
-        validator = ConversionValidator(sample_source_path, sample_output_path, sample_heightmap_path)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, sample_heightmap_path
+        )
 
         # Assert
         assert validator.terrain_provider is not None
@@ -160,7 +170,9 @@ class TestConversionValidatorInit:
         nonexistent_heightmap = tmp_path / "nonexistent.png"
 
         # Act
-        validator = ConversionValidator(sample_source_path, sample_output_path, nonexistent_heightmap)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, nonexistent_heightmap
+        )
 
         # Assert
         assert validator.terrain_provider is None
@@ -232,7 +244,9 @@ class TestConversionValidatorValidate:
         assert len(issues) == 1
         assert issues[0].severity == "error"
 
-    def test_validate_calls_engine_parse_map(self, sample_source_path: Path, sample_output_path: Path):
+    def test_validate_calls_engine_parse_map(
+        self, sample_source_path: Path, sample_output_path: Path
+    ):
         """Test validate calls engine.parse_map with correct path."""
         # Arrange
         validator = ConversionValidator(sample_source_path, sample_output_path)
@@ -262,7 +276,9 @@ class TestConversionValidatorValidate:
     ):
         """Test validate passes terrain provider to orchestrator."""
         # Arrange
-        validator = ConversionValidator(sample_source_path, sample_output_path, sample_heightmap_path)
+        validator = ConversionValidator(
+            sample_source_path, sample_output_path, sample_heightmap_path
+        )
 
         with patch.object(validator.engine, "parse_map") as mock_parse:
             mock_parse.return_value = Mock(
@@ -286,7 +302,9 @@ class TestConversionValidatorValidate:
         call_args = mock_orchestrator_cls.call_args
         assert call_args[0][2] is not None  # terrain_provider argument
 
-    def test_validate_prints_parsing_message(self, sample_source_path: Path, sample_output_path: Path, capsys):
+    def test_validate_prints_parsing_message(
+        self, sample_source_path: Path, sample_output_path: Path, capsys
+    ):
         """Test validate prints parsing message."""
         # Arrange
         validator = ConversionValidator(sample_source_path, sample_output_path)
@@ -325,7 +343,13 @@ class TestMainFunction:
     ):
         """Test main returns success code with valid arguments."""
         # Arrange
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with (
             patch("sys.argv", test_args),
@@ -346,7 +370,13 @@ class TestMainFunction:
     ):
         """Test main returns error code with validation errors."""
         # Arrange
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with (
             patch("sys.argv", test_args),
@@ -362,11 +392,19 @@ class TestMainFunction:
         # Assert
         assert result == 1
 
-    def test_main_returns_error_when_source_not_found(self, sample_output_path: Path, tmp_path: Path, capsys):
+    def test_main_returns_error_when_source_not_found(
+        self, sample_output_path: Path, tmp_path: Path, capsys
+    ):
         """Test main returns error when source path doesn't exist."""
         # Arrange
         nonexistent_source = tmp_path / "nonexistent"
-        test_args = ["validate_conversion.py", "--source", str(nonexistent_source), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(nonexistent_source),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with patch("sys.argv", test_args):
             # Act
@@ -378,11 +416,19 @@ class TestMainFunction:
         assert result == 1
         assert "Source map not found" in captured.out
 
-    def test_main_returns_error_when_output_not_found(self, sample_source_path: Path, tmp_path: Path, capsys):
+    def test_main_returns_error_when_output_not_found(
+        self, sample_source_path: Path, tmp_path: Path, capsys
+    ):
         """Test main returns error when output path doesn't exist."""
         # Arrange
         nonexistent_output = tmp_path / "nonexistent.tscn"
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(nonexistent_output)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(nonexistent_output),
+        ]
 
         with patch("sys.argv", test_args):
             # Act
@@ -454,7 +500,9 @@ class TestMainFunction:
         call_args = mock_validator_cls.call_args
         assert call_args[0][3] == 4096.0
 
-    def test_main_parses_height_range_args(self, sample_source_path: Path, sample_output_path: Path):
+    def test_main_parses_height_range_args(
+        self, sample_source_path: Path, sample_output_path: Path
+    ):
         """Test main parses min-height and max-height arguments."""
         # Arrange
         test_args = [
@@ -485,10 +533,18 @@ class TestMainFunction:
         call_args = mock_validator_cls.call_args
         assert call_args[0][4] == (50.0, 300.0)
 
-    def test_main_uses_default_terrain_size(self, sample_source_path: Path, sample_output_path: Path):
+    def test_main_uses_default_terrain_size(
+        self, sample_source_path: Path, sample_output_path: Path
+    ):
         """Test main uses default terrain size when not specified."""
         # Arrange
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with (
             patch("sys.argv", test_args),
@@ -506,10 +562,18 @@ class TestMainFunction:
         call_args = mock_validator_cls.call_args
         assert call_args[0][3] == 2048.0
 
-    def test_main_uses_default_height_range(self, sample_source_path: Path, sample_output_path: Path):
+    def test_main_uses_default_height_range(
+        self, sample_source_path: Path, sample_output_path: Path
+    ):
         """Test main uses default height range when not specified."""
         # Arrange
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with (
             patch("sys.argv", test_args),
@@ -530,7 +594,13 @@ class TestMainFunction:
     def test_main_handles_none_heightmap(self, sample_source_path: Path, sample_output_path: Path):
         """Test main handles None heightmap when not specified."""
         # Arrange
-        test_args = ["validate_conversion.py", "--source", str(sample_source_path), "--output", str(sample_output_path)]
+        test_args = [
+            "validate_conversion.py",
+            "--source",
+            str(sample_source_path),
+            "--output",
+            str(sample_output_path),
+        ]
 
         with (
             patch("sys.argv", test_args),
