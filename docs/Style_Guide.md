@@ -327,6 +327,8 @@ Refer to [Section Name](#section-name) in this document.
 
 ### Standard Admonitions
 
+Use a **two-line format** with an emoji/bold title on the first line and a "Use:" context line on the second:
+
 ```markdown
 > ⚠️ **Warning:** Critical information that prevents errors
 > **Use:** Safety warnings, breaking changes, destructive operations
@@ -355,12 +357,17 @@ Refer to [Section Name](#section-name) in this document.
 
 ### Usage
 
+The two-line format provides both immediate information and context for when to use that information:
+
 ```markdown
-> ⚠️ **IMPORTANT:** Download the **STANDARD** version, **NOT** .NET/Mono
+> ⚠️ **Warning:** Download the **STANDARD** version, **NOT** .NET/Mono
+> **Use:** Critical setup requirement to avoid installation failures
 
 > 💡 **Tip:** Use `--verbose` flag for detailed output
+> **Use:** Debugging conversion issues or understanding pipeline steps
 
 > 📝 **Note:** This structure is from BF1942 v1.6. Earlier versions may differ.
+> **Use:** Understanding version-specific differences in file formats
 ```
 
 ---

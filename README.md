@@ -2,7 +2,7 @@
 
 > Automated conversion pipeline for bringing classic Battlefield maps into Battlefield 6 Portal
 
-![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey.svg)
 ![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
@@ -62,7 +62,7 @@ This project converts classic Battlefield game maps to BF6 Portal format, preser
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.13+
 - Godot 4.5 (Standard, not .NET)
 - Portal SDK installed
 - Extracted BF1942 map files

@@ -1055,7 +1055,7 @@ See `tools/README.md` for detailed extraction instructions.
 
 ## Project Status
 
-**Current Status**: ✅ Production-ready - Kursk conversion complete with 241-test suite
+**Current Status**: ✅ Production-ready - Kursk conversion complete with 787-test suite
 
 **Completed Milestones**:
 - ✅ Phase 1: RFA extraction and BF1942 data analysis
@@ -1064,11 +1064,11 @@ See `tools/README.md` for detailed extraction instructions.
 - ✅ Phase 4: Kursk map full conversion (95.3% asset accuracy)
 - ✅ Sprint 1: Initial implementation
 - ✅ Sprint 2: Bug fixes and stabilization
-- ✅ Sprint 3: DRY/SOLID refactoring with comprehensive test suite (241 tests, 64% coverage)
+- ✅ Sprint 3: DRY/SOLID refactoring with comprehensive test suite (787 tests, 98% coverage)
 
 **Test Suite**:
-- 241 tests (237 passing, 1 skipped, 3 expected failures)
-- 64% overall code coverage
+- 787 tests (all passing)
+- 98% overall code coverage
 - Unit tests + integration tests
 - See `tools/tests/README.md` and `tools/tests/Coverage_Report.md`
 

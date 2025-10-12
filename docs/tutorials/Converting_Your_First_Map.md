@@ -45,7 +45,7 @@ By the end of this tutorial, you will:
 
 ### Required Software
 
-- [x] **Python 3.8+** - Check with `python3 --version`
+- [x] **Python 3.13+** - Check with `python3 --version`
 - [x] **Godot 4.3+** - [Installation Guide](../setup/Godot_Setup_Guide.md)
 - [x] **Portal SDK** - Cloned repository with Portal SDK files
 - [x] **BF1942 Game Files** - Original game or extracted maps
@@ -70,7 +70,7 @@ By the end of this tutorial, you will:
 
 ```bash
 python3 --version
-# Should show: Python 3.8.x or higher
+# Should show: Python 3.13.x or higher
 ```
 
 ### Verify Portal SDK
@@ -203,10 +203,10 @@ python3 tools/portal_convert.py --map Kursk --base-terrain MP_Tungsten
    Offset: (-512.0, 0.0, -512.0)
    ```
 
-4. **Height Adjustment** - Adjusts object heights
+4. **Height Adjustment** - Adjusts object heights to terrain mesh
    ```
-   Adjusting heights...
-   (No heightmap provided - using flat terrain)
+   Adjusting heights to Portal terrain...
+   Using MP_Tungsten terrain mesh for height data
    ```
 
 5. **Scene Generation** - Creates .tscn file
@@ -216,20 +216,7 @@ python3 tools/portal_convert.py --map Kursk --base-terrain MP_Tungsten
    Output: GodotProject/levels/Kursk.tscn
    ```
 
-### With Heightmap (Recommended)
-
-For better results, provide a heightmap:
-
-```bash
-python3 tools/portal_convert.py \
-    --map Kursk \
-    --base-terrain MP_Tungsten \
-    --heightmap GodotProject/terrain/Kursk_heightmap.png \
-    --min-height 73 \
-    --max-height 217
-```
-
-> 💡 **Tip:** Heightmaps ensure objects sit on the ground correctly. Without one, all objects are placed at Y=0.
+> 💡 **Note:** The conversion tool automatically loads the Portal terrain mesh (`.glb` file) to adjust object heights. No separate heightmap parameter is needed.
 
 ---
 
@@ -397,26 +384,23 @@ ls bf1942_source/extracted/Bf1942/Archives/bf1942/Levels/Kursk/
 
 ### Objects Floating/Underground
 
-**Cause:** No heightmap provided, or terrain mismatch.
+**Cause:** Terrain mesh mismatch or missing `.glb` terrain file.
 
 **Solution:**
 ```bash
-# Re-run conversion with heightmap
-python3 tools/portal_convert.py \
-    --map Kursk \
-    --base-terrain MP_Tungsten \
-    --heightmap GodotProject/terrain/Kursk_heightmap.png \
-    --min-height 73 \
-    --max-height 217
+# Verify terrain mesh exists
+ls GodotProject/raw/models/MP_Tungsten_Terrain.glb
+
+# If missing, ensure Portal SDK is properly set up
 ```
 
-Or adjust heights after conversion:
+Or try a different base terrain:
 ```bash
-python3 tools/portal_adjust_heights.py \
+# Rebase to different terrain (preserves horizontal positions)
+python3 tools/portal_rebase.py \
     --input GodotProject/levels/Kursk.tscn \
-    --output GodotProject/levels/Kursk_fixed.tscn \
-    --heightmap GodotProject/terrain/Tungsten_heightmap.png \
-    --terrain-size 2048
+    --output GodotProject/levels/Kursk_battery.tscn \
+    --new-base MP_Battery
 ```
 
 ---
@@ -481,7 +465,7 @@ ls GodotProject/raw/models/
    python3 tools/portal_rebase.py \
        --input GodotProject/levels/Kursk.tscn \
        --output GodotProject/levels/Kursk_outskirts.tscn \
-       --new-base-terrain MP_Outskirts
+       --new-base MP_Outskirts
    ```
 
 3. **Customize asset mappings**

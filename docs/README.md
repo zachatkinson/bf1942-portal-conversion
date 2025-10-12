@@ -80,6 +80,8 @@ Technical specifications and command documentation:
 |----------|-------------|
 | [**CLI Tools Reference**](./reference/CLI_Tools.md) | Complete command-line tool documentation for all conversion tools with examples and troubleshooting |
 | [**BF1942 Data Structures**](./reference/BF1942_Data_Structures.md) | Complete reference for BF1942 file formats (.con, .rfa, heightmaps) and coordinate systems |
+| [**Portal Export Guide**](./Portal_Export_Guide.md) | Complete workflow for exporting BF1942 maps to Battlefield 6 Portal |
+| [**Style Guide**](./Style_Guide.md) | Documentation standards and best practices for PortalSDK documentation |
 
 **CLI Tools Topics:**
 - portal_convert.py (master CLI)

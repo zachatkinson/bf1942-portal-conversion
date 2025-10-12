@@ -93,9 +93,24 @@ tools/
 │   │   ├── tungsten_terrain.py      # Query Tungsten heightmap
 │   │   └── custom_heightmap.py      # Custom BF1942 heightmap
 │   │
-│   └── generators/
-│       ├── base_generator.py        # ISceneGenerator interface
-│       └── tscn_generator.py        # Generate Godot .tscn
+│   ├── generators/
+│   │   ├── base_generator.py        # ISceneGenerator interface
+│   │   └── tscn_generator.py        # Generate Godot .tscn
+│   │
+│   ├── orientation/                  # Orientation detection
+│   │   ├── interfaces.py            # IOrientationDetector interface
+│   │   ├── map_orientation_detector.py    # Detect source map orientation
+│   │   ├── terrain_orientation_detector.py # Detect Portal terrain orientation
+│   │   └── orientation_matcher.py   # Match orientations, calculate rotation
+│   │
+│   ├── classifiers/                  # Asset classification
+│   │   └── asset_classifier.py      # Distinguish real assets from metadata
+│   │
+│   ├── indexers/                     # Asset indexing and cataloging
+│   │   └── portal_asset_indexer.py  # Index Portal SDK assets by category
+│   │
+│   └── utils/                        # Shared utilities
+│       └── tscn_utils.py            # TSCN Transform3D parsing/formatting
 │
 ├── configs/
 │   ├── games/
@@ -164,6 +179,208 @@ class IAssetMapper(ABC):
         """Map source game asset to Portal equivalent."""
         pass
 ```
+
+#### IOrientationDetector (Strategy Pattern)
+```python
+class IOrientationDetector(ABC):
+    @abstractmethod
+    def detect_orientation(self) -> OrientationAnalysis:
+        """Detect orientation (NORTH_SOUTH, EAST_WEST, SQUARE)."""
+        pass
+
+    @abstractmethod
+    def get_bounds(self) -> tuple[float, float, float, float]:
+        """Get bounding box (min_x, max_x, min_z, max_z)."""
+        pass
+```
+
+### Module Details
+
+#### Orientation Module (477 lines)
+**Purpose**: Detect and match map orientations between source maps and Portal terrains to calculate required rotation.
+
+**Key Components**:
+- `IOrientationDetector` - Abstract interface for orientation detection
+- `MapOrientationDetector` - Analyzes source map object distribution to determine if map extends more along X-axis (EAST_WEST) or Z-axis (NORTH_SOUTH)
+- `TerrainOrientationDetector` - Analyzes Portal terrain dimensions and heightmap variation
+- `OrientationMatcher` - Compares orientations and calculates rotation angle (0°, 90°, 180°, 270°)
+
+**SOLID Compliance**:
+- Single Responsibility: Each detector handles one type of data (map vs terrain)
+- Open/Closed: New detection strategies can be added without modifying existing code
+- Liskov Substitution: All detectors implement IOrientationDetector interface
+- Interface Segregation: Minimal interface with only detect_orientation() and get_bounds()
+- Dependency Inversion: Depends on ITerrainProvider abstraction, not concrete types
+
+**Usage Example**:
+```python
+# Detect source map orientation
+map_detector = MapOrientationDetector(map_data, threshold=1.2)
+source_analysis = map_detector.detect_orientation()
+
+# Detect Portal terrain orientation
+terrain_detector = TerrainOrientationDetector(terrain_provider, terrain_size=(2048, 2048))
+dest_analysis = terrain_detector.detect_orientation()
+
+# Calculate required rotation
+matcher = OrientationMatcher()
+rotation_result = matcher.match(source_analysis, dest_analysis)
+
+if rotation_result.rotation_needed:
+    print(f"Rotate {rotation_result.rotation_degrees}° around {matcher.suggest_rotation_axis(rotation_result)} axis")
+```
+
+**Key Features**:
+- Ratio-based detection with configurable threshold (default 1.2)
+- Confidence scoring (high/medium/low) based on aspect ratio
+- Automatic rotation calculation for mismatched orientations
+- Human-readable reasoning for all decisions
+
+---
+
+#### Classifiers Module (299 lines)
+**Purpose**: Distinguish real visual assets from metadata/gameplay objects (spawn points, control points, etc.) to avoid cluttering asset catalogs.
+
+**Key Components**:
+- `AssetClassification` - Value object containing classification result
+- `AssetClassifier` - Protocol defining classification strategy interface
+- Concrete classifiers (Strategy Pattern):
+  - `SpawnPointClassifier` - Identifies spawn point instances (not real assets)
+  - `ControlPointClassifier` - Identifies control point instances (gameplay objects)
+  - `VehicleSpawnerClassifier` - Identifies vehicle spawners (real assets)
+  - `VisualAssetClassifier` - Classifies buildings, vegetation, props, vehicles
+  - `WeaponClassifier` - Identifies weapon templates
+  - `AmmoCrateClassifier` - Identifies ammo/supply crates
+- `CompositeAssetClassifier` - Coordinates classifier chain (Chain of Responsibility Pattern)
+
+**SOLID Compliance**:
+- Single Responsibility: Each classifier handles one asset category
+- Open/Closed: Add new classifiers without modifying existing code
+- Liskov Substitution: All classifiers implement AssetClassifier protocol
+- Interface Segregation: Minimal protocol with single classify() method
+- Dependency Inversion: CompositeAssetClassifier depends on protocol, not concrete types
+
+**Usage Example**:
+```python
+classifier = CompositeAssetClassifier()
+
+# Classify single asset
+result = classifier.classify("PanzerIVSpawner")
+print(f"{result.asset_name}: {result.category} (real_asset={result.is_real_asset})")
+# Output: PanzerIVSpawner: spawner (real_asset=True)
+
+# Filter real assets from list
+all_assets = ["SpawnPoint_1_1", "PanzerIVSpawner", "Bunker_01", "CONTROLPOINT_Base"]
+real_assets = classifier.filter_real_assets(all_assets)
+# Returns: ["PanzerIVSpawner", "Bunker_01"]
+
+# Get statistics
+stats = classifier.get_statistics(all_assets)
+print(f"Real assets: {stats['_total_real_assets']}, Metadata: {stats['_total_metadata']}")
+```
+
+**Key Features**:
+- Keyword-based classification using asset name patterns
+- Extensible classifier chain (add custom classifiers via add_classifier())
+- Batch classification for efficiency
+- Statistics generation for asset auditing
+- Defaults to including unknown assets (err on side of inclusion)
+
+---
+
+#### Indexers Module (464 lines)
+**Purpose**: Create searchable indexes and catalogs from Portal SDK assets, organized by category, availability, and theme.
+
+**Key Components**:
+- `PortalAsset` - Immutable value object representing Portal SDK asset
+- `IndexMetadata` - Metadata about generated indexes
+- Reader/Writer Protocols:
+  - `AssetReader` - Protocol for reading assets from source
+  - `AssetIndexer` - Protocol for indexing strategies
+  - `IndexWriter` - Protocol for output formatting
+- Concrete Implementations:
+  - `PortalSDKAssetReader` - Parses Portal SDK asset_types.json
+  - `CategoryIndexer` - Index by primary category (Architecture, Props, etc.)
+  - `AvailabilityIndexer` - Index by map availability (unrestricted vs map-specific)
+  - `ThemeIndexer` - Index by theme keywords (military, natural, industrial, etc.)
+  - `JSONIndexWriter` - Write indexes as JSON
+  - `MarkdownCatalogWriter` - Generate browsable markdown catalog
+- `PortalAssetIndexerFacade` - Simplified interface coordinating all operations (Facade Pattern)
+
+**SOLID Compliance**:
+- Single Responsibility: Each indexer handles one indexing strategy, each writer one format
+- Open/Closed: Add new indexers/writers without modifying existing code
+- Liskov Substitution: All indexers implement AssetIndexer protocol
+- Interface Segregation: Separate protocols for reading, indexing, writing
+- Dependency Inversion: Facade depends on protocols, not concrete implementations
+
+**Usage Example**:
+```python
+# Simple facade usage
+facade = PortalAssetIndexerFacade(
+    asset_types_path=Path("FbExportData/asset_types.json"),
+    json_output_path=Path("tools/asset_audit/portal_asset_index.json"),
+    markdown_output_path=Path("tools/asset_audit/portal_asset_catalog.md")
+)
+
+index_data = facade.generate_indexes()
+print(f"Indexed {index_data['_metadata']['total_assets']} assets")
+print(f"Categories: {list(index_data['by_category'].keys())}")
+print(f"Unrestricted assets: {index_data['_metadata']['unrestricted_count']}")
+```
+
+**Key Features**:
+- Multiple indexing strategies (category, availability, theme)
+- JSON and Markdown output formats
+- Metadata generation (counts, categories, generation date)
+- Theme classification using keyword heuristics
+- Facade pattern for simplified usage
+
+---
+
+#### Utils Module (121 lines)
+**Purpose**: Shared utilities for parsing and formatting Godot .tscn Transform3D strings, eliminating code duplication across CLI tools and generators.
+
+**Key Components**:
+- `TscnTransformParser` - Static utility class for Transform3D operations
+
+**Methods**:
+- `parse(transform_str)` - Parse Transform3D string into rotation matrix and position
+- `format(rotation, position)` - Format rotation matrix and position into Transform3D string
+- `extract_from_line(line)` - Extract Transform3D substring from .tscn line
+- `replace_in_line(line, new_transform)` - Replace Transform3D in line
+
+**SOLID Compliance**:
+- Single Responsibility: Only handles Transform3D string operations
+- Open/Closed: Static methods can be extended without modification
+- Liskov Substitution: N/A (static utility class)
+- Interface Segregation: Focused utility with minimal API surface
+- Dependency Inversion: No dependencies, pure utility functions
+
+**Usage Example**:
+```python
+parser = TscnTransformParser()
+
+# Parse existing transform
+transform_str = "Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 50, 200)"
+rotation, position = parser.parse(transform_str)
+print(f"Position: {position}")  # [100.0, 50.0, 200.0]
+
+# Modify and format
+new_position = [150.0, 75.0, 250.0]
+new_transform = parser.format(rotation, new_position)
+
+# Replace in .tscn line
+line = f"transform = {transform_str}"
+updated_line = parser.replace_in_line(line, new_transform)
+```
+
+**Key Features**:
+- Regex-based parsing for robustness
+- Scientific notation formatting (6 significant digits)
+- Validation of matrix/position dimensions
+- Line-level extraction and replacement for .tscn file editing
+- Pure static methods (no state)
 
 ---
 
@@ -239,12 +456,25 @@ class IAssetMapper(ABC):
 - ✅ Terrain height query system
 
 **Code Stats**:
-- **2,142 lines** of production-quality Python code
+- **5,823 lines** of production-quality Python code
 - **100% SOLID/DRY compliant** (independently audited - see `.claude/SOLID_AUDIT_REPORT.md`)
 - ✅ No god classes detected
 - ✅ High cohesion, low coupling
 - Fully type-hinted
 - Comprehensive docstrings
+
+**Module Breakdown**:
+- Core library (interfaces, config, exceptions): ~600 lines
+- Engines (Refractor, parsers): ~1,200 lines
+- Mappers (asset mapping): ~800 lines
+- Transforms (coordinate offset, rebasing): ~700 lines
+- Terrain providers: ~400 lines
+- Generators (TSCN generation): ~600 lines
+- Orientation detection: ~477 lines
+- Asset classifiers: ~299 lines
+- Asset indexers: ~464 lines
+- Utilities (TSCN parsing): ~121 lines
+- Test infrastructure: ~162 lines
 
 ---
 
@@ -429,8 +659,12 @@ class IAssetMapper(ABC):
 - ✅ `bfportal/transforms/coordinate_offset.py` - Coordinate offset calculator
 - ✅ `bfportal/transforms/map_rebaser.py` - Portal→Portal rebaser (250+ lines)
 - ✅ `bfportal/terrain/terrain_provider.py` - Terrain height providers (200+ lines)
+- ✅ `bfportal/orientation/` - Orientation detection (477 lines)
+- ✅ `bfportal/classifiers/` - Asset classification (299 lines)
+- ✅ `bfportal/indexers/` - Asset indexing and cataloging (464 lines)
+- ✅ `bfportal/utils/` - TSCN utilities (121 lines)
 
-**Total: 2,142 lines of core library code**
+**Total: 5,823 lines of core library code**
 
 ### Phase 3 CLI Tools (Sprint 3 - DRY/SOLID Refactored)
 - ✅ `portal_convert.py` - Master CLI orchestrator (full conversion pipeline)

@@ -125,7 +125,7 @@ Implement support for other Battlefield games.
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.13+
 - Godot 4.3+
 - Git
 - BF1942 game files (for testing)
@@ -386,12 +386,60 @@ Before submitting PR, verify:
 - [ ] Verify visual correctness in Godot
 - [ ] Check no regressions (other maps still work)
 
-### Automated Tests (Future)
+### Automated Tests
 
-We plan to add:
-- Unit tests for parsers
-- Integration tests for full pipeline
-- Regression tests for known maps
+**Current Status:** We have **787 automated tests** with **98% code coverage**.
+
+**Testing Infrastructure:**
+- Unit tests for parsers, transformers, and core components
+- Integration tests for full conversion pipeline
+- Regression tests for known maps (Kursk, etc.)
+
+**Test Pattern:** All tests follow the **AAA pattern** (Arrange-Act-Assert):
+
+```python
+def test_parse_complete_spawn_point(self, tmp_path):
+    """Test parsing complete spawn point with position, rotation, and team."""
+    # Arrange
+    parser = ConParser()
+    con_file = tmp_path / "spawn.con"
+    con_file.write_text(
+        """ObjectTemplate.create ObjectSpawner SpawnPoint_1_1
+ObjectTemplate.setPosition 150.0/25.0/300.0
+ObjectTemplate.setRotation 0.0/45.0/0.0
+ObjectTemplate.setTeam 1
+"""
+    )
+
+    # Act
+    result = parser.parse(con_file)
+
+    # Assert
+    obj = result["objects"][0]
+    assert obj["name"] == "SpawnPoint_1_1"
+    assert obj["position"]["x"] == 150.0
+    assert obj["team"] == 1
+```
+
+**Required for new contributions:**
+- Use AAA pattern with comments (`# Arrange`, `# Act`, `# Assert`)
+- Add blank lines between sections
+- Write descriptive test names and docstrings
+- Test both success cases and error cases
+
+**Running tests:**
+```bash
+# Run all tests
+python3 -m pytest tools/tests/
+
+# Run specific test file
+python3 -m pytest tools/tests/bfportal/parsers/test_con_parser.py
+
+# Run with coverage report
+python3 -m pytest tools/tests/ --cov=tools/bfportal --cov-report=html
+```
+
+**See also:** [Testing Guide](Testing_Guide.md) for comprehensive testing procedures
 
 ---
 

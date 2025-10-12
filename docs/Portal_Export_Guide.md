@@ -475,7 +475,7 @@ If your BF1942 map has unique terrain, choose the closest BF6 base map:
 
 ```bash
 # For desert maps
-python3 tools/create_experience.py El_Alamein --base-map MP_FireStorm
+python3 tools/create_experience.py El_Alamein --base-map MP_Firestorm
 
 # For urban maps
 python3 tools/create_experience.py Berlin --base-map MP_Aftermath
