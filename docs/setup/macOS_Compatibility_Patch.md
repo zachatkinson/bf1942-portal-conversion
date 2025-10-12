@@ -1,415 +1,345 @@
 # macOS Compatibility for BF6 Portal SDK
 
-> macOS-specific workarounds and manual export procedures for Portal SDK development
-
-**Purpose:** macOS-specific workarounds for Portal SDK Windows-only features and manual export procedures
-**Last Updated:** October 2025
-**Status:** ⚠️ REFERENCE DOCUMENT - macOS fixes not yet implemented in this project
-**Difficulty:** Intermediate
-**Time Required:** ~20 minutes
+**Purpose:** Full-featured Portal SDK workflow for macOS - map editing and export
+**Last Updated:** October 12, 2025
+**Status:** ✅ Production Ready
+**Difficulty:** Easy
+**Time Required:** ~5 minutes
 
 ---
 
 ## Table of Contents
 
-- [The Issue](#the-issue)
-- [What Works on macOS (No Patch Needed)](#what-works-on-macos-no-patch-needed)
-- [What Doesn't Work (Windows-Only)](#what-doesnt-work-windows-only)
-- [Workaround: Manual Export on macOS](#workaround-manual-export-on-macos)
-  - [Step 1: Check Python Installation](#step-1-check-python-installation)
-  - [Step 2: Install Dependencies](#step-2-install-dependencies)
-  - [Step 3: Export Map Manually](#step-3-export-map-manually)
-  - [Step 4: Verify Export](#step-4-verify-export)
-- [Optional: Shell Script for Easy Export](#optional-shell-script-for-easy-export)
-- [Official Patch (Optional - Modifies Plugin Code)](#official-patch-optional---modifies-plugin-code)
-  - [Patch 1: Suppress macOS Setup Error](#patch-1-suppress-macos-setup-error)
-  - [Patch 2: Enable Manual Export Info for macOS](#patch-2-enable-manual-export-info-for-macos)
-- [Testing the Workaround](#testing-the-workaround)
-- [Advantages of Manual Export](#advantages-of-manual-export)
-- [Summary](#summary)
+- [Overview](#overview)
+- [What Works on macOS](#what-works-on-macos)
+- [Quick Start](#quick-start)
+- [Map Editing Workflow](#map-editing-workflow)
+- [Map Export Workflow](#map-export-workflow)
+- [Understanding the Setup Error](#understanding-the-setup-error)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## The Issue
+## Overview
 
-When opening Godot with the Portal SDK on macOS, you see:
+**Portal SDK works completely on macOS!** 🎉
 
-```
-ERROR: Setup has not been implemented for your platform: macOS
-```
+This project includes a streamlined macOS workflow that provides:
+- ✅ Full map editing in Godot 4
+- ✅ One-command map export to Portal format
+- ✅ No Windows machine required
+- ✅ Professional tooling with error handling
 
-### What This Actually Means
-
-The Portal SDK has **three components**:
-
-1. **Map Editing** (Godot editor) - ✅ **WORKS ON macOS**
-2. **Python Virtual Environment Setup** (Windows-only GUI button) - ❌ Windows only
-3. **Map Export** (.tscn → .spatial.json) - ✅ **WORKS ON macOS** (with workaround)
-
-**The error is ONLY about the "Setup" button in the Portal Tools panel!**
-
-The object library generation already succeeded:
-```
-Generating object library
-```
-
-This line appeared BEFORE the error, meaning the critical part worked fine!
+The Windows-only "Setup" button error can be safely ignored - it only affects an unnecessary GUI feature.
 
 ---
 
-## What Works on macOS (No Patch Needed)
+## What Works on macOS
 
-### ✅ Map Editing
-- Open .tscn files
-- View 3D scenes
-- Edit object positions
-- Add/remove objects
-- Navigate scene tree
-- Use Inspector panel
+### ✅ Map Editing (Godot Editor)
+- Open and edit `.tscn` map files
+- Full 3D viewport navigation
+- Object placement and manipulation
+- Inspector panel and scene tree
 - Save changes
+- All Portal SDK assets available
 
-### ✅ Map Export (Manual Method)
-- Convert .tscn → .spatial.json
-- Uses existing Python code
-- No virtual environment needed
-- Direct Python execution
+### ✅ Map Export (Command Line)
+- Convert `.tscn` → `.spatial.json` for Portal
+- Validate asset references
+- Professional error handling
+- Single-command operation
 
----
-
-## What Doesn't Work (Windows-Only)
-
-### ❌ "Setup" Button in Portal Tools Panel
-- **Purpose**: Creates Windows Python virtual environment
-- **Why It Fails**: Uses PowerShell and .exe paths
-- **Impact**: None - we don't need this button
-
-### ❌ "Export Level" GUI Button
-- **Purpose**: Convenience wrapper for Python script
-- **Why It Fails**: Checks `if OS.get_name() != "Windows": return`
-- **Impact**: Minor - we can run the script manually
+### ❌ Windows-Only Features (Not Needed)
+- **"Setup" GUI Button**: Creates Python virtual environment on Windows
+  - **Impact**: None - Python already configured in this project
+- **"Export Level" GUI Button**: Convenience wrapper for export script
+  - **Impact**: None - we have a better command-line tool
 
 ---
 
-## Workaround: Manual Export on macOS
+## Quick Start
 
-Instead of using the GUI button, run the Python export script directly.
+### 1. Install Dependencies
 
-### Step 1: Check Python Installation
+The `gdconverter` package must be installed once:
 
 ```bash
-# Check if Python 3 is available
-python3 --version
-
-# Should show Python 3.8+ (Mac usually has 3.9+)
+cd code/gdconverter
+pip3 install -e .
 ```
 
-### Step 2: Install Dependencies
+This installs the Godot scene parser (`lark`) and export tools.
 
-The Portal SDK includes a `requirements.txt`:
+### 2. Export Your Map
+
+Use the provided export helper script:
 
 ```bash
-cd <PortalSDK>/code/gdconverter
-
-# Create virtual environment (optional but recommended)
-python3 -m venv venv
-source venv/bin/activate
-
-# Install requirements
-pip install -r requirements.txt
+bash tools/export_map.sh Kursk
 ```
 
-**Required packages** (from requirements.txt):
-- `lark` - Parser for .tscn files
-- Other utilities
+**That's it!** Your map is now at `FbExportData/levels/Kursk.spatial.json` and ready to import into the Battlefield Portal web builder.
 
-### Step 3: Export Map Manually
+---
+
+## Map Editing Workflow
+
+### Opening a Map
+
+1. **Launch Godot 4.5+**
+   ```bash
+   # Open the Portal SDK project
+   open GodotProject/project.godot
+   ```
+
+2. **Ignore the Setup Error**
+
+   You'll see this message:
+   ```
+   ERROR: Setup has not been implemented for your platform: macOS
+   ```
+
+   **Click "OK" and continue** - this only affects a Windows-specific GUI button. All editing features work perfectly.
+
+3. **Open Your Map**
+
+   In Godot's FileSystem panel:
+   - Navigate to `res://levels/`
+   - Double-click `Kursk.tscn` (or your map)
+   - Scene loads normally ✅
+
+### Editing Your Map
+
+All Godot editing features work normally:
+- **3D Viewport**: Navigate, select objects, move/rotate/scale
+- **Scene Tree**: View node hierarchy
+- **Inspector**: Edit node properties
+- **Portal Tools Panel**: View asset library
+- **Save**: `Ctrl+S` / `Cmd+S` saves changes
+
+---
+
+## Map Export Workflow
+
+### Using the Export Script
+
+The project includes `tools/export_map.sh` for easy exporting:
 
 ```bash
-# Activate venv if you created one
-source <PortalSDK>/code/gdconverter/venv/bin/activate
+# Export any map by name
+bash tools/export_map.sh <MapName>
 
-# Export your map
-python3 <PortalSDK>/code/gdconverter/src/gdconverter/export_tscn.py \
-  <PortalSDK>/GodotProject/levels/<YourMap>.tscn \
-  <PortalSDK>/FbExportData \
-  <PortalSDK>/FbExportData/levels
+# Examples:
+bash tools/export_map.sh Kursk
+bash tools/export_map.sh El_Alamein
+bash tools/export_map.sh Iwo_Jima
+```
+
+### What the Script Does
+
+1. **Validates Inputs**: Checks that `.tscn` file exists
+2. **Runs Export**: Converts Godot scene to Portal JSON format
+3. **Validates Output**: Confirms export succeeded
+4. **Shows Results**: Displays file size and next steps
+
+### Example Output
+
+```
+Exporting map: Kursk
+  Input:  /Users/zach/Downloads/PortalSDK/GodotProject/levels/Kursk.tscn
+  Output: /Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+
+/Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+
+✅ Export successful!
+   File: /Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+   Size: 912K
+
+Next steps:
+  1. Open Battlefield Portal web builder
+  2. Import /Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+  3. Test your map in-game!
+```
+
+### What Gets Exported
+
+The `.spatial.json` file includes:
+- Team HQs and spawn points
+- Combat area boundaries
+- Static terrain and assets
+- Gameplay objects (capture points, triggers)
+- All transform matrices for Portal
+
+---
+
+## Understanding the Setup Error
+
+### Why the Error Appears
+
+The Portal SDK plugin checks for a Windows-only Python virtual environment setup. On macOS/Linux, this check fails and shows an error dialog.
+
+### Why You Can Ignore It
+
+The "Setup" button only performs these Windows-specific tasks:
+1. Creates a Python virtual environment at `python/`
+2. Runs `pip install` using Windows executables
+3. Uses PowerShell commands
+
+**None of these are needed on macOS** because:
+- Python is already configured in this project
+- The `gdconverter` package is installed via pip
+- Export works via direct Python script execution
+
+### What Actually Matters
+
+The critical functionality that **does work** on macOS:
+- ✅ Object library generation (runs before the error)
+- ✅ Godot scene editing (not affected by setup)
+- ✅ Python export script (cross-platform)
+
+---
+
+## Troubleshooting
+
+### Error: "No module named 'gdconverter'"
+
+**Solution**: Install the gdconverter package:
+
+```bash
+cd code/gdconverter
+pip3 install -e .
+```
+
+This installs the package in editable mode, making it available to Python.
+
+### Error: "Map file not found"
+
+**Solution**: The export script expects map names without `.tscn` extension:
+
+```bash
+# Correct:
+bash tools/export_map.sh Kursk
+
+# Incorrect:
+bash tools/export_map.sh Kursk.tscn
+```
+
+If your map has a different name, check available maps:
+
+```bash
+ls GodotProject/levels/*.tscn
+```
+
+### Error: "Export script not found"
+
+**Solution**: Run the export script from the project root directory:
+
+```bash
+cd /Users/zach/Downloads/PortalSDK
+bash tools/export_map.sh Kursk
+```
+
+### Godot Shows "Missing Dependencies"
+
+**Solution**: Ensure Godot 4.5+ is installed. The Portal SDK requires Godot 4 Standard (not .NET).
+
+Download from: https://godotengine.org/download/macos/
+
+### Export Produces Empty or Invalid JSON
+
+**Solution**: Check the console output for validation errors. Common issues:
+- Missing required nodes (HQs, spawn points)
+- Invalid asset references
+- Malformed transform matrices
+
+Review the `.tscn` file structure in Godot to ensure all required components exist.
+
+---
+
+## Advanced Usage
+
+### Direct Python Export (Without Helper Script)
+
+If you prefer running the export script directly:
+
+```bash
+python3 code/gdconverter/src/gdconverter/export_tscn.py \
+  GodotProject/levels/Kursk.tscn \
+  FbExportData \
+  FbExportData/levels
 ```
 
 **Arguments:**
-1. `SCENE_FILE`: Path to .tscn file to export
-2. `FB_EXPORT_DATA`: Path to FbExportData directory (asset catalog)
-3. `OUTPUT_DIR`: Where to save the .spatial.json
+1. Path to `.tscn` file
+2. Path to `FbExportData` directory (asset catalog)
+3. Output directory for `.spatial.json`
 
-**Output:**
-```
-<PortalSDK>/FbExportData/levels/<YourMap>.spatial.json
-```
+### Batch Export Multiple Maps
 
-### Step 4: Verify Export
+Create a simple loop:
 
 ```bash
-# Check if export succeeded
-ls -lh <PortalSDK>/FbExportData/levels/<YourMap>.spatial.json
-
-# View the exported JSON
-cat <PortalSDK>/FbExportData/levels/<YourMap>.spatial.json | python3 -m json.tool | head -50
+for map in Kursk El_Alamein Iwo_Jima; do
+  bash tools/export_map.sh "$map"
+done
 ```
 
----
+### Integration with CI/CD
 
-## Optional: Shell Script for Easy Export
+The export script returns proper exit codes:
+- `0` = Success
+- `1` = Failure (validation error, file not found, etc.)
 
-Create a helper script for easier exporting:
+Example GitHub Actions workflow:
 
-**File:** `tools/export_map_macos.sh`
-
-```bash
-#!/bin/bash
-# macOS helper script for exporting Portal maps
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-
-GDCONVERTER="${PROJECT_ROOT}/code/gdconverter"
-EXPORT_SCRIPT="${GDCONVERTER}/src/gdconverter/export_tscn.py"
-FB_EXPORT_DATA="${PROJECT_ROOT}/FbExportData"
-OUTPUT_DIR="${FB_EXPORT_DATA}/levels"
-
-# Check if virtual environment exists
-PYTHON_CMD="python3"
-if [ -f "${GDCONVERTER}/venv/bin/python3" ]; then
-    PYTHON_CMD="${GDCONVERTER}/venv/bin/python3"
-    echo "Using virtual environment Python"
-else
-    echo "Using system Python"
-fi
-
-# Check arguments
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <path/to/map.tscn>"
-    echo "Example: $0 GodotProject/levels/Kursk.tscn"
-    exit 1
-fi
-
-TSCN_FILE="$1"
-
-# Make path absolute if relative
-if [[ "$TSCN_FILE" != /* ]]; then
-    TSCN_FILE="${PROJECT_ROOT}/${TSCN_FILE}"
-fi
-
-# Check if file exists
-if [ ! -f "$TSCN_FILE" ]; then
-    echo "Error: File not found: $TSCN_FILE"
-    exit 1
-fi
-
-echo "Exporting: $TSCN_FILE"
-echo "Output: $OUTPUT_DIR"
-
-# Run export
-$PYTHON_CMD "$EXPORT_SCRIPT" "$TSCN_FILE" "$FB_EXPORT_DATA" "$OUTPUT_DIR"
-
-if [ $? -eq 0 ]; then
-    MAP_NAME=$(basename "$TSCN_FILE" .tscn)
-    OUTPUT_FILE="${OUTPUT_DIR}/${MAP_NAME}.spatial.json"
-    echo ""
-    echo "✅ Export successful!"
-    echo "📄 Output: $OUTPUT_FILE"
-    echo ""
-    echo "File size: $(du -h "$OUTPUT_FILE" | cut -f1)"
-else
-    echo ""
-    echo "❌ Export failed! Check error messages above."
-    exit 1
-fi
+```yaml
+- name: Export maps
+  run: |
+    pip3 install -e code/gdconverter
+    bash tools/export_map.sh Kursk
 ```
-
-**Make it executable:**
-```bash
-chmod +x tools/export_map_macos.sh
-```
-
-**Usage:**
-```bash
-# Export a map
-./tools/export_map_macos.sh GodotProject/levels/<YourMap>.tscn
-```
-
----
-
-## Official Patch (Optional - Modifies Plugin Code)
-
-If you want to eliminate the error message entirely, you can patch the plugin.
-
-### Patch 1: Suppress macOS Setup Error
-
-**File:** `GodotProject/addons/bf_portal/portal_tools/portal_tools_dock.gd`
-
-**Line 87-92** (Original):
-```gdscript
-	else:
-		var dialog = AcceptDialog.new()  # not member variable because simply one-off
-		var msg = "Setup has not been implemented for your platform: %s" % platform
-		dialog.dialog_text = msg
-		EditorInterface.popup_dialog_centered(dialog)
-		printerr(msg)
-```
-
-**Replace with:**
-```gdscript
-	else:
-		# macOS/Linux: Setup button not needed - use manual export script
-		print("Platform: %s - Setup button is Windows-only. Map editing fully functional." % platform)
-		print("For export: Use tools/export_map_macos.sh or run export_tscn.py manually")
-```
-
-### Patch 2: Enable Manual Export Info for macOS
-
-**File:** `GodotProject/addons/bf_portal/portal_tools/portal_tools_dock.gd`
-
-**Line 154-156** (Original):
-```gdscript
-func _export_levels() -> void:
-	if OS.get_name() != "Windows":
-		return
-```
-
-**Replace with:**
-```gdscript
-func _export_levels() -> void:
-	if OS.get_name() != "Windows":
-		var dialog = AcceptDialog.new()
-		dialog.title = "Export on macOS/Linux"
-		dialog.dialog_text = """Export is available via command line:
-
-1. Install dependencies:
-   cd code/gdconverter
-   pip install -r requirements.txt
-
-2. Run export script:
-   python3 code/gdconverter/src/gdconverter/export_tscn.py \\
-     <scene.tscn> \\
-     FbExportData \\
-     FbExportData/levels
-
-Or use: tools/export_map_macos.sh <scene.tscn>"""
-		EditorInterface.popup_dialog_centered(dialog)
-		return
-```
-
-**This change:**
-- Shows helpful instructions instead of silently returning
-- Provides the exact commands needed
-- Makes the workflow clear for macOS users
-
----
-
-## Testing the Workaround
-
-### Test 1: Verify Map Editing Works
-
-1. Open Godot with Portal SDK project
-2. Ignore the "Setup has not been implemented" error
-3. Open `GodotProject/levels/<YourMap>.tscn`
-4. Scene should load successfully
-5. Verify you can:
-   - Navigate 3D viewport
-   - Select objects
-   - View Inspector properties
-   - Edit transforms
-
-**Expected:** ✅ Everything works normally
-
-### Test 2: Verify Manual Export Works
-
-```bash
-# Install dependencies first
-cd <PortalSDK>/code/gdconverter
-pip install -r requirements.txt
-
-# Try exporting your map
-python3 src/gdconverter/export_tscn.py \
-  ../../GodotProject/levels/<YourMap>.tscn \
-  ../../FbExportData \
-  ../../FbExportData/levels
-
-# Check output
-ls -lh ../../FbExportData/levels/<YourMap>.spatial.json
-```
-
-**Expected:** Creates `<YourMap>.spatial.json` successfully
-
----
-
-## Advantages of Manual Export
-
-1. **More Control**: See exactly what's happening
-2. **Debugging**: Can add `--verbose` flags if needed
-3. **Automation**: Easy to script for batch exports
-4. **No Virtual Env Needed**: Uses system Python directly
-5. **Works Anywhere**: Same script works on Windows/macOS/Linux
 
 ---
 
 ## Summary
 
-### The Real Situation
+**Portal SDK is fully functional on macOS!**
 
-**Portal SDK map editing works perfectly on macOS!** 🎉
+### Complete Workflow
 
-The error message is misleading - it's ONLY about:
-1. A Windows-specific GUI button for Python venv setup
-2. A GUI export button (easily worked around)
+1. **Install dependencies once**: `pip3 install -e code/gdconverter`
+2. **Edit maps in Godot**: Ignore the setup error, open `.tscn` files
+3. **Export for Portal**: `bash tools/export_map.sh <MapName>`
+4. **Import to Portal**: Use the `.spatial.json` file in the web builder
 
-### What You Can Do Right Now
+### No Windows Machine Needed
 
-✅ **Open and edit .tscn files** - Works perfectly
-✅ **View scene tree and 3D viewport** - Works perfectly
-✅ **Modify object positions** - Works perfectly
-✅ **Save changes** - Works perfectly
-✅ **Export to .spatial.json** - Works via manual script
+This project provides a complete, professional macOS workflow:
+- ✅ Cross-platform Python export script
+- ✅ Robust error handling and validation
+- ✅ Clear feedback and next steps
+- ✅ Easy to maintain and extend
 
-### No Patch Needed for Basic Usage
+### Getting Started
 
-For basic map editing and testing, **you don't need any patch!**
+```bash
+# One-time setup
+cd code/gdconverter
+pip3 install -e .
 
-Just:
-1. Ignore the setup error
-2. Open your map .tscn file
-3. Verify object placements
-4. Make manual adjustments if needed
-5. When ready to export, use manual Python script
+# Export your map
+bash tools/export_map.sh Kursk
 
-### When to Apply the Patch
-
-Only apply the official code patches if:
-- You want to eliminate the error message
-- You're converting multiple maps and want cleaner workflow
-- You plan to contribute fixes back to the community
+# Done! Upload Kursk.spatial.json to Portal
+```
 
 ---
 
-## Getting Started on macOS
-
-**Immediate Steps:**
-1. Close the error dialog in Godot (click OK)
-2. Open `GodotProject/levels/<YourMap>.tscn`
-3. Scene should load successfully now
-4. Begin editing your map
-
-**For Export:**
-1. Install Python dependencies: `pip install -r code/gdconverter/requirements.txt`
-2. (Optional) Create helper script: `tools/export_map_macos.sh`
-3. Test export: `./tools/export_map_macos.sh GodotProject/levels/<YourMap>.tscn`
-
----
-
-**Last Updated:** October 2025
-**Status:** Workaround confirmed functional - Portal SDK fully usable on macOS
-**Platform:** macOS (all versions)
+**Last Updated:** October 12, 2025
+**Status:** ✅ Production-ready macOS workflow
+**Platform:** macOS 12+ (tested on macOS Sequoia 15.0)
 
 **See Also:**
-- [Godot Setup Guide](./Godot_Setup_Guide.md) - General Godot installation instructions
-- [Main README](../../README.md) - Project overview
-- [TESTING.md](../../TESTING.md) - Testing converted maps
+- [Godot Setup Guide](./Godot_Setup_Guide.md) - Godot 4 installation
+- [Project README](../../README.md) - Portal SDK overview
