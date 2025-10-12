@@ -116,7 +116,7 @@ python3 tools/portal_convert.py \
     --output GodotProject/levels/Wake.tscn
 ```
 
-### `portal_rebase.py` - Switch Base Terrains (TODO - Phase 3)
+### `portal_rebase.py` - Switch Base Terrains
 
 Switch Portal base terrain without re-converting from BF1942.
 
@@ -128,7 +128,9 @@ python3 tools/portal_rebase.py \
     --new-base-terrain MP_Outskirts
 ```
 
-### `portal_validate.py` - Validate Maps (TODO - Phase 3)
+**Status**: ✅ Implemented with 97% test coverage
+
+### `portal_validate.py` - Validate Maps
 
 Validate .tscn files for Portal compatibility.
 
@@ -136,6 +138,8 @@ Validate .tscn files for Portal compatibility.
 ```bash
 python3 tools/portal_validate.py GodotProject/levels/Kursk.tscn
 ```
+
+**Status**: ✅ Implemented with 97% test coverage
 
 ## Configuration Files
 
@@ -248,14 +252,32 @@ See `.claude/BF_TO_PORTAL_TOOLSET_PLAN.md` for complete architecture.
 2. Create engine: `bfportal/engines/refractor/games/<game>.py`
 3. Extend `RefractorEngine` base class
 
+## Test Suite
+
+Comprehensive testing with 241 tests:
+
+```bash
+# Run all tests
+python3 -m pytest tools/tests/ -v
+
+# Run with coverage
+python3 -m pytest tools/tests/ --cov=tools/bfportal --cov-report=html
+
+# View HTML report
+open tools/tests/htmlcov/index.html
+```
+
+See:
+- `tools/tests/README.md` - Test documentation
+- `tools/tests/COVERAGE_REPORT.md` - Coverage report
+
 ## Support
 
-- Master Plan: `.claude/BF_TO_PORTAL_TOOLSET_PLAN.md`
-- SOLID Audit: `.claude/SOLID_AUDIT_REPORT.md`
-- Project Docs: `.claude/CLAUDE.md`
+- **Master Plan**: `docs/architecture/BF_TO_PORTAL_TOOLSET_PLAN.md`
+- **Project Docs**: `.claude/CLAUDE.md`
+- **Test Suite**: `tools/tests/README.md`
 
 ---
 
-**Phase**: 2 (Core Library) - 3 (CLI Tools)
-**Status**: In Progress
-**Last Updated**: 2025-10-11
+**Status**: ✅ Production-ready (Sprint 3 complete)
+**Last Updated**: 2025-10-12

@@ -258,36 +258,37 @@ Both bases in BF1942 Kursk have airfields with 2 aircraft each:
 
 ## Files Created/Modified
 
-### Analysis Files
-- `tools/kursk_extracted_data.json` - Raw extracted BF1942 data
+### Current Conversion Tools (Sprint 3)
+- `tools/portal_convert.py` - Master CLI for BF1942 → Portal conversion
+- `tools/portal_parse.py` - Parse BF1942 map data
+- `tools/portal_map_assets.py` - Map BF1942 assets to Portal equivalents
+- `tools/portal_adjust_heights.py` - Adjust object heights to terrain
+- `tools/portal_rebase.py` - Switch Portal base terrains
+- `tools/portal_validate.py` - Validate .tscn structure
 
-### Conversion Tools
-- `tools/parse_kursk_data.py` - Extracts positions from .con files
-- `tools/generate_kursk_tscn.py` - Generates initial .tscn
-- `tools/validate_tscn.py` - Validates .tscn structure
+### Core Library (bfportal/)
+- `bfportal/engines/refractor/` - Refractor engine parser
+- `bfportal/mappers/asset_mapper.py` - Intelligent asset mapping with fallbacks
+- `bfportal/terrain/terrain_provider.py` - Terrain height sampling
+- `bfportal/transforms/coordinate_offset.py` - Coordinate transformations
+- `bfportal/generators/tscn_generator.py` - .tscn file generation
+- `bfportal/validation/validators.py` - Map validation
 
-### Fix Tools (Phase 4)
-- `tools/apply_coordinate_offset.py` - Centers map at origin
-- `tools/apply_axis_transform.py` - Swaps N-S to E-W orientation
-- `tools/adjust_height.py` - Raises objects to terrain level
-- `tools/reset_spawn_points.py` - Repositions spawn points
-- `tools/adjust_spawn_heights.py` - Fine-tunes spawn heights
-- `tools/add_hq_areas.py` - Adds HQ protection zones
-- `tools/remove_base_capture_points.py` - Removes base CPs
-- `tools/fix_authentic_spawn_counts.py` - Matches spawn counts to BF1942
+### Asset Database
+- `tools/asset_audit/bf1942_to_portal_mappings.json` - 733 asset mappings
+- `tools/asset_audit/asset_fallback_keywords.json` - Fallback keywords config
+
+### Test Suite (Sprint 3)
+- `tools/tests/` - 241 tests with 64% coverage
+- `tools/tests/README.md` - Test documentation
+- `tools/tests/COVERAGE_REPORT.md` - Coverage analysis
 
 ### Output
 - `GodotProject/levels/Kursk.tscn` - Final authentic BF6 map
 
-### Backups
-- `Kursk.tscn.backup_before_offset`
-- `Kursk.tscn.backup_before_axis_swap`
-- `Kursk.tscn.backup_before_height_adjust`
-- `Kursk.tscn.backup_before_spawn_reset`
-- `Kursk.tscn.backup_before_spawn_height_adjust`
-- `Kursk.tscn.backup_before_cp_removal`
-- `Kursk.tscn.backup_before_hq_areas`
-- `Kursk.tscn.backup_before_spawn_fix`
+### Historical Note
+Phase 4 conversion was originally done with individual fix scripts (now deprecated and removed).
+Sprint 3 refactored everything into the modular `portal_convert.py` pipeline with SOLID architecture.
 
 ## Next Steps
 

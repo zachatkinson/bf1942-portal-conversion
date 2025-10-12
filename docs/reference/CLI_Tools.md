@@ -18,7 +18,6 @@
   - [portal_map_assets.py](#portal_map_assetspy---asset-mapper)
   - [portal_adjust_heights.py](#portal_adjust_heightspy---height-adjuster)
   - [portal_rebase.py](#portal_rebasepy---terrain-switcher)
-  - [portal_generate.py](#portal_generatepy---scene-generator)
   - [portal_validate.py](#portal_validatepy---validator)
 - [Configuration Files](#configuration-files)
 - [Workflows](#workflows)
@@ -261,22 +260,6 @@ python3 tools/portal_rebase.py \
 4. Generates new `.tscn` with new base terrain reference
 
 > 📝 **Note:** Much faster than full re-conversion. Use this to experiment with different Portal base maps.
-
----
-
-### `portal_generate.py` - Scene Generator
-
-Generate `.tscn` file from processed data.
-
-**Usage:**
-```bash
-python3 tools/portal_generate.py \
-    --input <mapped_data.json> \
-    --output <tscn_file> \
-    --base-terrain <terrain>
-```
-
-**Purpose:** Final step in modular pipeline, custom .tscn generation.
 
 ---
 

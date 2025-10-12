@@ -440,24 +440,23 @@ BF1942 RFA → Extract → Parse .con → Map Objects → Transform Coords → G
 
 ### Start Conversion for New Map
 
-1. Extract RFA: `python tools/rfa_extract.py bf1942_source/.../MapName.rfa`
-2. Parse data: `python tools/parse_bf1942_map.py extracted/MapName`
-3. Generate .tscn: `python tools/generate_tscn.py --map MapName --output GodotProject/levels/`
-4. Open in Godot: Load `GodotProject/` project, open `levels/MapName.tscn`
-5. Manual refinement: Adjust terrain, verify spawns, test gameplay
-6. Export: Use BFPortal tab → "Export Current Level"
+1. Extract RFA: Use BGA tool on Windows or `python tools/rfa_extractor.py` (guidance only)
+2. Convert map: `python3 tools/portal_convert.py --map MapName --base-terrain MP_Tungsten`
+3. Open in Godot: Load `GodotProject/` project, open `levels/MapName.tscn`
+4. Manual refinement: Adjust terrain, verify spawns, test gameplay
+5. Export: Use BFPortal tab → "Export Current Level"
 
 ### Key Commands
 
 ```bash
-# Extract RFA
-python tools/rfa_extract.py <input.rfa> <output_dir>
+# Extract RFA (guidance tool - use BGA on Windows for actual extraction)
+python3 tools/rfa_extractor.py <input.rfa> <output_dir>
 
-# Generate .tscn
-python tools/generate_tscn.py --map <name> --output GodotProject/levels/
+# Convert BF1942 map to Portal (master CLI)
+python3 tools/portal_convert.py --map <name> --base-terrain <terrain>
 
 # Validate .tscn
-python tools/validate_map.py GodotProject/levels/<name>.tscn
+python3 tools/portal_validate.py GodotProject/levels/<name>.tscn
 
 # Export in Godot
 # Use BFPortal panel → "Export Current Level" button
@@ -509,13 +508,22 @@ See `tools/README.md` for detailed extraction instructions.
 
 ## Project Status
 
-**Current Status**: ✅ Production-ready - Kursk conversion complete and tested
+**Current Status**: ✅ Production-ready - Kursk conversion complete with 241-test suite
 
 **Completed Milestones**:
 - ✅ Phase 1: RFA extraction and BF1942 data analysis
 - ✅ Phase 2: Core library architecture (SOLID design)
-- ✅ Phase 3: Modular CLI toolset
+- ✅ Phase 3: Modular CLI toolset with DRY/SOLID refactoring
 - ✅ Phase 4: Kursk map full conversion (95.3% asset accuracy)
+- ✅ Sprint 1: Initial implementation
+- ✅ Sprint 2: Bug fixes and stabilization
+- ✅ Sprint 3: DRY/SOLID refactoring with comprehensive test suite (241 tests, 64% coverage)
+
+**Test Suite**:
+- 241 tests (237 passing, 1 skipped, 3 expected failures)
+- 64% overall code coverage
+- Unit tests + integration tests
+- See `tools/tests/README.md` and `tools/tests/COVERAGE_REPORT.md`
 
 **Next Steps**:
 - Test Kursk in Portal web builder and in-game
@@ -524,6 +532,6 @@ See `tools/README.md` for detailed extraction instructions.
 
 ---
 
-*Last Updated*: 2025-10-10
+*Last Updated*: 2025-10-12
 *Project Lead*: Zach Atkinson
 *AI Assistant*: Claude (Anthropic)

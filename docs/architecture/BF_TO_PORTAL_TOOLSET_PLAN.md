@@ -415,11 +415,8 @@ class IAssetMapper(ABC):
 - ✅ `audit_bf1942_assets.py` - Asset auditor (733 assets found!)
 - ✅ `analyze_portal_assets.py` - Portal asset analyzer (6,292 assets)
 - ✅ `create_asset_mappings.py` - Asset mapper (732/733 auto-mapped)
-- ✅ `parse_kursk_data.py` - Kursk parser (proof-of-concept)
-- ✅ `generate_kursk_tscn.py` - Kursk generator (proof-of-concept)
-- ✅ `convert_bf1942_heightmap.py` - Terrain converter
-- ✅ `validate_object_heights.py` - Height validator
-- ✅ `coordinate_transform.py` - Transform utilities
+- ✅ Proof-of-concept scripts (deprecated after Sprint 3 refactor)
+  - Note: Individual fix scripts replaced by unified `portal_convert.py` pipeline
 
 **Phase 2 Core Library:**
 - ✅ `bfportal/core/interfaces.py` - 9 SOLID interfaces (400+ lines)
@@ -435,23 +432,31 @@ class IAssetMapper(ABC):
 
 **Total: 2,142 lines of core library code**
 
-### Phase 3 CLI Tools
-- ✅ `portal_convert.py` - Master CLI (full conversion pipeline)
+### Phase 3 CLI Tools (Sprint 3 - DRY/SOLID Refactored)
+- ✅ `portal_convert.py` - Master CLI orchestrator (full conversion pipeline)
 - ✅ `portal_parse.py` - Standalone parser (BF1942/Vietnam/BF2/2142)
 - ✅ `portal_map_assets.py` - Standalone asset mapper
 - ✅ `portal_adjust_heights.py` - Standalone height adjuster (re-runnable)
-- ✅ `portal_rebase.py` - Base terrain switcher (Portal → Portal)
-- ✅ `portal_generate.py` - Scene generator (simplified)
-- ✅ `portal_validate.py` - Map validator
+- ✅ `portal_rebase.py` - Base terrain switcher (Portal → Portal, 97% test coverage)
+- ✅ `portal_validate.py` - Map validator (97% test coverage)
+
+**Note**: `portal_generate.py` integrated into `portal_convert.py` - no longer a standalone tool.
 
 ### Core Library (Phase 2)
-- 📋 `bfportal/` package structure
-- 📋 `bfportal/core/interfaces.py`
-- 📋 `bfportal/engines/refractor/refractor_base.py`
-- 📋 `bfportal/engines/refractor/games/bf1942.py`
-- 📋 `bfportal/mappers/`
-- 📋 `bfportal/terrain/`
-- 📋 `bfportal/generators/`
+- ✅ `bfportal/` package structure
+- ✅ `bfportal/core/interfaces.py` (100% test coverage)
+- ✅ `bfportal/engines/refractor/refractor_base.py` (41% test coverage)
+- ✅ `bfportal/engines/refractor/games/bf1942.py`
+- ✅ `bfportal/mappers/` (92% test coverage)
+- ✅ `bfportal/terrain/` (52% test coverage)
+- ✅ `bfportal/generators/` (95% test coverage)
+
+### Sprint 3 Achievements
+- ✅ 241-test comprehensive test suite
+- ✅ 64% overall code coverage
+- ✅ DRY refactoring (removed 12 vestigial scripts)
+- ✅ SOLID audit passed (100% compliant)
+- ✅ Configuration-driven asset fallbacks
 
 ---
 
