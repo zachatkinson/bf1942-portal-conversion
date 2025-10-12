@@ -351,5 +351,5 @@ actual_height = (raw_value / 65535.0) * verticalScale * maxHeight
 
 ---
 
-*Last Updated*: 2025-10-10
-*Phase*: Phase 1 - Analysis Complete
+**Last Updated:** October 2025
+**Status:** Technical reference - accurate for BF1942 file formats

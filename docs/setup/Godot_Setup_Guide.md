@@ -1,432 +1,245 @@
 # Godot 4 Setup Guide for BF6 Portal SDK
 
-**Date:** 2025-10-11
-**Purpose:** Guide for installing Godot 4 and optional MCP integration
+**Last Updated:** October 2025
+**Purpose:** Guide for installing and configuring Godot 4 for Portal map development
 
 ---
 
-## Do You Need Godot 4?
+## Requirements
 
-**YES** - The BF6 Portal SDK requires Godot 4.x
+**Godot Version:** 4.3 or later (Standard edition)
 
-**Evidence:**
-- `GodotProject/project.godot` has `config_version=5` (Godot 4.x format)
-- Generated `Kursk.tscn` uses `format=3` (Godot 4 scene format)
-- BF6 Portal plugins require Godot 4 features
+⚠️ **IMPORTANT:** Download the **STANDARD** version, **NOT** .NET/Mono
 
-**Current Status:** Godot is NOT installed on your Mac
+The Portal SDK uses GDScript only (not C#). You do not need the .NET version.
 
 ---
 
-## Option 1: Install Godot 4 (Required for Phase 4)
+## Installation
 
-### Download Godot 4
+### Windows
 
-**Official Website:** https://godotengine.org/download/macos/
+1. Visit https://godotengine.org/download/windows/
+2. Download **Godot 4.3+ Standard** (NOT .NET version)
+3. Extract the `.zip` file
+4. Run `Godot_v4.x_win64.exe`
+5. (Optional) Add to PATH or create desktop shortcut
 
-**Recommended Version:** Godot 4.3 or later (Stable)
+### macOS
 
-**⚠️ IMPORTANT: Download the STANDARD version, NOT .NET/Mono**
+**Option 1: Direct Download** (Recommended)
+1. Visit https://godotengine.org/download/macos/
+2. Download **Godot 4.3+ Standard** (NOT .NET version)
+3. Open the `.dmg` file
+4. Drag `Godot.app` to Applications folder
+5. First launch: Right-click → Open (to bypass Gatekeeper)
 
-The Portal SDK uses **GDScript only** (not C#). You do NOT need the .NET version.
-
-**macOS Installation Options:**
-
-1. **Direct Download (.dmg)** ⭐ Recommended
-   - Download **Godot 4.3 Standard** (NOT Mono/.NET)
-   - Look for: "Godot Engine - Standard version"
-   - Avoid: "Godot Engine - .NET version"
-   - Open the .dmg file
-   - Drag Godot.app to Applications folder
-
-2. **Homebrew** (if you use Homebrew):
-   ```bash
-   brew install godot
-   ```
-
-3. **Steam** (if you prefer):
-   - Search for "Godot Engine" on Steam
-   - Free download
-
-### First Launch
-
-1. Open Godot 4
-2. Click "Import" on the project manager
-3. Navigate to `/Users/zach/Downloads/PortalSDK/GodotProject/`
-4. Select the `project.godot` file
-5. Click "Import & Edit"
-
-**Expected Result:**
-- Godot loads the Portal SDK project
-- You'll see the BFPortal plugin tabs in the editor
-- You can open `levels/Kursk.tscn` in the scene tree
-
----
-
-## Option 2: Use Godot MCP Server (Enhanced AI Integration)
-
-### What is a Godot MCP?
-
-**MCP (Model Context Protocol)** allows me (Claude) to directly interact with Godot:
-- Launch the Godot editor
-- Run projects
-- Capture debug output
-- Create/modify scenes
-- Add/edit nodes
-- Load sprites
-
-**Benefit:** I can help you test and refine Kursk.tscn interactively without you manually running commands.
-
-### Available Godot MCP Servers
-
-I found 3 active Godot MCP servers:
-
-#### 1. **Coding-Solo/godot-mcp** ⭐ Most Popular
-- **Stars:** 964 on GitHub
-- **Released:** March 2025
-- **Language:** TypeScript
-- **Status:** Actively maintained
-
-**Features:**
-- Launch Godot editor
-- Run projects
-- Capture debug output
-- Scene management
-- UID management (Godot 4.4+)
-
-**GitHub:** https://github.com/Coding-Solo/godot-mcp
-
-#### 2. **bradypp/godot-mcp** ⭐ Comprehensive
-- **Features:** Full scene/node manipulation
-- **Status:** Active
-- **GitHub:** https://github.com/bradypp/godot-mcp
-
-#### 3. **ee0pdt/Godot-MCP** ⭐ Script Integration Focus
-- **Features:** Code assistance, scene manipulation
-- **GitHub:** https://github.com/ee0pdt/Godot-MCP
-
-### Installing a Godot MCP (Coding-Solo - Recommended)
-
-**Prerequisites:**
-- Godot 4 installed (see Option 1)
-- Node.js and npm installed
-
-**Installation Steps:**
-
+**Option 2: Homebrew**
 ```bash
-# 1. Clone the MCP server
-cd ~/Downloads
-git clone https://github.com/Coding-Solo/godot-mcp.git
-cd godot-mcp
-
-# 2. Install dependencies
-npm install
-
-# 3. Build the server
-npm run build
+brew install godot
 ```
 
-**Configuration for Claude Desktop (if using Claude Desktop app):**
+**Option 3: Steam**
+- Search for "Godot Engine" on Steam
+- Free download
 
-Add to your Claude Desktop MCP settings:
-```json
-{
-  "mcpServers": {
-    "godot": {
-      "command": "node",
-      "args": [
-        "/Users/zach/Downloads/godot-mcp/build/index.js"
-      ],
-      "env": {
-        "GODOT_PATH": "/Applications/Godot.app/Contents/MacOS/Godot"
-      }
-    }
-  }
-}
+### Linux
+
+**Option 1: Official Binary**
+1. Visit https://godotengine.org/download/linux/
+2. Download **Godot 4.3+ Standard**
+3. Extract and make executable:
+```bash
+chmod +x Godot_v4.x_linux.x86_64
 ```
 
-**Note:** Claude Code (CLI) support for MCP is currently limited. MCPs work best with:
-- Claude Desktop app
-- Cline (VS Code extension)
-- Cursor IDE
+**Option 2: Package Manager**
+```bash
+# Flatpak
+flatpak install flathub org.godotengine.Godot
 
-### Using Godot MCP with Claude Code
-
-**Current Limitation:** Claude Code CLI has some MCP support but not full integration like Claude Desktop.
-
-**Workarounds:**
-1. Use Claude Desktop for Godot interactions
-2. Use Cline in VS Code for AI + Godot integration
-3. Continue manual Godot workflow (still very effective!)
+# Snap
+snap install godot-4
+```
 
 ---
 
-## Recommended Approach for Phase 4
+## Opening the Portal SDK Project
 
-### Option A: Manual Godot Testing (Simplest)
+1. Launch Godot 4
+2. Click **"Import"** in the Project Manager
+3. Navigate to your repository: `PortalSDK/GodotProject/`
+4. Select `project.godot`
+5. Click **"Import & Edit"**
 
-**Steps:**
-1. Install Godot 4 (Option 1 above)
-2. Open Portal SDK project
-3. Load `levels/Kursk.tscn`
-4. Manually verify placements
-5. Use BFPortal export panel
-6. Share results with me for analysis
-
-**Pros:**
-- No additional setup
-- Full control
-- Official workflow
-
-**Cons:**
-- Manual back-and-forth communication
-- You need to describe what you see
-
-### Option B: Godot + MCP Integration (Advanced)
-
-**Steps:**
-1. Install Godot 4 (Option 1)
-2. Install Godot MCP (Option 2)
-3. Configure MCP in Claude Desktop
-4. Use Claude Desktop for interactive Godot commands
-
-**Pros:**
-- I can directly launch Godot
-- I can capture debug output
-- More interactive workflow
-
-**Cons:**
-- Requires Claude Desktop (not Claude Code CLI)
-- Additional setup time
-- May have compatibility issues
-
-### My Recommendation: **Option A (Manual Testing)**
-
-**Reasoning:**
-- You're already familiar with Godot
-- Claude Code CLI doesn't fully support MCP yet
-- Manual workflow is proven and reliable
-- We can iterate based on your observations
-- Less setup friction
-
-**How We'd Work:**
-1. You: Install Godot 4, open Kursk.tscn
-2. You: Share screenshots or describe what you see
-3. Me: Analyze issues, suggest fixes
-4. You: Test fixes
-5. Repeat until satisfied
+**First-time import:** Wait for asset import to complete (2-5 minutes depending on hardware)
 
 ---
 
-## Phase 4 Checklist (Manual Workflow)
+## Verifying Installation
 
-### Before Opening Godot
+After opening the project, verify:
 
-- [ ] Install Godot 4.3+ for macOS
-- [ ] Verify installation: `godot --version` (if added to PATH)
+- [ ] Project opens without errors
+- [ ] **BFPortal** tab appears in the editor (right panel or top menu)
+- [ ] You can navigate the `FileSystem` panel
+- [ ] `levels/` folder is visible with `.tscn` files
 
-### Opening the Project
+---
 
-- [ ] Launch Godot 4
-- [ ] Import project: `/Users/zach/Downloads/PortalSDK/GodotProject/`
-- [ ] Wait for initial asset import (may take a few minutes)
-- [ ] Check that BFPortal plugin tabs appear
+## Working with Maps
 
-### Loading Kursk
+### Opening a Map
 
-- [ ] Open Scene: `res://levels/Kursk.tscn`
-- [ ] Verify scene tree shows:
-  - Root node: "Kursk"
-  - TEAM_1_HQ with 8 spawn points
-  - TEAM_2_HQ with 8 spawn points
-  - 4 CapturePoints
-  - 18 VehicleSpawners
-  - CombatArea
-  - Static layer
+1. In the FileSystem panel, navigate to `res://levels/`
+2. Double-click any `.tscn` file (e.g., `Kursk.tscn`)
+3. The scene opens in the 3D viewport
 
-### Visual Inspection
+### Viewing the Scene Tree
 
-- [ ] Switch to 3D viewport
-- [ ] Check HQ positions (Axis vs Allies separation)
-- [ ] Verify vehicle spawner placements
-- [ ] Check terrain loads (MP_Outskirts)
-- [ ] Inspect combat area boundary (should be visible)
+Every Portal map has this structure:
+- **Root Node** (map name)
+  - **TEAM_1_HQ** (with spawn points as children)
+  - **TEAM_2_HQ** (with spawn points as children)
+  - **CombatArea** (playable boundary)
+  - **Static** (terrain and assets)
+  - (Optional) VehicleSpawners, CapturePoints, etc.
 
-### Testing Spawn Points
+### 3D Viewport Navigation
 
-- [ ] Select TEAM_1_HQ in scene tree
-- [ ] Verify 8 child SpawnPoint nodes
-- [ ] Check they're in circular pattern
-- [ ] Repeat for TEAM_2_HQ
+- **Middle Mouse Button**: Rotate view
+- **Scroll Wheel**: Zoom in/out
+- **Shift + Middle Mouse**: Pan view
+- **F Key**: Frame selection (focus on selected node)
 
-### Testing Vehicle Spawners
+---
 
-- [ ] Select any VehicleSpawner node
-- [ ] Check Inspector panel:
-  - Team = 1 or 2
-  - ObjId unique
-  - VehicleTemplate = valid vehicle name
-- [ ] Verify rotation looks reasonable
+## Exporting Maps
 
-### Export to .spatial.json
+### Export to Portal Format
 
-- [ ] Click BFPortal panel tab
-- [ ] Click "Export Current Level"
-- [ ] Choose output location
-- [ ] Verify export completes without errors
+1. Open your map `.tscn` file in Godot
+2. Click the **BFPortal** tab (usually in right panel)
+3. Click **"Export Current Level"** button
+4. Choose output location (default: `FbExportData/levels/`)
+5. The `.spatial.json` file is created
 
-### Share Results
+### Testing the Export
 
-- [ ] Take screenshots (3D view, scene tree)
-- [ ] Note any warnings or errors
-- [ ] Share .spatial.json file (optional)
-- [ ] Describe any visual issues
+Check that the `.spatial.json` file:
+- Is 500KB - 5MB in size (depending on asset count)
+- Contains valid JSON (no truncation)
+- Has both `"Static"` and `"Portal_Dynamic"` arrays
+
+Quick validation:
+```bash
+python3 -c "import json; json.load(open('FbExportData/levels/YourMap.spatial.json')); print('✅ Valid JSON')"
+```
 
 ---
 
 ## Troubleshooting
 
-### Godot Won't Import Project
+### Project Won't Import
 
-**Cause:** Missing or corrupt project.godot
+**Symptom:** "Failed to open project" error
 
-**Fix:**
-- Ensure you're selecting `GodotProject/project.godot`
-- Not `PortalSDK/project.godot` (doesn't exist)
-
-### Missing Textures/Assets
-
-**Cause:** Asset import not complete
-
-**Fix:**
-- Wait for import progress bar to finish
-- Check console for import errors
-- Re-import if needed: Project → Reimport Assets
+**Solution:**
+- Ensure you selected `GodotProject/project.godot` (not the root `PortalSDK/` folder)
+- Check Godot version is 4.3+ (not Godot 3.x)
 
 ### BFPortal Tab Missing
 
-**Cause:** Plugin not loaded
+**Symptom:** No BFPortal panel in editor
 
-**Fix:**
-- Project → Project Settings → Plugins
-- Ensure "BF Portal" is enabled
-- Restart Godot if needed
+**Solution:**
+1. Go to **Project → Project Settings → Plugins**
+2. Enable "**BF Portal**" plugin
+3. Restart Godot if needed
 
-### Kursk.tscn Shows Errors
+### Missing Assets / Red Meshes
 
-**Cause:** Missing external resources
+**Symptom:** Pink/red materials or missing meshes
 
-**Fix:**
-- Check that these exist:
-  - `res://objects/HQ_PlayerSpawner.tscn`
-  - `res://objects/VehicleSpawner.tscn`
-  - `res://objects/CapturePoint.tscn`
-  - `res://static/MP_Outskirts_Terrain.tscn`
+**Cause:** Portal SDK `.glb` files not present
+
+**Solution:**
+- The large `.glb` model files are not in git (100-500MB each)
+- Download the full Portal SDK from EA/DICE
+- Place `.glb` files in `GodotProject/raw/models/`
+
+See the main [README.md](../../README.md) for more information.
+
+### Map Scene Shows Errors
+
+**Symptom:** "Failed to load resource" errors when opening `.tscn`
+
+**Solution:**
+- Check that Portal SDK assets exist:
+  - `res://objects/Gameplay/Common/HQ_PlayerSpawner.tscn`
+  - `res://objects/entities/SpawnPoint.tscn`
+  - `res://objects/Gameplay/Conquest/CapturePoint.tscn`
+  - `res://static/[TERRAIN_NAME]_Terrain.tscn`
 
 ### Terrain Not Visible
 
-**Cause:** Large terrain mesh, slow loading
+**Symptom:** Gray/empty viewport when opening map
 
-**Fix:**
-- Wait for scene to fully load
+**Solution:**
+- Wait for scene to fully load (large terrains take time)
 - Check 3D viewport camera position
-- Try View → Frame Selection (F key)
+- Select terrain node and press **F** to frame it
+- Try **View → Top** or **View → Front** to reset camera
+
+### Export Fails
+
+**Symptom:** "Export failed" or empty `.spatial.json`
+
+**Solution:**
+- Check Godot console (bottom panel) for error messages
+- Ensure map has required components (HQs, CombatArea, Static)
+- Verify BFPortal plugin is enabled
+- Try closing and reopening the scene
 
 ---
 
-## Quick Command Reference
+## Performance Tips
 
-### Godot Installation Check
+### Large Maps
 
-```bash
-# Check if Godot is installed
-which godot
+- Use **LOD (Level of Detail)** for distant objects
+- Reduce viewport quality during editing: **Project → Project Settings → Rendering → Quality**
+- Close unnecessary editor panels
 
-# Check Godot version (if in PATH)
-godot --version
+### Asset Import
 
-# Expected: Godot Engine v4.3.x or later
-```
-
-### Open Project from Terminal
-
-```bash
-# If Godot is in PATH
-godot /Users/zach/Downloads/PortalSDK/GodotProject/project.godot
-
-# If using macOS .app bundle
-/Applications/Godot.app/Contents/MacOS/Godot /Users/zach/Downloads/PortalSDK/GodotProject/project.godot
-```
-
-### Godot MCP Commands (if installed)
-
-These work if you've set up a Godot MCP in Claude Desktop:
-
-- "Launch Godot editor for my project"
-- "Run Kursk.tscn and show any errors"
-- "List all nodes in Kursk.tscn"
-- "Capture debug output from Godot"
+- Initial import is slow (one-time operation)
+- Subsequent opens are fast
+- If import seems stuck, check Output panel for progress
 
 ---
 
-## Next Steps After Godot Setup
+## Next Steps
 
-Once Godot is installed and working:
+After setting up Godot:
 
-1. **Visual Verification**
-   - Open Kursk.tscn
-   - Check object placements match expected positions
-   - Verify terrain loads correctly
+1. **Test a map** - Open an existing `.tscn` file to verify setup
+2. **Export** - Try exporting to `.spatial.json` format
+3. **Portal Web Builder** - Upload the `.spatial.json` to BF6 Portal builder
+4. **In-Game Testing** - Play your map in BF6 Portal
 
-2. **Identify Issues**
-   - Note any Y-coordinate mismatches (elevation)
-   - Check for missing assets
-   - Look for rotation oddities
-
-3. **Manual Refinements** (optional)
-   - Adjust spawn point positions if needed
-   - Add decorative props from unrestricted assets
-   - Fine-tune capture point radii
-
-4. **Export Testing**
-   - Export to .spatial.json
-   - Verify JSON structure
-   - Check for export warnings
-
-5. **Report Back**
-   - Share findings with me
-   - I can generate fixes if needed
-   - Iterate until satisfied
+For detailed testing procedures, see [TESTING.md](../../TESTING.md)
 
 ---
 
-## Summary
+## Additional Resources
 
-**To Answer Your Questions:**
-
-1. **Do you need to install Godot 4?**
-   - **YES** - Required for Phase 4 testing
-   - Portal SDK needs Godot 4.x
-
-2. **Is there a Godot MCP we can use?**
-   - **YES** - 3 available Godot MCPs
-   - **HOWEVER** - Claude Code CLI has limited MCP support
-   - **BEST WITH** - Claude Desktop or Cline
-
-3. **My Recommendation:**
-   - Install Godot 4 (required)
-   - Skip MCP for now (optional, better with Claude Desktop)
-   - Use manual testing workflow (proven, effective)
-   - We can iterate based on your observations
-
-**Time Estimate:**
-- Godot 4 installation: 5-10 minutes
-- First project open: 5 minutes (asset import)
-- Initial Kursk.tscn inspection: 10-15 minutes
-- Total: ~30 minutes to get started with Phase 4
+- **Godot Documentation**: https://docs.godotengine.org/en/stable/
+- **Portal SDK Docs**: [README.html](../../README.html)
+- **Conversion Tools**: [docs/architecture/](../architecture/)
 
 ---
 
-*Last Updated:* 2025-10-11
-*For:* Phase 4 - Godot Testing
-*Project:* BF1942 → BF6 Portal Conversion
+**Platform Support:** Windows, macOS, Linux
+**Godot Version:** 4.3+
+**SDK Compatibility:** BF6 Portal SDK (2025)

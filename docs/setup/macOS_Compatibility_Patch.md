@@ -1,8 +1,8 @@
-# macOS Compatibility Patch for BF6 Portal SDK
+# macOS Compatibility for BF6 Portal SDK
 
-**Date:** 2025-10-11
-**Issue:** Portal SDK was designed for Windows, shows errors on macOS
-**Status:** WORKAROUND AVAILABLE - Map editing works fine!
+**Last Updated:** October 2025
+**Status:** ⚠️ REFERENCE DOCUMENT - macOS fixes not yet implemented in this project
+**Issue:** Portal SDK was designed for Windows, may show errors on macOS
 
 ---
 
