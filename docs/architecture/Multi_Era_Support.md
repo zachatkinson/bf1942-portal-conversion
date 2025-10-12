@@ -6,6 +6,44 @@
 
 ---
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture Design](#architecture-design)
+  - [SOLID Principles](#solid-principles)
+- [Core Interfaces](#core-interfaces)
+  - [IGameEngine](#igameengine)
+  - [IAssetMapper](#iassetmapper)
+- [Current Implementation: BF1942](#current-implementation-bf1942)
+  - [BF1942 Engine](#bf1942-engine)
+  - [Asset Mappings](#asset-mappings)
+  - [CLI Tool](#cli-tool)
+- [Adding a New Game](#adding-a-new-game)
+  - [Example: Battlefield Vietnam](#example-battlefield-vietnam)
+- [Multi-Game Conversion Pipeline](#multi-game-conversion-pipeline)
+  - [Unified CLI](#unified-cli)
+  - [Shared Components](#shared-components)
+- [Asset Mapping Strategy](#asset-mapping-strategy)
+  - [Per-Game Mapping Files](#per-game-mapping-files)
+  - [Mapping File Structure](#mapping-file-structure)
+  - [Intelligent Fallback System](#intelligent-fallback-system)
+- [Era and Asset Pack Support](#era-and-asset-pack-support)
+  - [Current: Modern Assets Only](#current-modern-assets-only)
+  - [Future: Classic Asset Packs](#future-classic-asset-packs)
+- [Game-Specific Considerations](#game-specific-considerations)
+  - [Battlefield 1942 (Refractor 1.0)](#battlefield-1942-refractor-10)
+  - [Battlefield Vietnam (Refractor 1.0)](#battlefield-vietnam-refractor-10)
+  - [Battlefield 2 (Refractor 2.0)](#battlefield-2-refractor-20)
+  - [Battlefield 2142 (Refractor 2.0)](#battlefield-2142-refractor-20)
+  - [Battlefield 3+ (Frostbite)](#battlefield-3-frostbite)
+- [Benefits of This Architecture](#benefits-of-this-architecture)
+- [Implementation Roadmap](#implementation-roadmap)
+- [Example: Converting Multiple Games](#example-converting-multiple-games)
+- [Testing New Game Support](#testing-new-game-support)
+- [Summary](#summary)
+
+---
+
 ## Overview
 
 The conversion pipeline uses a **modular, game-agnostic architecture** that makes adding support for new Battlefield games straightforward.
