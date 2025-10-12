@@ -214,10 +214,7 @@ Available base maps (choose terrain similar to your map):
     args = parser.parse_args()
 
     # Determine spatial file path
-    if args.spatial_path:
-        spatial_path = args.spatial_path
-    else:
-        spatial_path = Path(f"FbExportData/levels/{args.map_name}.spatial.json")
+    spatial_path = args.spatial_path or Path(f"FbExportData/levels/{args.map_name}.spatial.json")
 
     if not spatial_path.exists():
         print(f"❌ Error: Spatial file not found: {spatial_path}\n", file=sys.stderr)

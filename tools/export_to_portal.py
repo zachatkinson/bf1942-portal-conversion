@@ -231,10 +231,7 @@ Available base maps (choose terrain similar to your map):
     # Determine paths
     project_root = Path.cwd()
 
-    if args.tscn_path:
-        tscn_path = args.tscn_path
-    else:
-        tscn_path = project_root / "GodotProject" / "levels" / f"{args.map_name}.tscn"
+    tscn_path = args.tscn_path or project_root / "GodotProject" / "levels" / f"{args.map_name}.tscn"
 
     if not tscn_path.exists():
         print(f"❌ Error: Map file not found: {tscn_path}", file=sys.stderr)
