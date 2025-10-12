@@ -52,7 +52,7 @@ class AssetMapper(IAssetMapper):
             data = json.load(f)
 
         # Flatten category-based structure into single lookup dict
-        for category_key in data.keys():
+        for category_key in data:
             if category_key == "_metadata":
                 continue
 

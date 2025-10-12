@@ -213,11 +213,10 @@ class RefractorEngine(IGameEngine):
         # These are instances created from SpawnPoint templates but have instance name as type
         import re
 
-        if re.search(r"_\d+_\d+$", obj_name):
-            # Has pattern like _X_Y at end, likely a spawn instance
-            # Also check if it has spawn-related keywords
-            if "spawn" in obj_name or "open" in obj_name or "base" in obj_name:
-                return True
+        if re.search(r"_\d+_\d+$", obj_name) and (
+            "spawn" in obj_name or "open" in obj_name or "base" in obj_name
+        ):
+            return True
 
         return False
 
@@ -261,10 +260,7 @@ class RefractorEngine(IGameEngine):
             return False
         if ownership == "team1" and requested_team == Team.TEAM_1:
             return True
-        if ownership == "team2" and requested_team == Team.TEAM_2:
-            return True
-
-        return False
+        return bool(ownership == "team2" and requested_team == Team.TEAM_2)
 
     def _parse_spawns(self, con_files: ConFileSet, team: Team) -> list[SpawnPoint]:
         """Parse spawn points for a team.

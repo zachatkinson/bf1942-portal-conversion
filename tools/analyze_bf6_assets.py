@@ -56,10 +56,7 @@ def categorize_assets(assets: list[dict[str, Any]]) -> dict[str, list[dict[str, 
         level_restrictions = asset.get("levelRestrictions", [])
 
         # Extract category from directory path
-        if "/" in directory:
-            main_category = directory.split("/")[0]
-        else:
-            main_category = directory
+        main_category = directory.split("/")[0] if "/" in directory else directory
 
         # Store asset with useful metadata
         asset_info = {

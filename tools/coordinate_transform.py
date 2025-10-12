@@ -109,10 +109,7 @@ class RotationMatrix:
             return False
         if abs(dot(self.up, self.forward)) > tolerance:
             return False
-        if abs(dot(self.forward, self.right)) > tolerance:
-            return False
-
-        return True
+        return not abs(dot(self.forward, self.right)) > tolerance
 
     def has_nan(self) -> bool:
         """Check if any matrix element is NaN.
