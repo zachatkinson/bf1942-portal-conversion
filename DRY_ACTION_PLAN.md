@@ -556,6 +556,23 @@ Priority 2 refactorings focusing on immediate value and low effort:
 - Only one remaining CLI tool (`portal_adjust_heights.py`) had duplicated transform logic
 - Successfully converted Kursk map with all refactored code
 
+### Sprint 3: Remaining Priority 2 Warnings 🔄 IN PROGRESS
+**Scope**: Complete all unfinished Priority 2 warnings (6 tasks remaining)
+
+**Tasks**:
+- [ ] Warning #2: Investigate Combat Area transformation unification (2-4 hours)
+- [ ] Warning #3: Extract asset mapper best-guess fallback to config (1 hour)
+- [ ] Warning #4: Evaluate TerrainEstimator JSON config extraction (30 min - may skip if not needed)
+- [ ] Warning #5: Add strategy pattern for spawn point layouts (2-3 hours)
+- [ ] Warning #7: Standardize error messages with structured logging (4-6 hours)
+- [ ] Warning #8: Add unit tests for critical components (8-12 hours)
+- [ ] Validation: format, lint, type check
+- [ ] Commit and push
+
+**Total Estimated Effort**: 18-28 hours (comprehensive cleanup)
+
+**Target**: Complete all Priority 2 refactorings, establish testing foundation, standardize error handling
+
 ---
 
 *Last Updated*: 2025-10-11
