@@ -540,16 +540,21 @@ Priority 2 refactorings focusing on immediate value and low effort:
 
 **Result**: Code quality 8/10, all critical DRY violations eliminated
 
-### Sprint 2: CLI Refactoring & Testing 🔄 IN PROGRESS
-- [ ] Refactor `portal_adjust_heights.py` to use TscnTransformParser
-- [ ] Refactor `portal_reposition_combat_area.py` to use TscnTransformParser
-- [ ] Refactor `portal_map_assets.py` to use TscnTransformParser
-- [ ] Integration test: Run portal_convert.py on Kursk
-- [ ] Extract magic numbers to named constants
-- [ ] Validation: format, lint, type check
-- [ ] Commit and push
+### Sprint 2: CLI Refactoring & Testing ✅ COMPLETED (2025-10-11)
+- ✅ Refactor `portal_adjust_heights.py` to use TscnTransformParser
+- ✅ Extract magic numbers to named constants (HEIGHT_ADJUSTMENT_TOLERANCE_M)
+- ✅ Integration test: Run portal_convert.py on Kursk (successful - 246KB output)
+- ✅ Validation: format, lint, type check (all passed)
+- ✅ Commit and push
+- ⏭️  Skipped: `portal_reposition_combat_area.py` (already deleted as vestigial)
+- ⏭️  Skipped: `portal_map_assets.py` (doesn't use transform parsing)
 
-**Target**: Eliminate all transform parsing duplication, verify pipeline works
+**Result**: Transform parsing duplication eliminated in CLI tools, pipeline verified working
+
+**Notes**:
+- `tscn_generator.py` intentionally NOT refactored - creates new transforms from Euler angles (different use case)
+- Only one remaining CLI tool (`portal_adjust_heights.py`) had duplicated transform logic
+- Successfully converted Kursk map with all refactored code
 
 ---
 
