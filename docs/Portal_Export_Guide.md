@@ -239,6 +239,51 @@ A Portal "experience" is a complete game mode package including:
 > 📝 **Note:** The maps in this project use Portal's **Verified Modes** settings for Conquest (`ModBuilder_GameMode: 2`), not custom game mode logic. This provides the authentic BF1942 Conquest experience using BF6's official ruleset, matching the pattern used in official Portal examples like AcePursuit and BombSquad.
 > **Use:** Understanding the experience format and verified modes
 
+### How Portal Processes Custom Spatial Data
+
+Portal uses a **server-side processing workflow** for custom map data:
+
+**Import (What You Upload):**
+```json
+{
+  "mapRotation": [{
+    "id": "MP_Tungsten-ModBuilderCustom0",
+    "spatialAttachment": {
+      "filename": "Kursk.spatial.json",
+      "attachmentData": {
+        "original": "<base64_encoded_spatial_data>"
+      }
+    }
+  }]
+}
+```
+
+**Processing:**
+1. Portal receives your experience file with embedded spatial data
+2. Server extracts and validates the base64 spatial data
+3. Stores spatial data in Portal's database
+4. Links it to the map reference `MP_Tungsten-ModBuilderCustom0`
+5. Converts map ID to `MP_Tungsten-Conquest0` in UI
+
+**Export (What Portal Saves):**
+```json
+{
+  "mapRotation": [{
+    "id": "MP_Tungsten-Conquest0"
+  }]
+}
+```
+
+> 💡 **Tip:** Portal removes the `spatialAttachment` after processing. This is normal - your custom map data is stored server-side and linked to the map reference.
+> **Use:** Understanding why exported experiences look different from imported ones
+
+**Key Takeaways:**
+- ✅ Import requires `spatialAttachment` with base64 data
+- ✅ Portal processes and stores spatial data server-side
+- ✅ Export only shows simplified map reference
+- ✅ `-ModBuilderCustom0` suffix indicates custom spatial data
+- ✅ Portal converts to `-Conquest0` after processing
+
 ### File Structure
 
 ```json
@@ -284,6 +329,20 @@ A Portal "experience" is a complete game mode package including:
 
 > 💡 **Tip:** Most import issues are caused by incorrect file format. Always use our export tools to ensure compliance with Portal SDK standards.
 > **Use:** Troubleshooting import and format errors
+
+### "No maps chosen" Error
+
+**Cause:** Portal requires you to manually add the base map in the UI, even with custom spatial data
+
+**Solution:**
+1. After importing your experience
+2. Go to **Map Rotation** section in Portal Builder
+3. Click **"Add Map"**
+4. Select the display name (e.g., "Mirak Valley" for MP_Tungsten)
+5. Portal will combine the base terrain with your custom spatial data
+
+> 📝 **Note:** The experience JSON defines the custom spatial attachment, but Portal still requires you to select which base map(s) to use in the UI.
+> **Use:** Understanding the two-step process for custom maps
 
 ### "Map not appearing in rotation after import"
 
