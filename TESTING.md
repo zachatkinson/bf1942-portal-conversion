@@ -1,47 +1,112 @@
-# Testing Guide - Portal Map Conversion
+# Guide: Portal Map Testing
 
-This guide provides a checklist for testing converted Battlefield maps in Portal.
+> Complete validation checklist for converted Battlefield maps in Portal
 
-## Pre-Test Setup (PC)
+**Purpose:** Comprehensive testing procedures for validating converted maps from Godot to Portal
+**Last Updated:** October 2025
+**Difficulty:** Intermediate
+**Time Required:** ~30-45 minutes per map
+**Status:** Production Ready
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Pre-Test Setup](#pre-test-setup)
+  - [Pull Latest Changes](#1-pull-latest-changes)
+  - [Install Portal SDK Assets](#2-install-portal-sdk-assets)
+  - [Open Project in Godot](#3-open-project-in-godot)
+- [Phase 1: Godot Editor Verification](#phase-1-godot-editor-verification)
+  - [Load the Map](#load-the-map)
+  - [Visual Inspection Checklist](#visual-inspection-checklist)
+- [Phase 2: Portal Export](#phase-2-portal-export)
+  - [Export Process](#export-process)
+  - [Export Verification](#export-verification)
+- [Phase 3: Portal Web Builder](#phase-3-portal-web-builder)
+  - [Upload to Portal](#upload-to-portal)
+  - [Web Builder Checks](#web-builder-checks)
+  - [Common Issues](#common-issues)
+- [Phase 4: In-Game Testing](#phase-4-in-game-testing)
+  - [Test Match Setup](#test-match-setup)
+  - [Gameplay Checklist](#gameplay-checklist)
+- [Phase 5: Post-Test Documentation](#phase-5-post-test-documentation)
+  - [Record Results](#record-results)
+  - [Report Issues](#report-issues)
+- [Success Criteria](#success-criteria)
+- [Troubleshooting](#troubleshooting)
+- [Next Maps to Test](#next-maps-to-test)
+
+---
+
+## Overview
+
+This guide provides step-by-step validation procedures for maps converted using the Portal SDK conversion pipeline. Use this checklist to ensure your converted maps meet quality standards before release.
+
+**Testing Phases:**
+1. Godot Editor - Visual inspection and asset verification
+2. Portal Export - File generation and JSON validation
+3. Portal Web Builder - Import and configuration testing
+4. In-Game Testing - Gameplay validation
+5. Post-Test Documentation - Results and issue tracking
+
+> 💡 **Tip:** Complete each phase before moving to the next. Earlier phases catch issues faster than in-game testing.
+> **Use:** Efficient debugging workflow
+
+---
+
+## Pre-Test Setup
 
 ### 1. Pull Latest Changes
+
 ```bash
 cd PortalSDK
 git pull origin master
 ```
 
 ### 2. Install Portal SDK Assets
+
 The `.glb` model files are not in git (too large). You need to:
 
-**Option A**: Download full Portal SDK
+**Option A: Download Full Portal SDK**
 - Download Portal SDK from EA/DICE
 - Extract to `GodotProject/raw/models/`
 
-**Option B**: Copy from Mac
-- Copy `GodotProject/raw/models/*.glb` from Mac to PC
+**Option B: Copy from Development Machine**
+- Copy `GodotProject/raw/models/*.glb` from development machine
 - Via USB drive, network share, or cloud storage
 
-**Option C**: Verify existing installation
+**Option C: Verify Existing Installation**
 ```bash
 ls GodotProject/raw/models/*.glb | wc -l
 # Should show 50+ .glb files
 ```
 
+> 📝 **Note:** Portal SDK .glb files are excluded from git due to 100MB file size limits. You must install them separately.
+> **Use:** Understanding why assets aren't in repository
+
 ### 3. Open Project in Godot
-- Launch Godot 4.5 (Standard, not .NET)
+
+- Launch Godot 4.5+ (Standard, not .NET)
 - Open `PortalSDK/GodotProject/`
 - Wait for initial import (may take a few minutes)
+
+> ⚠️ **Warning:** Use Godot 4 Standard, NOT .NET version. The Portal SDK is not compatible with .NET.
+> **Use:** Avoiding project compatibility issues
+
+---
 
 ## Phase 1: Godot Editor Verification
 
 ### Load the Map
-1. Open `GodotProject/levels/Kursk.tscn`
+
+1. Open `GodotProject/levels/Kursk.tscn` (or your map)
 2. Check for dependency errors (should be none if .glb files present)
 
 ### Visual Inspection Checklist
 
 **Terrain & Layout:**
-- [ ] Terrain mesh loads properly (MP_Tungsten)
+- [ ] Terrain mesh loads properly (MP_Tungsten or other base map)
 - [ ] Combat area boundary is centered on map
 - [ ] Assets are positioned on terrain (not floating/underground)
 
@@ -69,6 +134,11 @@ ls GodotProject/raw/models/*.glb | wc -l
 - Use Shift + middle mouse to pan
 - Check different angles of the map
 
+> 💡 **Tip:** Use the 3D viewport top/front/side views to check for floating or underground objects quickly.
+> **Use:** Efficient visual inspection workflow
+
+---
+
 ## Phase 2: Portal Export
 
 ### Export Process
@@ -87,6 +157,9 @@ bash tools/export_map.sh Kursk
 python3 tools/create_experience.py Kursk
 ```
 
+> 📝 **Note:** The all-in-one tool is faster for final exports. Use modular workflow during development for quicker iteration.
+> **Use:** Choosing the right workflow for your testing phase
+
 ### Export Verification
 
 **Check .spatial.json:**
@@ -95,7 +168,7 @@ ls -lh FbExportData/levels/Kursk.spatial.json
 # Should be 500KB - 5MB depending on asset count
 ```
 
-**Check experience file:**
+**Check Experience File:**
 ```bash
 ls -lh experiences/Kursk_Experience.json
 # Should be 1-2MB (includes base64-encoded spatial data)
@@ -110,7 +183,7 @@ ls -lh experiences/Kursk_Experience.json
 - [ ] Experience file has "mapRotation" array
 - [ ] Experience file has "spatialAttachment" with base64 data
 
-Quick validation:
+**Quick Validation Commands:**
 ```bash
 # Validate spatial file
 python3 -c "import json; data=open('FbExportData/levels/Kursk.spatial.json').read(); json.loads(data); print('✅ Valid spatial.json')"
@@ -119,9 +192,12 @@ python3 -c "import json; data=open('FbExportData/levels/Kursk.spatial.json').rea
 python3 -c "import json; data=open('experiences/Kursk_Experience.json').read(); json.loads(data); print('✅ Valid experience.json')"
 ```
 
+---
+
 ## Phase 3: Portal Web Builder
 
 ### Upload to Portal
+
 1. Open BF6 Portal web builder (https://portal.battlefield.com)
 2. Click **"IMPORT"** button (top-right menu)
 3. Select `experiences/Kursk_Experience.json`
@@ -130,62 +206,66 @@ python3 -c "import json; data=open('experiences/Kursk_Experience.json').read(); 
 6. Click **"Add Map"** button
 7. Select the **display name** for your base map:
    - For MP_Tungsten: Select **"Mirak Valley"**
-   - For other maps: Check `FbExportData/map_names.json` for display names
+   - For other maps: Check docs/Portal_Export_Guide.md "Available Base Maps" section
 8. Portal combines the base terrain with your custom spatial data
 
+> ⚠️ **Warning:** Portal requires you to manually add the base map in the UI even though the spatial data is embedded. This is a Portal requirement, not an error.
+> **Use:** Understanding the two-step import process
+
 ### Web Builder Checks
+
 - [ ] Import completed without errors
 - [ ] Experience appears in your experiences list
 - [ ] Map Rotation section shows "No maps chosen" initially (expected)
-- [ ] After adding map: Shows base map name (e.g., "Mirak Valley")
+- [ ] After adding map: Shows base map display name (e.g., "Mirak Valley")
 - [ ] Map preview loads in builder
 - [ ] No "missing asset" warnings in console
 - [ ] Can save experience
 
 ### Common Issues
 
-**Issue**: "No maps chosen" error persists after import
+**Issue: "No maps chosen" error persists after import**
 - **Cause**: Forgot to manually add map in Portal Builder UI
 - **Fix**: Go to Map Rotation panel → Add Map → Select display name (e.g., "Mirak Valley")
 
-**Issue**: Don't know which map name to select
+> 💡 **Tip:** The map ID in the experience JSON (e.g., "MP_Tungsten-ModBuilderCustom0") tells Portal which base terrain to use, but you still need to select it manually in the UI.
+> **Use:** Understanding Portal's import workflow
+
+**Issue: Don't know which map name to select**
 - **Cause**: Map technical names (MP_Tungsten) differ from display names (Mirak Valley)
-- **Fix**: Check `FbExportData/map_names.json` for the mapping
+- **Fix**: Check docs/Portal_Export_Guide.md section "Available Base Maps" for the mapping table
 
-**Issue**: Import fails silently
+**Issue: Import fails silently**
 - **Cause**: Invalid experience JSON format
-- **Fix**: Validate JSON with `python3 -c "import json; json.load(open('experiences/Kursk_Experience.json'))"`
+- **Fix**: Validate JSON with Phase 2 validation commands
 
-**Issue**: "Asset type not found"
+**Issue: "Asset type not found"**
 - **Cause**: Portal SDK version mismatch or invalid asset reference
-- **Fix**: Verify Portal SDK version matches game version
+- **Fix**: Verify Portal SDK version matches game version, regenerate experience file
 
-**Issue**: Terrain not centered
-- **Cause**: Coordinate offset issue
-- **Fix**: Check terrain positioning in Godot editor
+**Issue: Terrain not centered**
+- **Cause**: Coordinate offset issue in conversion
+- **Fix**: Check terrain positioning in Godot editor, verify conversion used correct base terrain
 
-**Issue**: Assets floating/underground
-- **Cause**: Height sampling issue
-- **Fix**: Verify terrain mesh bounds and Y-axis positioning
+**Issue: Assets floating/underground**
+- **Cause**: Height sampling issue during conversion
+- **Fix**: Verify terrain mesh bounds and Y-axis positioning in Godot
+
+---
 
 ## Phase 4: In-Game Testing
 
 ### Test Match Setup
 
-**For Custom Mode (Local Testing):**
-1. In Portal Builder, ensure your experience uses custom mode
+**For Custom Mode (Recommended for Testing):**
+1. In Portal Builder, your experience uses custom mode by default
 2. Save and publish your experience
 3. Launch Battlefield 6
 4. Go to Portal → Find your experience
-5. Create local match or invite friends
+5. Create local match (supports testing without publishing)
 
-**For Published Experiences:**
-1. In Portal Builder, configure game settings
-2. Click **"Save and Publish"**
-3. Launch Battlefield 6
-4. Go to Portal → "My Experiences"
-5. Select Kursk experience
-6. Start match (public or private)
+> 📝 **Note:** All maps in this project use custom mode (ModBuilder_GameMode: 0) to enable local testing and full control over Portal Builder settings.
+> **Use:** Understanding why custom mode is used
 
 **Basic Game Setup:**
 - Game mode: Conquest
@@ -224,19 +304,21 @@ python3 -c "import json; data=open('experiences/Kursk_Experience.json').read(); 
 - [ ] UI shows objective status
 
 **Overall Feel:**
-- [ ] Map layout matches BF1942 Kursk
+- [ ] Map layout matches original Battlefield map
 - [ ] Scale feels appropriate
 - [ ] Distances reasonable for combat
 - [ ] Cover and sightlines preserved from original
+
+---
 
 ## Phase 5: Post-Test Documentation
 
 ### Record Results
 
-Create `test_results/Kursk_YYYY-MM-DD.md`:
+Create `test_results/MapName_YYYY-MM-DD.md`:
 
 ```markdown
-# Kursk Test Results - [Date]
+# [MapName] Test Results - [Date]
 
 ## Summary
 - **Status**: Pass/Fail/Partial
@@ -274,6 +356,9 @@ If you find bugs or issues:
 2. Note exact reproduction steps
 3. Check console output for errors
 4. Document in test results file
+5. Create GitHub issue if it's a conversion pipeline bug
+
+---
 
 ## Success Criteria
 
@@ -289,13 +374,15 @@ If you find bugs or issues:
 - ✅ Assets placed correctly (95%+ accuracy)
 - ✅ Terrain height matches original
 - ✅ Capture points work (if applicable)
-- ✅ Map feels like BF1942 Kursk
+- ✅ Map feels like original Battlefield map
+
+---
 
 ## Troubleshooting
 
 ### Godot Won't Open Map
 **Symptoms**: Dependency errors, missing resources
-**Solution**: Install Portal SDK .glb files
+**Solution**: Install Portal SDK .glb files to `GodotProject/raw/models/`
 
 ### Export Button Missing
 **Symptoms**: No BFPortal panel in Godot
@@ -305,35 +392,47 @@ If you find bugs or issues:
 
 ### Export Creates Empty File
 **Symptoms**: Very small .spatial.json (< 10KB)
-**Solution**: Check Godot console for errors
+**Solution**: Check Godot console for errors, verify map has required nodes (HQs, spawns)
 
 ### Map Doesn't Load in Portal
 **Symptoms**: Portal web builder shows errors
 **Solution**:
-1. Validate JSON syntax
+1. Validate JSON syntax with Phase 2 commands
 2. Check asset type names match Portal catalog
 3. Verify terrain type exists
 
 ### Players Spawn Underground
 **Symptoms**: Spawns below terrain
 **Solution**:
-1. Check terrain height grid is loaded
-2. Verify spawn point Y coordinates
-3. Re-run conversion with height validation
+1. Check terrain height grid is loaded in Godot
+2. Verify spawn point Y coordinates in .tscn
+3. Re-export with height validation enabled
+
+---
 
 ## Next Maps to Test
 
 After Kursk validation:
-1. Wake Island (island terrain with water)
-2. El Alamein (desert terrain)
-3. Stalingrad (urban environment)
+1. **Wake Island** - Tests island terrain with water boundaries
+2. **El Alamein** - Tests desert terrain and vehicle-heavy gameplay
+3. **Stalingrad** - Tests urban environment and dense building placement
 
 Each map tests different conversion features:
-- **Kursk**: Flat terrain, rural assets
-- **Wake**: Water boundaries, beach terrain
-- **El Alamein**: Desert, vehicle-heavy
-- **Stalingrad**: Dense urban, buildings
+- **Kursk**: Flat terrain, rural assets, open combat
+- **Wake**: Water boundaries, beach terrain, island layout
+- **El Alamein**: Desert environment, vehicle spawners, long sightlines
+- **Stalingrad**: Dense urban, building interiors, vertical gameplay
 
 ---
 
-**Good luck with testing!** Report any issues you find so we can improve the conversion pipeline.
+**Next Steps:**
+1. [Portal Export Guide](./docs/Portal_Export_Guide.md) - Complete export workflow and options
+2. [Troubleshooting Guide](./docs/guides/Troubleshooting.md) - Additional problem-solving
+3. [Maps Registry](./maps_registry.json) - View all planned maps
+
+**Last Updated:** October 2025
+**Status:** Production Ready
+**See Also:**
+- [Portal Export Guide](./docs/Portal_Export_Guide.md) - Export workflow
+- [macOS Setup](./docs/setup/macOS_Compatibility_Patch.md) - macOS-specific procedures
+- [Project README](./README.md) - Project overview
