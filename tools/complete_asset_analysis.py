@@ -5,19 +5,20 @@ Analyzes all asset sources and identifies gaps in mapping coverage.
 """
 
 import json
-from pathlib import Path
 from collections import defaultdict
-from typing import Dict, List, Set, Tuple
+from pathlib import Path
+
 
 def load_json(filepath: Path) -> dict:
     """Load JSON file."""
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, encoding="utf-8") as f:
         return json.load(f)
 
-def analyze_portal_assets(asset_types_path: Path) -> Dict:
+
+def analyze_portal_assets(asset_types_path: Path) -> dict:
     """Analyze Portal asset catalog."""
     data = load_json(asset_types_path)
-    assets = data.get('AssetTypes', [])
+    assets = data.get("AssetTypes", [])
 
     total = len(assets)
     by_category = defaultdict(int)
@@ -26,49 +27,51 @@ def analyze_portal_assets(asset_types_path: Path) -> Dict:
     portal_asset_names = set()
 
     for asset in assets:
-        asset_type = asset.get('type', '')
+        asset_type = asset.get("type", "")
         portal_asset_names.add(asset_type)
-        directory = asset.get('directory', '')
-        restrictions = asset.get('levelRestrictions', [])
+        directory = asset.get("directory", "")
+        restrictions = asset.get("levelRestrictions", [])
 
         # Categorize by directory
         if directory:
-            category = directory.split('/')[0]
+            category = directory.split("/")[0]
             by_category[category] += 1
 
         # Check restrictions
         if not restrictions:
             unrestricted += 1
-        elif 'MP_Tungsten' in restrictions:
+        elif "MP_Tungsten" in restrictions:
             usable_on_tungsten += 1
 
     return {
-        'total': total,
-        'by_category': dict(by_category),
-        'usable_on_tungsten': usable_on_tungsten,
-        'unrestricted': unrestricted,
-        'asset_names': portal_asset_names
+        "total": total,
+        "by_category": dict(by_category),
+        "usable_on_tungsten": usable_on_tungsten,
+        "unrestricted": unrestricted,
+        "asset_names": portal_asset_names,
     }
 
-def analyze_bf1942_catalog(catalog_path: Path) -> Dict:
+
+def analyze_bf1942_catalog(catalog_path: Path) -> dict:
     """Analyze BF1942 asset catalog."""
     data = load_json(catalog_path)
 
     total = len(data)
     by_category = defaultdict(int)
 
-    for bf1942_name, info in data.items():
-        category = info.get('category', 'unknown')
+    for _bf1942_name, info in data.items():
+        category = info.get("category", "unknown")
         by_category[category] += 1
 
     return {
-        'total': total,
-        'by_category': dict(by_category),
-        'asset_names': set(data.keys()),
-        'full_data': data
+        "total": total,
+        "by_category": dict(by_category),
+        "asset_names": set(data.keys()),
+        "full_data": data,
     }
 
-def analyze_mapping_table(mappings_path: Path) -> Dict:
+
+def analyze_mapping_table(mappings_path: Path) -> dict:
     """Analyze BF1942→Portal mapping table (nested by category)."""
     data = load_json(mappings_path)
 
@@ -84,7 +87,7 @@ def analyze_mapping_table(mappings_path: Path) -> Dict:
 
     # Iterate through nested structure
     for section, assets in data.items():
-        if section.startswith('_'):  # Skip metadata
+        if section.startswith("_"):  # Skip metadata
             continue
 
         if not isinstance(assets, dict):
@@ -98,60 +101,62 @@ def analyze_mapping_table(mappings_path: Path) -> Dict:
             total += 1
             mapped_bf1942_assets.add(bf1942_name)
 
-            portal_asset = mapping.get('portal_equivalent', '')
-            notes = mapping.get('notes', '')
-            fallback = mapping.get('fallback_alternatives', [])
-            is_auto = mapping.get('auto_suggested', False)
+            portal_asset = mapping.get("portal_equivalent", "")
+            notes = mapping.get("notes", "")
+            fallback = mapping.get("fallback_alternatives", [])
+            is_auto = mapping.get("auto_suggested", False)
 
-            if portal_asset and portal_asset != 'TODO' and portal_asset != '':
+            if portal_asset and portal_asset != "TODO" and portal_asset != "":
                 complete += 1
                 mapped_portal_assets.add(portal_asset)
 
             if is_auto:
                 auto_suggested += 1
 
-            if portal_asset == 'TODO' or 'TODO' in notes:
+            if portal_asset == "TODO" or "TODO" in notes:
                 todo_entries.append(bf1942_name)
 
-            if 'no direct equivalent' in notes.lower() or portal_asset == '':
+            if "no direct equivalent" in notes.lower() or portal_asset == "":
                 no_equivalent.append(bf1942_name)
 
             if fallback:
                 with_fallback += 1
 
     return {
-        'total': total,
-        'complete': complete,
-        'todo_entries': todo_entries,
-        'no_equivalent': no_equivalent,
-        'with_fallback': with_fallback,
-        'auto_suggested': auto_suggested,
-        'mapped_bf1942': mapped_bf1942_assets,
-        'mapped_portal': mapped_portal_assets
+        "total": total,
+        "complete": complete,
+        "todo_entries": todo_entries,
+        "no_equivalent": no_equivalent,
+        "with_fallback": with_fallback,
+        "auto_suggested": auto_suggested,
+        "mapped_bf1942": mapped_bf1942_assets,
+        "mapped_portal": mapped_portal_assets,
     }
 
-def analyze_kursk_usage(kursk_path: Path) -> Set[str]:
+
+def analyze_kursk_usage(kursk_path: Path) -> set[str]:
     """Extract unique BF1942 asset types used in Kursk."""
     data = load_json(kursk_path)
 
     asset_types = set()
 
     # Extract from vehicle spawners
-    for spawner in data.get('vehicle_spawners', []):
-        bf1942_type = spawner.get('bf1942_type', '')
+    for spawner in data.get("vehicle_spawners", []):
+        bf1942_type = spawner.get("bf1942_type", "")
         if bf1942_type:
             asset_types.add(bf1942_type)
 
     return asset_types
 
+
 def main():
     """Main analysis function."""
-    base_path = Path('/Users/zach/Downloads/PortalSDK')
+    base_path = Path("/Users/zach/Downloads/PortalSDK")
 
-    portal_path = base_path / 'FbExportData' / 'asset_types.json'
-    bf1942_catalog_path = base_path / 'tools' / 'asset_audit' / 'bf1942_asset_catalog.json'
-    mappings_path = base_path / 'tools' / 'asset_audit' / 'bf1942_to_portal_mappings.json'
-    kursk_path = base_path / 'tools' / 'kursk_extracted_data.json'
+    portal_path = base_path / "FbExportData" / "asset_types.json"
+    bf1942_catalog_path = base_path / "tools" / "asset_audit" / "bf1942_asset_catalog.json"
+    mappings_path = base_path / "tools" / "asset_audit" / "bf1942_to_portal_mappings.json"
+    kursk_path = base_path / "tools" / "kursk_extracted_data.json"
 
     print("=" * 80)
     print("COMPLETE ASSET COVERAGE ANALYSIS")
@@ -167,7 +172,7 @@ def main():
     print(f"Usable on MP_Tungsten: {portal_info['usable_on_tungsten']}")
     print()
     print("Top 10 categories:")
-    for category, count in sorted(portal_info['by_category'].items(), key=lambda x: -x[1])[:10]:
+    for category, count in sorted(portal_info["by_category"].items(), key=lambda x: -x[1])[:10]:
         print(f"  {category}: {count}")
     print()
 
@@ -178,7 +183,7 @@ def main():
     print(f"Total BF1942 assets cataloged: {bf1942_info['total']}")
     print()
     print("By category:")
-    for category, count in sorted(bf1942_info['by_category'].items(), key=lambda x: -x[1]):
+    for category, count in sorted(bf1942_info["by_category"].items(), key=lambda x: -x[1]):
         print(f"  {category}: {count}")
     print()
 
@@ -200,7 +205,7 @@ def main():
     print("-" * 80)
     kursk_assets = analyze_kursk_usage(kursk_path)
     print(f"Unique BF1942 asset types in Kursk: {len(kursk_assets)}")
-    print(f"Asset types:")
+    print("Asset types:")
     for asset in sorted(kursk_assets):
         print(f"  - {asset}")
     print()
@@ -211,7 +216,7 @@ def main():
     print()
 
     # 1. Kursk assets not in BF1942 catalog
-    kursk_not_in_catalog = kursk_assets - bf1942_info['asset_names']
+    kursk_not_in_catalog = kursk_assets - bf1942_info["asset_names"]
     print(f"1. Kursk assets NOT in BF1942 catalog: {len(kursk_not_in_catalog)}")
     if kursk_not_in_catalog:
         print("   ACTION REQUIRED: Add these to bf1942_asset_catalog.json")
@@ -220,19 +225,19 @@ def main():
     print()
 
     # 2. Kursk assets not in mapping table
-    kursk_not_mapped = kursk_assets - mapping_info['mapped_bf1942']
+    kursk_not_mapped = kursk_assets - mapping_info["mapped_bf1942"]
     print(f"2. Kursk assets NOT in mapping table: {len(kursk_not_mapped)}")
     if kursk_not_mapped:
         print("   ACTION REQUIRED: Add mappings to bf1942_to_portal_mappings.json")
         for asset in sorted(kursk_not_mapped):
             # Check if in catalog
-            in_catalog = asset in bf1942_info['asset_names']
+            in_catalog = asset in bf1942_info["asset_names"]
             status = "in catalog" if in_catalog else "NOT in catalog"
             print(f"   - {asset} ({status})")
     print()
 
     # 3. Kursk assets with TODO mappings
-    kursk_todo = kursk_assets.intersection(set(mapping_info['todo_entries']))
+    kursk_todo = kursk_assets.intersection(set(mapping_info["todo_entries"]))
     print(f"3. Kursk assets with TODO mappings: {len(kursk_todo)}")
     if kursk_todo:
         print("   ACTION REQUIRED: Complete these mappings")
@@ -241,10 +246,10 @@ def main():
     print()
 
     # 4. BF1942 assets not mapped (general)
-    unmapped = bf1942_info['asset_names'] - mapping_info['mapped_bf1942']
+    unmapped = bf1942_info["asset_names"] - mapping_info["mapped_bf1942"]
     non_kursk_unmapped = unmapped - kursk_assets
     print(f"4. Non-Kursk BF1942 assets unmapped: {len(non_kursk_unmapped)}")
-    print(f"   (Low priority - not used in Kursk)")
+    print("   (Low priority - not used in Kursk)")
     print()
 
     # Coverage metrics
@@ -252,13 +257,19 @@ def main():
     print("-" * 80)
 
     # Overall mapping coverage
-    overall_coverage = (mapping_info['total'] / bf1942_info['total'] * 100) if bf1942_info['total'] > 0 else 0
+    overall_coverage = (
+        (mapping_info["total"] / bf1942_info["total"] * 100) if bf1942_info["total"] > 0 else 0
+    )
     print(f"Overall BF1942 mapping coverage: {overall_coverage:.1f}%")
-    print(f"  ({mapping_info['total']} of {bf1942_info['total']} BF1942 assets have mapping entries)")
+    print(
+        f"  ({mapping_info['total']} of {bf1942_info['total']} BF1942 assets have mapping entries)"
+    )
     print()
 
     # Mapping completion rate
-    complete_pct = (mapping_info['complete'] / mapping_info['total'] * 100) if mapping_info['total'] > 0 else 0
+    complete_pct = (
+        (mapping_info["complete"] / mapping_info["total"] * 100) if mapping_info["total"] > 0 else 0
+    )
     print(f"Mapping completion rate: {complete_pct:.1f}%")
     print(f"  ({mapping_info['complete']} of {mapping_info['total']} mappings have Portal assets)")
     print()
@@ -279,9 +290,15 @@ def main():
     print()
 
     # Portal asset utilization
-    portal_utilization = (len(mapping_info['mapped_portal']) / portal_info['total'] * 100) if portal_info['total'] > 0 else 0
+    portal_utilization = (
+        (len(mapping_info["mapped_portal"]) / portal_info["total"] * 100)
+        if portal_info["total"] > 0
+        else 0
+    )
     print(f"Portal asset utilization: {portal_utilization:.1f}%")
-    print(f"  ({len(mapping_info['mapped_portal'])} of {portal_info['total']} Portal assets used in mappings)")
+    print(
+        f"  ({len(mapping_info['mapped_portal'])} of {portal_info['total']} Portal assets used in mappings)"
+    )
     print()
 
     # Priority recommendations
@@ -292,17 +309,21 @@ def main():
     priority = 1
 
     if kursk_not_in_catalog:
-        print(f"{priority}. CRITICAL: Add {len(kursk_not_in_catalog)} Kursk vehicle spawner types to BF1942 catalog")
-        print(f"   File: tools/asset_audit/bf1942_asset_catalog.json")
+        print(
+            f"{priority}. CRITICAL: Add {len(kursk_not_in_catalog)} Kursk vehicle spawner types to BF1942 catalog"
+        )
+        print("   File: tools/asset_audit/bf1942_asset_catalog.json")
         print(f"   Assets: {sorted(kursk_not_in_catalog)}")
         print()
         priority += 1
 
     if kursk_not_mapped:
-        print(f"{priority}. CRITICAL: Create {len(kursk_not_mapped)} Portal mappings for Kursk vehicle spawners")
-        print(f"   File: tools/asset_audit/bf1942_to_portal_mappings.json")
-        print(f"   Section: spawners")
-        print(f"   Assets:")
+        print(
+            f"{priority}. CRITICAL: Create {len(kursk_not_mapped)} Portal mappings for Kursk vehicle spawners"
+        )
+        print("   File: tools/asset_audit/bf1942_to_portal_mappings.json")
+        print("   Section: spawners")
+        print("   Assets:")
         for asset in sorted(kursk_not_mapped):
             print(f"     - {asset}")
         print()
@@ -315,14 +336,16 @@ def main():
         print()
         priority += 1
 
-    if len(mapping_info['todo_entries']) > len(kursk_todo):
-        remaining_todos = len(mapping_info['todo_entries']) - len(kursk_todo)
+    if len(mapping_info["todo_entries"]) > len(kursk_todo):
+        remaining_todos = len(mapping_info["todo_entries"]) - len(kursk_todo)
         print(f"{priority}. MEDIUM: Complete {remaining_todos} remaining TODO entries")
         print()
         priority += 1
 
     if non_kursk_unmapped:
-        print(f"{priority}. LOW: Create mappings for {len(non_kursk_unmapped)} non-Kursk BF1942 assets")
+        print(
+            f"{priority}. LOW: Create mappings for {len(non_kursk_unmapped)} non-Kursk BF1942 assets"
+        )
         print()
         priority += 1
 
@@ -339,5 +362,6 @@ def main():
         print("  STATUS: COMPLETE - All Kursk assets mapped")
     print("=" * 80)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

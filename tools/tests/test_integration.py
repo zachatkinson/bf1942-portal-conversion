@@ -8,12 +8,10 @@ These tests validate end-to-end workflows combining multiple components:
 """
 
 import json
-from pathlib import Path
 
 import pytest
-
-from bfportal.core.exceptions import MappingError, ValidationError
-from bfportal.core.game_config import ConfigLoader, GameConfig
+from bfportal.core.exceptions import MappingError
+from bfportal.core.game_config import ConfigLoader
 from bfportal.core.interfaces import GameObject, MapContext, Rotation, Team, Transform, Vector3
 from bfportal.mappers.asset_mapper import AssetMapper
 from bfportal.transforms.coordinate_offset import CoordinateOffset
@@ -90,7 +88,11 @@ class TestAssetMappingPipeline:
         assert "Building" in result.type or "building" in result.type.lower()
 
     def test_mapping_pipeline_with_best_guess_fallback(
-        self, sample_portal_assets, sample_bf1942_mappings, sample_fallback_keywords, sample_map_context
+        self,
+        sample_portal_assets,
+        sample_bf1942_mappings,
+        sample_fallback_keywords,
+        sample_map_context,
     ):
         """Test mapping pipeline uses best-guess fallback for unmapped assets.
 
@@ -314,9 +316,7 @@ class TestFullConversionWorkflow:
             # Verify it's a valid transform string
             assert matrix_str.count(",") == 11  # 12 values, 11 commas
 
-    def test_error_propagation_through_pipeline(
-        self, sample_portal_assets, sample_bf1942_mappings
-    ):
+    def test_error_propagation_through_pipeline(self, sample_portal_assets, sample_bf1942_mappings):
         """Test that errors propagate correctly through conversion pipeline.
 
         Scenario: Invalid map context → MappingError

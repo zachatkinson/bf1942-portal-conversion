@@ -28,7 +28,9 @@ def scan_con_file(con_path: Path) -> set[str]:
                 line = line.strip()
 
                 # Static objects: Object.create <AssetType>
-                if line.startswith(("Object.create", "ObjectTemplate.create", "ObjectSpawnTemplate.create")):
+                if line.startswith(
+                    ("Object.create", "ObjectTemplate.create", "ObjectSpawnTemplate.create")
+                ):
                     parts = line.split()
                     if len(parts) >= 2:
                         asset_types.add(parts[1])

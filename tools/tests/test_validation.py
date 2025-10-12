@@ -11,7 +11,6 @@ Tests all validators:
 """
 
 import pytest
-
 from bfportal.core.interfaces import (
     CapturePoint,
     GameObject,
@@ -24,7 +23,7 @@ from bfportal.core.interfaces import (
     Vector3,
 )
 from bfportal.terrain.terrain_provider import FixedHeightProvider
-from bfportal.validation.map_comparator import MapComparison, MapComparator
+from bfportal.validation.map_comparator import MapComparator, MapComparison
 from bfportal.validation.tscn_reader import TscnNode
 from bfportal.validation.validators import (
     BoundsValidator,
@@ -35,7 +34,6 @@ from bfportal.validation.validators import (
     SpawnCountValidator,
     ValidationIssue,
 )
-
 
 # ============================================================================
 # Fixtures
@@ -53,9 +51,7 @@ def sample_source_data() -> MapData:
     team1_spawns = [
         SpawnPoint(
             name=f"Spawn_T1_{i}",
-            transform=Transform(
-                position=Vector3(i * 10.0, 0.0, 0.0), rotation=Rotation(0, 0, 0)
-            ),
+            transform=Transform(position=Vector3(i * 10.0, 0.0, 0.0), rotation=Rotation(0, 0, 0)),
             team=Team.TEAM_1,
         )
         for i in range(4)
@@ -64,9 +60,7 @@ def sample_source_data() -> MapData:
     team2_spawns = [
         SpawnPoint(
             name=f"Spawn_T2_{i}",
-            transform=Transform(
-                position=Vector3(i * 10.0, 0.0, 100.0), rotation=Rotation(0, 0, 0)
-            ),
+            transform=Transform(position=Vector3(i * 10.0, 0.0, 100.0), rotation=Rotation(0, 0, 0)),
             team=Team.TEAM_2,
         )
         for i in range(4)
@@ -76,9 +70,7 @@ def sample_source_data() -> MapData:
     capture_points = [
         CapturePoint(
             name=f"CP_{i}",
-            transform=Transform(
-                position=Vector3(50.0, 0.0, i * 30.0), rotation=Rotation(0, 0, 0)
-            ),
+            transform=Transform(position=Vector3(50.0, 0.0, i * 30.0), rotation=Rotation(0, 0, 0)),
             radius=20.0,
             control_area=[Vector3(0, 0, 0), Vector3(10, 0, 0), Vector3(10, 0, 10)],
         )
@@ -184,7 +176,9 @@ def sample_output_nodes() -> list[TscnNode]:
 
 
 @pytest.fixture
-def sample_comparison(sample_source_data: MapData, sample_output_nodes: list[TscnNode]) -> MapComparison:
+def sample_comparison(
+    sample_source_data: MapData, sample_output_nodes: list[TscnNode]
+) -> MapComparison:
     """Create a MapComparison for testing.
 
     Returns:

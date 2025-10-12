@@ -10,7 +10,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from bfportal.core.exceptions import ParseError
-from bfportal.core.interfaces import Rotation, Team, Transform, Vector3
+from bfportal.core.interfaces import Team
 from bfportal.parsers.con_parser import ConParser
 
 

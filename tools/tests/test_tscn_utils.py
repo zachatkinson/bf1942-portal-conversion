@@ -141,7 +141,7 @@ class TestTscnTransformParser:
 
     def test_extract_from_line_with_transform(self):
         """Test extracting Transform3D from a .tscn line."""
-        line = 'transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, 30)'
+        line = "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, 30)"
 
         result = TscnTransformParser.extract_from_line(line)
 
@@ -165,7 +165,7 @@ class TestTscnTransformParser:
 
     def test_replace_in_line(self):
         """Test replacing Transform3D in a line."""
-        line = 'transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)'
+        line = "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)"
         new_transform = "Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 200, 300)"
 
         result = TscnTransformParser.replace_in_line(line, new_transform)
@@ -174,7 +174,7 @@ class TestTscnTransformParser:
 
     def test_replace_in_line_preserves_formatting(self):
         """Test replacing Transform3D preserves line formatting."""
-        line = '  transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)  # comment'
+        line = "  transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)  # comment"
         new_transform = "Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 50, 50, 50)"
 
         result = TscnTransformParser.replace_in_line(line, new_transform)

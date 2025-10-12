@@ -10,7 +10,6 @@ import pytest
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from bfportal.core.exceptions import MappingError
 from bfportal.core.interfaces import MapContext, Team
 from bfportal.mappers.asset_mapper import AssetMapper
 
@@ -43,7 +42,9 @@ class TestAssetMapperInitialization:
         assert oak_asset.level_restrictions == ["MP_Tungsten"]
 
     @pytest.mark.skip(reason="Complex path mocking test - keywords loaded manually in other tests")
-    def test_init_with_fallback_keywords(self, sample_portal_assets, sample_fallback_keywords, tmp_path):
+    def test_init_with_fallback_keywords(
+        self, sample_portal_assets, sample_fallback_keywords, tmp_path
+    ):
         """Test initialization with fallback keywords file."""
         # Create asset_audit directory structure
         asset_audit_dir = tmp_path / "asset_audit"
@@ -138,7 +139,9 @@ class TestAssetMapperLoadMappings:
 class TestAssetMapperBasicMapping:
     """Test cases for basic asset mapping."""
 
-    def test_map_asset_direct_mapping(self, sample_portal_assets, sample_bf1942_mappings, sample_map_context):
+    def test_map_asset_direct_mapping(
+        self, sample_portal_assets, sample_bf1942_mappings, sample_map_context
+    ):
         """Test mapping asset with direct match."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)
@@ -148,7 +151,9 @@ class TestAssetMapperBasicMapping:
         assert result is not None
         assert result.type == "Tree_Pine_Large"
 
-    def test_map_asset_with_level_restrictions_available(self, sample_portal_assets, sample_bf1942_mappings, sample_map_context):
+    def test_map_asset_with_level_restrictions_available(
+        self, sample_portal_assets, sample_bf1942_mappings, sample_map_context
+    ):
         """Test mapping restricted asset when available on target map."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)
@@ -158,7 +163,9 @@ class TestAssetMapperBasicMapping:
         assert result is not None
         assert result.type == "Tree_Oak_Medium"
 
-    def test_map_asset_unmapped_returns_none(self, sample_portal_assets, sample_bf1942_mappings, sample_map_context):
+    def test_map_asset_unmapped_returns_none(
+        self, sample_portal_assets, sample_bf1942_mappings, sample_map_context
+    ):
         """Test that unmapped non-terrain assets return None."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)
@@ -179,10 +186,7 @@ class TestAssetMapperLevelRestrictions:
         mapper.load_mappings(sample_bf1942_mappings)
 
         context = MapContext(
-            target_base_map="MP_Aftermath",
-            era="WW2",
-            theme="open_terrain",
-            team=Team.NEUTRAL
+            target_base_map="MP_Aftermath", era="WW2", theme="open_terrain", team=Team.NEUTRAL
         )
 
         # Tree_Oak_Medium is restricted to MP_Tungsten
@@ -193,7 +197,9 @@ class TestAssetMapperLevelRestrictions:
         assert result.type == "Tree_Pine_Large"
         assert result.level_restrictions == []  # Unrestricted alternative
 
-    def test_map_asset_uses_map_specific_fallback(self, sample_portal_assets, sample_bf1942_mappings):
+    def test_map_asset_uses_map_specific_fallback(
+        self, sample_portal_assets, sample_bf1942_mappings
+    ):
         """Test that map-specific fallback is used when available."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)
@@ -201,10 +207,7 @@ class TestAssetMapperLevelRestrictions:
         # Tree_Oak_Medium is restricted to MP_Tungsten
         # But we have a fallback for MP_Battery: Tree_Pine_Large
         context = MapContext(
-            target_base_map="MP_Battery",
-            era="WW2",
-            theme="open_terrain",
-            team=Team.NEUTRAL
+            target_base_map="MP_Battery", era="WW2", theme="open_terrain", team=Team.NEUTRAL
         )
         result = mapper.map_asset("treeline_oak_w", context)
 
@@ -230,7 +233,9 @@ class TestAssetMapperLevelRestrictions:
 class TestAssetMapperKeywordMatching:
     """Test cases for keyword-based fallback matching."""
 
-    def test_get_type_keywords_matches_tree_category(self, sample_portal_assets, sample_fallback_keywords):
+    def test_get_type_keywords_matches_tree_category(
+        self, sample_portal_assets, sample_fallback_keywords
+    ):
         """Test keyword extraction for tree assets."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.fallback_keywords = []
@@ -247,7 +252,9 @@ class TestAssetMapperKeywordMatching:
         assert "tree" in source_kw or "pine" in source_kw
         assert "tree" in portal_kw or "pine" in portal_kw
 
-    def test_get_type_keywords_matches_rock_category(self, sample_portal_assets, sample_fallback_keywords):
+    def test_get_type_keywords_matches_rock_category(
+        self, sample_portal_assets, sample_fallback_keywords
+    ):
         """Test keyword extraction for rock assets."""
         mapper = AssetMapper(sample_portal_assets)
 
@@ -325,7 +332,9 @@ class TestAssetMapperTerrainElements:
         assert mapper._is_terrain_element("tree_pine_01") is False
         assert mapper._is_terrain_element("building_barn") is False
 
-    def test_map_asset_skips_terrain_elements(self, sample_portal_assets, sample_bf1942_mappings, sample_map_context):
+    def test_map_asset_skips_terrain_elements(
+        self, sample_portal_assets, sample_bf1942_mappings, sample_map_context
+    ):
         """Test that terrain elements are skipped during mapping."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)
@@ -402,7 +411,9 @@ class TestAssetMapperStats:
         assert info["category"] == "vegetation"
         assert info["confidence"] == 5
 
-    def test_get_mapping_info_returns_none_for_unmapped(self, sample_portal_assets, sample_bf1942_mappings):
+    def test_get_mapping_info_returns_none_for_unmapped(
+        self, sample_portal_assets, sample_bf1942_mappings
+    ):
         """Test getting mapping info returns None for unmapped asset."""
         mapper = AssetMapper(sample_portal_assets)
         mapper.load_mappings(sample_bf1942_mappings)

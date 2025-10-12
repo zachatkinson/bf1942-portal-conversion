@@ -237,6 +237,7 @@ class TestCustomHeightmapProvider:
 
         # Mock the import to fail
         import builtins
+
         original_import = builtins.__import__
 
         def mock_import(name, *args, **kwargs):

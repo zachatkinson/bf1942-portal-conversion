@@ -3,7 +3,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock, Mock
+from unittest.mock import Mock
 
 import pytest
 
@@ -15,13 +15,12 @@ from bfportal.core.interfaces import (
     IBoundsValidator,
     ICoordinateOffset,
     ITerrainProvider,
-    MapBounds,
     Rotation,
     Team,
     Transform,
     Vector3,
 )
-from bfportal.transforms.map_rebaser import HEIGHT_ADJUSTMENT_TOLERANCE_M, MapRebaser
+from bfportal.transforms.map_rebaser import MapRebaser
 
 
 class TestMapRebaserInitialization:
@@ -144,7 +143,9 @@ class TestMapRebaserOffsetCalculation:
         def mock_apply_offset(transform, off):
             apply_offset_calls.append((transform, off))
             return Transform(
-                Vector3(transform.position.x + off.x, transform.position.y, transform.position.z + off.z),
+                Vector3(
+                    transform.position.x + off.x, transform.position.y, transform.position.z + off.z
+                ),
                 transform.rotation,
             )
 
@@ -202,7 +203,9 @@ class TestMapRebaserHeightAdjustment:
         try:
             output_tscn = test_tscn.parent / "test_rebaser_height_output.tscn"
 
-            stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
+            stats = rebaser.rebase_map(
+                test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
+            )
 
             # Verify height adjustment occurred
             assert stats["height_adjusted"] == 1
@@ -236,7 +239,9 @@ class TestMapRebaserHeightAdjustment:
         try:
             output_tscn = test_tscn.parent / "test_rebaser_no_height_output.tscn"
 
-            stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
+            stats = rebaser.rebase_map(
+                test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
+            )
 
             # Verify no height adjustment occurred
             assert stats["height_adjusted"] == 0
@@ -269,7 +274,9 @@ class TestMapRebaserHeightAdjustment:
         try:
             output_tscn = test_tscn.parent / "test_rebaser_bounds_output.tscn"
 
-            stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
+            stats = rebaser.rebase_map(
+                test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
+            )
 
             # Verify out of bounds was tracked
             assert stats["out_of_bounds"] == 1
@@ -448,7 +455,9 @@ class TestMapRebaserStatistics:
         try:
             output_tscn = test_tscn.parent / "test_rebaser_stats_output.tscn"
 
-            stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
+            stats = rebaser.rebase_map(
+                test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
+            )
 
             assert stats["total_objects"] == 3
 
@@ -496,7 +505,9 @@ class TestMapRebaserStatistics:
         try:
             output_tscn = test_tscn.parent / "test_rebaser_tracking_output.tscn"
 
-            stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
+            stats = rebaser.rebase_map(
+                test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
+            )
 
             assert stats["height_adjusted"] == 1
             assert stats["out_of_bounds"] == 1
