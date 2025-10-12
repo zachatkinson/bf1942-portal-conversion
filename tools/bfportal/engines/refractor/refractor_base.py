@@ -8,7 +8,6 @@ to customize game-specific behavior.
 
 from abc import abstractmethod
 from pathlib import Path
-from typing import List
 
 from ...core.interfaces import (
     CapturePoint,
@@ -267,7 +266,7 @@ class RefractorEngine(IGameEngine):
 
         return False
 
-    def _parse_spawns(self, con_files: ConFileSet, team: Team) -> List[SpawnPoint]:
+    def _parse_spawns(self, con_files: ConFileSet, team: Team) -> list[SpawnPoint]:
         """Parse spawn points for a team.
 
         Args:
@@ -277,7 +276,7 @@ class RefractorEngine(IGameEngine):
         Returns:
             List of SpawnPoints
         """
-        spawns = []
+        spawns: list[SpawnPoint] = []
 
         # Parse all .con files to find spawn points
         parsed_files = con_files.parse_all()
@@ -317,7 +316,7 @@ class RefractorEngine(IGameEngine):
 
         return spawns
 
-    def _parse_hq(self, con_files: ConFileSet, team: Team, spawns: List[SpawnPoint]) -> Transform:
+    def _parse_hq(self, con_files: ConFileSet, team: Team, spawns: list[SpawnPoint]) -> Transform:
         """Parse HQ position from spawn centroid.
 
         Args:
@@ -348,7 +347,7 @@ class RefractorEngine(IGameEngine):
         # Fallback: Default position (shouldn't happen if spawns are parsed correctly)
         return Transform(position=Vector3(0, 0, 0), rotation=Rotation(0, 0, 0))
 
-    def _parse_capture_points(self, con_files: ConFileSet) -> List[CapturePoint]:
+    def _parse_capture_points(self, con_files: ConFileSet) -> list[CapturePoint]:
         """Parse capture points and their associated spawns.
 
         Args:
@@ -357,7 +356,7 @@ class RefractorEngine(IGameEngine):
         Returns:
             List of CapturePoints with spawns
         """
-        capture_points = []
+        capture_points: list[CapturePoint] = []
         parsed_files = con_files.parse_all()
 
         # Step 1: Find all control points
@@ -430,14 +429,23 @@ class RefractorEngine(IGameEngine):
                             team=Team.NEUTRAL,
                         )
                         # Add to both team spawn lists for this capture point
-                        capture_points[cp_index].team1_spawns.append(spawn)
-                        capture_points[cp_index].team2_spawns.append(spawn)
+                        # __post_init__ ensures these are never None, but need explicit check for mypy
+                        cp_team1_spawns = capture_points[cp_index].team1_spawns
+                        cp_team2_spawns = capture_points[cp_index].team2_spawns
+                        if cp_team1_spawns is not None:
+                            cp_team1_spawns.append(spawn)
+                        if cp_team2_spawns is not None:
+                            cp_team2_spawns.append(spawn)
 
         # Step 3: Calculate capture point positions from spawn centroids
         # The .con file positions are placeholders - real position is where spawns are
         for cp in capture_points:
-            if cp.team1_spawns or cp.team2_spawns:
-                all_spawns = cp.team1_spawns + cp.team2_spawns
+            # __post_init__ ensures these are never None, but need explicit check for mypy
+            team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
+            team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+
+            if team1_spawns or team2_spawns:
+                all_spawns = team1_spawns + team2_spawns
                 total_x = sum(s.transform.position.x for s in all_spawns)
                 total_y = sum(s.transform.position.y for s in all_spawns)
                 total_z = sum(s.transform.position.z for s in all_spawns)
@@ -451,7 +459,7 @@ class RefractorEngine(IGameEngine):
 
         return capture_points
 
-    def _parse_game_objects(self, con_files: ConFileSet) -> List[GameObject]:
+    def _parse_game_objects(self, con_files: ConFileSet) -> list[GameObject]:
         """Parse game objects (vehicles, buildings, props).
 
         Args:
@@ -487,9 +495,9 @@ class RefractorEngine(IGameEngine):
 
     def _calculate_bounds(
         self,
-        spawns: List[SpawnPoint],
-        capture_points: List[CapturePoint],
-        objects: List[GameObject],
+        spawns: list[SpawnPoint],
+        capture_points: list[CapturePoint],
+        objects: list[GameObject],
     ) -> MapBounds:
         """Calculate map bounds from all objects.
 

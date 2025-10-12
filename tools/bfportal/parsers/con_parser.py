@@ -7,7 +7,7 @@
 
 import re
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any
 
 from ..core.exceptions import ParseError
 from ..core.interfaces import IParser, Rotation, Team, Transform, Vector3
@@ -34,7 +34,7 @@ class ConParser(IParser):
         """
         return file_path.suffix.lower() == ".con"
 
-    def parse(self, file_path: Path) -> Dict:
+    def parse(self, file_path: Path) -> dict[str, Any]:
         """Parse .con file and return structured data.
 
         Args:
@@ -60,7 +60,7 @@ class ConParser(IParser):
 
         return {"file": str(file_path), "objects": objects, "raw_content": content}
 
-    def _parse_objects(self, content: str) -> List[Dict]:
+    def _parse_objects(self, content: str) -> list[dict[str, Any]]:
         """Parse object definitions from .con file content.
 
         Args:
@@ -69,8 +69,8 @@ class ConParser(IParser):
         Returns:
             List of object dictionaries
         """
-        objects = []
-        current_object = None
+        objects: list[dict[str, Any]] = []
+        current_object: dict[str, Any] | None = None
 
         for line in content.split("\n"):
             line = line.strip()
@@ -113,7 +113,7 @@ class ConParser(IParser):
 
         return objects
 
-    def _parse_property(self, line: str, obj: Dict) -> None:
+    def _parse_property(self, line: str, obj: dict[str, Any]) -> None:
         """Parse a property line and add to object.
 
         Args:
@@ -181,7 +181,7 @@ class ConParser(IParser):
             prop_name, prop_value = inst_prop_match.groups()
             obj["properties"][prop_name] = prop_value.strip()
 
-    def parse_transform(self, obj_dict: Dict) -> Optional[Transform]:
+    def parse_transform(self, obj_dict: dict[str, Any]) -> Transform | None:
         """Extract Transform from parsed object dictionary.
 
         Args:
@@ -206,7 +206,7 @@ class ConParser(IParser):
 
         return Transform(position, rotation)
 
-    def parse_team(self, obj_dict: Dict) -> Team:
+    def parse_team(self, obj_dict: dict[str, Any]) -> Team:
         """Extract team from parsed object dictionary.
 
         Args:
@@ -243,13 +243,13 @@ class ConFileSet:
         """
         self.map_dir = map_dir
         self.parser = ConParser()
-        self.con_files: List[Path] = []
+        self.con_files: list[Path] = []
 
         # Find all .con files recursively
         if map_dir.exists():
             self.con_files = list(map_dir.rglob("*.con"))
 
-    def find_file(self, pattern: str) -> Optional[Path]:
+    def find_file(self, pattern: str) -> Path | None:
         """Find a .con file matching a pattern.
 
         Args:
@@ -264,7 +264,7 @@ class ConFileSet:
                 return con_file
         return None
 
-    def parse_all(self) -> Dict[str, Dict]:
+    def parse_all(self) -> dict[str, dict[str, Any]]:
         """Parse all .con files in the map directory.
 
         Returns:
@@ -281,7 +281,7 @@ class ConFileSet:
 
         return results
 
-    def get_objects_by_type(self, object_type: str) -> List[Dict]:
+    def get_objects_by_type(self, object_type: str) -> list[dict[str, Any]]:
         """Get all objects of a specific type from all .con files.
 
         Args:

@@ -3,10 +3,13 @@
 
 import struct
 from pathlib import Path
-from typing import Tuple
+from typing import TYPE_CHECKING
 
 from ..core.exceptions import OutOfBoundsError, TerrainError
 from ..core.interfaces import ITerrainProvider, Vector3
+
+if TYPE_CHECKING:
+    import numpy as np
 
 
 class CustomHeightmapProvider(ITerrainProvider):
@@ -19,8 +22,8 @@ class CustomHeightmapProvider(ITerrainProvider):
     def __init__(
         self,
         heightmap_path: Path,
-        terrain_size: Tuple[float, float],
-        height_range: Tuple[float, float],
+        terrain_size: tuple[float, float],
+        height_range: tuple[float, float],
     ):
         """Initialize heightmap provider.
 
@@ -83,15 +86,27 @@ class CustomHeightmapProvider(ITerrainProvider):
         py = int(norm_z * (self.height - 1))
 
         # Get pixel value (0-255)
+        # getpixel returns int for mode 'L', tuple for RGB, or None
         pixel_value = self.heightmap.getpixel((px, py))
 
+        # Handle different return types
+        if isinstance(pixel_value, tuple):
+            # RGB/RGBA - use first channel
+            grayscale_value = pixel_value[0]
+        elif isinstance(pixel_value, int):
+            # Grayscale - use directly
+            grayscale_value = pixel_value
+        else:
+            # None or other - default to 0
+            grayscale_value = 0
+
         # Normalize to 0-1 and scale to height range
-        normalized = pixel_value / 255.0
+        normalized = grayscale_value / 255.0
         height = self.min_height + (normalized * (self.max_height - self.min_height))
 
         return height
 
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds.
 
         Returns:
@@ -169,7 +184,7 @@ class TungstenTerrainProvider(ITerrainProvider):
 
         return avg_height + variation
 
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds.
 
         Returns:
@@ -190,7 +205,7 @@ class OutskirtsTerrainProvider(ITerrainProvider):
     Queries the Outskirts heightmap from Portal SDK static files.
     """
 
-    def __init__(self, portal_sdk_root: Path = None):
+    def __init__(self, portal_sdk_root: Path | None = None):
         """Initialize Outskirts terrain provider.
 
         Args:
@@ -231,7 +246,7 @@ class OutskirtsTerrainProvider(ITerrainProvider):
 
         return base_height + variation
 
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds.
 
         Returns:
@@ -258,7 +273,7 @@ class MeshTerrainProvider(ITerrainProvider):
     Open/Closed: Can be extended with different interpolation strategies.
     """
 
-    def __init__(self, mesh_path: Path, terrain_size: Tuple[float, float]):
+    def __init__(self, mesh_path: Path, terrain_size: tuple[float, float]):
         """Initialize mesh terrain provider.
 
         Args:
@@ -490,7 +505,7 @@ class MeshTerrainProvider(ITerrainProvider):
 
         return float(height)
 
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds.
 
         Returns actual mesh bounds from vertex data, not assumed centered bounds.
@@ -610,7 +625,7 @@ class FixedHeightProvider(ITerrainProvider):
 
         return self.fixed_height
 
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds.
 
         Returns:

@@ -18,7 +18,6 @@ Usage:
 import argparse
 import sys
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 # Add bfportal to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -39,9 +38,9 @@ class ConversionValidator:
         self,
         source_map_path: Path,
         output_tscn_path: Path,
-        heightmap_path: Optional[Path] = None,
+        heightmap_path: Path | None = None,
         terrain_size: float = 2048.0,
-        height_range: Tuple[float, float] = (70.0, 220.0),
+        height_range: tuple[float, float] = (70.0, 220.0),
     ):
         """Initialize validator.
 
@@ -66,7 +65,7 @@ class ConversionValidator:
                 heightmap_path, terrain_size=(terrain_size, terrain_size), height_range=height_range
             )
 
-    def validate(self) -> Tuple[bool, List[ValidationIssue]]:
+    def validate(self) -> tuple[bool, list[ValidationIssue]]:
         """Run all validation checks.
 
         Returns:

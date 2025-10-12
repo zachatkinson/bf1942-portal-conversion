@@ -20,7 +20,6 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from typing import Optional, Tuple
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -40,7 +39,7 @@ class PortalAdjustHeightsApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
         self.height_adjuster = HeightAdjuster()
 
     def parse_args(self) -> argparse.Namespace:
@@ -166,15 +165,18 @@ Use Cases:
         elif self.args.base_terrain:
             print(f"🗺️  Using base terrain: {self.args.base_terrain}")
 
+            # Get portal SDK root (two dirs up from tools/)
+            portal_sdk_root = Path(__file__).parent.parent
+
             if self.args.base_terrain == "MP_Tungsten":
-                return TungstenTerrainProvider()
+                return TungstenTerrainProvider(portal_sdk_root)
             elif self.args.base_terrain == "MP_Outskirts":
-                return OutskirtsTerrainProvider()
+                return OutskirtsTerrainProvider(portal_sdk_root)
 
         else:
             raise ValueError("Must specify either --heightmap or --base-terrain")
 
-    def parse_transform(self, transform_str: str) -> Optional[Transform]:
+    def parse_transform(self, transform_str: str) -> Transform | None:
         """Parse Transform3D string from .tscn.
 
         Args:
@@ -218,7 +220,7 @@ Use Cases:
 
         return original_matrix
 
-    def adjust_heights_in_tscn(self, content: str, terrain) -> Tuple[str, int]:
+    def adjust_heights_in_tscn(self, content: str, terrain) -> tuple[str, int]:
         """Adjust heights in .tscn content.
 
         Args:

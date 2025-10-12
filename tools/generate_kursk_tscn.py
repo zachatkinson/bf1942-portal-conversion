@@ -20,7 +20,6 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 # Import coordinate transformation utilities
 from coordinate_transform import (
@@ -57,9 +56,9 @@ class TscnGenerator:
         self.kursk_data_path = Path(kursk_data_path)
         self.mapping_db_path = Path(mapping_db_path)
 
-        self.kursk_data: Dict = {}
-        self.mapping_db: Dict = {}
-        self.ext_resources: List[ExtResource] = []
+        self.kursk_data: dict = {}
+        self.mapping_db: dict = {}
+        self.ext_resources: list[ExtResource] = []
         self.next_ext_resource_id = 1
         self.next_obj_id = 1
 
@@ -143,7 +142,7 @@ class TscnGenerator:
         """
         return '[node name="Kursk" type="Node3D"]'
 
-    def generate_team_hq(self, team: int, base_position: Tuple[float, float, float]) -> str:
+    def generate_team_hq(self, team: int, base_position: tuple[float, float, float]) -> str:
         """Generate team HQ with spawn points.
 
         Args:
@@ -462,18 +461,18 @@ class TscnGenerator:
         full_content = self.generate_header() + "\n".join(sections)
 
         # Write to file
-        output_path = Path(output_path)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(output_path, "w", encoding="utf-8") as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             f.write(full_content)
 
-        print(f"\n✅ Generated {output_path}")
-        print(f"   File size: {output_path.stat().st_size} bytes")
+        print(f"\n✅ Generated {output_file}")
+        print(f"   File size: {output_file.stat().st_size} bytes")
         print(f"   External resources: {len(self.ext_resources)}")
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent

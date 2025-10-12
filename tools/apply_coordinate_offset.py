@@ -14,10 +14,9 @@ Date: 2025-10-11
 
 import re
 from pathlib import Path
-from typing import Tuple
 
 
-def parse_transform3d(transform_str: str) -> Tuple[list, list]:
+def parse_transform3d(transform_str: str) -> tuple[list, list]:
     """
     Parse Transform3D string into rotation matrix and position.
 
@@ -62,7 +61,7 @@ def format_transform3d(rotation: list, position: list) -> str:
     return f"Transform3D({values_str})"
 
 
-def apply_offset_to_transform(transform_line: str, offset: Tuple[float, float, float]) -> str:
+def apply_offset_to_transform(transform_line: str, offset: tuple[float, float, float]) -> str:
     """
     Apply coordinate offset to a transform line.
 
@@ -101,7 +100,7 @@ def apply_offset_to_transform(transform_line: str, offset: Tuple[float, float, f
         return transform_line
 
 
-def calculate_kursk_offset() -> Tuple[float, float, float]:
+def calculate_kursk_offset() -> tuple[float, float, float]:
     """
     Calculate the offset needed to center Kursk coordinates.
 
@@ -121,7 +120,7 @@ def calculate_kursk_offset() -> Tuple[float, float, float]:
 
 
 def apply_offset_to_tscn(
-    input_path: Path, output_path: Path, offset: Tuple[float, float, float]
+    input_path: Path, output_path: Path, offset: tuple[float, float, float]
 ) -> None:
     """
     Apply coordinate offset to all transform nodes in .tscn file.

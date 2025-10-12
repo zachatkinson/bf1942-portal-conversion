@@ -13,16 +13,17 @@ Usage:
 
 import json
 from pathlib import Path
-from typing import Dict
+from typing import Any
 
 
-def load_kursk_data(data_path: Path) -> Dict:
+def load_kursk_data(data_path: Path) -> dict[str, Any]:
     """Load Kursk extracted data."""
     with open(data_path) as f:
-        return json.load(f)
+        data: dict[str, Any] = json.load(f)
+        return data
 
 
-def analyze_heights(kursk_data: Dict) -> None:
+def analyze_heights(kursk_data: dict[str, Any]) -> None:
     """Analyze height distribution of all objects."""
     print("=" * 70)
     print("Kursk Object Height Analysis")
@@ -66,7 +67,7 @@ def analyze_heights(kursk_data: Dict) -> None:
     print("     - Option 3: Convert BF1942 heightmap to replace Tungsten")
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     project_root = Path(__file__).parent.parent
     kursk_data_path = project_root / "tools" / "kursk_extracted_data.json"

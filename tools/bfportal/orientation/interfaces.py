@@ -8,7 +8,6 @@ Interface Segregation Principle: Each interface defines minimal contract.
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
-from typing import Tuple
 
 
 class Orientation(Enum):
@@ -46,7 +45,7 @@ class IOrientationDetector(ABC):
         """
 
     @abstractmethod
-    def get_bounds(self) -> Tuple[float, float, float, float]:
+    def get_bounds(self) -> tuple[float, float, float, float]:
         """Get bounding box.
 
         Returns:

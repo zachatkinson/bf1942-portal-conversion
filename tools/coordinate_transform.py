@@ -25,7 +25,6 @@ Usage:
 
 import math
 from dataclasses import dataclass
-from typing import List, Tuple
 
 
 @dataclass
@@ -40,7 +39,7 @@ class Vector3:
         """Allow unpacking: x, y, z = vector."""
         return iter((self.x, self.y, self.z))
 
-    def to_tuple(self) -> Tuple[float, float, float]:
+    def to_tuple(self) -> tuple[float, float, float]:
         """Convert to tuple."""
         return (self.x, self.y, self.z)
 
@@ -59,7 +58,7 @@ class RotationMatrix:
     up: Vector3  # Y-axis basis vector
     forward: Vector3  # Z-axis basis vector
 
-    def to_flat_list(self) -> List[float]:
+    def to_flat_list(self) -> list[float]:
         """Convert to flat list for Transform3D matrix.
 
         Returns:
@@ -148,8 +147,8 @@ def degrees_to_radians(degrees: float) -> float:
 
 
 def euler_to_transform3d(
-    pitch: float, yaw: float, roll: float, position: Tuple[float, float, float] = (0.0, 0.0, 0.0)
-) -> Tuple[RotationMatrix, Vector3]:
+    pitch: float, yaw: float, roll: float, position: tuple[float, float, float] = (0.0, 0.0, 0.0)
+) -> tuple[RotationMatrix, Vector3]:
     """Convert BF1942 Euler angles to Godot Transform3D components.
 
     BF1942 uses intrinsic Euler angles in pitch/yaw/roll order.
@@ -255,7 +254,7 @@ def format_transform3d(rotation: RotationMatrix, position: Vector3, precision: i
     return f"Transform3D({values_str})"
 
 
-def format_identity_transform(position: Tuple[float, float, float], precision: int = 6) -> str:
+def format_identity_transform(position: tuple[float, float, float], precision: int = 6) -> str:
     """Create an identity rotation Transform3D (no rotation).
 
     Args:
@@ -277,7 +276,7 @@ def format_identity_transform(position: Tuple[float, float, float], precision: i
     return f"Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, {y}, {z})"
 
 
-def validate_position(position: Tuple[float, float, float]) -> bool:
+def validate_position(position: tuple[float, float, float]) -> bool:
     """Validate position values (no NaN or infinity).
 
     Args:
@@ -290,7 +289,7 @@ def validate_position(position: Tuple[float, float, float]) -> bool:
 
 
 def convert_bf1942_to_godot(
-    bf1942_position: Tuple[float, float, float], bf1942_rotation: Tuple[float, float, float]
+    bf1942_position: tuple[float, float, float], bf1942_rotation: tuple[float, float, float]
 ) -> str:
     """Convert BF1942 position and rotation to Godot Transform3D string.
 
@@ -329,7 +328,7 @@ def convert_bf1942_to_godot(
 
 
 def convert_vehicle_spawner(
-    position: Tuple[float, float, float], rotation: Tuple[float, float, float]
+    position: tuple[float, float, float], rotation: tuple[float, float, float]
 ) -> str:
     """Convert vehicle spawner transform.
 
@@ -343,7 +342,7 @@ def convert_vehicle_spawner(
     return convert_bf1942_to_godot(position, rotation)
 
 
-def convert_control_point(position: Tuple[float, float, float]) -> str:
+def convert_control_point(position: tuple[float, float, float]) -> str:
     """Convert control point position (no rotation needed).
 
     Args:
@@ -355,7 +354,7 @@ def convert_control_point(position: Tuple[float, float, float]) -> str:
     return format_identity_transform(position)
 
 
-def convert_spawn_point(position: Tuple[float, float, float], facing_angle: float = 0.0) -> str:
+def convert_spawn_point(position: tuple[float, float, float], facing_angle: float = 0.0) -> str:
     """Convert infantry spawn point with facing direction.
 
     Args:

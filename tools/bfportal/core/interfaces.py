@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any
 
 # ============================================================================
 # Data Classes
@@ -48,9 +48,10 @@ class Transform:
 
     position: Vector3
     rotation: Rotation
-    scale: Vector3 = None  # Optional scale
+    scale: Vector3 | None = None  # Optional scale
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
+        """Initialize default scale if not provided."""
         if self.scale is None:
             self.scale = Vector3(1.0, 1.0, 1.0)
 
@@ -63,7 +64,7 @@ class GameObject:
     asset_type: str  # Original game asset type
     transform: Transform
     team: Team
-    properties: Dict  # Additional properties from source game
+    properties: dict[str, Any]  # Additional properties from source game
 
 
 @dataclass
@@ -82,11 +83,11 @@ class CapturePoint:
     name: str
     transform: Transform
     radius: float
-    control_area: List[Vector3]  # Polygon points for control area
-    team1_spawns: List["SpawnPoint"] = None  # Spawns for Team 1 when captured
-    team2_spawns: List["SpawnPoint"] = None  # Spawns for Team 2 when captured
+    control_area: list[Vector3]  # Polygon points for control area
+    team1_spawns: list["SpawnPoint"] | None = None  # Spawns for Team 1 when captured
+    team2_spawns: list["SpawnPoint"] | None = None  # Spawns for Team 2 when captured
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize spawn lists if not provided."""
         if self.team1_spawns is None:
             self.team1_spawns = []
@@ -100,7 +101,7 @@ class MapBounds:
 
     min_point: Vector3
     max_point: Vector3
-    combat_area_polygon: List[Vector3]  # 2D polygon (X, Z)
+    combat_area_polygon: list[Vector3]  # 2D polygon (X, Z)
     height: float  # Vertical extent
 
 
@@ -112,12 +113,12 @@ class MapData:
     game_mode: str
     team1_hq: Transform
     team2_hq: Transform
-    team1_spawns: List[SpawnPoint]
-    team2_spawns: List[SpawnPoint]
-    capture_points: List[CapturePoint]
-    game_objects: List[GameObject]
+    team1_spawns: list[SpawnPoint]
+    team2_spawns: list[SpawnPoint]
+    capture_points: list[CapturePoint]
+    game_objects: list[GameObject]
     bounds: MapBounds
-    metadata: Dict  # Additional map-specific data
+    metadata: dict[str, Any]  # Additional map-specific data
 
 
 @dataclass
@@ -126,8 +127,8 @@ class PortalAsset:
 
     type: str  # Portal asset type
     directory: str
-    level_restrictions: List[str]  # Maps where this asset is allowed
-    properties: Dict
+    level_restrictions: list[str]  # Maps where this asset is allowed
+    properties: dict[str, Any]
 
 
 @dataclass
@@ -220,7 +221,7 @@ class ICoordinateOffset(ABC):
     """
 
     @abstractmethod
-    def calculate_centroid(self, objects: List[GameObject]) -> Vector3:
+    def calculate_centroid(self, objects: list[GameObject]) -> Vector3:
         """Calculate the centroid of all objects.
 
         Args:
@@ -277,7 +278,7 @@ class ITerrainProvider(ABC):
         """
 
     @abstractmethod
-    def get_bounds(self) -> Tuple[Vector3, Vector3]:
+    def get_bounds(self) -> tuple[Vector3, Vector3]:
         """Get terrain bounds (min, max).
 
         Returns:
@@ -345,7 +346,7 @@ class IAssetMapper(ABC):
     """
 
     @abstractmethod
-    def map_asset(self, source_asset: str, context: MapContext) -> Optional[PortalAsset]:
+    def map_asset(self, source_asset: str, context: MapContext) -> PortalAsset | None:
         """Map source game asset to Portal equivalent.
 
         Args:
@@ -391,7 +392,7 @@ class ISceneGenerator(ABC):
         """
 
     @abstractmethod
-    def validate(self, tscn_path: Path) -> List[str]:
+    def validate(self, tscn_path: Path) -> list[str]:
         """Validate generated .tscn file.
 
         Args:
@@ -420,7 +421,7 @@ class IParser(ABC):
         """
 
     @abstractmethod
-    def parse(self, file_path: Path) -> Dict:
+    def parse(self, file_path: Path) -> dict[str, Any]:
         """Parse file and return data.
 
         Args:

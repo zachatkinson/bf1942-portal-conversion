@@ -14,10 +14,9 @@ Date: 2025-10-11
 
 import re
 from pathlib import Path
-from typing import Dict, Tuple
 
 
-def parse_transform3d(transform_str: str) -> Tuple[list, list]:
+def parse_transform3d(transform_str: str) -> tuple[list, list]:
     """Parse Transform3D into rotation matrix and position."""
     match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
@@ -37,7 +36,7 @@ def format_transform3d(rotation: list, position: list) -> str:
     return f"Transform3D({values_str})"
 
 
-def extract_hq_positions(lines: list) -> Dict[str, Tuple[float, float, float]]:
+def extract_hq_positions(lines: list) -> dict[str, tuple[float, float, float]]:
     """
     Extract HQ positions from .tscn file.
 
@@ -59,7 +58,8 @@ def extract_hq_positions(lines: list) -> Dict[str, Tuple[float, float, float]]:
             match = re.search(r"Transform3D\(([^)]+)\)", line)
             if match:
                 values = [float(x.strip()) for x in match.group(1).split(",")]
-                position = tuple(values[9:12])
+                # Explicitly create 3-tuple for type checking
+                position: tuple[float, float, float] = (values[9], values[10], values[11])
                 hq_positions[current_hq] = position
                 current_hq = None
 
@@ -67,8 +67,8 @@ def extract_hq_positions(lines: list) -> Dict[str, Tuple[float, float, float]]:
 
 
 def make_position_relative(
-    child_pos: Tuple[float, float, float], parent_pos: Tuple[float, float, float]
-) -> Tuple[float, float, float]:
+    child_pos: tuple[float, float, float], parent_pos: tuple[float, float, float]
+) -> tuple[float, float, float]:
     """
     Convert absolute child position to relative position.
 

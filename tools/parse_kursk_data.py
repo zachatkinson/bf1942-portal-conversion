@@ -16,7 +16,7 @@ import re
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any
 
 
 @dataclass
@@ -85,12 +85,13 @@ class GameObject:
 
     object_type: str
     position: Vector3
-    rotation: Optional[Rotation] = None
-    team: Optional[int] = None
-    os_id: Optional[int] = None
-    properties: Dict = None
+    rotation: Rotation | None = None
+    team: int | None = None
+    os_id: int | None = None
+    properties: dict[str, Any] | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
+        """Initialize empty properties dict if not provided."""
         if self.properties is None:
             self.properties = {}
 
@@ -105,9 +106,9 @@ class ConFileParser:
             file_path: Path to .con file
         """
         self.file_path = Path(file_path)
-        self.lines = []
-        self.current_object = None
-        self.objects = []
+        self.lines: list[str] = []
+        self.current_object: dict[str, Any] | None = None
+        self.objects: list[dict[str, Any]] = []
 
     def load(self) -> None:
         """Load .con file into memory.
@@ -121,11 +122,11 @@ class ConFileParser:
         with open(self.file_path, encoding="utf-8", errors="ignore") as f:
             self.lines = [line.rstrip() for line in f]
 
-    def parse(self) -> List[GameObject]:
+    def parse(self) -> list[dict[str, Any]]:
         """Parse loaded .con file.
 
         Returns:
-            List of parsed game objects
+            List of parsed game object dictionaries
 
         Raises:
             ValueError: If parsing fails
@@ -218,7 +219,7 @@ class ConFileParser:
             self.current_object["properties"][prop_name] = prop_value
             return
 
-    def to_game_objects(self) -> List[GameObject]:
+    def to_game_objects(self) -> list[GameObject]:
         """Convert parsed data to GameObject instances.
 
         Returns:
@@ -255,11 +256,11 @@ class KurskDataExtractor:
             kursk_dir: Path to extracted Kursk directory
         """
         self.kursk_dir = Path(kursk_dir)
-        self.control_points = []
-        self.vehicle_spawners = []
-        self.static_objects = []
+        self.control_points: list[dict] = []
+        self.vehicle_spawners: list[dict] = []
+        self.static_objects: list[dict] = []
 
-    def extract_control_points(self) -> List[Dict]:
+    def extract_control_points(self) -> list[dict[str, Any]]:
         """Extract control point data.
 
         Returns:
@@ -293,7 +294,7 @@ class KurskDataExtractor:
 
         return control_points
 
-    def extract_vehicle_spawners(self) -> List[Dict]:
+    def extract_vehicle_spawners(self) -> list[dict[str, Any]]:
         """Extract vehicle spawner data.
 
         Returns:
@@ -326,7 +327,7 @@ class KurskDataExtractor:
 
         return vehicle_spawners
 
-    def extract_all(self) -> Dict:
+    def extract_all(self) -> dict[str, Any]:
         """Extract all Kursk data.
 
         Returns:
@@ -359,7 +360,7 @@ class KurskDataExtractor:
         }
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent

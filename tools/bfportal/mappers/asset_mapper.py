@@ -3,7 +3,6 @@
 
 import json
 from pathlib import Path
-from typing import Dict, Optional
 
 from ..core.exceptions import MappingError
 from ..core.interfaces import IAssetMapper, MapContext, PortalAsset
@@ -21,8 +20,8 @@ class AssetMapper(IAssetMapper):
         Args:
             portal_assets_path: Path to Portal SDK asset_types.json
         """
-        self.mappings: Dict[str, Dict] = {}
-        self.portal_assets: Dict[str, PortalAsset] = {}
+        self.mappings: dict[str, dict] = {}
+        self.portal_assets: dict[str, PortalAsset] = {}
 
         # Load Portal asset catalog
         with open(portal_assets_path) as f:
@@ -77,7 +76,7 @@ class AssetMapper(IAssetMapper):
 
         print(f"✅ Loaded {len(self.mappings)} asset mappings from {mappings_file.name}")
 
-    def map_asset(self, source_asset: str, context: MapContext) -> Optional[PortalAsset]:
+    def map_asset(self, source_asset: str, context: MapContext) -> PortalAsset | None:
         """Map BF1942 asset to Portal equivalent.
 
         Args:
@@ -168,7 +167,7 @@ class AssetMapper(IAssetMapper):
 
     def _find_alternative(
         self, source_asset: str, category: str, target_map: str
-    ) -> Optional[PortalAsset]:
+    ) -> PortalAsset | None:
         """Find an alternative Portal asset in the same category.
 
         Looks for assets that are either unrestricted OR available on the target map.
@@ -288,7 +287,7 @@ class AssetMapper(IAssetMapper):
 
         return None
 
-    def get_mapping_info(self, source_asset: str) -> Optional[Dict]:
+    def get_mapping_info(self, source_asset: str) -> dict | None:
         """Get detailed mapping information for an asset.
 
         Args:
@@ -299,14 +298,14 @@ class AssetMapper(IAssetMapper):
         """
         return self.mappings.get(source_asset)
 
-    def get_stats(self) -> Dict:
+    def get_stats(self) -> dict:
         """Get mapping statistics.
 
         Returns:
             Statistics dictionary
         """
         total = len(self.mappings)
-        categories = {}
+        categories: dict[str, int] = {}
 
         for asset, mapping in self.mappings.items():
             category = mapping["category"]
@@ -351,9 +350,7 @@ class AssetMapper(IAssetMapper):
 
         return False
 
-    def _find_best_guess_fallback(
-        self, source_asset: str, target_map: str
-    ) -> Optional[PortalAsset]:
+    def _find_best_guess_fallback(self, source_asset: str, target_map: str) -> PortalAsset | None:
         """Find best-guess fallback for asset not in mappings file.
 
         Uses name-based heuristics to guess asset type and find Portal equivalent.

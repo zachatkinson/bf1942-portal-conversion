@@ -18,7 +18,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Any
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -42,7 +42,7 @@ class SimpleTscnGenerator:
         """
         self.base_terrain = base_terrain
 
-    def generate(self, map_name: str, objects: list, output_path: Path) -> None:
+    def generate(self, map_name: str, objects: list[Any], output_path: Path) -> None:
         """Generate .tscn file.
 
         Args:
@@ -127,7 +127,7 @@ class PortalGenerateApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -204,7 +204,7 @@ Workflow:
 
         return parser.parse_args()
 
-    def load_objects(self) -> list:
+    def load_objects(self) -> list[Any]:
         """Load objects from input files.
 
         Returns:
@@ -322,7 +322,7 @@ Workflow:
             return 1
 
 
-def main():
+def main() -> None:
     """Entry point."""
     app = PortalGenerateApp()
     sys.exit(app.run())

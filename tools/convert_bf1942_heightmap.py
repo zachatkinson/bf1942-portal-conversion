@@ -24,10 +24,9 @@ Output:
 
 import struct
 from pathlib import Path
-from typing import List, Tuple
 
 
-def detect_heightmap_dimensions(file_size: int) -> Tuple[int, int]:
+def detect_heightmap_dimensions(file_size: int) -> tuple[int, int]:
     """Detect heightmap dimensions from file size.
 
     Args:
@@ -57,7 +56,7 @@ def detect_heightmap_dimensions(file_size: int) -> Tuple[int, int]:
     raise ValueError(f"Cannot determine dimensions from file size {file_size}")
 
 
-def read_bf1942_heightmap(filepath: Path) -> Tuple[List[List[float]], int, int]:
+def read_bf1942_heightmap(filepath: Path) -> tuple[list[list[float]], int, int]:
     """Read BF1942 RAW heightmap file.
 
     Args:
@@ -95,7 +94,7 @@ def read_bf1942_heightmap(filepath: Path) -> Tuple[List[List[float]], int, int]:
     return heightmap, width, height
 
 
-def analyze_heightmap(heightmap: List[List[float]], width: int, height: int) -> None:
+def analyze_heightmap(heightmap: list[list[float]], width: int, height: int) -> None:
     """Analyze and print heightmap statistics."""
     all_heights = [h for row in heightmap for h in row]
 
@@ -114,7 +113,7 @@ def analyze_heightmap(heightmap: List[List[float]], width: int, height: int) -> 
     print(f"   Range: {max_h - min_h:.2f}m")
 
 
-def export_to_png(heightmap: List[List[float]], width: int, height: int, output_path: Path) -> None:
+def export_to_png(heightmap: list[list[float]], width: int, height: int, output_path: Path) -> None:
     """Export heightmap to 16-bit PNG (Godot-compatible).
 
     Note: Requires PIL/Pillow library.
@@ -152,7 +151,7 @@ def export_to_png(heightmap: List[List[float]], width: int, height: int, output_
 
 
 def export_to_obj(
-    heightmap: List[List[float]], width: int, height: int, output_path: Path, scale: float = 1.0
+    heightmap: list[list[float]], width: int, height: int, output_path: Path, scale: float = 1.0
 ) -> None:
     """Export heightmap to OBJ mesh for visualization.
 

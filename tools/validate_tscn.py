@@ -19,7 +19,6 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Set
 
 
 @dataclass
@@ -42,7 +41,7 @@ class TscnValidator:
         """
         self.tscn_path = Path(tscn_path)
         self.content = ""
-        self.results: List[ValidationResult] = []
+        self.results: list[ValidationResult] = []
 
     def load(self) -> None:
         """Load .tscn file.
@@ -115,7 +114,7 @@ class TscnValidator:
 
     def validate_obj_ids(self) -> None:
         """Validate ObjIds are unique and non-negative."""
-        obj_ids: Set[int] = set()
+        obj_ids: set[int] = set()
         duplicate_ids = []
         negative_ids = []
 
@@ -201,7 +200,7 @@ class TscnValidator:
             r'\[ext_resource type="([^"]+)" path="([^"]+)" id="(\d+)"\]', self.content
         )
 
-        resource_ids: Set[int] = set()
+        resource_ids: set[int] = set()
         duplicate_res_ids = []
 
         for res_type, res_path, res_id in ext_resources:
@@ -295,7 +294,7 @@ class TscnValidator:
         """
         return not any(r.severity == "ERROR" and not r.passed for r in self.results)
 
-    def print_results(self) -> None:
+    def print_results(self) -> bool:
         """Print validation results."""
         print("\nValidation Results:")
         print("=" * 70)
@@ -335,7 +334,7 @@ class TscnValidator:
         return not errors
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     if len(sys.argv) < 2:
         print("Usage: python tools/validate_tscn.py <file.tscn>")

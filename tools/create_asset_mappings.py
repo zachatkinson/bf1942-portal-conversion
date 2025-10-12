@@ -15,7 +15,7 @@ import json
 import sys
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any
 
 
 class AssetMapper:
@@ -73,7 +73,7 @@ class AssetMapper:
 
     def find_best_matches(
         self, bf1942_asset: str, category: str, top_n: int = 5
-    ) -> List[Tuple[str, float, Dict]]:
+    ) -> list[tuple[str, float, dict[str, Any]]]:
         """Find best Portal asset matches for a BF1942 asset."""
         scores = []
 
@@ -110,7 +110,7 @@ class AssetMapper:
 
         return scores[:top_n]
 
-    def auto_suggest_mappings(self) -> Dict:
+    def auto_suggest_mappings(self) -> dict[str, Any]:
         """Automatically suggest mappings for all assets."""
         print("=" * 70)
         print("Auto-Suggesting Asset Mappings")
@@ -179,7 +179,8 @@ class AssetMapper:
         print("  3. Remove 'auto_suggested' flag when confirmed")
         print("  4. Update 'notes' with your validation")
 
-        return self.bf1942_data
+        result: dict[str, Any] = self.bf1942_data
+        return result
 
     def generate_mapping_report(self) -> None:
         """Generate a report on current mapping status."""
@@ -245,7 +246,7 @@ class AssetMapper:
         print(f"\n✅ Saved mappings to: {output_path}")
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     project_root = Path(__file__).parent.parent
 

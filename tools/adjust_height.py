@@ -17,10 +17,9 @@ Date: 2025-10-11
 import re
 import sys
 from pathlib import Path
-from typing import Tuple
 
 
-def parse_transform3d(transform_str: str) -> Tuple[list, list]:
+def parse_transform3d(transform_str: str) -> tuple[list, list]:
     """
     Parse Transform3D string into rotation matrix and position.
 

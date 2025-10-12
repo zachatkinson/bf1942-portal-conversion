@@ -4,7 +4,6 @@
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
 
 
 @dataclass
@@ -16,7 +15,7 @@ class GameConfig:
     engine_type: str  # e.g., "refractor", "frostbite"
     version: str  # e.g., "1.6"
     era: str  # e.g., "WW2"
-    expansions: List[str]  # e.g., ["xpack1_rtr", "xpack2_sw"]
+    expansions: list[str]  # e.g., ["xpack1_rtr", "xpack2_sw"]
 
 
 @dataclass
@@ -29,7 +28,7 @@ class MapConfig:
     theme: str  # e.g., "open_terrain", "urban", "desert"
     recommended_base_terrain: str  # e.g., "MP_Tungsten"
     size: str  # e.g., "large", "medium", "small"
-    dimensions: Dict[str, float]  # {"width": 2000, "height": 2000}
+    dimensions: dict[str, float]  # {"width": 2000, "height": 2000}
     notes: str  # Additional notes
 
 
@@ -38,7 +37,7 @@ class ConversionConfig:
     """Configuration for the conversion process."""
 
     base_terrain: str  # Target Portal base terrain
-    target_map_center: Dict[str, float]  # {"x": 0, "y": 0, "z": 0}
+    target_map_center: dict[str, float]  # {"x": 0, "y": 0, "z": 0}
     scale_factor: float = 1.0
     height_adjustment: bool = True
     validate_bounds: bool = True

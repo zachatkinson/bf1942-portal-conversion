@@ -6,7 +6,6 @@ Does not perform validation logic itself.
 """
 
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 from ..core.interfaces import MapData
 from ..terrain.terrain_provider import ITerrainProvider
@@ -34,7 +33,7 @@ class ValidationOrchestrator:
         self,
         source_data: MapData,
         output_tscn_path: Path,
-        terrain_provider: Optional[ITerrainProvider] = None,
+        terrain_provider: ITerrainProvider | None = None,
         terrain_size: float = 2048.0,
     ):
         """Initialize orchestrator.
@@ -54,9 +53,9 @@ class ValidationOrchestrator:
         self.tscn_reader = TscnReader(output_tscn_path)
         self.map_comparator = MapComparator()
 
-        self.issues: List[ValidationIssue] = []
+        self.issues: list[ValidationIssue] = []
 
-    def validate(self) -> Tuple[bool, List[ValidationIssue]]:
+    def validate(self) -> tuple[bool, list[ValidationIssue]]:
         """Run all validation checks.
 
         Returns:
@@ -102,7 +101,7 @@ class ValidationOrchestrator:
         has_errors = any(issue.severity == "error" for issue in self.issues)
         return (not has_errors, self.issues)
 
-    def _run_validators(self, comparison: MapComparison, output_nodes: List[TscnNode]):
+    def _run_validators(self, comparison: MapComparison, output_nodes: list[TscnNode]):
         """Run all validators.
 
         Single Responsibility: Only runs validators and collects issues.

@@ -8,7 +8,9 @@ Author: BF1942 Portal Conversion Project
 Date: 2025-01-11
 """
 
-terrains = {
+from typing import Any
+
+terrains: dict[str, dict[str, Any]] = {
     "MP_Abbasid": {
         "location": "Cairo, Egypt",
         "setting": "Urban/Sandy",
@@ -75,7 +77,8 @@ terrains = {
 }
 
 
-def main():
+def main() -> None:
+    """Main entry point for comparing BF6 Portal terrains."""
     print("=" * 70)
     print("BF6 Portal Terrain Comparison for Kursk")
     print("=" * 70)
@@ -84,7 +87,9 @@ def main():
     print()
 
     # Sort by rural_score descending
-    sorted_terrains = sorted(terrains.items(), key=lambda x: x[1]["rural_score"], reverse=True)
+    sorted_terrains = sorted(
+        terrains.items(), key=lambda x: float(x[1]["rural_score"]), reverse=True
+    )
 
     for name, data in sorted_terrains:
         print(f"{name} - Score: {data['rural_score']}/10")

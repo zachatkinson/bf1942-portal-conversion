@@ -4,8 +4,6 @@
 Single Responsibility: Only detects orientation of source map data.
 """
 
-from typing import List, Tuple
-
 from ..core.interfaces import MapData, Vector3
 from .interfaces import IOrientationDetector, Orientation, OrientationAnalysis
 
@@ -83,7 +81,7 @@ class MapOrientationDetector(IOrientationDetector):
             confidence=confidence,
         )
 
-    def get_bounds(self) -> Tuple[float, float, float, float]:
+    def get_bounds(self) -> tuple[float, float, float, float]:
         """Get bounding box of all map objects.
 
         Returns:
@@ -101,7 +99,7 @@ class MapOrientationDetector(IOrientationDetector):
 
         return (min_x, max_x, min_z, max_z)
 
-    def _collect_positions(self) -> List[Vector3]:
+    def _collect_positions(self) -> list[Vector3]:
         """Collect all object positions from map data.
 
         Single Responsibility: Only collects positions.

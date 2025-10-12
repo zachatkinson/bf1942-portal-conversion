@@ -5,7 +5,6 @@ Single Responsibility: Only detects orientation of Portal terrain heightmaps.
 """
 
 from pathlib import Path
-from typing import Optional, Tuple
 
 from ..terrain.terrain_provider import ITerrainProvider
 from .interfaces import IOrientationDetector, Orientation, OrientationAnalysis
@@ -20,9 +19,9 @@ class TerrainOrientationDetector(IOrientationDetector):
 
     def __init__(
         self,
-        terrain_provider: Optional[ITerrainProvider] = None,
-        heightmap_path: Optional[Path] = None,
-        terrain_size: Tuple[float, float] = (2048.0, 2048.0),
+        terrain_provider: ITerrainProvider | None = None,
+        heightmap_path: Path | None = None,
+        terrain_size: tuple[float, float] = (2048.0, 2048.0),
         threshold: float = 1.2,
     ):
         """Initialize detector.
@@ -87,7 +86,7 @@ class TerrainOrientationDetector(IOrientationDetector):
             confidence=confidence,
         )
 
-    def get_bounds(self) -> Tuple[float, float, float, float]:
+    def get_bounds(self) -> tuple[float, float, float, float]:
         """Get terrain bounding box.
 
         Assumes terrain is centered at origin.

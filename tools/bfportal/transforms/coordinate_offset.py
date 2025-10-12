@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Coordinate offset calculator for map re-centering."""
 
-from typing import List
-
 from ..core.interfaces import GameObject, ICoordinateOffset, Transform, Vector3
 
 
@@ -13,7 +11,7 @@ class CoordinateOffset(ICoordinateOffset):
     between different Portal base terrains.
     """
 
-    def calculate_centroid(self, objects: List[GameObject]) -> Vector3:
+    def calculate_centroid(self, objects: list[GameObject]) -> Vector3:
         """Calculate the centroid (center of mass) of all objects.
 
         Args:

@@ -15,7 +15,6 @@ This is DIFFERENT from the initial BF1942 → Portal conversion.
 
 import re
 from pathlib import Path
-from typing import Dict, List
 
 from ..core.interfaces import (
     GameObject,
@@ -39,7 +38,7 @@ class MapRebaser:
         self,
         terrain_provider: ITerrainProvider,
         offset_calculator: ICoordinateOffset,
-        bounds_validator: IBoundsValidator,
+        bounds_validator: IBoundsValidator | None,
     ):
         """Initialize rebaser.
 
@@ -54,7 +53,7 @@ class MapRebaser:
 
     def rebase_map(
         self, input_tscn: Path, output_tscn: Path, new_base_terrain: str, new_map_center: Vector3
-    ) -> Dict:
+    ) -> dict:
         """Rebase a Portal map to a different base terrain.
 
         Args:
@@ -142,7 +141,7 @@ class MapRebaser:
 
         return stats
 
-    def _parse_tscn(self, tscn_path: Path) -> List[GameObject]:
+    def _parse_tscn(self, tscn_path: Path) -> list[GameObject]:
         """Parse existing .tscn file to extract objects.
 
         Args:
@@ -203,7 +202,7 @@ class MapRebaser:
         return objects
 
     def _generate_tscn(
-        self, objects: List[GameObject], output_path: Path, base_terrain: str
+        self, objects: list[GameObject], output_path: Path, base_terrain: str
     ) -> None:
         """Generate new .tscn file with rebased objects.
 

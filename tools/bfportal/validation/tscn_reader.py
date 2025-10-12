@@ -7,7 +7,7 @@ Single Responsibility: Only reads and parses .tscn files.
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any
 
 from ..core.interfaces import Vector3
 
@@ -18,8 +18,8 @@ class TscnNode:
 
     name: str
     position: Vector3
-    rotation_matrix: List[float]  # 3x3 rotation matrix (9 values)
-    properties: Dict[str, any]
+    rotation_matrix: list[float]  # 3x3 rotation matrix (9 values)
+    properties: dict[str, Any]
     raw_content: str
 
 
@@ -37,9 +37,9 @@ class TscnReader:
             tscn_path: Path to .tscn file
         """
         self.tscn_path = tscn_path
-        self.nodes: List[TscnNode] = []
+        self.nodes: list[TscnNode] = []
 
-    def parse(self) -> List[TscnNode]:
+    def parse(self) -> list[TscnNode]:
         """Parse .tscn file and extract all nodes with transforms.
 
         Returns:
@@ -67,7 +67,7 @@ class TscnReader:
 
         return self.nodes
 
-    def _parse_node_block(self, node_name: str, node_content: str) -> Optional[TscnNode]:
+    def _parse_node_block(self, node_name: str, node_content: str) -> TscnNode | None:
         """Parse a single node block.
 
         Single Responsibility: Only parses one node block.
@@ -106,7 +106,7 @@ class TscnReader:
             raw_content=node_content,
         )
 
-    def _extract_properties(self, node_content: str) -> Dict[str, any]:
+    def _extract_properties(self, node_content: str) -> dict[str, Any]:
         """Extract properties from node content.
 
         Single Responsibility: Only extracts properties.
@@ -117,7 +117,7 @@ class TscnReader:
         Returns:
             Dictionary of properties
         """
-        properties = {}
+        properties: dict[str, Any] = {}
 
         # Extract Team property
         team_match = re.search(r"Team = (\d+)", node_content)
@@ -136,7 +136,7 @@ class TscnReader:
 
         return properties
 
-    def get_nodes_by_pattern(self, pattern: str) -> List[TscnNode]:
+    def get_nodes_by_pattern(self, pattern: str) -> list[TscnNode]:
         """Get nodes matching a name pattern.
 
         Args:
@@ -148,7 +148,7 @@ class TscnReader:
         regex = re.compile(pattern)
         return [node for node in self.nodes if regex.search(node.name)]
 
-    def get_nodes_by_team(self, team: int) -> List[TscnNode]:
+    def get_nodes_by_team(self, team: int) -> list[TscnNode]:
         """Get nodes belonging to a specific team.
 
         Args:

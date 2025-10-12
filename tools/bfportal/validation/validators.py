@@ -6,7 +6,6 @@ Each validator is responsible for validating ONE specific aspect of the conversi
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional
 
 from ..terrain.terrain_provider import ITerrainProvider
 from .map_comparator import MapComparison
@@ -21,8 +20,8 @@ class ValidationIssue:
     category: str  # 'positioning', 'height', 'rotation', 'bounds', 'missing'
     message: str
     object_name: str = ""
-    expected_value: Optional[str] = None
-    actual_value: Optional[str] = None
+    expected_value: str | None = None
+    actual_value: str | None = None
 
 
 class IValidator(ABC):
@@ -32,7 +31,7 @@ class IValidator(ABC):
     """
 
     @abstractmethod
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Run validation and return issues found.
 
         Returns:
@@ -54,9 +53,9 @@ class SpawnCountValidator(IValidator):
         """
         self.comparison = comparison
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate spawn counts."""
-        issues = []
+        issues: list[ValidationIssue] = []
 
         # Check Team 1 spawns
         if self.comparison.source_team1_spawn_count != self.comparison.output_team1_spawn_count:
@@ -99,7 +98,7 @@ class CapturePointValidator(IValidator):
         """
         self.comparison = comparison
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate capture point counts."""
         issues = []
 
@@ -123,7 +122,7 @@ class PositioningValidator(IValidator):
     Single Responsibility: Only validates positioning/centering.
     """
 
-    def __init__(self, output_nodes: List[TscnNode], tolerance: float = 50.0):
+    def __init__(self, output_nodes: list[TscnNode], tolerance: float = 50.0):
         """Initialize validator.
 
         Args:
@@ -133,9 +132,9 @@ class PositioningValidator(IValidator):
         self.output_nodes = output_nodes
         self.tolerance = tolerance
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate map is centered at origin."""
-        issues = []
+        issues: list[ValidationIssue] = []
 
         if not self.output_nodes:
             return issues
@@ -171,8 +170,8 @@ class HeightValidator(IValidator):
 
     def __init__(
         self,
-        nodes: List[TscnNode],
-        terrain_provider: Optional[ITerrainProvider],
+        nodes: list[TscnNode],
+        terrain_provider: ITerrainProvider | None,
         tolerance: float = 2.0,
         expected_offset: float = 1.0,
     ):
@@ -189,9 +188,9 @@ class HeightValidator(IValidator):
         self.tolerance = tolerance
         self.expected_offset = expected_offset
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate object heights."""
-        issues = []
+        issues: list[ValidationIssue] = []
 
         if not self.terrain_provider:
             return issues
@@ -234,7 +233,7 @@ class BoundsValidator(IValidator):
     Single Responsibility: Only validates bounds.
     """
 
-    def __init__(self, nodes: List[TscnNode], max_distance: float):
+    def __init__(self, nodes: list[TscnNode], max_distance: float):
         """Initialize validator.
 
         Args:
@@ -244,7 +243,7 @@ class BoundsValidator(IValidator):
         self.nodes = nodes
         self.max_distance = max_distance
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate object bounds."""
         issues = []
 
@@ -275,7 +274,7 @@ class OrientationValidator(IValidator):
     Single Responsibility: Only validates orientation/rotation.
     """
 
-    def __init__(self, nodes: List[TscnNode]):
+    def __init__(self, nodes: list[TscnNode]):
         """Initialize validator.
 
         Args:
@@ -283,7 +282,7 @@ class OrientationValidator(IValidator):
         """
         self.nodes = nodes
 
-    def validate(self) -> List[ValidationIssue]:
+    def validate(self) -> list[ValidationIssue]:
         """Validate object orientations."""
         issues = []
 
@@ -309,7 +308,7 @@ class OrientationValidator(IValidator):
 
         return issues
 
-    def _is_identity_matrix(self, matrix: List[float]) -> bool:
+    def _is_identity_matrix(self, matrix: list[float]) -> bool:
         """Check if rotation matrix is identity.
 
         Args:

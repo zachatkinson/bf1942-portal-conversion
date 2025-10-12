@@ -23,12 +23,11 @@ Date: 2025-10-11
 import re
 import sys
 from pathlib import Path
-from typing import Tuple
 
 
 def apply_axis_transform(
     x: float, y: float, z: float, transform_type: str
-) -> Tuple[float, float, float]:
+) -> tuple[float, float, float]:
     """
     Apply axis transformation to coordinates.
 
@@ -55,7 +54,7 @@ def apply_axis_transform(
     return transforms[transform_type]
 
 
-def parse_transform3d(transform_str: str) -> Tuple[list, list]:
+def parse_transform3d(transform_str: str) -> tuple[list, list]:
     """
     Parse Transform3D string into rotation matrix and position.
 
@@ -82,7 +81,7 @@ def parse_transform3d(transform_str: str) -> Tuple[list, list]:
     return rotation_matrix, position
 
 
-def transform_rotation_matrix(rotation: list, transform_type: str) -> list:
+def transform_rotation_matrix(rotation: list[float], transform_type: str) -> list[float]:
     """
     Transform rotation matrix to match axis transformation.
 
@@ -96,14 +95,18 @@ def transform_rotation_matrix(rotation: list, transform_type: str) -> list:
         Transformed rotation matrix
     """
     # Convert to column vectors (right, up, forward)
-    right = [rotation[0], rotation[3], rotation[6]]  # First column
-    up = [rotation[1], rotation[4], rotation[7]]  # Second column
-    forward = [rotation[2], rotation[5], rotation[8]]  # Third column
+    right: list[float] = [rotation[0], rotation[3], rotation[6]]  # First column
+    up: list[float] = [rotation[1], rotation[4], rotation[7]]  # Second column
+    forward: list[float] = [rotation[2], rotation[5], rotation[8]]  # Third column
 
     # Apply transformation to each vector
-    new_right = apply_axis_transform(*right, transform_type)
-    new_up = apply_axis_transform(*up, transform_type)
-    new_forward = apply_axis_transform(*forward, transform_type)
+    new_right: tuple[float, float, float] = apply_axis_transform(
+        right[0], right[1], right[2], transform_type
+    )
+    new_up: tuple[float, float, float] = apply_axis_transform(up[0], up[1], up[2], transform_type)
+    new_forward: tuple[float, float, float] = apply_axis_transform(
+        forward[0], forward[1], forward[2], transform_type
+    )
 
     # Convert back to row-major matrix
     return [
@@ -158,7 +161,9 @@ def apply_transform_to_line(line: str, transform_type: str) -> str:
         rotation, position = parse_transform3d(transform_str)
 
         # Apply transformation to position
-        new_position = list(apply_axis_transform(*position, transform_type))
+        new_position = list(
+            apply_axis_transform(position[0], position[1], position[2], transform_type)
+        )
 
         # Apply transformation to rotation matrix
         new_rotation = transform_rotation_matrix(rotation, transform_type)

@@ -22,7 +22,6 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -42,7 +41,7 @@ class PortalParseApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -193,7 +192,7 @@ Supported Games:
             lines.append(f"📦 Game Objects: {len(map_data.game_objects)}")
 
             # Count by asset type
-            asset_counts = {}
+            asset_counts: dict[str, int] = {}
             for obj in map_data.game_objects:
                 asset_counts[obj.asset_type] = asset_counts.get(obj.asset_type, 0) + 1
 

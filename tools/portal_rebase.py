@@ -20,7 +20,6 @@ Date: 2025-10-11
 import argparse
 import sys
 from pathlib import Path
-from typing import Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -52,7 +51,7 @@ class PortalRebaseApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -153,23 +152,25 @@ Available Base Terrains:
             print(f"📊 Using custom heightmap: {self.args.heightmap}")
             return CustomHeightmapProvider(
                 heightmap_path=self.args.heightmap,
-                terrain_size=self.args.terrain_size,
-                min_height=self.args.min_height,
-                max_height=self.args.max_height,
+                terrain_size=(self.args.terrain_size, self.args.terrain_size),
+                height_range=(self.args.min_height, self.args.max_height),
             )
 
         # Use built-in terrain provider
         base_terrain = self.args.new_base
         print(f"🗺️  Using built-in terrain: {base_terrain}")
 
+        # Get portal SDK root (two dirs up from tools/)
+        portal_sdk_root = Path(__file__).parent.parent
+
         if base_terrain == "MP_Tungsten":
-            return TungstenTerrainProvider()
+            return TungstenTerrainProvider(portal_sdk_root)
         elif base_terrain == "MP_Outskirts":
-            return OutskirtsTerrainProvider()
+            return OutskirtsTerrainProvider(portal_sdk_root)
         else:
             # Fallback to generic provider (flat terrain estimation)
             print(f"  ⚠️  No specific terrain provider for {base_terrain}, using flat estimation")
-            return TungstenTerrainProvider()  # Generic flat provider
+            return TungstenTerrainProvider(portal_sdk_root)  # Generic flat provider
 
     def run(self) -> int:
         """Execute the rebasing process.

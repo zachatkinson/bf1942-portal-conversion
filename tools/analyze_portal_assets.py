@@ -25,7 +25,7 @@ def analyze_portal_assets(asset_types_path: Path) -> None:
     print(f"\nTotal Portal assets: {len(assets)}")
 
     # Categorize by directory
-    categories = defaultdict(int)
+    categories: defaultdict[str, int] = defaultdict(int)
     by_category = defaultdict(list)
 
     for asset in assets:
@@ -109,7 +109,7 @@ def analyze_portal_assets(asset_types_path: Path) -> None:
         print(f"  Restricted to {count} map(s): {len(restricted_counts[count])} assets")
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     project_root = Path(__file__).parent.parent
     asset_types_path = project_root / "FbExportData" / "asset_types.json"

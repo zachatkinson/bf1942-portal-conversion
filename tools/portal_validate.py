@@ -33,11 +33,10 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
-
 
 
 @dataclass
@@ -61,9 +60,9 @@ class PortalMapValidator:
         """
         self.sdk_root = portal_sdk_root
         self.asset_catalog = self._load_asset_catalog()
-        self.results: List[ValidationResult] = []
+        self.results: list[ValidationResult] = []
 
-    def _load_asset_catalog(self) -> Dict:
+    def _load_asset_catalog(self) -> dict[str, Any]:
         """Load Portal asset catalog.
 
         Returns:
@@ -76,7 +75,8 @@ class PortalMapValidator:
             return {"AssetTypes": []}
 
         with open(catalog_path) as f:
-            return json.load(f)
+            catalog: dict[str, Any] = json.load(f)
+            return catalog
 
     def validate_map(self, tscn_path: Path) -> bool:
         """Validate a Portal map.
@@ -428,7 +428,7 @@ class PortalValidateApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -527,7 +527,7 @@ Validation Checks:
         return 0 if all_passed else 1
 
 
-def main():
+def main() -> None:
     """Entry point."""
     app = PortalValidateApp()
     sys.exit(app.run())

@@ -17,7 +17,6 @@ Date: 2025-10-11
 
 import math
 from pathlib import Path
-from typing import Dict, List
 
 from ..core.exceptions import ValidationError
 from ..core.interfaces import (
@@ -38,7 +37,7 @@ class TscnGenerator(ISceneGenerator):
 
     def __init__(self):
         """Initialize generator."""
-        self.ext_resources: List[Dict] = []
+        self.ext_resources: list[dict] = []
         self.next_ext_resource_id = 1
         self.base_terrain: str = ""
 
@@ -206,7 +205,7 @@ class TscnGenerator(ISceneGenerator):
             f"{transform.position.x:.6g}, {transform.position.y:.6g}, {transform.position.z:.6g})"
         )
 
-    def _generate_hqs(self, map_data: MapData) -> List[str]:
+    def _generate_hqs(self, map_data: MapData) -> list[str]:
         """Generate HQ nodes with spawn points.
 
         Args:
@@ -309,7 +308,7 @@ class TscnGenerator(ISceneGenerator):
         # Keep rotation as-is for now (proper solution would account for parent rotation)
         return Transform(rel_pos, child.rotation, child.scale)
 
-    def _generate_capture_points(self, capture_points: List[CapturePoint]) -> List[str]:
+    def _generate_capture_points(self, capture_points: list[CapturePoint]) -> list[str]:
         """Generate capture point nodes with spawn points.
 
         Args:
@@ -321,12 +320,16 @@ class TscnGenerator(ISceneGenerator):
         lines = []
 
         for i, cp in enumerate(capture_points, 1):
+            # __post_init__ ensures these are never None, but need explicit check for mypy
+            team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
+            team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+
             # Build spawn arrays
             team1_spawn_paths = [
-                f'NodePath("CP{i}_Spawn_1_{j + 1}")' for j in range(len(cp.team1_spawns))
+                f'NodePath("CP{i}_Spawn_1_{j + 1}")' for j in range(len(team1_spawns))
             ]
             team2_spawn_paths = [
-                f'NodePath("CP{i}_Spawn_2_{j + 1}")' for j in range(len(cp.team2_spawns))
+                f'NodePath("CP{i}_Spawn_2_{j + 1}")' for j in range(len(team2_spawns))
             ]
 
             team1_spawns_str = ", ".join(team1_spawn_paths) if team1_spawn_paths else ""
@@ -356,7 +359,7 @@ class TscnGenerator(ISceneGenerator):
             lines.append("")
 
             # Generate spawn point nodes as children of the capture point
-            for j, spawn in enumerate(cp.team1_spawns, 1):
+            for j, spawn in enumerate(team1_spawns, 1):
                 lines.append(
                     f'[node name="CP{i}_Spawn_1_{j}" parent="CapturePoint_{i}" instance=ExtResource("2")]'
                 )
@@ -364,7 +367,7 @@ class TscnGenerator(ISceneGenerator):
                 lines.append(f"transform = {self._format_transform(rel_transform)}")
                 lines.append("")
 
-            for j, spawn in enumerate(cp.team2_spawns, 1):
+            for j, spawn in enumerate(team2_spawns, 1):
                 lines.append(
                     f'[node name="CP{i}_Spawn_2_{j}" parent="CapturePoint_{i}" instance=ExtResource("2")]'
                 )
@@ -374,7 +377,7 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
-    def _generate_vehicle_spawners(self, spawners: List[GameObject]) -> List[str]:
+    def _generate_vehicle_spawners(self, spawners: list[GameObject]) -> list[str]:
         """Generate vehicle spawner nodes.
 
         Args:
@@ -398,7 +401,7 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
-    def _generate_combat_area(self, map_data: MapData) -> List[str]:
+    def _generate_combat_area(self, map_data: MapData) -> list[str]:
         """Generate combat area with polygon boundary.
 
         Args:
@@ -412,9 +415,9 @@ class TscnGenerator(ISceneGenerator):
         if not map_data.bounds:
             # Create default bounds
             print("⚠️  Warning: No bounds provided, using default 2048x2048")
-            min_x, max_x = -1024, 1024
-            min_z, max_z = -1024, 1024
-            center_x, center_z = 0, 0
+            min_x, max_x = -1024.0, 1024.0
+            min_z, max_z = -1024.0, 1024.0
+            center_x, center_z = 0.0, 0.0
             center_y = 80.0
         else:
             min_x = map_data.bounds.min_point.x
@@ -452,7 +455,7 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
-    def _generate_static_layer(self, map_data: MapData) -> List[str]:
+    def _generate_static_layer(self, map_data: MapData) -> list[str]:
         """Generate static layer with terrain and objects.
 
         Args:
@@ -517,7 +520,7 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
-    def validate(self, tscn_path: Path) -> List[str]:
+    def validate(self, tscn_path: Path) -> list[str]:
         """Validate generated .tscn file.
 
         Args:

@@ -16,10 +16,10 @@ import json
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List
+from typing import Any
 
 
-def load_asset_types(json_path: str) -> List[Dict]:
+def load_asset_types(json_path: str) -> list[dict[str, Any]]:
     """Load and parse asset_types.json.
 
     Args:
@@ -33,12 +33,13 @@ def load_asset_types(json_path: str) -> List[Dict]:
         json.JSONDecodeError: If JSON is malformed
     """
     with open(json_path, encoding="utf-8") as f:
-        data = json.load(f)
+        data: dict[str, Any] = json.load(f)
 
-    return data.get("AssetTypes", [])
+    asset_types: list[dict[str, Any]] = data.get("AssetTypes", [])
+    return asset_types
 
 
-def categorize_assets(assets: List[Dict]) -> Dict[str, List[Dict]]:
+def categorize_assets(assets: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     """Categorize assets by directory and type.
 
     Args:
@@ -76,7 +77,7 @@ def categorize_assets(assets: List[Dict]) -> Dict[str, List[Dict]]:
     return dict(categories)
 
 
-def find_vehicle_spawners(assets: List[Dict]) -> List[Dict]:
+def find_vehicle_spawners(assets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Find all vehicle spawner assets.
 
     Args:
@@ -93,13 +94,17 @@ def find_vehicle_spawners(assets: List[Dict]) -> List[Dict]:
         directory = asset.get("directory", "").lower()
 
         # Check if this is a spawner
-        if any(keyword in asset_type for keyword in keywords) or "vehicle" in directory or "spawner" in directory:
+        if (
+            any(keyword in asset_type for keyword in keywords)
+            or "vehicle" in directory
+            or "spawner" in directory
+        ):
             spawners.append(asset)
 
     return spawners
 
 
-def find_terrain_assets(assets: List[Dict]) -> List[Dict]:
+def find_terrain_assets(assets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Find terrain and landscape assets.
 
     Args:
@@ -115,13 +120,15 @@ def find_terrain_assets(assets: List[Dict]) -> List[Dict]:
         asset_type = asset.get("type", "").lower()
         directory = asset.get("directory", "").lower()
 
-        if any(keyword in asset_type for keyword in keywords) or any(keyword in directory for keyword in keywords):
+        if any(keyword in asset_type for keyword in keywords) or any(
+            keyword in directory for keyword in keywords
+        ):
             terrain.append(asset)
 
     return terrain
 
 
-def find_gameplay_objects(assets: List[Dict]) -> List[Dict]:
+def find_gameplay_objects(assets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Find gameplay-related objects (HQs, spawners, capture points).
 
     Args:
@@ -154,7 +161,7 @@ def find_gameplay_objects(assets: List[Dict]) -> List[Dict]:
     return gameplay
 
 
-def find_unrestricted_assets(assets: List[Dict]) -> List[Dict]:
+def find_unrestricted_assets(assets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Find assets with no level restrictions (usable on any map).
 
     Args:
@@ -173,7 +180,7 @@ def find_unrestricted_assets(assets: List[Dict]) -> List[Dict]:
     return unrestricted
 
 
-def analyze_level_restrictions(assets: List[Dict]) -> Dict[str, int]:
+def analyze_level_restrictions(assets: list[dict[str, Any]]) -> dict[str, int]:
     """Analyze how many assets are restricted to specific levels.
 
     Args:
@@ -182,7 +189,7 @@ def analyze_level_restrictions(assets: List[Dict]) -> Dict[str, int]:
     Returns:
         Dictionary mapping level names to asset counts
     """
-    level_counts = defaultdict(int)
+    level_counts: defaultdict[str, int] = defaultdict(int)
 
     for asset in assets:
         level_restrictions = asset.get("levelRestrictions", [])
@@ -193,7 +200,7 @@ def analyze_level_restrictions(assets: List[Dict]) -> Dict[str, int]:
     return dict(sorted(level_counts.items(), key=lambda x: x[1], reverse=True))
 
 
-def generate_statistics(assets: List[Dict]) -> Dict:
+def generate_statistics(assets: list[dict[str, Any]]) -> dict[str, Any]:
     """Generate overall statistics about the asset library.
 
     Args:
@@ -227,7 +234,7 @@ def generate_statistics(assets: List[Dict]) -> Dict:
     }
 
 
-def main():
+def main() -> None:
     """Main entry point."""
     # Paths
     project_root = Path(__file__).parent.parent

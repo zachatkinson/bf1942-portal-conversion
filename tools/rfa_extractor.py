@@ -17,7 +17,6 @@ import logging
 import struct
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -77,8 +76,8 @@ class RFAExtractor:
         if not self.rfa_path.exists():
             raise FileNotFoundError(f"RFA file not found: {rfa_path}")
 
-        self.file_entries: List[RFAFileEntry] = []
-        self.header: Optional[RFAHeader] = None
+        self.file_entries: list[RFAFileEntry] = []
+        self.header: RFAHeader | None = None
 
     def _read_header(self, f) -> RFAHeader:
         """Read and parse RFA header.
@@ -170,7 +169,7 @@ class RFAExtractor:
 
         logger.debug(f"Extracted: {entry.filename}")
 
-    def list_files(self) -> List[str]:
+    def list_files(self) -> list[str]:
         """List all files in the archive.
 
         Returns:

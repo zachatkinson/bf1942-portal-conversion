@@ -26,7 +26,6 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -41,7 +40,7 @@ class PortalMapAssetsApp:
 
     def __init__(self):
         """Initialize the app."""
-        self.args: Optional[argparse.Namespace] = None
+        self.args: argparse.Namespace
 
     def parse_args(self) -> argparse.Namespace:
         """Parse command-line arguments.
@@ -135,13 +134,16 @@ Supported Games:
         Raises:
             FileNotFoundError: If mappings file not found
         """
-        if self.args.mappings_file:
-            if not self.args.mappings_file.exists():
-                raise FileNotFoundError(f"Mappings file not found: {self.args.mappings_file}")
-            return self.args.mappings_file
+        # Type-safe access to argparse args
+        mappings_file: Path | None = self.args.mappings_file
+        game: str = self.args.game
+
+        if mappings_file:
+            if not mappings_file.exists():
+                raise FileNotFoundError(f"Mappings file not found: {mappings_file}")
+            return mappings_file
 
         # Auto-detect based on game
-        game = self.args.game
         default_path = Path(__file__).parent / "asset_audit" / f"{game}_to_portal_mappings.json"
 
         if not default_path.exists():
@@ -152,7 +154,7 @@ Supported Games:
 
         return default_path
 
-    def extract_assets_from_parsed_data(self, data: Dict) -> List[str]:
+    def extract_assets_from_parsed_data(self, data: dict) -> list[str]:
         """Extract asset names from parsed map data.
 
         Args:
@@ -225,9 +227,9 @@ Supported Games:
             for asset_name in assets:
                 # Create context
                 context = MapContext(
-                    source_game=self.args.game,
-                    map_name="",
-                    map_theme=self.args.map_theme,
+                    target_base_map="MP_Tungsten",
+                    era="WW2",
+                    theme=self.args.map_theme,
                     team=Team.NEUTRAL,
                 )
 
@@ -239,15 +241,15 @@ Supported Games:
                         results.append(
                             {
                                 "source_asset": asset_name,
-                                "portal_asset": portal_asset.name,
-                                "category": portal_asset.category,
+                                "portal_asset": portal_asset.type,
+                                "category": portal_asset.directory,
                                 "level_restricted": bool(portal_asset.level_restrictions),
                                 "status": "mapped",
                             }
                         )
 
                         if self.args.verbose:
-                            print(f"✅ {asset_name} → {portal_asset.name}")
+                            print(f"✅ {asset_name} → {portal_asset.type}")
                             if portal_asset.level_restrictions:
                                 print(
                                     f"   ⚠️  Level restricted: {', '.join(portal_asset.level_restrictions[:3])}"

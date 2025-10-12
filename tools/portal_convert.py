@@ -172,7 +172,10 @@ class PortalConverter:
                 for cp in map_data.capture_points:
                     cp.transform = self.coord_offset.apply_offset(cp.transform, offset)
                     # Also offset spawns within capture points (avoid duplicates)
-                    for spawn in cp.team1_spawns + cp.team2_spawns:
+                    # __post_init__ ensures these are never None, but need explicit check for mypy
+                    team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
+                    team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+                    for spawn in team1_spawns + team2_spawns:
                         if id(spawn) not in offset_spawns:
                             spawn.transform = self.coord_offset.apply_offset(
                                 spawn.transform, offset
@@ -303,7 +306,10 @@ class PortalConverter:
                 )
 
                 # Adjust spawns (avoid duplicates)
-                for spawn in cp.team1_spawns + cp.team2_spawns:
+                # __post_init__ ensures these are never None, but need explicit check for mypy
+                team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
+                team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+                for spawn in team1_spawns + team2_spawns:
                     if id(spawn) not in adjusted_spawns:
                         spawn.transform = self.height_adjuster.adjust_height(
                             spawn.transform, self.terrain, ground_offset=1.0
@@ -354,8 +360,12 @@ class PortalConverter:
 
     def _resolve_map_path(self) -> Path:
         """Resolve path to BF1942 map directory."""
-        if self.args.bf1942_root:
-            base_path = Path(self.args.bf1942_root)
+        # Type-safe access to argparse args
+        bf1942_root: str | None = self.args.bf1942_root
+        map_name: str = self.args.map
+
+        if bf1942_root:
+            base_path = Path(bf1942_root)
         else:
             base_path = (
                 self.project_root
@@ -367,7 +377,7 @@ class PortalConverter:
                 / "Levels"
             )
 
-        map_path = base_path / self.args.map
+        map_path = base_path / map_name
 
         if not map_path.exists():
             raise BFPortalError(f"Map directory not found: {map_path}")

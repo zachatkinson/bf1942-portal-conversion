@@ -13,7 +13,9 @@ import re
 from pathlib import Path
 
 
-def apply_axis_transform(x, y, z, transform_type):
+def apply_axis_transform(
+    x: float, y: float, z: float, transform_type: str
+) -> tuple[float, float, float]:
     """
     Apply different axis transformations.
 
@@ -38,7 +40,7 @@ def apply_axis_transform(x, y, z, transform_type):
     return transforms.get(transform_type, (x, y, z))
 
 
-def parse_transform3d(transform_str):
+def parse_transform3d(transform_str: str) -> tuple[float, float, float] | None:
     """Parse Transform3D to extract position."""
     match = re.search(r"Transform3D\(([^)]+)\)", transform_str)
     if not match:
@@ -79,6 +81,10 @@ def main():
 
     team1_pos = parse_transform3d(team1_match.group(1))
     team2_pos = parse_transform3d(team2_match.group(1))
+
+    if not team1_pos or not team2_pos:
+        print("Error: Could not parse HQ transforms")
+        return 1
 
     print("Current HQ Positions (After Offset):")
     print(f"  TEAM_1_HQ (Axis):   ({team1_pos[0]:7.2f}, {team1_pos[1]:7.2f}, {team1_pos[2]:7.2f})")

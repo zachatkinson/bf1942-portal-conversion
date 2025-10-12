@@ -5,7 +5,6 @@ Single Responsibility: Only compares source map data vs output .tscn data.
 """
 
 from dataclasses import dataclass
-from typing import List, Tuple
 
 from ..core.interfaces import MapData, Vector3
 from .tscn_reader import TscnNode
@@ -47,7 +46,7 @@ class MapComparator:
     and producing comparison results. Does not validate or read files.
     """
 
-    def compare(self, source_data: MapData, output_nodes: List[TscnNode]) -> MapComparison:
+    def compare(self, source_data: MapData, output_nodes: list[TscnNode]) -> MapComparison:
         """Compare source map data with output nodes.
 
         Args:
@@ -78,7 +77,7 @@ class MapComparator:
             output_object_count=output_object_count,
         )
 
-    def _count_team_spawns(self, nodes: List[TscnNode], team: int) -> int:
+    def _count_team_spawns(self, nodes: list[TscnNode], team: int) -> int:
         """Count spawn points for a specific team.
 
         Single Responsibility: Only counts spawns for one team.
@@ -92,7 +91,7 @@ class MapComparator:
         """
         return sum(1 for node in nodes if f"SpawnPoint_{team}_" in node.name)
 
-    def _count_capture_points(self, nodes: List[TscnNode]) -> int:
+    def _count_capture_points(self, nodes: list[TscnNode]) -> int:
         """Count capture points (excluding static props).
 
         Single Responsibility: Only counts capture points.
@@ -109,7 +108,7 @@ class MapComparator:
             if node.name.startswith("CapturePoint_") and 'parent="Static"' not in node.raw_content
         )
 
-    def calculate_position_centroid(self, nodes: List[TscnNode]) -> Vector3:
+    def calculate_position_centroid(self, nodes: list[TscnNode]) -> Vector3:
         """Calculate centroid of node positions.
 
         Args:
@@ -128,7 +127,7 @@ class MapComparator:
 
         return Vector3(total_x / count, total_y / count, total_z / count)
 
-    def calculate_bounds(self, nodes: List[TscnNode]) -> Tuple[Vector3, Vector3]:
+    def calculate_bounds(self, nodes: list[TscnNode]) -> tuple[Vector3, Vector3]:
         """Calculate bounding box of nodes.
 
         Args:

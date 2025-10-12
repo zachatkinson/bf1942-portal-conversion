@@ -18,7 +18,7 @@ import re
 from collections import defaultdict
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, List
+from typing import Any
 
 
 @dataclass
@@ -27,10 +27,10 @@ class AssetInfo:
 
     asset_type: str
     category: str  # vehicle, static, building, prop, weapon, kit
-    found_in_maps: List[str]
+    found_in_maps: list[str]
     usage_count: int
     expansion: str  # base, xpack1, xpack2
-    sample_properties: Dict  # Example properties from .con files
+    sample_properties: dict[str, Any]  # Example properties from .con files
 
 
 class BF1942AssetAuditor:
@@ -38,7 +38,7 @@ class BF1942AssetAuditor:
 
     def __init__(self, bf1942_root: Path):
         self.bf1942_root = bf1942_root
-        self.assets: Dict[str, AssetInfo] = {}
+        self.assets: dict[str, AssetInfo] = {}
         self.asset_categories = {
             "vehicle": ["tank", "plane", "ship", "car", "boat", "helicopter", "apc"],
             "weapon": ["gun", "rifle", "pistol", "grenade", "mine", "knife"],
@@ -85,10 +85,15 @@ class BF1942AssetAuditor:
         for pattern in patterns:
             matches = re.findall(pattern, content)
             for match in matches:
+                # Extract asset_type - handle both string and tuple results
                 if isinstance(match, tuple):
-                    asset_type = match[0] if len(match) > 0 else match
+                    asset_type = match[0] if len(match) > 0 else ""
                 else:
                     asset_type = match
+
+                # Skip if empty or non-string
+                if not isinstance(asset_type, str) or not asset_type:
+                    continue
 
                 # Skip common non-asset keywords
                 skip_words = ["if", "else", "rem", "begin", "end", "var", "set"]
@@ -157,35 +162,41 @@ class BF1942AssetAuditor:
                 if map_dir.is_dir():
                     self.scan_map(map_dir, map_dir.name, "xpack2_sw")
 
-    def generate_statistics(self) -> Dict:
+    def generate_statistics(self) -> dict[str, Any]:
         """Generate asset usage statistics."""
-        stats = {
-            "total_unique_assets": len(self.assets),
-            "by_category": defaultdict(int),
-            "by_expansion": defaultdict(int),
-            "most_used_assets": [],
-            "expansion_exclusive_assets": {"base": [], "xpack1_rtr": [], "xpack2_sw": []},
-        }
+        # Use explicit defaultdicts with type annotations
+        by_category: defaultdict[str, int] = defaultdict(int)
+        by_expansion: defaultdict[str, int] = defaultdict(int)
+        expansion_exclusive: dict[str, list[str]] = {"base": [], "xpack1_rtr": [], "xpack2_sw": []}
 
         # Category counts
         for asset in self.assets.values():
-            stats["by_category"][asset.category] += 1
-            stats["by_expansion"][asset.expansion] += 1
+            by_category[asset.category] += 1
+            by_expansion[asset.expansion] += 1
 
         # Most used assets
         sorted_assets = sorted(self.assets.values(), key=lambda x: x.usage_count, reverse=True)
-        stats["most_used_assets"] = [
+        most_used_assets: list[dict[str, Any]] = [
             {"asset": a.asset_type, "usage_count": a.usage_count, "maps": len(a.found_in_maps)}
             for a in sorted_assets[:20]
         ]
 
         # Expansion-exclusive assets
         for asset in self.assets.values():
-            stats["expansion_exclusive_assets"][asset.expansion].append(asset.asset_type)
+            expansion_exclusive[asset.expansion].append(asset.asset_type)
 
-        return dict(stats)
+        # Build final stats dict
+        stats: dict[str, Any] = {
+            "total_unique_assets": len(self.assets),
+            "by_category": dict(by_category),
+            "by_expansion": dict(by_expansion),
+            "most_used_assets": most_used_assets,
+            "expansion_exclusive_assets": expansion_exclusive,
+        }
 
-    def generate_portal_mapping_template(self) -> Dict:
+        return stats
+
+    def generate_portal_mapping_template(self) -> dict[str, Any]:
         """Generate template for BF1942 → Portal mappings."""
         mappings = {
             "_metadata": {
@@ -277,7 +288,7 @@ class BF1942AssetAuditor:
         print("  4. Use in portal_convert.py for automatic asset mapping")
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     project_root = Path(__file__).parent.parent
     bf1942_root = project_root / "bf1942_source"
