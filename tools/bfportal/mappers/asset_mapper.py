@@ -22,6 +22,7 @@ class AssetMapper(IAssetMapper):
         """
         self.mappings: dict[str, dict] = {}
         self.portal_assets: dict[str, PortalAsset] = {}
+        self.fallback_keywords: list[dict] = []
 
         # Load Portal asset catalog
         with open(portal_assets_path) as f:
@@ -34,6 +35,15 @@ class AssetMapper(IAssetMapper):
                 level_restrictions=asset.get("levelRestrictions", []),
                 properties=asset.get("properties", []),
             )
+
+        # Load keyword fallback config for best-guess asset matching
+        keywords_path = (
+            Path(__file__).parent.parent.parent / "asset_audit" / "asset_fallback_keywords.json"
+        )
+        if keywords_path.exists():
+            with open(keywords_path) as f:
+                data = json.load(f)
+                self.fallback_keywords = data.get("type_categories", [])
 
     def load_mappings(self, mappings_file: Path) -> None:
         """Load BF1942 → Portal mappings from JSON file.
@@ -180,15 +190,8 @@ class AssetMapper(IAssetMapper):
         Returns:
             PortalAsset if found, None otherwise
         """
-        # Determine asset type keywords from source asset name
-        source_lower = source_asset.lower()
-        type_keywords = []
-        if any(kw in source_lower for kw in ["tree", "pine", "spruce", "oak", "birch", "palm"]):
-            type_keywords = ["tree", "pine", "spruce", "oak", "birch", "palm", "cedar"]
-        elif any(kw in source_lower for kw in ["rock", "stone", "boulder"]):
-            type_keywords = ["rock", "stone", "boulder", "cliff"]
-        elif any(kw in source_lower for kw in ["fence", "wall"]):
-            type_keywords = ["fence", "wall", "barrier"]
+        # Get type keywords from config
+        _source_keywords, portal_keywords = self._get_type_keywords(source_asset)
 
         # Look for other mappings in the same category
         category_mappings = []
@@ -212,7 +215,9 @@ class AssetMapper(IAssetMapper):
             portal_type = mapping["portal_type"].lower()
 
             # Check if portal asset matches any type keywords
-            type_match = any(kw in portal_type for kw in type_keywords) if type_keywords else False
+            type_match = (
+                any(kw in portal_type for kw in portal_keywords) if portal_keywords else False
+            )
 
             # Return tuple: (type_match as int, confidence)
             # This prioritizes type matches first, then confidence within each group
@@ -226,9 +231,9 @@ class AssetMapper(IAssetMapper):
 
             # If we have type keywords, only return if first asset matches them
             # Otherwise fall through to catalog search
-            if type_keywords:
+            if portal_keywords:
                 portal_type_lower = portal_asset.type.lower()
-                if not any(kw in portal_type_lower for kw in type_keywords):
+                if not any(kw in portal_type_lower for kw in portal_keywords):
                     # First result doesn't match type - don't settle for wrong type
                     # Fall through to catalog search instead
                     pass
@@ -242,14 +247,14 @@ class AssetMapper(IAssetMapper):
                 return portal_asset
 
         # Step 2: If no mapped alternatives found, search entire Portal catalog for type matches
-        if type_keywords:
+        if portal_keywords:
             # Search all Portal assets for matching type keywords available on target map
             for portal_type, portal_asset in self.portal_assets.items():
                 portal_type_lower = portal_type.lower()
 
                 # Check if this Portal asset matches type keywords
                 if any(
-                    kw in portal_type_lower for kw in type_keywords
+                    kw in portal_type_lower for kw in portal_keywords
                 ) and self._is_asset_available_on_map(portal_asset, target_map):
                     print(f"  ℹ️  Using catalog alternative: {portal_type} for {source_asset}")
                     return portal_asset
@@ -300,6 +305,36 @@ class AssetMapper(IAssetMapper):
             DRY helper - eliminates repeated availability checking logic.
         """
         return not portal_asset.level_restrictions or target_map in portal_asset.level_restrictions
+
+    def _get_type_keywords(self, source_asset: str) -> tuple[list[str], list[str]]:
+        """Get source and Portal keywords for asset type matching.
+
+        Uses the loaded fallback_keywords config to determine what type of
+        asset this is based on its name, then returns appropriate keywords
+        for searching Portal assets.
+
+        Args:
+            source_asset: BF1942 asset name
+
+        Returns:
+            Tuple of (source_keywords, portal_keywords). Both lists are empty
+            if no matching category found.
+
+        Note:
+            DRY helper - eliminates keyword logic duplication between
+            _find_alternative() and _find_best_guess_fallback().
+        """
+        source_lower = source_asset.lower()
+
+        # Search loaded config for matching category
+        for category in self.fallback_keywords:
+            source_kw = category.get("source_keywords", [])
+            if any(kw in source_lower for kw in source_kw):
+                portal_kw = category.get("portal_keywords", [])
+                return (source_kw, portal_kw)
+
+        # No matching category
+        return ([], [])
 
     def _print_alternative_message(
         self, portal_asset: PortalAsset, source_asset: str, target_map: str
@@ -358,7 +393,8 @@ class AssetMapper(IAssetMapper):
     def _find_best_guess_fallback(self, source_asset: str, target_map: str) -> PortalAsset | None:
         """Find best-guess fallback for asset not in mappings file.
 
-        Uses name-based heuristics to guess asset type and find Portal equivalent.
+        Uses name-based heuristics from config to guess asset type and find
+        Portal equivalent.
 
         Args:
             source_asset: BF1942 asset name not in mappings
@@ -367,38 +403,21 @@ class AssetMapper(IAssetMapper):
         Returns:
             PortalAsset if reasonable guess found, None otherwise
         """
-        source_lower = source_asset.lower()
+        # Get type keywords from config
+        _source_keywords, portal_keywords = self._get_type_keywords(source_asset)
 
-        # Define type keywords with category hints
-        type_categories = [
-            (
-                ["tree", "pine", "spruce", "oak", "birch", "palm", "cedar"],
-                ["tree", "pine", "spruce", "oak", "birch", "palm", "cedar"],
-            ),
-            (
-                ["barn", "house", "building", "warehouse", "mill", "lumbermill"],
-                ["barn", "house", "building", "warehouse", "shed", "hut"],
-            ),
-            (["sandbag", "sand"], ["sandbag", "sand", "bag"]),
-            (["cart", "wagon"], ["cart", "wagon", "wheelbarrow"]),
-            (["camo", "netting", "net"], ["camo", "netting", "tarp", "canopy"]),
-        ]
+        # If we matched a category, search Portal catalog
+        if portal_keywords:
+            for portal_type, portal_asset in self.portal_assets.items():
+                portal_type_lower = portal_type.lower()
 
-        # Find matching type
-        for source_keywords, portal_keywords in type_categories:
-            if any(kw in source_lower for kw in source_keywords):
-                # Search Portal catalog for matching assets
-                for portal_type, portal_asset in self.portal_assets.items():
-                    portal_type_lower = portal_type.lower()
-
-                    if any(
-                        kw in portal_type_lower for kw in portal_keywords
-                    ) and self._is_asset_available_on_map(portal_asset, target_map):
-                        print(
-                            f"  ℹ️  Using best-guess fallback: {portal_type} "
-                            f"for unmapped {source_asset}"
-                        )
-                        return portal_asset
+                if any(
+                    kw in portal_type_lower for kw in portal_keywords
+                ) and self._is_asset_available_on_map(portal_asset, target_map):
+                    print(
+                        f"  ℹ️  Using best-guess fallback: {portal_type} for unmapped {source_asset}"
+                    )
+                    return portal_asset
 
         # No reasonable guess found
         return None

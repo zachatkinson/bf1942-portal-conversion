@@ -1,0 +1,46 @@
+{
+    "_metadata": {
+        "description": "Keyword-based fallback mappings for asset type heuristics",
+        "purpose": "Used when BF1942 assets are not in primary mappings file",
+        "format": "Each entry maps source keywords to Portal search keywords",
+        "version": "1.0",
+        "last_updated": "2025-10-11"
+    },
+    "type_categories": [
+        {
+            "name": "trees",
+            "source_keywords": ["tree", "pine", "spruce", "oak", "birch", "palm"],
+            "portal_keywords": ["tree", "pine", "spruce", "oak", "birch", "palm", "cedar"]
+        },
+        {
+            "name": "buildings",
+            "source_keywords": ["barn", "house", "building", "warehouse", "mill", "lumbermill"],
+            "portal_keywords": ["barn", "house", "building", "warehouse", "shed", "hut"]
+        },
+        {
+            "name": "rocks",
+            "source_keywords": ["rock", "stone", "boulder"],
+            "portal_keywords": ["rock", "stone", "boulder", "cliff"]
+        },
+        {
+            "name": "barriers",
+            "source_keywords": ["fence", "wall"],
+            "portal_keywords": ["fence", "wall", "barrier"]
+        },
+        {
+            "name": "fortifications",
+            "source_keywords": ["sandbag", "sand"],
+            "portal_keywords": ["sandbag", "sand", "bag"]
+        },
+        {
+            "name": "vehicles",
+            "source_keywords": ["cart", "wagon"],
+            "portal_keywords": ["cart", "wagon", "wheelbarrow"]
+        },
+        {
+            "name": "camouflage",
+            "source_keywords": ["camo", "netting", "net"],
+            "portal_keywords": ["camo", "netting", "tarp", "canopy"]
+        }
+    ]
+}
