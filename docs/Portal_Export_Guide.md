@@ -1,8 +1,11 @@
-# Portal Export Guide
+# Guide: Portal Export
+
+> Complete workflow for exporting BF1942 maps to Battlefield 6 Portal
 
 **Purpose:** Complete workflow for exporting BF1942 maps to Battlefield 6 Portal
-**Last Updated:** October 12, 2025
-**Status:** ✅ Production Ready
+**Last Updated:** October 2025
+**Difficulty:** Intermediate
+**Time Required:** ~15 minutes
 
 ---
 
@@ -55,6 +58,7 @@ python3 tools/export_to_portal.py Kursk
 ### Option 2: Modular Workflow (Better for Iteration)
 
 > 💡 **Tip:** Use this workflow during development for faster iteration - you can re-export just the map without recreating the experience file each time.
+> **Use:** Recommended for active map development and testing
 
 ```bash
 # Step 1: Export .tscn to .spatial.json
@@ -230,6 +234,7 @@ A Portal "experience" is a complete game mode package including:
 - **Custom spatial data** (your BF1942 map layout)
 
 > 📝 **Note:** The maps in this project use Portal's **Verified Modes** settings for Conquest (`ModBuilder_GameMode: 2`), not custom game mode logic. This provides the authentic BF1942 Conquest experience using BF6's official ruleset, matching the pattern used in official Portal examples like AcePursuit and BombSquad.
+> **Use:** Understanding the experience format and verified modes
 
 ### File Structure
 
@@ -254,7 +259,8 @@ A Portal "experience" is a complete game mode package including:
 
 ### Key Requirements
 
-> ⚠️ **IMPORTANT:** Map ID format is critical - Portal will silently fail if incorrect!
+> ⚠️ **Warning:** Map ID format is critical - Portal will silently fail if incorrect!
+> **Use:** Critical requirement for all Portal experience files
 
 **Map ID Format:**
 - ✅ `MP_Tungsten-ModBuilderCustom0` (correct)
@@ -267,12 +273,14 @@ A Portal "experience" is a complete game mode package including:
 - Our tools handle this automatically
 
 > ✅ **Success:** When using our tools, all format requirements are handled automatically. You don't need to worry about these technical details.
+> **Use:** Verification that automated tools handle complex requirements
 
 ---
 
 ## Troubleshooting
 
 > 💡 **Tip:** Most import issues are caused by incorrect file format. Always use our export tools to ensure compliance with Portal SDK standards.
+> **Use:** Troubleshooting import and format errors
 
 ### "Map not appearing in rotation after import"
 
@@ -460,10 +468,8 @@ ls FbExportData/levels/*.spatial.json
 
 ---
 
-**Last Updated:** October 2025
-**Status:** Production Ready
+**Next Steps:**
+1. [macOS Compatibility Patch](./setup/macOS_Compatibility_Patch.md) - Setup Portal SDK on macOS
+2. [Project Architecture](../.claude/CLAUDE.md) - Understanding the project structure
 
-**See Also:**
-- [macOS Compatibility Patch](./setup/macOS_Compatibility_Patch.md) - macOS-specific setup and troubleshooting
-- [Project Architecture](../.claude/CLAUDE.md) - Complete project structure and coding standards
-- [Portal SDK README](../README.html) - Official Portal SDK documentation and reference
+**Last Updated:** October 2025
