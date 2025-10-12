@@ -264,6 +264,7 @@ class TestCoordinateOffsetApplication:
         new_transform = offset_calculator.apply_offset(transform, offset)
 
         # Scale should be preserved
+        assert new_transform.scale is not None
         assert new_transform.scale.x == 2.0
         assert new_transform.scale.y == 1.5
         assert new_transform.scale.z == 3.0
@@ -358,6 +359,7 @@ class TestCoordinateOffsetScaling:
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
         # Scale property should be preserved (not affected)
+        assert new_transform.scale is not None
         assert new_transform.scale.x == 2.0
         assert new_transform.scale.y == 2.0
         assert new_transform.scale.z == 2.0

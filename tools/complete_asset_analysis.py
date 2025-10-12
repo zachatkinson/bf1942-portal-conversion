@@ -7,12 +7,13 @@ Analyzes all asset sources and identifies gaps in mapping coverage.
 import json
 from collections import defaultdict
 from pathlib import Path
+from typing import Any
 
 
-def load_json(filepath: Path) -> dict:
+def load_json(filepath: Path) -> dict[str, Any]:
     """Load JSON file."""
     with open(filepath, encoding="utf-8") as f:
-        return json.load(f)
+        return json.load(f)  # type: ignore[no-any-return]
 
 
 def analyze_portal_assets(asset_types_path: Path) -> dict:
@@ -21,7 +22,7 @@ def analyze_portal_assets(asset_types_path: Path) -> dict:
     assets = data.get("AssetTypes", [])
 
     total = len(assets)
-    by_category = defaultdict(int)
+    by_category: dict[str, int] = defaultdict(int)
     usable_on_tungsten = 0
     unrestricted = 0
     portal_asset_names = set()
@@ -57,7 +58,7 @@ def analyze_bf1942_catalog(catalog_path: Path) -> dict:
     data = load_json(catalog_path)
 
     total = len(data)
-    by_category = defaultdict(int)
+    by_category: dict[str, int] = defaultdict(int)
 
     for _bf1942_name, info in data.items():
         category = info.get("category", "unknown")

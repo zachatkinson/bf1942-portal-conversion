@@ -98,7 +98,7 @@ class TestTscnTransformParser:
         rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
         position = [0, 0, 0]
 
-        result = TscnTransformParser.format(rotation, position)
+        result = TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
 
         assert result == "Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)"
 
@@ -107,7 +107,7 @@ class TestTscnTransformParser:
         rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
         position = [100, 50, -200]
 
-        result = TscnTransformParser.format(rotation, position)
+        result = TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
 
         assert result == "Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 50, -200)"
 
@@ -116,7 +116,7 @@ class TestTscnTransformParser:
         rotation = [0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1]
         position = [3.14159, 2.71828, 1.41421]
 
-        result = TscnTransformParser.format(rotation, position)
+        result = TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
 
         # Check format uses compact notation
         assert "Transform3D(" in result
@@ -129,16 +129,14 @@ class TestTscnTransformParser:
         position = [0, 0, 0]
 
         with pytest.raises(ValueError, match="Rotation matrix must have 9 values"):
-            TscnTransformParser.format(rotation, position)
-
+            TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
     def test_format_invalid_position_length(self):
         """Test formatting fails with invalid position length."""
         rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
         position = [0, 0]  # Only 2 values
 
         with pytest.raises(ValueError, match="Position must have 3 values"):
-            TscnTransformParser.format(rotation, position)
-
+            TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
     def test_extract_from_line_with_transform(self):
         """Test extracting Transform3D from a .tscn line."""
         line = "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, 30)"
@@ -188,7 +186,7 @@ class TestTscnTransformParser:
         original = "Transform3D(0.707, -0.707, 0, 0.707, 0.707, 0, 0, 0, 1, 100, 200, 300)"
 
         rotation, position = TscnTransformParser.parse(original)
-        result = TscnTransformParser.format(rotation, position)
+        result = TscnTransformParser.format(rotation, position)  # type: ignore[arg-type]
 
         # Parse the result again to compare values (not string format)
         rotation2, position2 = TscnTransformParser.parse(result)

@@ -482,7 +482,7 @@ class TestConParserTransformExtraction:
     def test_parse_transform_empty_dict_returns_none(self):
         """Test that parse_transform returns None for empty dict."""
         parser = ConParser()
-        obj_dict = {}
+        obj_dict: dict[str, object] = {}
 
         transform = parser.parse_transform(obj_dict)
 
@@ -537,7 +537,7 @@ class TestConParserTeamExtraction:
     def test_parse_team_missing_defaults_neutral(self):
         """Test that missing team defaults to NEUTRAL."""
         parser = ConParser()
-        obj_dict = {}
+        obj_dict: dict[str, object] = {}
 
         team = parser.parse_team(obj_dict)
 

@@ -305,13 +305,13 @@ class TestFullConversionWorkflow:
         parser = TscnTransformParser()
         for obj in recentered_objects:
             # Create rotation matrix (identity for simplicity)
-            rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-            position = [
+            rotation = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+            position_list: list[float] = [
                 obj.transform.position.x,
                 obj.transform.position.y,
                 obj.transform.position.z,
             ]
-            matrix_str = parser.format(rotation, position)
+            matrix_str = parser.format(rotation, position_list)
             assert "Transform3D(" in matrix_str
             # Verify it's a valid transform string
             assert matrix_str.count(",") == 11  # 12 values, 11 commas
@@ -347,7 +347,7 @@ class TestTscnOutputFormatting:
         parser = TscnTransformParser()
 
         # Create rotation matrix (identity) and position
-        rotation = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+        rotation = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
         position = [100.5, 50.25, 200.75]
 
         # Format for .tscn

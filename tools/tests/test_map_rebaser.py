@@ -416,7 +416,7 @@ class TestMapRebaserTscnGeneration:
         output_tscn = Path(__file__).parent / "test_rebaser_terrain_name.tscn"
 
         try:
-            objects = []
+            objects: list[GameObject] = []
             rebaser._generate_tscn(objects, output_tscn, "MP_CustomTerrain")
 
             content = output_tscn.read_text()
