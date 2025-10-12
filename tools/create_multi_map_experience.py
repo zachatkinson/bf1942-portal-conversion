@@ -30,18 +30,22 @@ import base64
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 
-def load_registry(registry_path: Path) -> dict:
+def load_registry(registry_path: Path) -> dict[str, Any]:
     """Load the maps registry."""
     if not registry_path.exists():
         raise FileNotFoundError(f"Maps registry not found: {registry_path}")
 
     with open(registry_path, encoding="utf-8") as f:
-        return json.load(f)
+        data: dict[str, Any] = json.load(f)
+        return data
 
 
-def filter_maps(maps: list[dict], filter_criteria: dict) -> list[dict]:
+def filter_maps(
+    maps: list[dict[str, Any]], filter_criteria: dict[str, Any]
+) -> list[dict[str, Any]]:
     """Filter maps based on criteria."""
     filtered = maps
     for key, value in filter_criteria.items():
@@ -49,7 +53,7 @@ def filter_maps(maps: list[dict], filter_criteria: dict) -> list[dict]:
     return filtered
 
 
-def load_spatial_data(map_entry: dict, project_root: Path) -> str:
+def load_spatial_data(map_entry: dict[str, Any], project_root: Path) -> str:
     """Load and base64 encode spatial data for a map."""
     map_id = map_entry["id"]
     spatial_path = (
@@ -69,13 +73,13 @@ def load_spatial_data(map_entry: dict, project_root: Path) -> str:
 
 
 def create_multi_map_experience(
-    maps: list[dict],
+    maps: list[dict[str, Any]],
     experience_name: str,
     description: str,
     game_mode: str,
     max_players_per_team: int,
     project_root: Path,
-) -> dict:
+) -> dict[str, Any]:
     """Create a multi-map Portal experience."""
     print(f"\nCreating multi-map experience: {experience_name}")
     print(f"Maps to include: {len(maps)}")
