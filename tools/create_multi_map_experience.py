@@ -32,6 +32,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from bfportal.exporters import create_spatial_attachment
+
 
 def load_registry(registry_path: Path) -> dict[str, Any]:
     """Load the maps registry."""
@@ -86,6 +88,7 @@ def create_multi_map_experience(
     print("=" * 60)
 
     map_rotation = []
+    attachments = []  # Root-level attachments array (required by Portal UI)
 
     for idx, map_entry in enumerate(maps):
         map_id = map_entry["id"]
@@ -104,22 +107,26 @@ def create_multi_map_experience(
             spatial_base64 = load_spatial_data(map_entry, project_root)
             print(f"  ✅ Loaded spatial data ({len(spatial_base64):,} bytes)")
 
+            # Create spatial attachment (used in both mapRotation and root attachments)
+            spatial_attachment = create_spatial_attachment(
+                map_id=map_id,
+                map_name=map_name,
+                spatial_base64=spatial_base64,
+                map_index=idx,
+            )
+
+            # Add to map rotation (nested)
             map_rotation.append(
                 {
                     "id": f"{base_map}-ModBuilderCustom0",
-                    "spatialAttachment": {
-                        "id": f"{map_id}-bf1942-spatial",
-                        "filename": f"{map_name}.spatial.json",
-                        "metadata": f"mapIdx={idx}",
-                        "version": "1",
-                        "isProcessable": True,
-                        "processingStatus": 2,
-                        "attachmentData": {"original": spatial_base64, "compiled": ""},
-                        "attachmentType": 1,
-                        "errors": [],
-                    },
+                    "spatialAttachment": spatial_attachment,
                 }
             )
+
+            # CRITICAL: Also add to root-level attachments array
+            # Portal requires the spatial attachment in BOTH locations for UI to work
+            attachments.append(spatial_attachment)
+
         except FileNotFoundError as e:
             print(f"  ❌ Error: {e}")
             continue
@@ -155,7 +162,7 @@ def create_multi_map_experience(
             [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
         ],
         "gameMode": game_mode,
-        "attachments": [],
+        "attachments": attachments,  # ✅ Populated with spatial attachments
     }
 
     return experience
@@ -313,8 +320,8 @@ Examples:
         print("1. Go to portal.battlefield.com")
         print("2. Click 'IMPORT' button")
         print(f"3. Select: {output_file.name}")
-        print("4. Add maps in Portal Builder UI (see map names above)")
-        print("5. Save and test!")
+        print("4. Map rotation will appear pre-populated - verify and save!")
+        print("5. Test your experience in-game!")
 
         return 0
 

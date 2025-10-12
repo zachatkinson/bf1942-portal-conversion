@@ -19,6 +19,8 @@ import json
 import sys
 from pathlib import Path
 
+from bfportal.exporters import create_spatial_attachment
+
 
 def create_experience_file(
     map_name: str,
@@ -67,6 +69,14 @@ def create_experience_file(
 
     print("Creating experience structure...")
 
+    # Create spatial attachment (used in both mapRotation and root attachments)
+    spatial_attachment = create_spatial_attachment(
+        map_id=map_name.lower(),
+        map_name=map_name,
+        spatial_base64=spatial_base64,
+        map_index=0,
+    )
+
     # Create the complete experience structure following the official pattern
     # Using custom mode (ModBuilder_GameMode: 0) for full control and local testing
     experience = {
@@ -90,20 +100,7 @@ def create_experience_file(
                 # CRITICAL: Must follow pattern MP_<MapName>-ModBuilderCustom0
                 # This is required by Portal to recognize custom map attachments
                 "id": f"{base_map}-ModBuilderCustom0",
-                "spatialAttachment": {
-                    "id": f"{map_name.lower()}-bf1942-spatial",
-                    "filename": f"{map_name}.spatial.json",
-                    "metadata": "mapIdx=0",
-                    "version": "1",
-                    "isProcessable": True,
-                    "processingStatus": 2,
-                    "attachmentData": {
-                        "original": spatial_base64,
-                        "compiled": "",  # Empty - Portal compiles server-side
-                    },
-                    "attachmentType": 1,
-                    "errors": [],
-                },
+                "spatialAttachment": spatial_attachment,
             }
         ],
         "workspace": {},
@@ -112,7 +109,9 @@ def create_experience_file(
             [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
         ],
         "gameMode": game_mode,
-        "attachments": [],
+        # CRITICAL: Portal requires spatial attachment in BOTH mapRotation AND root attachments
+        # Without this, map rotation UI appears empty after import
+        "attachments": [spatial_attachment],
     }
 
     # Create experiences directory if it doesn't exist
