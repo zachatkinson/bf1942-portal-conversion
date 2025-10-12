@@ -74,3 +74,21 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "PIL.*"
 ignore_missing_imports = true
+
+[tool.coverage.run]
+# Coverage for entire tools/ directory (CLI + SDK)
+source = ["tools"]
+omit = [
+    "tools/tests/*",
+]
+
+[tool.coverage.report]
+# Reporting configuration
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

@@ -372,23 +372,506 @@ Example: `feat: add RFA extraction for Kursk map data`
 
 ## Testing Strategy
 
+**Target Coverage:** 75%+ (commendable by industry standards)
+**Current Coverage:** 28% (tools/), 56% (tools/bfportal/)
+
+### Testing Best Practices
+
+All tests must follow these modern best practices:
+
+#### AAA Pattern (Arrange-Act-Assert)
+
+Every test must use the AAA pattern for clarity:
+
+```python
+def test_create_experience_file():
+    # Arrange - Set up test data and environment
+    map_name = "Kursk"
+    spatial_path = tmp_path / "Kursk.spatial.json"
+    spatial_path.write_text('{"Portal_Dynamic": [], "Static": []}')
+
+    # Act - Execute the code being tested
+    result = create_experience_file(
+        map_name=map_name,
+        spatial_path=spatial_path,
+        base_map="MP_Tungsten",
+        max_players_per_team=32,
+        game_mode="Conquest"
+    )
+
+    # Assert - Verify behavior matches expectations
+    assert result.exists()
+    assert result.name == "Kursk_Experience.json"
+```
+
+**Key Points:**
+- Separate each phase with blank lines
+- Keep each phase focused and clear
+- Assert one concept per test (can have multiple assertions for same concept)
+
+#### Test Independence and Isolation
+
+**DO:**
+- Each test runs independently
+- Tests don't rely on other tests' state
+- Use fixtures for shared setup/teardown
+- Mock external dependencies (filesystem, network, databases)
+
+**DON'T:**
+- Share mutable state between tests
+- Rely on test execution order
+- Use real external systems (files, networks, DBs)
+
+```python
+# Good - Each test is independent
+@pytest.fixture
+def sample_spatial_data():
+    """Fixture provides fresh data for each test."""
+    return {"Portal_Dynamic": [], "Static": [{"name": "Terrain"}]}
+
+def test_experience_creation(tmp_path, sample_spatial_data):
+    spatial_file = tmp_path / "test.spatial.json"
+    spatial_file.write_text(json.dumps(sample_spatial_data))
+    # Test uses isolated tmp_path and fresh data
+```
+
+#### Flexible Testing - Avoid Brittle Tests
+
+**Test Behavior, Not Implementation:**
+```python
+# Bad - Tests implementation details (brittle)
+def test_export_calls_json_dump():
+    with patch('json.dump') as mock_dump:
+        export_map("Kursk")
+        mock_dump.assert_called_once()  # Breaks if we change JSON library
+
+# Good - Tests external behavior (robust)
+def test_export_creates_valid_json(tmp_path):
+    output = export_map("Kursk", output_dir=tmp_path)
+    data = json.loads(output.read_text())
+    assert data["name"] == "Kursk - BF1942 Classic"
+```
+
+**Use `autospec=True` for Mocks:**
+```python
+# Good - autospec ensures mock matches real signature
+with patch('tools.bfportal.terrain.terrain_provider.TerrainProvider', autospec=True) as mock:
+    mock.return_value.get_height_at_position.return_value = 10.0
+```
+
+**Mock Only External Dependencies:**
+```python
+# Mock external things (filesystem, network, time)
+@patch('pathlib.Path.exists', return_value=True)
+@patch('pathlib.Path.read_text', return_value='{"data": "test"}')
+def test_load_config(mock_read, mock_exists):
+    config = load_config("test.json")
+    assert config["data"] == "test"
+
+# Don't mock internal business logic - test it directly
+```
+
+#### Pytest Fixtures
+
+**Use fixtures for reusable setup:**
+```python
+@pytest.fixture
+def kursk_tscn_path(tmp_path):
+    """Provide path to test .tscn file."""
+    tscn = tmp_path / "Kursk.tscn"
+    tscn.write_text('[gd_scene format=3]\n[node name="Kursk" type="Node3D"]')
+    return tscn
+
+@pytest.fixture
+def mock_terrain_provider():
+    """Provide mocked terrain provider with default behavior."""
+    provider = MagicMock(spec=ITerrainProvider)
+    provider.get_height_at_position.return_value = 0.0
+    return provider
+
+# Use fixtures in tests
+def test_conversion(kursk_tscn_path, mock_terrain_provider):
+    result = convert_map(kursk_tscn_path, terrain_provider=mock_terrain_provider)
+    assert result.exists()
+```
+
+**Fixture Scopes:**
+- `function`: Default, runs before each test (most common)
+- `module`: Runs once per test module (for expensive setup)
+- `session`: Runs once per test session (rarely needed)
+
+#### Descriptive Test Names
+
+```python
+# Good - Describes what is being tested and expected outcome
+def test_create_experience_with_missing_spatial_file_raises_file_not_found_error():
+    pass
+
+def test_export_to_portal_creates_experience_with_base64_encoded_spatial_data():
+    pass
+
+# Bad - Vague, doesn't explain what's tested
+def test_export():
+    pass
+
+def test_error():
+    pass
+```
+
+**Format:** `test_<function_name>_<scenario>_<expected_result>`
+
+#### Test Organization
+
+**Group Related Tests:**
+```python
+class TestCreateExperience:
+    """Tests for create_experience.py functionality."""
+
+    def test_creates_valid_experience_file(self):
+        pass
+
+    def test_encodes_spatial_data_as_base64(self):
+        pass
+
+    def test_raises_error_for_missing_spatial_file(self):
+        pass
+```
+
+**One Concept Per Test:**
+```python
+# Good - One test per concept
+def test_experience_has_correct_map_id():
+    exp = create_experience("Kursk", "MP_Tungsten")
+    assert exp["mapRotation"][0]["id"] == "MP_Tungsten-ModBuilderCustom0"
+
+def test_experience_has_correct_game_mode():
+    exp = create_experience("Kursk", mode="Conquest")
+    assert exp["gameMode"] == "Conquest"
+
+# Bad - Tests multiple unrelated concepts
+def test_experience_structure():
+    exp = create_experience("Kursk")
+    assert exp["mapRotation"][0]["id"] == "MP_Tungsten-ModBuilderCustom0"  # Map ID
+    assert exp["gameMode"] == "Conquest"  # Game mode
+    assert exp["mutators"]["MaxPlayerCount_PerTeam"] == 32  # Player count
+    # If this fails, which concept broke?
+```
+
+#### Parameterized Tests
+
+**Use `@pytest.mark.parametrize` for multiple scenarios:**
+```python
+@pytest.mark.parametrize("map_name,base_map,expected_id", [
+    ("Kursk", "MP_Tungsten", "MP_Tungsten-ModBuilderCustom0"),
+    ("El_Alamein", "MP_Firestorm", "MP_Firestorm-ModBuilderCustom0"),
+    ("Wake_Island", "MP_Limestone", "MP_Limestone-ModBuilderCustom0"),
+])
+def test_map_id_format(map_name, base_map, expected_id):
+    exp = create_experience(map_name, base_map)
+    assert exp["mapRotation"][0]["id"] == expected_id
+```
+
+#### Test Documentation
+
+```python
+def test_create_multi_map_experience_filters_incomplete_maps(maps_registry):
+    """
+    Test that create_multi_map_experience only includes maps with status='complete'.
+
+    Given: Registry with mix of complete/planned maps
+    When: Creating multi-map experience with status filter
+    Then: Only complete maps are included in mapRotation
+    """
+    # Arrange
+    registry = {
+        "maps": [
+            {"id": "kursk", "status": "complete"},
+            {"id": "el_alamein", "status": "planned"},
+        ]
+    }
+
+    # Act
+    result = create_multi_map_experience(registry, filter={"status": "complete"})
+
+    # Assert
+    assert len(result["mapRotation"]) == 1
+    assert result["mapRotation"][0]["spatialAttachment"]["id"] == "kursk-bf1942-spatial"
+```
+
+#### Coverage Exclusions
+
+Use `# pragma: no cover` for lines that shouldn't be tested:
+```python
+if __name__ == "__main__":  # pragma: no cover
+    sys.exit(main())
+
+def __repr__(self):  # pragma: no cover
+    return f"Asset({self.name})"
+```
+
+#### CLI Testing Best Practices
+
+**Test CLI Tools via Direct Function Calls:**
+```python
+# Good - Test main() function directly
+def test_create_experience_cli_with_valid_args(tmp_path, monkeypatch):
+    # Arrange
+    monkeypatch.setattr('sys.argv', [
+        'create_experience.py',
+        'Kursk',
+        '--base-map', 'MP_Tungsten',
+        '--max-players', '32'
+    ])
+    # Create mock spatial file
+    spatial = tmp_path / "FbExportData/levels/Kursk.spatial.json"
+    spatial.parent.mkdir(parents=True)
+    spatial.write_text('{}')
+
+    # Act
+    exit_code = main()
+
+    # Assert
+    assert exit_code == 0
+    assert (tmp_path / "experiences/Kursk_Experience.json").exists()
+```
+
+**Test Error Handling:**
+```python
+def test_create_experience_missing_spatial_file_exits_with_error(capsys):
+    # Arrange
+    sys.argv = ['create_experience.py', 'NonExistent']
+
+    # Act
+    exit_code = main()
+
+    # Assert
+    assert exit_code == 1
+    captured = capsys.readouterr()
+    assert "Spatial file not found" in captured.err
+```
+
+#### Dependency Injection for Testability
+
+**Design Code for Easy Testing:**
+```python
+# Good - Dependencies injected, easy to test
+def convert_map(
+    map_path: Path,
+    terrain_provider: ITerrainProvider,
+    asset_mapper: IAssetMapper
+) -> Path:
+    """Convert map using provided dependencies."""
+    height = terrain_provider.get_height_at_position(0, 0)
+    asset = asset_mapper.map_asset("TreeType1")
+    return output_path
+
+# Test with mocks
+def test_convert_map(mock_terrain, mock_mapper):
+    result = convert_map(Path("map.con"), mock_terrain, mock_mapper)
+    assert result.exists()
+
+# Bad - Hard-coded dependencies, hard to test
+def convert_map(map_path: Path) -> Path:
+    terrain = TerrainProvider()  # Can't mock this
+    mapper = AssetMapper()  # Can't mock this
+    # ...
+```
+
+#### Property-Based Testing for Complex Logic
+
+**Use Hypothesis for coordinate transforms and math:**
+```python
+from hypothesis import given, strategies as st
+
+@given(
+    x=st.floats(min_value=-1000, max_value=1000),
+    y=st.floats(min_value=-1000, max_value=1000)
+)
+def test_coordinate_transform_is_reversible(x, y):
+    """Transform and inverse should return original coordinates."""
+    # Act
+    transformed = transform_bf1942_to_godot(x, y)
+    back = transform_godot_to_bf1942(*transformed)
+
+    # Assert
+    assert abs(back[0] - x) < 0.01
+    assert abs(back[1] - y) < 0.01
+```
+
+#### Test Data Management
+
+**Use Conftest for Shared Fixtures:**
+```python
+# tools/tests/conftest.py
+@pytest.fixture
+def sample_registry():
+    """Provide sample maps registry for all tests."""
+    return {
+        "maps": [
+            {
+                "id": "kursk",
+                "display_name": "Kursk",
+                "status": "complete",
+                "base_map": "MP_Tungsten"
+            }
+        ],
+        "experience_templates": {
+            "all_maps": {"name": "All Maps", "game_mode": "Conquest"}
+        }
+    }
+
+@pytest.fixture
+def mock_spatial_file(tmp_path):
+    """Create a mock spatial.json file."""
+    spatial = tmp_path / "test.spatial.json"
+    spatial.write_text(json.dumps({
+        "Portal_Dynamic": [],
+        "Static": [{"name": "Terrain", "type": "MP_Tungsten_Terrain"}]
+    }))
+    return spatial
+```
+
+#### Fast Tests with Proper Mocking
+
+**Mock Slow Operations:**
+```python
+# Good - Mock file I/O for speed
+@patch('pathlib.Path.read_text')
+def test_load_large_spatial_file_quickly(mock_read):
+    mock_read.return_value = '{"Portal_Dynamic": []}'  # Instant
+    data = load_spatial_file("huge.spatial.json")
+    assert data["Portal_Dynamic"] == []
+
+# Don't actually read huge files in tests
+```
+
+#### Test Error Messages
+
+**Verify User-Facing Error Messages:**
+```python
+def test_missing_map_shows_helpful_error_message(capsys):
+    # Act
+    with pytest.raises(SystemExit) as exc_info:
+        main(["portal_convert.py", "--map", "DoesNotExist"])
+
+    # Assert
+    assert exc_info.value.code == 1
+    captured = capsys.readouterr()
+    assert "Map file not found" in captured.err
+    assert "Available maps:" in captured.err  # Lists alternatives
+```
+
+#### Regression Tests
+
+**Add Tests for Every Bug Fix:**
+```python
+def test_regression_issue_42_terrain_offset():
+    """
+    Regression test for Issue #42: Terrain was offset by 500m.
+
+    Bug: TerrainProvider didn't account for mesh center offset.
+    Fix: Added mesh bounds detection in terrain_provider.py:135
+    """
+    # Arrange - Reproduce bug conditions
+    terrain = TerrainProvider("MP_Tungsten")
+
+    # Act - This should work now
+    height = terrain.get_height_at_position(0, 0)
+
+    # Assert - Verify fix
+    assert -100 < height < 100  # Reasonable height, not offset
+```
+
+#### Test Performance for Critical Paths
+
+**Ensure Conversion Performance:**
+```python
+import time
+
+def test_convert_large_map_completes_within_30_seconds(large_map_fixture):
+    """Conversion should be fast enough for interactive use."""
+    start = time.time()
+
+    result = convert_map(large_map_fixture)
+
+    duration = time.time() - start
+    assert duration < 30.0, f"Conversion took {duration}s, expected <30s"
+    assert result.exists()
+```
+
+#### Continuous Integration Best Practices
+
+**Mark Slow Tests:**
+```python
+@pytest.mark.slow
+def test_full_end_to_end_conversion():
+    """Full conversion test (slow)."""
+    # This runs in CI but skipped in local dev with pytest -m "not slow"
+    pass
+
+# Run fast tests: pytest
+# Run all tests: pytest -m ""
+```
+
+**Platform-Specific Tests:**
+```python
+import sys
+import pytest
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="macOS-specific test")
+def test_macos_gdconverter_export():
+    """Test export tool on macOS."""
+    pass
+```
+
+#### Test Coverage Goals by Module Type
+
+**Target Coverage by Component:**
+- **CLI Scripts (create_experience.py, etc.):** 60-70% (focus on main workflows)
+- **Core SDK (parsers, mappers, generators):** 85-95% (critical business logic)
+- **Utility Scripts (compare_terrains.py):** 40-50% (less critical)
+- **Overall Target:** 75%+
+
+**Prioritize:**
+1. User-facing code (export tools, portal_convert.py)
+2. Complex business logic (coordinate transforms, asset mapping)
+3. Error-prone areas (file I/O, parsing)
+4. Bug fixes (regression tests)
+
 ### Unit Tests
 
-- Test RFA extraction with known archives
-- Validate coordinate transformations with reference points
-- Verify object mapping with sample data
+**Focus Areas:**
+- CLI entry points (portal_convert.py, create_experience.py, etc.)
+- Core business logic (parsers, mappers, generators)
+- Coordinate transformations and math
+- Error handling and validation
+
+**Examples:**
+- Test create_experience.py with valid/invalid inputs
+- Validate coordinate transformations with known reference points
+- Verify asset mapping with sample data
+- Test error messages for missing files
 
 ### Integration Tests
 
-- Extract complete map and generate .tscn
-- Import into Godot and verify structure
-- Export .spatial.json and validate format
+**Focus Areas:**
+- End-to-end workflows (BF1942 → .tscn → .spatial.json)
+- Multiple modules working together
+- File I/O operations with real (temporary) files
+
+**Examples:**
+- Parse BF1942 .con file → Generate .tscn → Validate structure
+- Export .tscn → Create experience → Validate Portal format
+- Convert map → Validate all required nodes present
 
 ### Manual Testing
 
+**Focus Areas:**
 - Visual inspection in Godot editor
-- Test map in Portal web builder
-- Play test in-game for gameplay validation
+- Portal web builder import testing
+- In-game gameplay validation
+
+**See:** TESTING.md for complete manual testing procedures
 
 ## Common Pitfalls & Solutions
 
