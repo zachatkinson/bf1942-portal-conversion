@@ -6,6 +6,43 @@
 
 ---
 
+## Table of Contents
+
+- [Quick Reference](#quick-reference)
+  - [Option 1: All-in-One Export](#option-1-all-in-one-export-fastest)
+  - [Option 2: Modular Workflow](#option-2-modular-workflow-better-for-iteration)
+  - [Option 3: Custom Settings](#option-3-custom-settings)
+- [Complete Workflow](#complete-workflow)
+  - [1. Edit Map in Godot](#1-edit-map-in-godot)
+  - [2. Export to Portal Format](#2-export-to-portal-format)
+  - [3. Import to Portal Builder](#3-import-to-portal-builder)
+  - [4. Publish and Test](#4-publish-and-test)
+- [Tool Reference](#tool-reference)
+  - [export_map.sh](#exportmapsh)
+  - [create_experience.py](#create_experiencepy)
+  - [export_to_portal.py](#export_to_portalpy)
+- [Available Base Maps](#available-base-maps)
+- [Understanding the Experience Format](#understanding-the-experience-format)
+  - [What is a Portal Experience?](#what-is-a-portal-experience)
+  - [File Structure](#file-structure)
+  - [Key Requirements](#key-requirements)
+- [Troubleshooting](#troubleshooting)
+- [Best Practices](#best-practices)
+  - [During Development](#during-development)
+  - [For Release](#for-release)
+  - [Version Control](#version-control)
+- [Examples](#examples)
+  - [Example 1: Quick Export](#example-1-quick-export)
+  - [Example 2: Custom Settings](#example-2-custom-settings)
+  - [Example 3: Multiple Maps](#example-3-multiple-maps)
+  - [Example 4: Testing Workflow](#example-4-testing-workflow)
+- [Advanced Topics](#advanced-topics)
+  - [Custom Base Map Selection](#custom-base-map-selection)
+  - [Multiple Game Modes](#multiple-game-modes)
+- [Quick Command Reference](#quick-command-reference)
+
+---
+
 ## Quick Reference
 
 ### Option 1: All-in-One Export (Fastest)
@@ -16,6 +53,8 @@ python3 tools/export_to_portal.py Kursk
 ```
 
 ### Option 2: Modular Workflow (Better for Iteration)
+
+> 💡 **Tip:** Use this workflow during development for faster iteration - you can re-export just the map without recreating the experience file each time.
 
 ```bash
 # Step 1: Export .tscn to .spatial.json
@@ -190,6 +229,8 @@ A Portal "experience" is a complete game mode package including:
 - **Game settings** (player counts, rules)
 - **Custom spatial data** (your BF1942 map layout)
 
+> 📝 **Note:** The maps in this project use Portal's **Verified Modes** settings for Conquest (`ModBuilder_GameMode: 2`), not custom game mode logic. This provides the authentic BF1942 Conquest experience using BF6's official ruleset, matching the pattern used in official Portal examples like AcePursuit and BombSquad.
+
 ### File Structure
 
 ```json
@@ -213,6 +254,8 @@ A Portal "experience" is a complete game mode package including:
 
 ### Key Requirements
 
+> ⚠️ **IMPORTANT:** Map ID format is critical - Portal will silently fail if incorrect!
+
 **Map ID Format:**
 - ✅ `MP_Tungsten-ModBuilderCustom0` (correct)
 - ❌ `MP_Tungsten-Kursk` (wrong - Portal won't recognize it)
@@ -223,9 +266,13 @@ A Portal "experience" is a complete game mode package including:
 - Must be in `attachmentData.original` field
 - Our tools handle this automatically
 
+> ✅ **Success:** When using our tools, all format requirements are handled automatically. You don't need to worry about these technical details.
+
 ---
 
 ## Troubleshooting
+
+> 💡 **Tip:** Most import issues are caused by incorrect file format. Always use our export tools to ensure compliance with Portal SDK standards.
 
 ### "Map not appearing in rotation after import"
 
@@ -413,7 +460,10 @@ ls FbExportData/levels/*.spatial.json
 
 ---
 
+**Last Updated:** October 2025
+**Status:** Production Ready
+
 **See Also:**
-- [macOS Compatibility Patch](./setup/macOS_Compatibility_Patch.md) - macOS-specific setup
-- [CLAUDE.md](../.claude/CLAUDE.md) - Project architecture
-- [Portal SDK README](../README.html) - Official documentation
+- [macOS Compatibility Patch](./setup/macOS_Compatibility_Patch.md) - macOS-specific setup and troubleshooting
+- [Project Architecture](../.claude/CLAUDE.md) - Complete project structure and coding standards
+- [Portal SDK README](../README.html) - Official Portal SDK documentation and reference
