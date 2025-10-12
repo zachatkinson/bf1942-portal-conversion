@@ -12,7 +12,7 @@ GodotProject/raw/models/*.glb
 # ============================================================================
 # Project Planning (Local tracking only)
 # ============================================================================
-PROJECT_PLAN.md
+# (None currently - documentation consolidated in .claude/ and README.md)
 
 # ============================================================================
 # Godot Engine
@@ -148,7 +148,6 @@ FbExportData/levels/*.spatial.json
 # Keep README and documentation
 !README.html
 !*.md
-!PROJECT_PLAN.md
 
 # Keep configuration files
 !package.json
