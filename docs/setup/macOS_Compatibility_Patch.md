@@ -4,6 +4,24 @@
 **Status:** ⚠️ REFERENCE DOCUMENT - macOS fixes not yet implemented in this project
 **Issue:** Portal SDK was designed for Windows, may show errors on macOS
 
+## Table of Contents
+
+- [The Issue](#the-issue)
+- [What Works on macOS (No Patch Needed)](#what-works-on-macos-no-patch-needed)
+- [What Doesn't Work (Windows-Only)](#what-doesnt-work-windows-only)
+- [Workaround: Manual Export on macOS](#workaround-manual-export-on-macos)
+  - [Step 1: Check Python Installation](#step-1-check-python-installation)
+  - [Step 2: Install Dependencies](#step-2-install-dependencies)
+  - [Step 3: Export Map Manually](#step-3-export-map-manually)
+  - [Step 4: Verify Export](#step-4-verify-export)
+- [Optional: Shell Script for Easy Export](#optional-shell-script-for-easy-export)
+- [Official Patch (Optional - Modifies Plugin Code)](#official-patch-optional---modifies-plugin-code)
+  - [Patch 1: Suppress macOS Setup Error](#patch-1-suppress-macos-setup-error)
+  - [Patch 2: Enable Manual Export Info for macOS](#patch-2-enable-manual-export-info-for-macos)
+- [Testing the Workaround](#testing-the-workaround)
+- [Advantages of Manual Export](#advantages-of-manual-export)
+- [Summary](#summary)
+
 ---
 
 ## The Issue
@@ -84,7 +102,7 @@ python3 --version
 The Portal SDK includes a `requirements.txt`:
 
 ```bash
-cd /Users/zach/Downloads/PortalSDK/code/gdconverter
+cd <PortalSDK>/code/gdconverter
 
 # Create virtual environment (optional but recommended)
 python3 -m venv venv
@@ -102,13 +120,13 @@ pip install -r requirements.txt
 
 ```bash
 # Activate venv if you created one
-source /Users/zach/Downloads/PortalSDK/code/gdconverter/venv/bin/activate
+source <PortalSDK>/code/gdconverter/venv/bin/activate
 
-# Export Kursk.tscn
-python3 /Users/zach/Downloads/PortalSDK/code/gdconverter/src/gdconverter/export_tscn.py \
-  /Users/zach/Downloads/PortalSDK/GodotProject/levels/Kursk.tscn \
-  /Users/zach/Downloads/PortalSDK/FbExportData \
-  /Users/zach/Downloads/PortalSDK/FbExportData/levels
+# Export your map
+python3 <PortalSDK>/code/gdconverter/src/gdconverter/export_tscn.py \
+  <PortalSDK>/GodotProject/levels/<YourMap>.tscn \
+  <PortalSDK>/FbExportData \
+  <PortalSDK>/FbExportData/levels
 ```
 
 **Arguments:**
@@ -118,17 +136,17 @@ python3 /Users/zach/Downloads/PortalSDK/code/gdconverter/src/gdconverter/export_
 
 **Output:**
 ```
-/Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+<PortalSDK>/FbExportData/levels/<YourMap>.spatial.json
 ```
 
 ### Step 4: Verify Export
 
 ```bash
 # Check if export succeeded
-ls -lh /Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json
+ls -lh <PortalSDK>/FbExportData/levels/<YourMap>.spatial.json
 
 # View the exported JSON
-cat /Users/zach/Downloads/PortalSDK/FbExportData/levels/Kursk.spatial.json | python3 -m json.tool | head -50
+cat <PortalSDK>/FbExportData/levels/<YourMap>.spatial.json | python3 -m json.tool | head -50
 ```
 
 ---
@@ -208,11 +226,8 @@ chmod +x tools/export_map_macos.sh
 
 **Usage:**
 ```bash
-# Export Kursk
-./tools/export_map_macos.sh GodotProject/levels/Kursk.tscn
-
-# Export any map
-./tools/export_map_macos.sh GodotProject/levels/YourMap.tscn
+# Export a map
+./tools/export_map_macos.sh GodotProject/levels/<YourMap>.tscn
 ```
 
 ---
@@ -290,7 +305,7 @@ Or use: tools/export_map_macos.sh <scene.tscn>"""
 
 1. Open Godot with Portal SDK project
 2. Ignore the "Setup has not been implemented" error
-3. Open `GodotProject/levels/Kursk.tscn`
+3. Open `GodotProject/levels/<YourMap>.tscn`
 4. Scene should load successfully
 5. Verify you can:
    - Navigate 3D viewport
@@ -304,20 +319,20 @@ Or use: tools/export_map_macos.sh <scene.tscn>"""
 
 ```bash
 # Install dependencies first
-cd /Users/zach/Downloads/PortalSDK/code/gdconverter
+cd <PortalSDK>/code/gdconverter
 pip install -r requirements.txt
 
-# Try exporting Kursk
+# Try exporting your map
 python3 src/gdconverter/export_tscn.py \
-  ../../GodotProject/levels/Kursk.tscn \
+  ../../GodotProject/levels/<YourMap>.tscn \
   ../../FbExportData \
   ../../FbExportData/levels
 
 # Check output
-ls -lh ../../FbExportData/levels/Kursk.spatial.json
+ls -lh ../../FbExportData/levels/<YourMap>.spatial.json
 ```
 
-**Expected:** Creates `Kursk.spatial.json` successfully
+**Expected:** Creates `<YourMap>.spatial.json` successfully
 
 ---
 
@@ -343,19 +358,19 @@ The error message is misleading - it's ONLY about:
 
 ### What You Can Do Right Now
 
-✅ **Open and edit Kursk.tscn** - Works perfectly
+✅ **Open and edit .tscn files** - Works perfectly
 ✅ **View scene tree and 3D viewport** - Works perfectly
 ✅ **Modify object positions** - Works perfectly
 ✅ **Save changes** - Works perfectly
 ✅ **Export to .spatial.json** - Works via manual script
 
-### No Patch Needed for Phase 4
+### No Patch Needed for Basic Usage
 
-For our current goals (testing Kursk.tscn), **you don't need any patch!**
+For basic map editing and testing, **you don't need any patch!**
 
 Just:
 1. Ignore the setup error
-2. Open Kursk.tscn
+2. Open your map .tscn file
 3. Verify object placements
 4. Make manual adjustments if needed
 5. When ready to export, use manual Python script
@@ -369,21 +384,20 @@ Only apply the official code patches if:
 
 ---
 
-## Next Steps for Phase 4
+## Getting Started on macOS
 
-**Immediate:**
+**Immediate Steps:**
 1. Close the error dialog in Godot (click OK)
-2. Open `GodotProject/levels/Kursk.tscn`
+2. Open `GodotProject/levels/<YourMap>.tscn`
 3. Scene should load successfully now
-4. Proceed with validation checklist
+4. Begin editing your map
 
-**For Export (Later):**
+**For Export:**
 1. Install Python dependencies: `pip install -r code/gdconverter/requirements.txt`
-2. Create helper script: `tools/export_map_macos.sh`
-3. Test export: `./tools/export_map_macos.sh GodotProject/levels/Kursk.tscn`
+2. (Optional) Create helper script: `tools/export_map_macos.sh`
+3. Test export: `./tools/export_map_macos.sh GodotProject/levels/<YourMap>.tscn`
 
 ---
 
-*Last Updated:* 2025-10-11
-*Status:* Workaround confirmed functional
-*Phase:* Phase 4 - macOS compatibility resolved
+**Last Updated:** October 2025
+**Status:** Workaround confirmed functional - Portal SDK fully usable on macOS

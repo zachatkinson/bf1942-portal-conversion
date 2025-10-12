@@ -3,6 +3,31 @@
 **Last Updated:** October 2025
 **Purpose:** Guide for installing and configuring Godot 4 for Portal map development
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Windows](#windows)
+  - [macOS](#macos)
+  - [Linux](#linux)
+- [Opening the Portal SDK Project](#opening-the-portal-sdk-project)
+- [Verifying Installation](#verifying-installation)
+- [Working with Maps](#working-with-maps)
+  - [Opening a Map](#opening-a-map)
+  - [Viewing the Scene Tree](#viewing-the-scene-tree)
+  - [3D Viewport Navigation](#3d-viewport-navigation)
+- [Exporting Maps](#exporting-maps)
+- [Troubleshooting](#troubleshooting)
+  - [Project Won't Import](#project-wont-import)
+  - [BFPortal Tab Missing](#bfportal-tab-missing)
+  - [Missing Assets / Red Meshes](#missing-assets--red-meshes)
+  - [Map Scene Shows Errors](#map-scene-shows-errors)
+  - [Terrain Not Visible](#terrain-not-visible)
+  - [Export Fails](#export-fails)
+- [Performance Tips](#performance-tips)
+- [Next Steps](#next-steps)
+- [Additional Resources](#additional-resources)
+
 ---
 
 ## Requirements
