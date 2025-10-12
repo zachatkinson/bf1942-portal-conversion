@@ -1,12 +1,14 @@
 # Battlefield to Portal Conversion Project
 
+> Automated conversion pipeline for bringing classic Battlefield maps into Battlefield 6 Portal
+
 ![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Platform](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey.svg)
 ![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
 ![Conversion Accuracy](https://img.shields.io/badge/conversion%20accuracy-95.3%25-success.svg)
-![Last Commit](https://img.shields.io/github/last-commit/zachatkinson/bf1942-portal-conversion)
 
-Automated conversion pipeline for bringing classic Battlefield maps into Battlefield 6 Portal. Currently supports Battlefield 1942 with extensible architecture for all Battlefield games.
+Currently supports Battlefield 1942 with extensible architecture for all Battlefield games.
 
 ## Table of Contents
 
