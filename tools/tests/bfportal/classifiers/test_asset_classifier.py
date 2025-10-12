@@ -22,14 +22,20 @@ from bfportal.classifiers.asset_classifier import (
 class TestAssetClassification:
     """Tests for AssetClassification value object."""
 
-    def test_creates_classification_with_all_fields(self):
+    def test_asset_classification_with_all_fields_creates_valid_object(self):
         """Test creating AssetClassification with all fields."""
-        # Arrange & Act
+        # Arrange
+        asset_name = "TestAsset"
+        is_real = True
+        category = "building"
+        reason = "Test reason"
+
+        # Act
         classification = AssetClassification(
-            asset_name="TestAsset",
-            is_real_asset=True,
-            category="building",
-            reason="Test reason",
+            asset_name=asset_name,
+            is_real_asset=is_real,
+            category=category,
+            reason=reason,
         )
 
         # Assert
@@ -46,9 +52,10 @@ class TestSpawnPointClassifier:
         """Test classifying asset with SpawnPoint keyword."""
         # Arrange
         classifier = SpawnPointClassifier()
+        asset_name = "German_SpawnPoint_1"
 
         # Act
-        result = classifier.classify("German_SpawnPoint_1")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -60,9 +67,10 @@ class TestSpawnPointClassifier:
         """Test classifying asset with _spawn_ pattern."""
         # Arrange
         classifier = SpawnPointClassifier()
+        asset_name = "axis_spawn_north"
 
         # Act
-        result = classifier.classify("axis_spawn_north")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -73,9 +81,10 @@ class TestSpawnPointClassifier:
         """Test classifying numbered spawn point."""
         # Arrange
         classifier = SpawnPointClassifier()
+        asset_name = "Spawn_1"
 
         # Act
-        result = classifier.classify("Spawn_1")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -85,9 +94,10 @@ class TestSpawnPointClassifier:
         """Test returns None for non-spawn point asset."""
         # Arrange
         classifier = SpawnPointClassifier()
+        asset_name = "Bunker_German_01"
 
         # Act
-        result = classifier.classify("Bunker_German_01")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -100,9 +110,10 @@ class TestControlPointClassifier:
         """Test classifying control point with _Cpoint keyword."""
         # Arrange
         classifier = ControlPointClassifier()
+        asset_name = "North_Cpoint"
 
         # Act
-        result = classifier.classify("North_Cpoint")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -113,9 +124,10 @@ class TestControlPointClassifier:
         """Test classifying CONTROLPOINT_ pattern."""
         # Arrange
         classifier = ControlPointClassifier()
+        asset_name = "CONTROLPOINT_Alpha"
 
         # Act
-        result = classifier.classify("CONTROLPOINT_Alpha")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -125,9 +137,10 @@ class TestControlPointClassifier:
         """Test classifying _BASE_ pattern."""
         # Arrange
         classifier = ControlPointClassifier()
+        asset_name = "Axis_BASE_HQ"
 
         # Act
-        result = classifier.classify("Axis_BASE_HQ")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -137,9 +150,10 @@ class TestControlPointClassifier:
         """Test returns None for non-control point asset."""
         # Arrange
         classifier = ControlPointClassifier()
+        asset_name = "Tank_Tiger"
 
         # Act
-        result = classifier.classify("Tank_Tiger")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -152,9 +166,10 @@ class TestVehicleSpawnerClassifier:
         """Test classifying vehicle spawner with Spawner suffix."""
         # Arrange
         classifier = VehicleSpawnerClassifier()
+        asset_name = "TankSpawner"
 
         # Act
-        result = classifier.classify("TankSpawner")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -166,9 +181,10 @@ class TestVehicleSpawnerClassifier:
         """Test classifying spawner with lowercase suffix."""
         # Arrange
         classifier = VehicleSpawnerClassifier()
+        asset_name = "jeep_spawner"
 
         # Act
-        result = classifier.classify("jeep_spawner")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -179,9 +195,10 @@ class TestVehicleSpawnerClassifier:
         """Test excludes assets with SpawnPoint keyword."""
         # Arrange
         classifier = VehicleSpawnerClassifier()
+        asset_name = "SpawnPoint_Spawner"
 
         # Act
-        result = classifier.classify("SpawnPoint_Spawner")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -190,9 +207,10 @@ class TestVehicleSpawnerClassifier:
         """Test returns None for asset without Spawner suffix."""
         # Arrange
         classifier = VehicleSpawnerClassifier()
+        asset_name = "TankInstance"
 
         # Act
-        result = classifier.classify("TankInstance")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -205,9 +223,10 @@ class TestVisualAssetClassifier:
         """Test classifying vegetation asset."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "Tree_Pine_Large"
 
         # Act
-        result = classifier.classify("Tree_Pine_Large")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -218,9 +237,10 @@ class TestVisualAssetClassifier:
         """Test classifying building asset."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "Bunker_German_01"
 
         # Act
-        result = classifier.classify("Bunker_German_01")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -231,9 +251,10 @@ class TestVisualAssetClassifier:
         """Test classifying prop asset."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "Rock_Boulder_Large"
 
         # Act
-        result = classifier.classify("Rock_Boulder_Large")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -244,9 +265,10 @@ class TestVisualAssetClassifier:
         """Test classifying vehicle asset."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "Tank_Tiger"
 
         # Act
-        result = classifier.classify("Tank_Tiger")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -257,9 +279,10 @@ class TestVisualAssetClassifier:
         """Test classification is case insensitive."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "TREE_OAK"
 
         # Act
-        result = classifier.classify("TREE_OAK")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -269,9 +292,10 @@ class TestVisualAssetClassifier:
         """Test returns None for asset without visual patterns."""
         # Arrange
         classifier = VisualAssetClassifier()
+        asset_name = "UnknownObject_123"
 
         # Act
-        result = classifier.classify("UnknownObject_123")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -284,9 +308,10 @@ class TestWeaponClassifier:
         """Test classifying rifle weapon."""
         # Arrange
         classifier = WeaponClassifier()
+        asset_name = "Kar98_Rifle"
 
         # Act
-        result = classifier.classify("Kar98_Rifle")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -297,9 +322,10 @@ class TestWeaponClassifier:
         """Test classifying MG weapon."""
         # Arrange
         classifier = WeaponClassifier()
+        asset_name = "MG42"
 
         # Act
-        result = classifier.classify("MG42")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -310,9 +336,10 @@ class TestWeaponClassifier:
         """Test classifying grenade."""
         # Arrange
         classifier = WeaponClassifier()
+        asset_name = "Grenade_German"
 
         # Act
-        result = classifier.classify("Grenade_German")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -323,9 +350,10 @@ class TestWeaponClassifier:
         """Test returns None for non-weapon asset."""
         # Arrange
         classifier = WeaponClassifier()
+        asset_name = "SomethingElse"
 
         # Act
-        result = classifier.classify("SomethingElse")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -338,9 +366,10 @@ class TestAmmoCrateClassifier:
         """Test classifying ammo crate."""
         # Arrange
         classifier = AmmoCrateClassifier()
+        asset_name = "AmmoBox_German"
 
         # Act
-        result = classifier.classify("AmmoBox_German")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -351,9 +380,10 @@ class TestAmmoCrateClassifier:
         """Test classifying supply crate."""
         # Arrange
         classifier = AmmoCrateClassifier()
+        asset_name = "SupplyCrate"
 
         # Act
-        result = classifier.classify("SupplyCrate")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is not None
@@ -364,9 +394,10 @@ class TestAmmoCrateClassifier:
         """Test returns None for non-ammo asset."""
         # Arrange
         classifier = AmmoCrateClassifier()
+        asset_name = "RandomObject"
 
         # Act
-        result = classifier.classify("RandomObject")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result is None
@@ -375,22 +406,26 @@ class TestAmmoCrateClassifier:
 class TestCompositeAssetClassifier:
     """Tests for CompositeAssetClassifier."""
 
-    def test_initializes_with_default_classifiers(self):
+    def test_composite_initialization_with_no_args_creates_six_classifiers(self):
         """Test composite classifier initializes with default chain."""
-        # Arrange & Act
+        # Arrange
+        # No setup needed
+
+        # Act
         classifier = CompositeAssetClassifier()
 
         # Assert
         assert len(classifier.classifiers) == 6
 
-    def test_add_classifier_extends_chain(self):
+    def test_composite_add_classifier_with_new_classifier_extends_chain(self):
         """Test adding custom classifier to chain."""
         # Arrange
         classifier = CompositeAssetClassifier()
         initial_count = len(classifier.classifiers)
+        new_classifier = WeaponClassifier()
 
         # Act
-        classifier.add_classifier(WeaponClassifier())
+        classifier.add_classifier(new_classifier)
 
         # Assert
         assert len(classifier.classifiers) == initial_count + 1
@@ -399,9 +434,10 @@ class TestCompositeAssetClassifier:
         """Test classification stops at first match."""
         # Arrange
         classifier = CompositeAssetClassifier()
+        asset_name = "German_SpawnPoint_1"
 
         # Act
-        result = classifier.classify("German_SpawnPoint_1")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result.category == "spawn_point_instance"
@@ -411,16 +447,17 @@ class TestCompositeAssetClassifier:
         """Test unknown classification for unmatched asset."""
         # Arrange
         classifier = CompositeAssetClassifier()
+        asset_name = "CompletelyUnknownAsset_XYZ"
 
         # Act
-        result = classifier.classify("CompletelyUnknownAsset_XYZ")
+        result = classifier.classify(asset_name)
 
         # Assert
         assert result.category == "unknown"
         assert result.is_real_asset is True  # Err on side of inclusion
         assert "manual review" in result.reason
 
-    def test_classify_many_returns_dict(self):
+    def test_composite_classify_many_with_assets_returns_dict(self):
         """Test classifying multiple assets returns dict."""
         # Arrange
         classifier = CompositeAssetClassifier()
@@ -459,7 +496,7 @@ class TestCompositeAssetClassifier:
         assert "SpawnPoint_1" not in result
         assert "North_Cpoint" not in result
 
-    def test_get_statistics_counts_categories(self):
+    def test_composite_get_statistics_with_assets_returns_category_counts(self):
         """Test getting classification statistics."""
         # Arrange
         classifier = CompositeAssetClassifier()
@@ -486,9 +523,10 @@ class TestCompositeAssetClassifier:
         """Test statistics for empty asset list."""
         # Arrange
         classifier = CompositeAssetClassifier()
+        assets: list[str] = []
 
         # Act
-        stats = classifier.get_statistics([])
+        stats = classifier.get_statistics(assets)
 
         # Assert
         assert stats["_total"] == 0

@@ -60,8 +60,7 @@ class TestGameConfigLoader:
             # Missing engine_type, version, era
         }
         config_path = tmp_path / "incomplete.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act & Assert
         with pytest.raises(KeyError):
@@ -79,8 +78,7 @@ class TestGameConfigLoader:
             # No expansions field
         }
         config_path = tmp_path / "no_expansions.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act
         config = ConfigLoader.load_game_config(config_path)
@@ -132,8 +130,7 @@ class TestMapConfigLoader:
             "dimensions": {"width": 2000.0, "height": 2000.0},
         }
         config_path = tmp_path / "map_config.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act
         config = ConfigLoader.load_map_config(config_path)
@@ -155,8 +152,7 @@ class TestMapConfigLoader:
             # No notes field
         }
         config_path = tmp_path / "map_config.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act
         config = ConfigLoader.load_map_config(config_path)
@@ -212,8 +208,7 @@ class TestConversionConfigLoader:
             # No optional fields
         }
         config_path = tmp_path / "conversion_config.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act
         config = ConfigLoader.load_conversion_config(config_path)
@@ -236,8 +231,7 @@ class TestConversionConfigLoader:
             "debug_mode": True,
         }
         config_path = tmp_path / "conversion_config.json"
-        with open(config_path, "w") as f:
-            json.dump(config_data, f)
+        config_path.write_text(json.dumps(config_data))
 
         # Act
         config = ConfigLoader.load_conversion_config(config_path)

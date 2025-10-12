@@ -42,6 +42,7 @@ class TestRefractorCoordinateSystem:
 
     def test_to_portal_preserves_coordinates(self):
         """Test coordinate conversion preserves values (both Y-up)."""
+        # Arrange
         coord_system = RefractorCoordinateSystem()
         position = Vector3(100.0, 50.0, -200.0)
 
@@ -55,6 +56,7 @@ class TestRefractorCoordinateSystem:
 
     def test_to_portal_rotation_preserves_angles(self):
         """Test rotation conversion preserves angles."""
+        # Arrange
         coord_system = RefractorCoordinateSystem()
         rotation = Rotation(45.0, 90.0, 180.0)
 
@@ -68,6 +70,7 @@ class TestRefractorCoordinateSystem:
 
     def test_get_scale_factor_returns_one(self):
         """Test scale factor is 1.0 (both use meters)."""
+        # Arrange
         coord_system = RefractorCoordinateSystem()
 
         # Act
@@ -80,17 +83,14 @@ class TestRefractorCoordinateSystem:
 class TestRefractorEngineSpawnPointIdentification:
     """Test cases for spawn point identification logic."""
 
-    def setup_method(self):
-        """Set up test engine."""
-        self.engine = ConcreteRefractorEngine()
-
     def test_is_spawn_point_with_spawn_and_point_in_name(self):
         """Test identifying spawn points by 'spawn' and 'point' keywords."""
-        # (self.engine created in setup_method)
+        # Arrange
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._is_spawn_point("spawnpoint_axis_1", "")
-        result2 = self.engine._is_spawn_point("spawn_point_allies", "")
+        result1 = engine._is_spawn_point("spawnpoint_axis_1", "")
+        result2 = engine._is_spawn_point("spawn_point_allies", "")
 
         # Assert
         assert result1
@@ -98,11 +98,12 @@ class TestRefractorEngineSpawnPointIdentification:
 
     def test_is_spawn_point_with_spawnpoint_type(self):
         """Test identifying spawn points by type."""
-        # (self.engine created in setup_method)
+        # Arrange
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._is_spawn_point("some_object", "spawnpoint")
-        result2 = self.engine._is_spawn_point("some_object", "objectspawner_spawnpoint")
+        result1 = engine._is_spawn_point("some_object", "spawnpoint")
+        result2 = engine._is_spawn_point("some_object", "objectspawner_spawnpoint")
 
         # Assert
         assert result1
@@ -110,12 +111,13 @@ class TestRefractorEngineSpawnPointIdentification:
 
     def test_is_spawn_point_with_instance_pattern(self):
         """Test identifying spawn points by instance pattern (name_groupnum_spawnnum)."""
-        # (self.engine created in setup_method)
+        # Arrange
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._is_spawn_point("openbasecammo_4_13", "")
-        result2 = self.engine._is_spawn_point("spawnpoint_axis_1_1", "")
-        result3 = self.engine._is_spawn_point("basecamp_3_5", "")
+        result1 = engine._is_spawn_point("openbasecammo_4_13", "")
+        result2 = engine._is_spawn_point("spawnpoint_axis_1_1", "")
+        result3 = engine._is_spawn_point("basecamp_3_5", "")
 
         # Assert
         assert result1
@@ -124,11 +126,12 @@ class TestRefractorEngineSpawnPointIdentification:
 
     def test_is_spawn_point_excludes_control_points(self):
         """Test control points are not identified as spawn points."""
-        # (self.engine created in setup_method)
+        # Arrange
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._is_spawn_point("cpoint_base_1", "")
-        result2 = self.engine._is_spawn_point("controlpoint_cpoint_1", "")
+        result1 = engine._is_spawn_point("cpoint_base_1", "")
+        result2 = engine._is_spawn_point("controlpoint_cpoint_1", "")
 
         # Assert
         assert not result1
@@ -136,12 +139,13 @@ class TestRefractorEngineSpawnPointIdentification:
 
     def test_is_spawn_point_rejects_non_spawn_objects(self):
         """Test non-spawn objects are rejected."""
-        # (self.engine created in setup_method)
+        # Arrange
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._is_spawn_point("building_barn_01", "")
-        result2 = self.engine._is_spawn_point("vehicle_tank", "")
-        result3 = self.engine._is_spawn_point("tree_pine_large", "")
+        result1 = engine._is_spawn_point("building_barn_01", "")
+        result2 = engine._is_spawn_point("vehicle_tank", "")
+        result3 = engine._is_spawn_point("tree_pine_large", "")
 
         # Assert
         assert not result1
@@ -152,17 +156,13 @@ class TestRefractorEngineSpawnPointIdentification:
 class TestRefractorEngineOwnershipClassification:
     """Test cases for spawn ownership classification."""
 
-    def setup_method(self):
-        """Set up test engine."""
-        self.engine = ConcreteRefractorEngine()
-
     def test_classify_spawn_ownership_team1_axis(self):
         """Test classifying team1 spawns by 'axis' keyword."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result = self.engine._classify_spawn_ownership("spawnpoint_axis_1")
+        result = engine._classify_spawn_ownership("spawnpoint_axis_1")
 
         # Assert
         assert result == "team1"
@@ -170,11 +170,11 @@ class TestRefractorEngineOwnershipClassification:
     def test_classify_spawn_ownership_team1_index(self):
         """Test classifying team1 spawns by _1_ index pattern."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._classify_spawn_ownership("spawn_1_1")
-        result2 = self.engine._classify_spawn_ownership("basecamp_1_5")
+        result1 = engine._classify_spawn_ownership("spawn_1_1")
+        result2 = engine._classify_spawn_ownership("basecamp_1_5")
 
         # Assert
         assert result1 == "team1"
@@ -183,10 +183,10 @@ class TestRefractorEngineOwnershipClassification:
     def test_classify_spawn_ownership_team2_allies(self):
         """Test classifying team2 spawns by 'allies' keyword."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result = self.engine._classify_spawn_ownership("spawnpoint_allies_1")
+        result = engine._classify_spawn_ownership("spawnpoint_allies_1")
 
         # Assert
         assert result == "team2"
@@ -194,11 +194,11 @@ class TestRefractorEngineOwnershipClassification:
     def test_classify_spawn_ownership_team2_index(self):
         """Test classifying team2 spawns by _2_ index pattern."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._classify_spawn_ownership("spawn_2_1")
-        result2 = self.engine._classify_spawn_ownership("basecamp_2_3")
+        result1 = engine._classify_spawn_ownership("spawn_2_1")
+        result2 = engine._classify_spawn_ownership("basecamp_2_3")
 
         # Assert
         assert result1 == "team2"
@@ -207,12 +207,12 @@ class TestRefractorEngineOwnershipClassification:
     def test_classify_spawn_ownership_neutral(self):
         """Test classifying neutral spawns."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._classify_spawn_ownership("spawn_3_1")
-        result2 = self.engine._classify_spawn_ownership("spawn_4_2")
-        result3 = self.engine._classify_spawn_ownership("openbasecamp_5_1")
+        result1 = engine._classify_spawn_ownership("spawn_3_1")
+        result2 = engine._classify_spawn_ownership("spawn_4_2")
+        result3 = engine._classify_spawn_ownership("openbasecamp_5_1")
 
         # Assert
         assert result1 == "neutral"
@@ -223,19 +223,15 @@ class TestRefractorEngineOwnershipClassification:
 class TestRefractorEngineTeamFiltering:
     """Test cases for team-based spawn filtering logic."""
 
-    def setup_method(self):
-        """Set up test engine."""
-        self.engine = ConcreteRefractorEngine()
-
     def test_should_include_spawn_for_team1(self):
         """Test including team1 spawns for team1 request."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._should_include_spawn_for_team("team1", Team.TEAM_1)
-        result2 = self.engine._should_include_spawn_for_team("team2", Team.TEAM_1)
-        result3 = self.engine._should_include_spawn_for_team("neutral", Team.TEAM_1)
+        result1 = engine._should_include_spawn_for_team("team1", Team.TEAM_1)
+        result2 = engine._should_include_spawn_for_team("team2", Team.TEAM_1)
+        result3 = engine._should_include_spawn_for_team("neutral", Team.TEAM_1)
 
         # Assert
         assert result1 is True
@@ -245,12 +241,12 @@ class TestRefractorEngineTeamFiltering:
     def test_should_include_spawn_for_team2(self):
         """Test including team2 spawns for team2 request."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._should_include_spawn_for_team("team2", Team.TEAM_2)
-        result2 = self.engine._should_include_spawn_for_team("team1", Team.TEAM_2)
-        result3 = self.engine._should_include_spawn_for_team("neutral", Team.TEAM_2)
+        result1 = engine._should_include_spawn_for_team("team2", Team.TEAM_2)
+        result2 = engine._should_include_spawn_for_team("team1", Team.TEAM_2)
+        result3 = engine._should_include_spawn_for_team("neutral", Team.TEAM_2)
 
         # Assert
         assert result1 is True
@@ -260,13 +256,11 @@ class TestRefractorEngineTeamFiltering:
     def test_should_exclude_neutral_spawns_from_hq(self):
         """Test neutral spawns are excluded from team HQs."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Neutral spawns belong to capture points, not HQs
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result1 = self.engine._should_include_spawn_for_team("neutral", Team.TEAM_1)
-        result2 = self.engine._should_include_spawn_for_team("neutral", Team.TEAM_2)
+        result1 = engine._should_include_spawn_for_team("neutral", Team.TEAM_1)
+        result2 = engine._should_include_spawn_for_team("neutral", Team.TEAM_2)
 
         # Assert
         assert result1 is False
@@ -276,17 +270,13 @@ class TestRefractorEngineTeamFiltering:
 class TestRefractorEngineCoordinateConversion:
     """Test cases for coordinate system conversion."""
 
-    def setup_method(self):
-        """Set up test engine."""
-        self.engine = ConcreteRefractorEngine()
-
     def test_get_coordinate_system_returns_refractor_system(self):
         """Test getting coordinate system returns RefractorCoordinateSystem."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        result = self.engine.get_coordinate_system()
+        result = engine.get_coordinate_system()
 
         # Assert
         assert isinstance(result, RefractorCoordinateSystem)
@@ -294,15 +284,12 @@ class TestRefractorEngineCoordinateConversion:
     def test_coordinate_system_converts_position(self):
         """Test coordinate system can convert positions."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
-        coord_system = self.engine.get_coordinate_system()
+        engine = ConcreteRefractorEngine()
+        coord_system = engine.get_coordinate_system()
         position = Vector3(500.0, 100.0, -300.0)
 
+        # Act
         result = coord_system.to_portal(position)
-
-        # Both use Y-up, so conversion preserves values
 
         # Assert
         assert result.x == 500.0
@@ -313,16 +300,10 @@ class TestRefractorEngineCoordinateConversion:
 class TestRefractorEngineBoundsCalculation:
     """Test cases for map bounds calculation."""
 
-    def setup_method(self):
-        """Set up test engine."""
-        self.engine = ConcreteRefractorEngine()
-
     def test_calculate_bounds_with_spawns(self):
         """Test bounds calculation from spawn points."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
+        engine = ConcreteRefractorEngine()
         spawns = [
             SpawnPoint(
                 name="spawn1",
@@ -336,9 +317,8 @@ class TestRefractorEngineBoundsCalculation:
             ),
         ]
 
-        bounds = self.engine._calculate_bounds(spawns, [], [])
-
-        # Check bounds include all spawns with padding
+        # Act
+        bounds = engine._calculate_bounds(spawns, [], [])
 
         # Assert
         assert bounds.min_point.x < 0
@@ -349,9 +329,7 @@ class TestRefractorEngineBoundsCalculation:
     def test_calculate_bounds_with_capture_points(self):
         """Test bounds calculation includes capture points."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
+        engine = ConcreteRefractorEngine()
         capture_points = [
             CapturePoint(
                 name="cp1",
@@ -367,9 +345,8 @@ class TestRefractorEngineBoundsCalculation:
             ),
         ]
 
-        bounds = self.engine._calculate_bounds([], capture_points, [])
-
-        # Check bounds include capture points with padding
+        # Act
+        bounds = engine._calculate_bounds([], capture_points, [])
 
         # Assert
         assert bounds.min_point.x < -500
@@ -380,9 +357,7 @@ class TestRefractorEngineBoundsCalculation:
     def test_calculate_bounds_with_game_objects(self):
         """Test bounds calculation includes game objects."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
+        engine = ConcreteRefractorEngine()
         objects = [
             GameObject(
                 name="obj1",
@@ -400,9 +375,8 @@ class TestRefractorEngineBoundsCalculation:
             ),
         ]
 
-        bounds = self.engine._calculate_bounds([], [], objects)
-
-        # Check bounds include objects with padding
+        # Act
+        bounds = engine._calculate_bounds([], [], objects)
 
         # Assert
         assert bounds.min_point.x < 0
@@ -413,9 +387,7 @@ class TestRefractorEngineBoundsCalculation:
     def test_calculate_bounds_adds_vertical_buffer(self):
         """Test bounds calculation adds vertical buffer for height."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
+        engine = ConcreteRefractorEngine()
         spawns = [
             SpawnPoint(
                 name="spawn1",
@@ -428,11 +400,10 @@ class TestRefractorEngineBoundsCalculation:
                 team=Team.TEAM_1,
             ),
         ]
-
-        bounds = self.engine._calculate_bounds(spawns, [], [])
-
-        # Height should be max_y - min_y + 100m buffer
         expected_height = 100 - 0 + 100
+
+        # Act
+        bounds = engine._calculate_bounds(spawns, [], [])
 
         # Assert
         assert bounds.height == expected_height
@@ -440,12 +411,10 @@ class TestRefractorEngineBoundsCalculation:
     def test_calculate_bounds_with_empty_lists_returns_defaults(self):
         """Test bounds calculation with no objects returns default bounds."""
         # Arrange
-        # (self.engine created in setup_method)
+        engine = ConcreteRefractorEngine()
 
         # Act
-        bounds = self.engine._calculate_bounds([], [], [])
-
-        # Default bounds
+        bounds = engine._calculate_bounds([], [], [])
 
         # Assert
         assert bounds.min_point.x == -1000
@@ -457,9 +426,7 @@ class TestRefractorEngineBoundsCalculation:
     def test_calculate_bounds_adds_10_percent_padding(self):
         """Test bounds calculation adds 10% padding."""
         # Arrange
-        # (self.engine created in setup_method)
-
-        # Act
+        engine = ConcreteRefractorEngine()
         spawns = [
             SpawnPoint(
                 name="spawn1",
@@ -473,10 +440,8 @@ class TestRefractorEngineBoundsCalculation:
             ),
         ]
 
-        bounds = self.engine._calculate_bounds(spawns, [], [])
-
-        # Width/depth = 1000, padding = 10% = 100
-        # min should be -100, max should be 1100
+        # Act
+        bounds = engine._calculate_bounds(spawns, [], [])
 
         # Assert
         assert bounds.min_point.x == pytest.approx(-100.0)

@@ -19,8 +19,11 @@ class TestAssetMapperInitialization:
 
     def test_init_loads_portal_assets(self, sample_portal_assets):
         """Test that initialization loads Portal assets correctly."""
-        # Arrange/Act
-        mapper = AssetMapper(sample_portal_assets)
+        # Arrange
+        assets = sample_portal_assets
+
+        # Act
+        mapper = AssetMapper(assets)
 
         # Assert
         assert len(mapper.portal_assets) == 6
@@ -29,8 +32,11 @@ class TestAssetMapperInitialization:
 
     def test_init_loads_portal_asset_properties(self, sample_portal_assets):
         """Test that Portal asset properties are loaded correctly."""
-        # Arrange/Act
-        mapper = AssetMapper(sample_portal_assets)
+        # Arrange
+        assets = sample_portal_assets
+
+        # Act
+        mapper = AssetMapper(assets)
 
         # Assert
         tree_asset = mapper.portal_assets["Tree_Pine_Large"]
@@ -40,8 +46,11 @@ class TestAssetMapperInitialization:
 
     def test_init_loads_level_restrictions(self, sample_portal_assets):
         """Test that level restrictions are loaded correctly."""
-        # Arrange/Act
-        mapper = AssetMapper(sample_portal_assets)
+        # Arrange
+        assets = sample_portal_assets
+
+        # Act
+        mapper = AssetMapper(assets)
 
         # Assert
         oak_asset = mapper.portal_assets["Tree_Oak_Medium"]
@@ -57,14 +66,16 @@ class TestAssetMapperInitialization:
         asset_audit_dir.mkdir()
 
         # Act
-        with patch("pathlib.Path.__truediv__") as mock_div:
+        with (
+            patch("pathlib.Path.__truediv__", spec=Path) as mock_div,
+            patch("bfportal.mappers.asset_mapper.__file__", str(tmp_path / "mapper.py")),
+        ):
             mock_div.return_value = sample_fallback_keywords
 
             mapper_file = tmp_path / "mapper.py"
             mapper_file.write_text("")
 
-            with patch("bfportal.mappers.asset_mapper.__file__", str(mapper_file)):
-                mapper = AssetMapper(sample_portal_assets)
+            mapper = AssetMapper(sample_portal_assets)
 
         # Assert
         assert len(mapper.fallback_keywords) > 0
@@ -359,27 +370,39 @@ class TestAssetMapperTerrainElements:
         # Arrange
         mapper = AssetMapper(sample_portal_assets)
 
-        # Act/Assert
-        assert mapper._is_terrain_element("lake_01") is True
-        assert mapper._is_terrain_element("river_wide") is True
-        assert mapper._is_terrain_element("ocean_surface") is True
+        # Act
+        result_lake = mapper._is_terrain_element("lake_01")
+        result_river = mapper._is_terrain_element("river_wide")
+        result_ocean = mapper._is_terrain_element("ocean_surface")
+
+        # Assert
+        assert result_lake is True
+        assert result_river is True
+        assert result_ocean is True
 
     def test_is_terrain_element_detects_terrain_objects(self, sample_portal_assets):
         """Test that terrain objects are detected."""
         # Arrange
         mapper = AssetMapper(sample_portal_assets)
 
-        # Act/Assert
-        assert mapper._is_terrain_element("terrain_object_01") is True
+        # Act
+        result = mapper._is_terrain_element("terrain_object_01")
+
+        # Assert
+        assert result is True
 
     def test_is_terrain_element_normal_asset(self, sample_portal_assets):
         """Test that normal assets are not detected as terrain elements."""
         # Arrange
         mapper = AssetMapper(sample_portal_assets)
 
-        # Act/Assert
-        assert mapper._is_terrain_element("tree_pine_01") is False
-        assert mapper._is_terrain_element("building_barn") is False
+        # Act
+        result_tree = mapper._is_terrain_element("tree_pine_01")
+        result_building = mapper._is_terrain_element("building_barn")
+
+        # Assert
+        assert result_tree is False
+        assert result_building is False
 
     def test_map_asset_skips_terrain_elements(
         self, sample_portal_assets, sample_bf1942_mappings, sample_map_context
@@ -405,10 +428,15 @@ class TestAssetMapperAvailability:
         mapper = AssetMapper(sample_portal_assets)
         tree_asset = mapper.portal_assets["Tree_Pine_Large"]
 
-        # Act/Assert
-        assert mapper._is_asset_available_on_map(tree_asset, "MP_Tungsten") is True
-        assert mapper._is_asset_available_on_map(tree_asset, "MP_Battery") is True
-        assert mapper._is_asset_available_on_map(tree_asset, "MP_Aftermath") is True
+        # Act
+        result_tungsten = mapper._is_asset_available_on_map(tree_asset, "MP_Tungsten")
+        result_battery = mapper._is_asset_available_on_map(tree_asset, "MP_Battery")
+        result_aftermath = mapper._is_asset_available_on_map(tree_asset, "MP_Aftermath")
+
+        # Assert
+        assert result_tungsten is True
+        assert result_battery is True
+        assert result_aftermath is True
 
     def test_is_asset_available_on_map_restricted_available(self, sample_portal_assets):
         """Test that restricted asset is available on allowed map."""
@@ -416,8 +444,11 @@ class TestAssetMapperAvailability:
         mapper = AssetMapper(sample_portal_assets)
         oak_asset = mapper.portal_assets["Tree_Oak_Medium"]
 
-        # Act/Assert
-        assert mapper._is_asset_available_on_map(oak_asset, "MP_Tungsten") is True
+        # Act
+        result = mapper._is_asset_available_on_map(oak_asset, "MP_Tungsten")
+
+        # Assert
+        assert result is True
 
     def test_is_asset_available_on_map_restricted_unavailable(self, sample_portal_assets):
         """Test that restricted asset is not available on disallowed map."""
@@ -425,9 +456,13 @@ class TestAssetMapperAvailability:
         mapper = AssetMapper(sample_portal_assets)
         oak_asset = mapper.portal_assets["Tree_Oak_Medium"]
 
-        # Act/Assert
-        assert mapper._is_asset_available_on_map(oak_asset, "MP_Battery") is False
-        assert mapper._is_asset_available_on_map(oak_asset, "MP_Aftermath") is False
+        # Act
+        result_battery = mapper._is_asset_available_on_map(oak_asset, "MP_Battery")
+        result_aftermath = mapper._is_asset_available_on_map(oak_asset, "MP_Aftermath")
+
+        # Assert
+        assert result_battery is False
+        assert result_aftermath is False
 
 
 class TestAssetMapperStats:

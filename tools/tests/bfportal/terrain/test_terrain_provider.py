@@ -3,7 +3,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
@@ -216,13 +216,13 @@ class TestCustomHeightmapProvider:
 
             mock_image = MagicMock(spec=PILImage)
         except ImportError:
-            # If PIL not available, create mock without spec
-            mock_image = MagicMock()
+            # If PIL not available, create mock with explicit spec
+            mock_image = MagicMock(spec=["size", "getpixel", "convert"])
 
         mock_image.size = (256, 256)
-        mock_image.getpixel = MagicMock(return_value=128)  # Mid-gray (50% height)
+        mock_image.getpixel = Mock(spec=[], return_value=128)  # Mid-gray (50% height)
         # Make convert() return the same mock object
-        mock_image.convert = MagicMock(return_value=mock_image)
+        mock_image.convert = Mock(spec=[], return_value=mock_image)
         return mock_image
 
     def test_initialization_with_valid_heightmap(self, tmp_path: Path, mock_heightmap_image):
@@ -291,7 +291,7 @@ class TestCustomHeightmapProvider:
         # Arrange
         heightmap_path = tmp_path / "heightmap.png"
         heightmap_path.write_bytes(b"fake png data")
-        mock_heightmap_image.getpixel = MagicMock(return_value=128)  # Mid-gray
+        mock_heightmap_image.getpixel = Mock(spec=[], return_value=128)  # Mid-gray
 
         with patch("PIL.Image.open", return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
@@ -320,17 +320,17 @@ class TestCustomHeightmapProvider:
             )
 
             # Act & Assert - Test minimum height (black pixel)
-            mock_heightmap_image.getpixel = MagicMock(return_value=0)
+            mock_heightmap_image.getpixel = Mock(spec=[], return_value=0)
             height = provider.get_height_at(0.0, 0.0)
             assert height == 0.0
 
             # Act & Assert - Test maximum height (white pixel)
-            mock_heightmap_image.getpixel = MagicMock(return_value=255)
+            mock_heightmap_image.getpixel = Mock(spec=[], return_value=255)
             height = provider.get_height_at(0.0, 0.0)
             assert height == 100.0
 
             # Act & Assert - Test mid height (gray pixel)
-            mock_heightmap_image.getpixel = MagicMock(return_value=127)
+            mock_heightmap_image.getpixel = Mock(spec=[], return_value=127)
             height = provider.get_height_at(0.0, 0.0)
             assert 49.0 <= height <= 51.0
 
@@ -339,7 +339,7 @@ class TestCustomHeightmapProvider:
         # Arrange
         heightmap_path = tmp_path / "heightmap.png"
         heightmap_path.write_bytes(b"fake png data")
-        mock_heightmap_image.getpixel = MagicMock(return_value=(128, 128, 128))  # RGB tuple
+        mock_heightmap_image.getpixel = Mock(spec=[], return_value=(128, 128, 128))  # RGB tuple
 
         with patch("PIL.Image.open", return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(

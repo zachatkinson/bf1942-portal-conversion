@@ -148,9 +148,11 @@ class TestTscnGenerator:
 
     def test_validate_map_data_valid(self, generator, minimal_map_data):
         """Test validation accepts valid map data."""
-        # Arrange (done via fixtures)
+        # Arrange
+        # (done via fixtures)
 
-        # Act & Assert - should not raise exception
+        # Act & Assert
+        # Should not raise exception
         generator._validate_map_data(minimal_map_data)
 
     def test_validate_map_data_missing_team1_hq(self, generator, minimal_map_data):
@@ -253,12 +255,10 @@ class TestTscnGenerator:
         assert 'name="TEAM_1_HQ"' in content
         assert "Team = 1" in content
         assert 'HQArea = NodePath("HQ_Team1")' in content
-
         # Check Team 2 HQ
         assert 'name="TEAM_2_HQ"' in content
         assert "Team = 2" in content
         assert 'HQArea = NodePath("HQ_Team2")' in content
-
         # Check spawn points
         assert 'name="SpawnPoint_1_1"' in content
         assert 'name="SpawnPoint_2_4"' in content
@@ -298,7 +298,6 @@ class TestTscnGenerator:
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-
         capture_points = [
             CapturePoint(
                 name="CP1",
@@ -339,7 +338,6 @@ class TestTscnGenerator:
         assert 'name="CapturePoint_1"' in content
         assert "ObjId = 101" in content
         assert 'name="CaptureZone_1"' in content
-        # Check that the radius (30.0) is used in the capture zone points
         assert "30.0" in content or "30" in content
 
     def test_generate_vehicle_spawners(self, generator):
@@ -347,7 +345,6 @@ class TestTscnGenerator:
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-
         spawners = [
             GameObject(
                 name="Tank_Spawner",
@@ -375,8 +372,6 @@ class TestTscnGenerator:
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-
-        # Add some static objects
         minimal_map_data.game_objects = [
             GameObject(
                 name="Building_01",
@@ -410,24 +405,17 @@ class TestTscnGenerator:
             generator.generate(minimal_map_data, output_path, base_terrain="MP_Tungsten")
 
             # Assert
-            # Verify file was created
             assert output_path.exists()
-
-            # Read and verify content
             content = output_path.read_text()
-
             # Check header
             assert "[gd_scene" in content
             assert "format=3" in content
-
             # Check ExtResources
             assert "HQ_PlayerSpawner.tscn" in content
             assert "SpawnPoint.tscn" in content
             assert "CombatArea.tscn" in content
-
             # Check root node
             assert 'name="TestMap"' in content
-
             # Check required components
             assert "TEAM_1_HQ" in content
             assert "TEAM_2_HQ" in content
@@ -435,7 +423,6 @@ class TestTscnGenerator:
             assert "Static" in content
 
         finally:
-            # Cleanup
             if output_path.exists():
                 output_path.unlink()
 
@@ -460,7 +447,8 @@ class TestTscnGenerator:
 
     def test_validate_missing_file(self, generator):
         """Test validation of non-existent file."""
-        # Arrange (done via fixture)
+        # Arrange
+        # (done via fixture)
 
         # Act
         errors = generator.validate(Path("/nonexistent/file.tscn"))
@@ -499,9 +487,7 @@ class TestTscnGenerator:
         generator._init_ext_resources()
 
         # Assert
-        # Check all required resources are present
         assert len(generator.ext_resources) == 6
-
         resource_paths = [r["path"] for r in generator.ext_resources]
         assert "res://objects/Gameplay/Common/HQ_PlayerSpawner.tscn" in resource_paths
         assert "res://objects/entities/SpawnPoint.tscn" in resource_paths
@@ -509,11 +495,11 @@ class TestTscnGenerator:
         assert "res://objects/Gameplay/Common/VehicleSpawner.tscn" in resource_paths
         assert "res://objects/Gameplay/Common/CombatArea.tscn" in resource_paths
         assert "res://static/MP_Tungsten_Terrain.tscn" in resource_paths
-
-        # Check next ID is correct
         assert generator.next_ext_resource_id == 7
 
-    def test_generate_with_capture_points_generates_capture_points(self, generator, minimal_map_data):
+    def test_generate_with_capture_points_generates_capture_points(
+        self, generator, minimal_map_data
+    ):
         """Test generate method includes capture points when present."""
         # Arrange
         with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
@@ -542,7 +528,9 @@ class TestTscnGenerator:
             if output_path.exists():
                 output_path.unlink()
 
-    def test_generate_with_vehicle_spawners_generates_vehicle_spawners(self, generator, minimal_map_data):
+    def test_generate_with_vehicle_spawners_generates_vehicle_spawners(
+        self, generator, minimal_map_data
+    ):
         """Test generate method includes vehicle spawners when present."""
         # Arrange
         with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
