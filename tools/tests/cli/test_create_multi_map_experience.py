@@ -92,7 +92,7 @@ class TestFilterMaps:
         """Test returns all maps when filter criteria is empty."""
         # Arrange
         maps = [{"id": "map1"}, {"id": "map2"}, {"id": "map3"}]
-        filter_criteria = {}
+        filter_criteria: dict[str, str] = {}
 
         # Act
         result = filter_maps(maps, filter_criteria)
@@ -331,7 +331,7 @@ class TestMainFunction:
     def test_returns_error_when_template_not_found(self, tmp_path: Path):
         """Test main returns error code when template doesn't exist."""
         # Arrange
-        registry_data = {"maps": [], "experience_templates": {}}
+        registry_data: dict[str, list | dict] = {"maps": [], "experience_templates": {}}
         registry_path = tmp_path / "registry.json"
         registry_path.write_text(json.dumps(registry_data))
         test_args = [
@@ -388,9 +388,11 @@ class TestMainFunction:
         ]
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("create_multi_map_experience.Path.cwd", return_value=tmp_path):
-                result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+        ):
+            result = main()
 
         # Assert
         assert result == 0

@@ -49,9 +49,11 @@ class TestExportTscnToSpatial:
         output_dir = tmp_path / "output"
 
         # Act & Assert
-        with patch("export_to_portal.Path.exists", return_value=False):
-            with pytest.raises(RuntimeError, match="Export script not found"):
-                export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
+        with (
+            patch("export_to_portal.Path.exists", return_value=False),
+            pytest.raises(RuntimeError, match="Export script not found"),
+        ):
+            export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
     def test_raises_error_when_subprocess_fails(self, tmp_path: Path):
         """Test error raised when subprocess returns non-zero."""
@@ -68,9 +70,11 @@ class TestExportTscnToSpatial:
         mock_result.stderr = "Export failed"
 
         # Act & Assert
-        with patch("export_to_portal.subprocess.run", return_value=mock_result):
-            with pytest.raises(RuntimeError, match="Export failed"):
-                export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
+        with (
+            patch("export_to_portal.subprocess.run", return_value=mock_result),
+            pytest.raises(RuntimeError, match="Export failed"),
+        ):
+            export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
     def test_raises_error_when_output_file_not_created(self, tmp_path: Path):
         """Test error raised when expected output file doesn't exist."""
@@ -86,9 +90,11 @@ class TestExportTscnToSpatial:
         mock_result.returncode = 0
 
         # Act & Assert
-        with patch("export_to_portal.subprocess.run", return_value=mock_result):
-            with pytest.raises(RuntimeError, match="Expected output file not created"):
-                export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
+        with (
+            patch("export_to_portal.subprocess.run", return_value=mock_result),
+            pytest.raises(RuntimeError, match="Expected output file not created"),
+        ):
+            export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
 
 class TestCreateExperienceFileFromExportToPortal:
@@ -150,9 +156,11 @@ class TestMainFunctionFromExportToPortal:
         test_args = ["export_to_portal.py", "NonExistentMap"]
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("export_to_portal.Path.exists", return_value=False):
-                result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("export_to_portal.Path.exists", return_value=False),
+        ):
+            result = main()
 
         # Assert
         assert result == 1
@@ -166,9 +174,11 @@ class TestMainFunctionFromExportToPortal:
         test_args = ["export_to_portal.py", "TestMap"]
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("export_to_portal.Path.cwd", return_value=tmp_path):
-                result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("export_to_portal.Path.cwd", return_value=tmp_path),
+        ):
+            result = main()
 
         # Assert
         assert result == 1
@@ -189,12 +199,14 @@ class TestMainFunctionFromExportToPortal:
         test_args = ["export_to_portal.py", "TestMap"]
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("export_to_portal.Path.cwd", return_value=tmp_path):
-                with patch("export_to_portal.export_tscn_to_spatial", return_value=spatial_path):
-                    with patch("export_to_portal.create_experience_file") as mock_create:
-                        mock_create.return_value = tmp_path / "TestMap_Experience.json"
-                        result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("export_to_portal.Path.cwd", return_value=tmp_path),
+            patch("export_to_portal.export_tscn_to_spatial", return_value=spatial_path),
+            patch("export_to_portal.create_experience_file") as mock_create,
+        ):
+            mock_create.return_value = tmp_path / "TestMap_Experience.json"
+            result = main()
 
         # Assert
         assert result == 0

@@ -224,9 +224,11 @@ class TestMainFunction:
         test_args = ["create_experience.py", "NonExistentMap"]
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("create_experience.Path.exists", return_value=False):
-                result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("create_experience.Path.exists", return_value=False),
+        ):
+            result = main()
 
         # Assert
         assert result == 1
@@ -240,12 +242,14 @@ class TestMainFunction:
         spatial_path.write_text(spatial_data)
 
         # Act
-        with patch("sys.argv", test_args):
-            with patch("create_experience.Path", return_value=spatial_path):
-                with patch("create_experience.Path.exists", return_value=True):
-                    with patch("create_experience.create_experience_file") as mock_create:
-                        mock_create.return_value = tmp_path / "TestMap_Experience.json"
-                        result = main()
+        with (
+            patch("sys.argv", test_args),
+            patch("create_experience.Path", return_value=spatial_path),
+            patch("create_experience.Path.exists", return_value=True),
+            patch("create_experience.create_experience_file") as mock_create,
+        ):
+            mock_create.return_value = tmp_path / "TestMap_Experience.json"
+            result = main()
 
         # Assert
         assert result == 0

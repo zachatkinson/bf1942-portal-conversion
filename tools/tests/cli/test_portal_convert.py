@@ -32,16 +32,18 @@ def _create_mock_converter(args: Namespace, tmp_path: Path | None = None):
     mock_asset_mapper = MagicMock()
     mock_asset_mapper.load_mappings = MagicMock()
 
-    with patch("portal_convert.BF1942Engine"):
-        with patch("portal_convert.AssetMapper", return_value=mock_asset_mapper):
-            with patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain):
-                with patch("portal_convert.CoordinateOffset"):
-                    with patch("portal_convert.HeightAdjuster"):
-                        with patch.object(Path, "exists", return_value=True):
-                            converter = PortalConverter(args)
-                            if tmp_path:
-                                converter.project_root = tmp_path
-                            return converter
+    with (
+        patch("portal_convert.BF1942Engine"),
+        patch("portal_convert.AssetMapper", return_value=mock_asset_mapper),
+        patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain),
+        patch("portal_convert.CoordinateOffset"),
+        patch("portal_convert.HeightAdjuster"),
+        patch.object(Path, "exists", return_value=True),
+    ):
+        converter = PortalConverter(args)
+        if tmp_path:
+            converter.project_root = tmp_path
+        return converter
 
 
 class TestPortalConverterInit:
@@ -73,13 +75,15 @@ class TestPortalConverterInit:
         mock_asset_mapper.load_mappings = MagicMock()
 
         # Act
-        with patch("portal_convert.BF1942Engine"):
-            with patch("portal_convert.AssetMapper", return_value=mock_asset_mapper):
-                with patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain):
-                    with patch("portal_convert.CoordinateOffset"):
-                        with patch("portal_convert.HeightAdjuster"):
-                            with patch.object(Path, "exists", return_value=True):
-                                converter = PortalConverter(args)
+        with (
+            patch("portal_convert.BF1942Engine"),
+            patch("portal_convert.AssetMapper", return_value=mock_asset_mapper),
+            patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain),
+            patch("portal_convert.CoordinateOffset"),
+            patch("portal_convert.HeightAdjuster"),
+            patch.object(Path, "exists", return_value=True),
+        ):
+            converter = PortalConverter(args)
 
         # Assert
         assert converter.args == args
@@ -99,12 +103,14 @@ class TestPortalConverterInit:
         )
 
         # Act & Assert
-        with patch("portal_convert.BF1942Engine"):
-            with patch("portal_convert.AssetMapper"):
-                with patch("portal_convert.CoordinateOffset"):
-                    with patch.object(Path, "exists", return_value=False):
-                        with pytest.raises(BFPortalError, match="Portal terrain mesh not found"):
-                            PortalConverter(args)
+        with (
+            patch("portal_convert.BF1942Engine"),
+            patch("portal_convert.AssetMapper"),
+            patch("portal_convert.CoordinateOffset"),
+            patch.object(Path, "exists", return_value=False),
+            pytest.raises(BFPortalError, match="Portal terrain mesh not found"),
+        ):
+            PortalConverter(args)
 
 
 class TestResolveMapPath:
@@ -293,15 +299,17 @@ class TestMainFunction:
         ]
 
         # Act & Assert
-        with patch("sys.argv", test_args):
-            with patch("portal_convert.PortalConverter") as mock_converter_class:
-                mock_converter = MagicMock(spec=["convert"])
-                mock_converter.convert.return_value = 0
-                mock_converter_class.return_value = mock_converter
-                with pytest.raises(SystemExit) as exc_info:
-                    main()
+        with (
+            patch("sys.argv", test_args),
+            patch("portal_convert.PortalConverter") as mock_converter_class,
+        ):
+            mock_converter = MagicMock(spec=["convert"])
+            mock_converter.convert.return_value = 0
+            mock_converter_class.return_value = mock_converter
+            with pytest.raises(SystemExit) as exc_info:
+                main()
 
-                assert exc_info.value.code == 0
+            assert exc_info.value.code == 0
 
     def test_returns_error_when_conversion_fails(self):
         """Test main returns error code when conversion fails."""
@@ -315,12 +323,14 @@ class TestMainFunction:
         ]
 
         # Act & Assert
-        with patch("sys.argv", test_args):
-            with patch("portal_convert.PortalConverter") as mock_converter_class:
-                mock_converter = MagicMock(spec=["convert"])
-                mock_converter.convert.return_value = 1
-                mock_converter_class.return_value = mock_converter
-                with pytest.raises(SystemExit) as exc_info:
-                    main()
+        with (
+            patch("sys.argv", test_args),
+            patch("portal_convert.PortalConverter") as mock_converter_class,
+        ):
+            mock_converter = MagicMock(spec=["convert"])
+            mock_converter.convert.return_value = 1
+            mock_converter_class.return_value = mock_converter
+            with pytest.raises(SystemExit) as exc_info:
+                main()
 
-                assert exc_info.value.code == 1
+            assert exc_info.value.code == 1
