@@ -1,0 +1,181 @@
+{
+  "maps": [
+    {
+      "id": "kursk",
+      "display_name": "Kursk",
+      "base_map": "MP_Tungsten",
+      "base_map_display": "Mirak Valley",
+      "terrain_type": "open_plains",
+      "era": "ww2_eastern_front",
+      "theater": "Eastern Front",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "complete",
+      "tscn_path": "GodotProject/levels/Kursk.tscn",
+      "description": "Epic tank battle on the Eastern Front"
+    },
+    {
+      "id": "el_alamein",
+      "display_name": "El Alamein",
+      "base_map": "MP_Firestorm",
+      "base_map_display": "Operation Firestorm",
+      "terrain_type": "desert",
+      "era": "ww2_north_africa",
+      "theater": "North Africa",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/El_Alamein.tscn",
+      "description": "Desert warfare in North Africa"
+    },
+    {
+      "id": "wake_island",
+      "display_name": "Wake Island",
+      "base_map": "MP_Limestone",
+      "base_map_display": "Saint's Quarter",
+      "terrain_type": "island_coastal",
+      "era": "ww2_pacific",
+      "theater": "Pacific",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Wake_Island.tscn",
+      "description": "Island assault in the Pacific"
+    },
+    {
+      "id": "guadalcanal",
+      "display_name": "Guadalcanal",
+      "base_map": "MP_Limestone",
+      "base_map_display": "Saint's Quarter",
+      "terrain_type": "jungle_coastal",
+      "era": "ww2_pacific",
+      "theater": "Pacific",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Guadalcanal.tscn",
+      "description": "Jungle warfare in the Solomon Islands"
+    },
+    {
+      "id": "stalingrad",
+      "display_name": "Stalingrad",
+      "base_map": "MP_Aftermath",
+      "base_map_display": "Empire State",
+      "terrain_type": "urban_ruins",
+      "era": "ww2_eastern_front",
+      "theater": "Eastern Front",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Stalingrad.tscn",
+      "description": "Urban combat in the ruined city"
+    },
+    {
+      "id": "battle_of_britain",
+      "display_name": "Battle of Britain",
+      "base_map": "MP_Battery",
+      "base_map_display": "Iberian Offensive",
+      "terrain_type": "countryside",
+      "era": "ww2_western_europe",
+      "theater": "Western Europe",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Battle_of_Britain.tscn",
+      "description": "Aerial superiority over the English countryside"
+    },
+    {
+      "id": "monte_cassino",
+      "display_name": "Monte Cassino",
+      "base_map": "MP_Battery",
+      "base_map_display": "Iberian Offensive",
+      "terrain_type": "mountain_fortress",
+      "era": "ww2_italy",
+      "theater": "Italy",
+      "expansion": "road_to_rome",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Monte_Cassino.tscn",
+      "description": "Assault on the mountain monastery"
+    },
+    {
+      "id": "anzio",
+      "display_name": "Anzio",
+      "base_map": "MP_Battery",
+      "base_map_display": "Iberian Offensive",
+      "terrain_type": "beach_invasion",
+      "era": "ww2_italy",
+      "theater": "Italy",
+      "expansion": "road_to_rome",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Anzio.tscn",
+      "description": "Beachhead assault in Italy"
+    },
+    {
+      "id": "market_garden",
+      "display_name": "Market Garden",
+      "base_map": "MP_Outskirts",
+      "base_map_display": "New Sobek City",
+      "terrain_type": "countryside_bridges",
+      "era": "ww2_western_europe",
+      "theater": "Western Europe",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Market_Garden.tscn",
+      "description": "Airborne operation in the Netherlands"
+    },
+    {
+      "id": "berlin",
+      "display_name": "Berlin",
+      "base_map": "MP_Aftermath",
+      "base_map_display": "Empire State",
+      "terrain_type": "urban_ruins",
+      "era": "ww2_eastern_front",
+      "theater": "Eastern Front",
+      "expansion": "vanilla",
+      "recommended_players": 64,
+      "status": "planned",
+      "tscn_path": "GodotProject/levels/Berlin.tscn",
+      "description": "Final battle for the Reich capital"
+    }
+  ],
+  "experience_templates": {
+    "all_maps_conquest": {
+      "name": "1942 Revisited",
+      "description": "Experience the legend reborn. Classic Battlefield 1942 maps from the base game and both expansion packs, authentically recreated in BF6 Portal with modern graphics and gameplay.",
+      "game_mode": "Conquest",
+      "max_players": 64,
+      "map_filter": {
+        "status": "complete"
+      }
+    },
+    "vanilla_only": {
+      "name": "1942 Revisited - Vanilla",
+      "description": "The original Battlefield 1942 base game maps, faithfully recreated for BF6 Portal.",
+      "game_mode": "Conquest",
+      "max_players": 64,
+      "map_filter": {
+        "expansion": "vanilla",
+        "status": "complete"
+      }
+    },
+    "road_to_rome": {
+      "name": "1942 Revisited - Road to Rome",
+      "description": "The Road to Rome expansion maps recreated for BF6 Portal.",
+      "game_mode": "Conquest",
+      "max_players": 64,
+      "map_filter": {
+        "expansion": "road_to_rome",
+        "status": "complete"
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2025-10-12",
+    "total_maps_planned": 10,
+    "total_maps_complete": 1
+  }
+}

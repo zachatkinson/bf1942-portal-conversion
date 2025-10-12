@@ -42,6 +42,7 @@
 - [Advanced Topics](#advanced-topics)
   - [Custom Base Map Selection](#custom-base-map-selection)
   - [Multiple Game Modes](#multiple-game-modes)
+  - [Multi-Map Experiences](#multi-map-experiences)
 - [Quick Command Reference](#quick-command-reference)
 
 ---
@@ -500,6 +501,64 @@ python3 tools/create_experience.py Kursk \
 
 # Output: Kursk_Experience.json (overwrites each time)
 # Rename manually if you want to keep both
+```
+
+### Multi-Map Experiences
+
+Create experiences with multiple maps in rotation using the maps registry:
+
+**Quick Start:**
+```bash
+# Create "1942 Revisited" with all complete maps
+python3 tools/create_multi_map_experience.py
+```
+
+**Custom Map Selection:**
+```bash
+# Include only specific maps
+python3 tools/create_multi_map_experience.py --maps kursk el_alamein wake_island
+
+# Use different template from registry
+python3 tools/create_multi_map_experience.py --template vanilla_only
+```
+
+**How It Works:**
+
+1. **Maps Registry** (`maps_registry.json`):
+   - Central catalog of all BF1942 maps
+   - Tracks completion status, base map assignments, metadata
+   - Defines experience templates
+
+2. **Multi-Map Tool** (`create_multi_map_experience.py`):
+   - Reads registry to find maps matching criteria
+   - Loads `.spatial.json` for each map
+   - Creates single experience with multiple `mapRotation` entries
+   - Each map gets its own `spatialAttachment` with `mapIdx`
+
+3. **Adding New Maps** (Future Workflow):
+   ```bash
+   # 1. Convert new map
+   python3 tools/export_to_portal.py El_Alamein
+
+   # 2. Update registry status to "complete"
+   # Edit maps_registry.json: el_alamein.status = "complete"
+
+   # 3. Regenerate multi-map experience
+   python3 tools/create_multi_map_experience.py
+
+   # Done! Full rotation updated automatically
+   ```
+
+> 💡 **Tip:** The multi-map system is designed for future expansion. Currently only Kursk is complete, but as you add more maps, simply update their status in the registry and regenerate the experience.
+> **Use:** Understanding the automated multi-map workflow for project growth
+
+**Output Structure:**
+```
+experiences/
+├── single/                      # Individual map experiences
+│   └── Kursk_Experience.json
+└── multi/                       # Multi-map rotations
+    └── 1942_Revisited_Experience.json
 ```
 
 ---

@@ -147,6 +147,7 @@ experiences/
 # Keep these specific files even if patterns above would ignore them
 !FbExportData/asset_types.json
 !FbExportData/level_info.json
+!maps_registry.json
 
 # Keep README and documentation
 !README.html
