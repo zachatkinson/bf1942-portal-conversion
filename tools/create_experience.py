@@ -103,7 +103,7 @@ def create_experience_file(
                         "original": spatial_base64,
                         "compiled": ""  # Empty - Portal compiles server-side
                     },
-                    "attachmentType": "application/json",
+                    "attachmentType": 1,
                     "errors": []
                 }
             }

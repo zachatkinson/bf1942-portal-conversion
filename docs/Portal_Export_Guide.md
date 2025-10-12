@@ -202,24 +202,27 @@ python3 tools/export_to_portal.py <map_name> [options]
 
 Choose a base map with terrain similar to your BF1942 map:
 
-| Base Map | Theater | Terrain Type |
-|----------|---------|--------------|
-| **MP_Tungsten** | Tajikistan | Mountains, valleys (default) |
-| **MP_Outskirts** | Cairo | Desert, urban outskirts |
-| **MP_Battery** | Gibraltar | Rocky coastal terrain |
-| **MP_Capstone** | Tajikistan | High mountains |
-| **MP_Abbasid** | Cairo | Urban cityscape |
-| **MP_Aftermath** | Brooklyn | Urban ruins |
-| **MP_Dumbo** | Brooklyn | Dense urban |
-| **MP_FireStorm** | Turkmenistan | Desert wasteland |
-| **MP_Limestone** | Gibraltar | Coastal cliffs |
+| Technical Name | Display Name | Theater | Terrain Type |
+|----------------|--------------|---------|--------------|
+| **MP_Tungsten** | **Mirak Valley** | Tajikistan | Mountains, valleys (default for Kursk) |
+| MP_Capstone | Liberation Peak | Tajikistan | High mountains |
+| MP_Outskirts | New Sobek City | Cairo | Desert, urban outskirts |
+| MP_Abbasid | Siege of Cairo | Cairo | Urban cityscape |
+| MP_Battery | Iberian Offensive | Gibraltar | Rocky coastal terrain |
+| MP_Limestone | Saint's Quarter | Gibraltar | Coastal cliffs |
+| MP_Aftermath | Empire State | Brooklyn | Urban ruins |
+| MP_Dumbo | Manhattan Bridge | Brooklyn | Dense urban |
+| MP_Firestorm | Operation Firestorm | Turkmenistan | Desert wasteland |
+
+> 📝 **Note:** When adding maps in Portal Builder, use the **Display Name** (e.g., "Mirak Valley"). The technical name is used in the experience JSON file.
+> **Use:** Understanding the difference between technical and display names
 
 **Recommendation for BF1942 maps:**
-- **Kursk** → MP_Tungsten (open terrain)
-- **El Alamein** → MP_FireStorm (desert)
-- **Wake Island** → MP_Limestone (island)
-- **Berlin** → MP_Aftermath (urban ruins)
-- **Stalingrad** → MP_Aftermath (urban warfare)
+- **Kursk** → Mirak Valley (MP_Tungsten) - open terrain
+- **El Alamein** → Operation Firestorm (MP_Firestorm) - desert
+- **Wake Island** → Saint's Quarter (MP_Limestone) - island/coastal
+- **Berlin** → Empire State (MP_Aftermath) - urban ruins
+- **Stalingrad** → Empire State (MP_Aftermath) - urban warfare
 
 ---
 

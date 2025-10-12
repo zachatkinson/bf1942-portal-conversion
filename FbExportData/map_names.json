@@ -1,0 +1,71 @@
+{
+  "map_display_names": {
+    "MP_Aftermath": "Empire State",
+    "MP_Battery": "Iberian Offensive",
+    "MP_Capstone": "Liberation Peak",
+    "MP_Dumbo": "Manhattan Bridge",
+    "MP_Tungsten": "Mirak Valley",
+    "MP_Outskirts": "New Sobek City",
+    "MP_Firestorm": "Operation Firestorm",
+    "MP_Limestone": "Saint's Quarter",
+    "MP_Abbasid": "Siege of Cairo"
+  },
+  "map_technical_names": {
+    "Empire State": "MP_Aftermath",
+    "Iberian Offensive": "MP_Battery",
+    "Liberation Peak": "MP_Capstone",
+    "Manhattan Bridge": "MP_Dumbo",
+    "Mirak Valley": "MP_Tungsten",
+    "New Sobek City": "MP_Outskirts",
+    "Operation Firestorm": "MP_Firestorm",
+    "Saint's Quarter": "MP_Limestone",
+    "Siege of Cairo": "MP_Abbasid"
+  },
+  "map_info": {
+    "MP_Aftermath": {
+      "display_name": "Empire State",
+      "theater": "Brooklyn",
+      "terrain": "Urban ruins"
+    },
+    "MP_Battery": {
+      "display_name": "Iberian Offensive",
+      "theater": "Gibraltar",
+      "terrain": "Rocky coastal terrain"
+    },
+    "MP_Capstone": {
+      "display_name": "Liberation Peak",
+      "theater": "Tajikistan",
+      "terrain": "High mountains"
+    },
+    "MP_Dumbo": {
+      "display_name": "Manhattan Bridge",
+      "theater": "Brooklyn",
+      "terrain": "Dense urban"
+    },
+    "MP_Tungsten": {
+      "display_name": "Mirak Valley",
+      "theater": "Tajikistan",
+      "terrain": "Mountains, valleys (recommended for Kursk)"
+    },
+    "MP_Outskirts": {
+      "display_name": "New Sobek City",
+      "theater": "Cairo",
+      "terrain": "Desert, urban outskirts"
+    },
+    "MP_Firestorm": {
+      "display_name": "Operation Firestorm",
+      "theater": "Turkmenistan",
+      "terrain": "Desert wasteland"
+    },
+    "MP_Limestone": {
+      "display_name": "Saint's Quarter",
+      "theater": "Gibraltar",
+      "terrain": "Coastal cliffs"
+    },
+    "MP_Abbasid": {
+      "display_name": "Siege of Cairo",
+      "theater": "Cairo",
+      "terrain": "Urban cityscape"
+    }
+  }
+}
