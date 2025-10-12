@@ -1,8 +1,10 @@
 # Multi-Game Support Architecture
 
+> Extensible interface-based design for supporting all Battlefield games through modular game engines
+
+**Purpose:** Extensible design for supporting all Battlefield games (BF1942, Vietnam, BF2, 2142, Frostbite) via IGameEngine interface
 **Last Updated:** October 2025
 **Status:** ✅ Architecture implemented and proven with BF1942
-**Purpose:** Extensible design for supporting all Battlefield games
 
 ---
 
@@ -621,5 +623,15 @@ When adding a new game engine:
 ---
 
 **Last Updated:** October 2025
-**Status:** Production-ready for BF1942, extensible for all games
-**Next Steps:** Add BF Vietnam support, convert more BF1942 maps
+**Status:** ✅ Production-ready for BF1942, extensible for all games
+**Complexity:** Medium
+
+**Next Steps:**
+1. Add BF Vietnam support (Refractor 1.0, shares base with BF1942)
+2. Convert more BF1942 maps to validate pipeline
+3. Implement BF2/BF2142 support (Refractor 2.0)
+
+**See Also:**
+- [Toolset Plan](./BF_TO_PORTAL_TOOLSET_PLAN.md) - Complete architecture and phase breakdown
+- [BF1942 Data Structures](../reference/BF1942_Data_Structures.md) - Source game format reference
+- [Main README](../../README.md) - Project overview

@@ -8,6 +8,8 @@
 ![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
 ![Conversion Accuracy](https://img.shields.io/badge/conversion%20accuracy-95.3%25-success.svg)
 
+---
+
 Currently supports Battlefield 1942 with extensible architecture for all Battlefield games.
 
 ## Table of Contents
@@ -19,9 +21,11 @@ Currently supports Battlefield 1942 with extensible architecture for all Battlef
 - [Architecture](#architecture)
 - [Supported Maps](#supported-maps)
 - [Advanced Usage](#advanced-usage)
+- [Project Structure](#project-structure)
 - [Known Limitations](#known-limitations)
 - [Development](#development)
 - [Contributing](#contributing)
+- [Additional Resources](#additional-resources)
 - [License](#license)
 
 ## Overview
@@ -244,11 +248,21 @@ python3 tools/portal_convert.py --map Kursk --base-terrain MP_Tungsten 2>&1 | te
 4. Test with at least one map conversion
 5. Submit pull request
 
-## Resources
+## Additional Resources
 
-- [Portal SDK Documentation](./README.html) (original EA/DICE docs)
-- [Unofficial Portal Docs](https://github.com/NodotProject/Unofficial-BF6-Portal-SDK-Docs)
-- [BF1942 Modding Community](https://bfmods.com)
+### Project Documentation
+
+- [Documentation Hub](./docs/README.md) - Complete documentation index
+- [Architecture Guide](./docs/architecture/Multi_Era_Support.md) - Multi-game architecture
+- [BF1942 Reference](./docs/reference/BF1942_Data_Structures.md) - File format reference
+- [Setup Guide](./docs/setup/Godot_Setup_Guide.md) - Godot installation
+
+### External Resources
+
+- [Portal SDK Documentation](./README.html) - Original EA/DICE Portal SDK docs
+- [Unofficial Portal Docs](https://github.com/NodotProject/Unofficial-BF6-Portal-SDK-Docs) - Community documentation
+- [BF1942 Modding Community](https://bfmods.com) - Classic BF modding resources
+- [Godot 4 Documentation](https://docs.godotengine.org/en/stable/) - Godot engine docs
 
 ## License
 
@@ -256,10 +270,16 @@ This conversion toolset is provided as-is for educational and modding purposes.
 
 Battlefield 1942 and Battlefield 6 are trademarks of Electronic Arts Inc.
 
-## Credits
+---
 
-**Author**: Zach Atkinson
-**AI Assistant**: Claude (Anthropic)
-**Date**: October 2025
+**Last Updated:** October 2025
+**Project Status:** Production Ready
+**Author:** Zach Atkinson
+**AI Assistant:** Claude (Anthropic)
 
 Built with the Portal SDK provided by EA/DICE.
+
+**See Also:**
+- [Documentation](./docs/README.md) - Full documentation
+- [Testing Guide](./TESTING.md) - Validation procedures
+- [Style Guide](./docs/STYLE_GUIDE.md) - Documentation standards

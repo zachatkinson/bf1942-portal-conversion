@@ -1,5 +1,7 @@
 # Documentation Style Guide
 
+> Comprehensive standards and best practices based on industry-leading open source projects
+
 **Purpose:** Standards and best practices for all PortalSDK documentation
 **Last Updated:** October 2025
 **Status:** Official Standard
@@ -18,6 +20,9 @@
 - [Admonitions](#admonitions)
 - [Footer Pattern](#footer-pattern)
 - [File Naming](#file-naming)
+- [Document Templates](#document-templates)
+- [Checklist for New Documents](#checklist-for-new-documents)
+- [Examples from This Project](#examples-from-this-project)
 
 ---
 

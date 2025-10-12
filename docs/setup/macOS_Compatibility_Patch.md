@@ -1,8 +1,14 @@
 # macOS Compatibility for BF6 Portal SDK
 
+> macOS-specific workarounds and manual export procedures for Portal SDK development
+
+**Purpose:** macOS-specific workarounds for Portal SDK Windows-only features and manual export procedures
 **Last Updated:** October 2025
 **Status:** ⚠️ REFERENCE DOCUMENT - macOS fixes not yet implemented in this project
-**Issue:** Portal SDK was designed for Windows, may show errors on macOS
+**Difficulty:** Intermediate
+**Time Required:** ~20 minutes
+
+---
 
 ## Table of Contents
 
@@ -401,3 +407,9 @@ Only apply the official code patches if:
 
 **Last Updated:** October 2025
 **Status:** Workaround confirmed functional - Portal SDK fully usable on macOS
+**Platform:** macOS (all versions)
+
+**See Also:**
+- [Godot Setup Guide](./Godot_Setup_Guide.md) - General Godot installation instructions
+- [Main README](../../README.md) - Project overview
+- [TESTING.md](../../TESTING.md) - Testing converted maps

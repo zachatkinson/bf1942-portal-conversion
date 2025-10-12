@@ -1,5 +1,13 @@
 # BF1942 Data Structures Reference
 
+> Complete technical reference for Battlefield 1942 file formats, data structures, and coordinate systems
+
+**Purpose:** Technical reference for BF1942 file formats (.con, .rfa, heightmaps), object spawner syntax, and coordinate systems for map conversion
+**Last Updated:** October 2025
+**Status:** Technical reference - accurate for BF1942 v1.6
+
+---
+
 ## Overview
 
 This document provides a technical reference for Battlefield 1942's data formats, focusing on structures relevant to map conversion.
@@ -401,13 +409,17 @@ Transform coordinates, generate .tscn scene file, and test in Godot editor.
 - **Challenge:** BF6 assets have `levelRestrictions`
 - **Solution:** Use only unrestricted or compatible assets
 
-## References
-
-- BF1942 Modding Tutorials: https://bfmods.com/mdt/
-- RFA Format Overview: https://www.realtimerendering.com/erich/bf1942/mdt/tutorials/Overview/Overview.html
-- BGA Tool: https://github.com/yann-papouin/bga
-
 ---
 
+**References:**
+- [BF1942 Modding Tutorials](https://bfmods.com/mdt/) - Official modding documentation
+- [RFA Format Overview](https://www.realtimerendering.com/erich/bf1942/mdt/tutorials/Overview/Overview.html) - File format specifications
+- [BGA Tool](https://github.com/yann-papouin/bga) - Archive extraction utility
+
 **Last Updated:** October 2025
-**Status:** Technical reference - accurate for BF1942 file formats
+**Status:** Technical reference - accurate for BF1942 v1.6
+
+**See Also:**
+- [Multi-Game Support Architecture](../architecture/Multi_Era_Support.md) - How BF1942 data is parsed by the engine
+- [Toolset Plan](../architecture/BF_TO_PORTAL_TOOLSET_PLAN.md) - Complete conversion pipeline
+- [Main README](../../README.md) - Project overview

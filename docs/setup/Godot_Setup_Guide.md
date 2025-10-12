@@ -1,7 +1,13 @@
 # Godot 4 Setup Guide for BF6 Portal SDK
 
-**Last Updated:** October 2025
+> Complete guide for installing Godot 4 and opening Portal SDK projects for map development
+
 **Purpose:** Guide for installing and configuring Godot 4 for Portal map development
+**Last Updated:** October 2025
+**Difficulty:** Beginner
+**Time Required:** ~15 minutes
+
+---
 
 ## Table of Contents
 
@@ -265,6 +271,12 @@ For detailed testing procedures, see [TESTING.md](../../TESTING.md)
 
 ---
 
+**Last Updated:** October 2025
 **Platform Support:** Windows, macOS, Linux
 **Godot Version:** 4.3+
 **SDK Compatibility:** BF6 Portal SDK (2025)
+
+**See Also:**
+- [macOS Compatibility](./macOS_Compatibility_Patch.md) - macOS-specific workarounds
+- [TESTING.md](../../TESTING.md) - Testing procedures for converted maps
+- [Main README](../../README.md) - Project overview

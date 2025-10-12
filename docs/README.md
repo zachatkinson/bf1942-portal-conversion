@@ -8,6 +8,8 @@
 **Last Updated:** October 2025
 **Status:** Production Ready
 
+---
+
 ## Table of Contents
 
 - [Getting Started](#getting-started)
@@ -144,14 +146,15 @@ Some documentation remains in `.claude/` for AI assistant context:
 
 ---
 
-## Questions or Feedback?
-
-- 💬 **Discussions** - [GitHub Discussions](https://github.com/yourusername/PortalSDK/discussions)
-- 🐛 **Bug Reports** - [GitHub Issues](https://github.com/yourusername/PortalSDK/issues)
-- 📧 **Contact** - (Your contact method)
-
----
-
 **Last Updated:** October 2025
 **Documentation Version:** 1.0
 **Project Status:** Production Ready
+
+**Questions or Feedback?**
+- 💬 Discussions - [GitHub Discussions](https://github.com/yourusername/PortalSDK/discussions)
+- 🐛 Bug Reports - [GitHub Issues](https://github.com/yourusername/PortalSDK/issues)
+
+**See Also:**
+- [Project README](../README.md) - Main project overview
+- [Style Guide](./STYLE_GUIDE.md) - Documentation standards
+- [TESTING.md](../TESTING.md) - Testing procedures

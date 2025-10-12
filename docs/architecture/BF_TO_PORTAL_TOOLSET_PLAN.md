@@ -1,19 +1,22 @@
-# Battlefield → BF6 Portal Conversion Toolset - Master Plan
+# Classic Battlefield → BF6 Portal Conversion Toolset - Master Plan
 
-**Project Status**: ✅ Production Ready - Phases 1-3 Complete
-**Last Updated**: October 2025
-**Current Focus**: Multi-map support and additional Battlefield games
+> Comprehensive architecture plan, SOLID design principles, and modular CLI structure for multi-game conversion
+
+**Purpose:** Complete architecture design, phase breakdown, and implementation roadmap for the Battlefield to Portal conversion system
+**Last Updated:** October 2025
+**Status:** ✅ Production Ready - Phases 1-3 Complete
+**Current Focus:** Multi-map support and additional Battlefield games
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Architecture Design](#architecture-design)
-3. [Phase Breakdown](#phase-breakdown)
-4. [Asset Audit Results](#asset-audit-results)
-5. [Implementation Status](#implementation-status)
-6. [Recovery Instructions](#recovery-instructions)
+- [Project Overview](#project-overview)
+- [Architecture Design](#architecture-design)
+- [Phase Breakdown](#phase-breakdown)
+- [Asset Audit Results](#asset-audit-results)
+- [Implementation Status](#implementation-status)
+- [Recovery Instructions](#recovery-instructions)
 
 ---
 
@@ -565,5 +568,11 @@ Existing .tscn → Parse → Re-center → Re-adjust Heights → Generate .tscn
 
 ---
 
-**End of Master Plan**
-*Continue updating this document as phases progress*
+**Last Updated:** October 2025
+**Status:** ✅ Production Ready (Phases 1-3 Complete)
+**Complexity:** High
+
+**See Also:**
+- [Multi-Game Support Architecture](./Multi_Era_Support.md) - Extensible multi-game design
+- [BF1942 Data Structures](../reference/BF1942_Data_Structures.md) - Source game format reference
+- [Main README](../../README.md) - Project overview
