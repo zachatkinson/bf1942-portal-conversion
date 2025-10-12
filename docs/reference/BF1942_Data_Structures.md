@@ -4,6 +4,26 @@
 
 This document provides a technical reference for Battlefield 1942's data formats, focusing on structures relevant to map conversion.
 
+## Table of Contents
+
+- [File Formats](#file-formats)
+  - [.RFA (Refractor Archive)](#rfa-refractor-archive)
+  - [.CON (Configuration) Files](#con-configuration-files)
+- [Map Structure](#map-structure-actual-after-rfa-extraction)
+- [ObjectSpawns.con Format](#objectspawnscon-format)
+  - [Common Spawner Types](#common-spawner-types)
+  - [Position and Rotation](#position-and-rotation)
+- [ControlPoints.con Format](#controlpointscon-format)
+- [SoldierSpawns.con Format](#soldierspawnscon-format)
+- [Heightmap.raw Format](#heightmapraw-format)
+- [Team System](#team-system)
+- [Object Properties Reference](#object-properties-reference)
+- [Data Extraction Strategy](#data-extraction-strategy)
+- [Conversion Challenges](#conversion-challenges)
+- [References](#references)
+
+---
+
 ## File Formats
 
 ### .RFA (Refractor Archive)
@@ -76,78 +96,100 @@ Object.setHealth 1000
 Object.active 1
 ```
 
-## Map Structure (Expected After RFA Extraction)
+## Map Structure (Actual After RFA Extraction)
 
 ### Directory Layout
 
 ```
 Kursk/
-├── Info/
-│   ├── Kursk.desc              # Map metadata
-│   ├── Kursk.ai                # AI navigation
-│   └── *.dds                   # Loading screen images
-├── Gameplay/
-│   ├── GameplayObjects.con     # PRIMARY: Object placements
-│   ├── ControlPoints.con       # Conquest objectives
-│   ├── SpawnPoints.con         # Player spawns
-│   ├── AIPathfinding.con       # Bot navigation
-│   └── init.con                # Map initialization script
-├── Heightdata/
-│   ├── HeightMap.raw           # Terrain heightmap (binary)
-│   ├── HeightMap.con           # Heightmap configuration
-│   └── ColorMap.raw            # Terrain color overlay
-├── Textures/
-│   ├── Detail/
-│   │   └── *.dds               # Detail textures
-│   └── *.dds                   # Terrain textures
-└── StaticObjects/
-    ├── *.sm                    # Static mesh files
-    └── *.rs                    # Render state files
+├── Init.con                         # Map initialization script
+├── StaticObjects.con                # Static object placements (large file ~330KB)
+├── Heightmap.raw                    # Terrain heightmap (binary, 128KB)
+├── materialmap.raw                  # Terrain material/texture mapping
+├── Conquest/                        # Conquest game mode
+│   ├── ObjectSpawns.con            # PRIMARY: Vehicle spawner placements
+│   ├── SoldierSpawns.con           # PRIMARY: Player spawn points
+│   ├── ControlPoints.con           # Conquest capture points
+│   ├── ObjectSpawnTemplates.con    # Vehicle spawner templates
+│   ├── SoldierSpawnTemplates.con   # Spawn point templates
+│   └── ControlPointTemplates.con   # Capture point templates
+├── Init/
+│   ├── Terrain.con                 # Heightmap configuration
+│   └── SkyAndSun.con               # Lighting/atmosphere
+├── Textures/                        # Terrain and detail textures
+│   └── *.dds                       # DirectDraw Surface texture files
+├── AI/                              # AI navigation data
+│   └── *.ai                        # Pathfinding meshes
+├── Sounds/                          # Ambient sound definitions
+├── TDM/                             # Team Deathmatch mode (similar structure)
+├── Ctf/                             # Capture the Flag mode (similar structure)
+├── SinglePlayer/                    # Single player mission data
+└── Pathfinding/                     # Bot pathfinding data
 ```
 
-**Note:** Exact structure may vary between maps and game versions.
+**Note:** This structure is from BF1942 v1.6. Earlier versions may differ slightly.
 
-## GameplayObjects.con Format
+## ObjectSpawns.con Format
 
-### Object Template Definitions
+### Object Instance Syntax
 
 **Syntax:**
 ```con
-ObjectTemplate.create <ObjectType> <ObjectName>
-ObjectTemplate.setNetworkableInfo <NetworkInfo>
-ObjectTemplate.saveInSeparateFile 1
-ObjectTemplate.addTemplate <ChildTemplate>
-ObjectTemplate.setPosition <x>/<y>/<z>
-ObjectTemplate.setRotation <pitch>/<yaw>/<roll>
+Object.create <SpawnerType>
+Object.absolutePosition <x>/<y>/<z>
+Object.rotation <pitch>/<yaw>/<roll>
+Object.setOSId <ObjectSpawnerId>
+Object.setTeam <team_id>
 ```
 
-**Example:**
+**Example (from actual Kursk ObjectSpawns.con):**
 ```con
-rem *** German Bunker at North Base ***
-ObjectTemplate.create StaticObject Bunker_North_01
-ObjectTemplate.geometry Bunker_German_Medium
-ObjectTemplate.setPosition 152.5/12.3/387.9
-ObjectTemplate.setRotation 0/45/0
-ObjectTemplate.team 1
-ObjectTemplate.armour 100
+rem*****************************************
+rem ****          AXIS BASE1           *****
+rem ****************************************
+
+Object.create lighttankspawner
+Object.absolutePosition 450.345/78.6349/249.093
+Object.rotation 0/0.103998/1.52588e-005
+Object.setOSId 1
+Object.setTeam 1
+
+Object.create heavytankspawner
+Object.absolutePosition 388.567/78.7631/246.062
+Object.rotation 0/-0.664717/-1.52588e-005
+Object.setOSId 1
+Object.setTeam 1
 ```
 
-### Common Object Types
+**Key Properties:**
+- `Object.create` - Creates instance of a spawner type (e.g., `lighttankspawner`, `heavytankspawner`, `APCSpawner`)
+- `Object.absolutePosition` - World position in meters (x/y/z)
+- `Object.rotation` - Euler angles in degrees (pitch/yaw/roll)
+- `Object.setOSId` - Object Spawn ID (links to control points)
+- `Object.setTeam` - Team ownership (1=Axis, 2=Allies, unset=Neutral)
 
-**Static Objects:**
-- `StaticObject` - Buildings, props
-- `SimpleObject` - Basic geometry
+### Common Spawner Types
 
-**Gameplay Objects:**
-- `SpawnPoint` - Player spawn location
-- `ControlPoint` - Conquest flag
-- `ObjectSpawner` - Vehicle/ammo spawner
-- `StrategicArea` - Capture zone
+**Vehicle Spawners:**
+- `lighttankspawner` - Light tank
+- `heavytankspawner` - Heavy tank
+- `APCSpawner` - Armored Personnel Carrier
+- `ScoutCarSpawner` - Scout/reconnaissance vehicle
+- `FighterSpawner` - Fighter aircraft
+- `DiveBomberSpawner` - Bomber aircraft
+- `AAGunSpawner` - Anti-aircraft gun
+- `ArtillerySpawner` - Artillery piece
 
-**Vehicles:**
-- `Tank` - Tank spawner
-- `Plane` - Aircraft spawner
-- `Ship` - Naval spawner
+**Note:** Spawner types are lowercase in actual files (e.g., `lighttankspawner` not `LightTankSpawner`)
+
+**Example (from Kursk):**
+```con
+Object.create lighttankspawner
+Object.absolutePosition 450.345/78.6349/249.093
+Object.rotation 0/0.103998/1.52588e-005
+Object.setOSId 1
+Object.setTeam 1
+```
 
 ### Position and Rotation
 
@@ -166,86 +208,108 @@ ObjectTemplate.armour 100
 
 ## ControlPoints.con Format
 
-### Control Point Definition
+### Control Point Instance Syntax
 
+**Syntax:**
 ```con
-ObjectTemplate.create ControlPoint CP_Name
-ObjectTemplate.setNetworkableInfo ControlPointInfo
-ObjectTemplate.radius <radius_in_meters>
-ObjectTemplate.team <0|1|2>  # 0=Neutral, 1=Axis, 2=Allies
-ObjectTemplate.setPosition <x>/<y>/<z>
-ObjectTemplate.controlPointName "Display Name"
-ObjectTemplate.timeToLoseControl <seconds>
-ObjectTemplate.timeToTakeControl <seconds>
+Object.create <ControlPointTemplateName>
+Object.absolutePosition <x>/<y>/<z>
 ```
 
-**Example:**
+**Key Points:**
+- Control points reference template names defined in `ControlPointTemplates.con`
+- Templates define properties like radius, team, capture times
+- Instances only specify position - all other properties come from template
+- Template names indicate team/type (e.g., `AxisBase_1_Cpoint`, `openbase_lumbermill_Cpoint`)
+
+**Example (from Kursk):**
 ```con
-rem *** Central Control Point ***
-ObjectTemplate.create ControlPoint CP_Center
-ObjectTemplate.setPosition 256.0/10.5/512.0
-ObjectTemplate.radius 30.0
-ObjectTemplate.team 0
-ObjectTemplate.controlPointName "Village Center"
-ObjectTemplate.timeToTakeControl 30
-ObjectTemplate.timeToLoseControl 30
+rem*****************************************
+rem ****          AXIS BASE1           *****
+rem ****************************************
+
+Object.create AxisBase_1_Cpoint
+Object.absolutePosition 437.315/77.8547/238.39
+
+rem*****************************************
+rem ****        ALLIES Base2           *****
+rem ****************************************
+
+Object.create AlliesBase_2_Cpoint
+Object.absolutePosition 568.058/76.6406/849.956
 ```
 
-### Linking Spawn Points to Control Points
+## SoldierSpawns.con Format
 
+### Infantry Spawn Point Syntax
+
+**Syntax:**
 ```con
-ObjectTemplate.create SpawnPoint SP_Center_01
-ObjectTemplate.setPosition 250.0/10.0/505.0
-ObjectTemplate.controlPointId <CP_Id>
-ObjectTemplate.setSpawnRotation 0/90/0
+Object.create <SpawnPointTemplateName>
+Object.absolutePosition <x>/<y>/<z>
+Object.rotation <pitch>/<yaw>/<roll>
 ```
 
-## SpawnPoints.con Format
+**Key Points:**
+- Soldier spawn points reference template names defined in `SoldierSpawnTemplates.con`
+- Template name indicates team and control point (e.g., `AxisSpawnPoint_1_1` = Axis team, control point 1, spawn #1)
+- Rotation determines which direction player faces when spawning
+- Multiple spawn points per control point for spread
 
-### Spawn Point Types
-
-1. **Infantry Spawn:**
+**Example (from Kursk):**
 ```con
-ObjectTemplate.create SpawnPoint SP_Axis_01
-ObjectTemplate.setPosition <x>/<y>/<z>
-ObjectTemplate.setSpawnRotation <pitch>/<yaw>/<roll>
-ObjectTemplate.team 1
-ObjectTemplate.spawnDelay 5
+rem*****************************************
+rem ****          AXIS BASE  1          *****
+rem ****************************************
+
+Object.create AxisSpawnPoint_1_1
+Object.absolutePosition 464.978/77.9123/233.386
+Object.rotation -67.3921/0/0.0342712
+
+Object.create AxisSpawnPoint_1_2
+Object.absolutePosition 406.791/78.1203/249.466
+Object.rotation 165.672/0/1.52588e-005
 ```
 
-2. **Vehicle Spawn:**
-```con
-ObjectTemplate.create ObjectSpawner VS_Tank_01
-ObjectTemplate.setPosition <x>/<y>/<z>
-ObjectTemplate.setRotation 0/<yaw>/0
-ObjectTemplate.objectTemplate <VehicleTemplate>
-ObjectTemplate.team 1
-ObjectTemplate.respawnTime 60
-ObjectTemplate.maxSpawns -1  # Infinite
-ObjectTemplate.timeUntilFirstSpawn 30
-```
-
-## HeightMap.raw Format
+## Heightmap.raw Format
 
 **Format**: Binary raw data
+**File**: `Heightmap.raw` (at map root level)
+**Size**: Typically 128KB (256x256 heightmap at 2 bytes per pixel)
+
 **Structure**:
 - 16-bit unsigned integers (little-endian)
-- Resolution: Typically 1024x1024 or 512x512
+- Resolution: Typically 256x256 or 512x512
 - Value range: 0-65535
-- Maps to height in meters via scale factor
+- Maps to height in meters via yScale factor
 
-**Metadata** (from HeightMap.con):
+**Metadata** (from Init/Terrain.con):
 ```con
-HeightmapCluster.setHeightmap Heightdata/HeightMap.raw
-HeightmapCluster.setDimensions 1024 1024
-HeightmapCluster.setHorizontalScale 2.0
-HeightmapCluster.setVerticalScale 0.5
-HeightmapCluster.waterLevel 10.0
+GeometryTemplate.create patchTerrain terrainGeometry
+GeometryTemplate.file bf1942\levels\<MapName>\Heightmap
+GeometryTemplate.materialMap bf1942\levels\<MapName>\Materialmap
+GeometryTemplate.worldSize <size>
+GeometryTemplate.yScale <scale>
+GeometryTemplate.waterLevel <height>
+GeometryTemplate.seaFloorLevel <height>
 ```
+
+**Key Parameters:**
+- `worldSize` - Map size in meters (e.g., 1024 = 1024m x 1024m)
+- `yScale` - Vertical scale multiplier (typically 0.5 - 1.0)
+- `waterLevel` - Water plane elevation in meters
+- Heightmap resolution interpolated to world size
 
 **Conversion Formula:**
 ```
-actual_height = (raw_value / 65535.0) * verticalScale * maxHeight
+actual_height = (raw_value / 65535.0) * yScale * maxHeight
+```
+
+**Example (Kursk):**
+```con
+GeometryTemplate.worldSize 1024
+GeometryTemplate.yScale 0.6
+GeometryTemplate.waterLevel 72
 ```
 
 ## Team System
@@ -294,32 +358,26 @@ actual_height = (raw_value / 65535.0) * verticalScale * maxHeight
 
 ## Data Extraction Strategy
 
-### Phase 1 (Current): Understanding
+### Step 1: Extract RFA Archives
 
-1. Extract RFA files using BGA
-2. Analyze .con file syntax
-3. Identify object types and properties
-4. Document coordinate ranges
+Use BGA or WinRFA tools to extract map RFA files to access .con files and heightmaps.
 
-### Phase 2: Asset Cataloging
+### Step 2: Parse .con Files
 
-1. List all BF1942 object types in Kursk
-2. Cross-reference with BF6 available assets
-3. Create initial mapping database
+Parse the following key files for map conversion:
+- `Conquest/ObjectSpawns.con` - Vehicle spawner positions
+- `Conquest/SoldierSpawns.con` - Player spawn point positions
+- `Conquest/ControlPoints.con` - Capture point positions
+- `Init/Terrain.con` - Heightmap and terrain configuration
+- `StaticObjects.con` - Static object placements (buildings, props)
 
-### Phase 3: Conversion Implementation
+### Step 3: Map to Portal Assets
 
-1. Write .con parser in Python
-2. Extract object positions and types
-3. Map to BF6 equivalents
-4. Generate .tscn output
+Cross-reference BF1942 object types with available Portal assets using mapping databases.
 
-### Phase 4: Testing
+### Step 4: Generate Portal Map
 
-1. Generate Kursk .tscn
-2. Load in Godot
-3. Verify positions and mappings
-4. Iterate and refine
+Transform coordinates, generate .tscn scene file, and test in Godot editor.
 
 ## Conversion Challenges
 
