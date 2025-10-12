@@ -54,7 +54,7 @@ def create_spatial_attachment(
         "id": f"{map_id}-bf1942-spatial",
         "filename": f"{map_name}.spatial.json",
         "metadata": f"mapIdx={map_index}",
-        "version": "1",
+        "version": "123",  # Portal expects "123" - this is the Portal SDK version format
         "isProcessable": True,
         "processingStatus": 2,  # 2 = processed/ready
         "attachmentData": {
