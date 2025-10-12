@@ -56,29 +56,49 @@ class TestAssetMapperInitialization:
         oak_asset = mapper.portal_assets["Tree_Oak_Medium"]
         assert oak_asset.level_restrictions == ["MP_Tungsten"]
 
-    @pytest.mark.skip(reason="Complex path mocking test - keywords loaded manually in other tests")
-    def test_init_with_fallback_keywords(
-        self, sample_portal_assets, sample_fallback_keywords, tmp_path
-    ):
-        """Test initialization with fallback keywords file."""
+    def test_init_with_fallback_keywords_loads_file(self, sample_portal_assets, tmp_path):
+        """Test initialization loads fallback keywords from file when it exists."""
         # Arrange
-        asset_audit_dir = tmp_path / "asset_audit"
-        asset_audit_dir.mkdir()
+        import json
+
+        fake_module_path = tmp_path / "tools" / "bfportal" / "mappers" / "asset_mapper.py"
+        fake_module_path.parent.mkdir(parents=True)
+        fake_module_path.write_text("")
+
+        keywords_file = tmp_path / "tools" / "asset_audit" / "asset_fallback_keywords.json"
+        keywords_file.parent.mkdir(parents=True)
+        keywords_data = {
+            "type_categories": [
+                {"source_keywords": ["tree", "pine"], "portal_keywords": ["tree", "pine"]},
+                {"source_keywords": ["rock", "stone"], "portal_keywords": ["rock", "stone"]},
+            ]
+        }
+        keywords_file.write_text(json.dumps(keywords_data))
 
         # Act
-        with (
-            patch("pathlib.Path.__truediv__", spec=Path) as mock_div,
-            patch("bfportal.mappers.asset_mapper.__file__", str(tmp_path / "mapper.py")),
-        ):
-            mock_div.return_value = sample_fallback_keywords
-
-            mapper_file = tmp_path / "mapper.py"
-            mapper_file.write_text("")
-
+        with patch("bfportal.mappers.asset_mapper.__file__", str(fake_module_path)):
             mapper = AssetMapper(sample_portal_assets)
 
         # Assert
-        assert len(mapper.fallback_keywords) > 0
+        assert len(mapper.fallback_keywords) == 2
+        assert mapper.fallback_keywords[0]["source_keywords"] == ["tree", "pine"]
+        assert mapper.fallback_keywords[1]["source_keywords"] == ["rock", "stone"]
+
+    def test_init_without_fallback_keywords_file_uses_empty_list(
+        self, sample_portal_assets, tmp_path
+    ):
+        """Test initialization gracefully handles missing fallback keywords file."""
+        # Arrange
+        fake_module_path = tmp_path / "tools" / "bfportal" / "mappers" / "asset_mapper.py"
+        fake_module_path.parent.mkdir(parents=True)
+        fake_module_path.write_text("")
+
+        # Act
+        with patch("bfportal.mappers.asset_mapper.__file__", str(fake_module_path)):
+            mapper = AssetMapper(sample_portal_assets)
+
+        # Assert
+        assert mapper.fallback_keywords == []
 
 
 class TestAssetMapperLoadMappings:
