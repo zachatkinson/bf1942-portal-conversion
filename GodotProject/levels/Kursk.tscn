@@ -122,91 +122,91 @@ transform = Transform3D(1, 0, 0, 0, 1, -2.66316e-07, -0, 2.66316e-07, 1, 8.91167
 transform = Transform3D(0.999998, -0.00181511, 4.83392e-10, 0.00181511, 0.999998, -2.66316e-07, -0, 2.66316e-07, 1, -26.4907, 87.4582, -569.71)
 Team = 1
 ObjId = 1001
-VehicleTemplate = "lighttankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_2" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.999749, -0.00296739, 0.022214, 0.00296665, 0.999996, 6.61842e-05, -0.0222141, -2.66251e-07, 0.999753, -32.4147, 87.9568, -570.102)
 Team = 1
 ObjId = 1002
-VehicleTemplate = "lighttankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_3" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.999788, -0.0205735, 5.47907e-09, 0.0205735, 0.999788, -2.6626e-07, -0, 2.66316e-07, 1, -26.9247, 86.7767, -584.219)
 Team = 1
 ObjId = 1003
-VehicleTemplate = "APCSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_4" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.999933, 0.0116012, 3.0896e-09, -0.0116012, 0.999933, 2.66298e-07, -0, -2.66316e-07, 1, -44.3357, 86.5863, -588.803)
 Team = 1
 ObjId = 1004
-VehicleTemplate = "heavytankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_5" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.0464788, 0.00752629, -0.998891, 1.66248e-05, 0.999972, 0.00753366, 0.998919, 0.000333549, -0.0464776, -55.8357, 88.3666, -548.803)
 Team = 1
 ObjId = 1005
-VehicleTemplate = "ScoutCarSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_6" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.0274922, 0.222757, 0.974486, 0.00628191, 0.974874, -0.222668, -0.999602, -7.51033e-09, -0.0282008, -100.149, 85.436, -614.991)
 Team = 1
 ObjId = 1006
-VehicleTemplate = "FighterSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_7" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.0147074, -0.011069, 0.999831, 3.92695e-06, 0.999939, 0.0110701, -0.999892, -0.000158886, 0.0147065, 109.664, 80.6332, 18.6974)
 Team = 2
 ObjId = 1007
-VehicleTemplate = "heavytankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_8" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.999287, 0.00232838, -0.0376889, 0.00230833, 0.999997, 0.000575485, 0.0376902, 0.000488076, -0.999289, 99.1643, 81.5926, 19.1974)
 Team = 2
 ObjId = 1008
-VehicleTemplate = "lighttankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_9" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.999935, 0.00131699, 0.0113095, 0.0013169, 0.999999, -1.51608e-05, -0.0113095, -2.66299e-07, -0.999936, 89.1643, 81.6066, 24.6974)
 Team = 2
 ObjId = 1009
-VehicleTemplate = "lighttankspawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_10" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.999906, 0.00770334, 0.0113092, 0.00770284, 0.99997, -8.73871e-05, -0.0113095, -2.66299e-07, -0.999936, 80.6643, 84.3104, 11.1974)
 Team = 2
 ObjId = 1010
-VehicleTemplate = "ScoutCarSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_11" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.00659904, 0.0200685, -0.999777, 1.19153e-06, 0.999799, 0.020069, 0.999978, -0.000133627, 0.00659769, 103.164, 77.777, 56.1974)
 Team = 2
 ObjId = 1011
-VehicleTemplate = "APCSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="VehicleSpawner_12" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.0138226, -2.66291e-07, -0.999904, -9.20769e-18, 1, -2.66316e-07, 0.999904, -3.68118e-09, -0.0138226, 206.664, 91.0388, -265.303)
 Team = 0
 ObjId = 1012
-VehicleTemplate = "AAGunSpawner"
+VehicleTemplate = "StationaryEmplacementSpawner"
 
 [node name="VehicleSpawner_13" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.019529, -0.0137085, -0.999715, -3.30242e-05, 0.999906, -0.0137105, 0.999809, -0.000234736, -0.0195276, 125.664, 93.8748, -272.303)
 Team = 0
 ObjId = 1013
-VehicleTemplate = "ArtillerySpawner"
+VehicleTemplate = "StationaryEmplacementSpawner"
 
 [node name="VehicleSpawner_14" parent="." instance=ExtResource("4")]
 transform = Transform3D(0.0024993, -0.0139357, -0.9999, 4.85067e-06, 0.999903, -0.0139358, 0.999997, 2.99795e-05, 0.00249913, 120.664, 94.2267, -263.303)
 Team = 0
 ObjId = 1014
-VehicleTemplate = "ArtillerySpawner"
+VehicleTemplate = "StationaryEmplacementSpawner"
 
 [node name="VehicleSpawner_15" parent="." instance=ExtResource("4")]
 transform = Transform3D(-0.0274922, 0.222757, 0.974486, 0.00628191, 0.974874, -0.222668, -0.999602, -7.51033e-09, -0.0282008, 18.2453, 80.7456, 68.0714)
 Team = 2
 ObjId = 1015
-VehicleTemplate = "FighterSpawner"
+VehicleTemplate = "VehicleSpawner"
 
 [node name="CombatArea" parent="." node_paths=PackedStringArray("CombatVolume") instance=ExtResource("5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.442717911712691, 63.9535, -309.6276366766982)

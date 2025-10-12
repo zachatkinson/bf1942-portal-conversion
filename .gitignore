@@ -127,10 +127,13 @@ $RECYCLE.BIN/
 # ============================================================================
 # Project Specific
 # ============================================================================
-# Exported map files (can be regenerated)
-FbExportData/levels/*.spatial.json
+# Portal spatial.json files are tracked in git (canonical conversion output)
+# These are the intermediate format output from TSCN conversion (~400KB each)
+# Human-readable JSON, useful for diffs and debugging
 
-# Generated Portal experience files (large, can be regenerated)
+# Generated Portal experience files (regenerated from spatial.json on demand)
+# These contain base64-encoded spatial data + metadata (~1.2MB each)
+# Regenerate with: python3 tools/create_multi_map_experience.py
 experiences/
 
 # Conversion tool outputs (temporary)
