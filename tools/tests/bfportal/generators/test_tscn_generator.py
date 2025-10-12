@@ -148,46 +148,59 @@ class TestTscnGenerator:
 
     def test_validate_map_data_valid(self, generator, minimal_map_data):
         """Test validation accepts valid map data."""
-        # Should not raise exception
+        # Arrange (done via fixtures)
+
+        # Act & Assert - should not raise exception
         generator._validate_map_data(minimal_map_data)
 
     def test_validate_map_data_missing_team1_hq(self, generator, minimal_map_data):
         """Test validation fails with missing Team 1 HQ."""
+        # Arrange
         minimal_map_data.team1_hq = None
 
+        # Act & Assert
         with pytest.raises(ValidationError, match="Missing Team 1 HQ"):
             generator._validate_map_data(minimal_map_data)
 
     def test_validate_map_data_missing_team2_hq(self, generator, minimal_map_data):
         """Test validation fails with missing Team 2 HQ."""
+        # Arrange
         minimal_map_data.team2_hq = None
 
+        # Act & Assert
         with pytest.raises(ValidationError, match="Missing Team 2 HQ"):
             generator._validate_map_data(minimal_map_data)
 
     def test_validate_map_data_insufficient_team1_spawns(self, generator, minimal_map_data):
         """Test validation fails with fewer than 4 Team 1 spawns."""
+        # Arrange
         minimal_map_data.team1_spawns = minimal_map_data.team1_spawns[:3]  # Only 3 spawns
 
+        # Act & Assert
         with pytest.raises(ValidationError, match="Team 1 needs at least 4 spawns"):
             generator._validate_map_data(minimal_map_data)
 
     def test_validate_map_data_insufficient_team2_spawns(self, generator, minimal_map_data):
         """Test validation fails with fewer than 4 Team 2 spawns."""
+        # Arrange
         minimal_map_data.team2_spawns = minimal_map_data.team2_spawns[:2]  # Only 2 spawns
 
+        # Act & Assert
         with pytest.raises(ValidationError, match="Team 2 needs at least 4 spawns"):
             generator._validate_map_data(minimal_map_data)
 
     def test_format_transform_identity(self, generator):
         """Test formatting identity transform (no rotation, zero position)."""
+        # Arrange
         transform = Transform(
             position=Vector3(0.0, 0.0, 0.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
 
+        # Act
         result = generator._format_transform(transform)
 
+        # Assert
         assert "Transform3D(" in result
         assert result.endswith("0, 0, 0)")
         # Check identity rotation matrix - note: -0 is valid for negative zero
@@ -196,24 +209,30 @@ class TestTscnGenerator:
 
     def test_format_transform_with_position(self, generator):
         """Test formatting transform with position but no rotation."""
+        # Arrange
         transform = Transform(
             position=Vector3(100.0, 50.0, -200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
 
+        # Act
         result = generator._format_transform(transform)
 
+        # Assert
         assert "100, 50, -200)" in result
 
     def test_format_transform_with_yaw_rotation(self, generator):
         """Test formatting transform with Y-axis rotation (yaw)."""
+        # Arrange
         transform = Transform(
             position=Vector3(10.0, 20.0, 30.0),
             rotation=Rotation(0.0, 90.0, 0.0),  # 90-degree yaw
         )
 
+        # Act
         result = generator._format_transform(transform)
 
+        # Assert
         # 90-degree rotation around Y should give approximately:
         # [0, 0, 1, 0, 1, 0, -1, 0, 0]
         assert "Transform3D(" in result
@@ -221,12 +240,15 @@ class TestTscnGenerator:
 
     def test_generate_hqs_creates_both_teams(self, generator, minimal_map_data):
         """Test HQ generation creates both team HQs with spawn points."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
+        # Act
         lines = generator._generate_hqs(minimal_map_data)
         content = "\n".join(lines)
 
+        # Assert
         # Check Team 1 HQ
         assert 'name="TEAM_1_HQ"' in content
         assert "Team = 1" in content
@@ -243,30 +265,37 @@ class TestTscnGenerator:
 
     def test_generate_combat_area_with_bounds(self, generator, minimal_map_data):
         """Test combat area generation uses map bounds."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
+        # Act
         lines = generator._generate_combat_area(minimal_map_data)
         content = "\n".join(lines)
 
+        # Assert
         assert 'name="CombatArea"' in content
         assert "height = 200.0" in content
         assert "PackedVector2Array" in content
 
     def test_generate_combat_area_without_bounds(self, generator, minimal_map_data):
         """Test combat area generation with default bounds."""
+        # Arrange
         minimal_map_data.bounds = None
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
+        # Act
         lines = generator._generate_combat_area(minimal_map_data)
         content = "\n".join(lines)
 
+        # Assert
         assert 'name="CombatArea"' in content
         assert "PackedVector2Array" in content
 
     def test_generate_capture_points(self, generator):
         """Test capture point generation with spawns."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
@@ -302,9 +331,11 @@ class TestTscnGenerator:
             )
         ]
 
+        # Act
         lines = generator._generate_capture_points(capture_points)
         content = "\n".join(lines)
 
+        # Assert
         assert 'name="CapturePoint_1"' in content
         assert "ObjId = 101" in content
         assert 'name="CaptureZone_1"' in content
@@ -313,6 +344,7 @@ class TestTscnGenerator:
 
     def test_generate_vehicle_spawners(self, generator):
         """Test vehicle spawner generation."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
@@ -329,15 +361,18 @@ class TestTscnGenerator:
             )
         ]
 
+        # Act
         lines = generator._generate_vehicle_spawners(spawners)
         content = "\n".join(lines)
 
+        # Assert
         assert 'name="VehicleSpawner_1"' in content
         assert "Team = 1" in content
         assert 'VehicleTemplate = "Tank_Sherman"' in content
 
     def test_generate_static_layer(self, generator, minimal_map_data):
         """Test static layer generation with terrain."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
 
@@ -355,21 +390,26 @@ class TestTscnGenerator:
             )
         ]
 
+        # Act
         lines = generator._generate_static_layer(minimal_map_data)
         content = "\n".join(lines)
 
+        # Assert
         assert 'name="Static"' in content
         assert 'name="MP_Tungsten_Terrain"' in content
         assert 'name="Building_Warehouse_1"' in content
 
     def test_generate_complete_tscn_file(self, generator, minimal_map_data):
         """Test complete .tscn file generation."""
+        # Arrange
         with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
             output_path = Path(f.name)
 
         try:
+            # Act
             generator.generate(minimal_map_data, output_path, base_terrain="MP_Tungsten")
 
+            # Assert
             # Verify file was created
             assert output_path.exists()
 
@@ -401,14 +441,17 @@ class TestTscnGenerator:
 
     def test_validate_generated_file(self, generator, minimal_map_data):
         """Test validation of generated .tscn file."""
+        # Arrange
         with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
             output_path = Path(f.name)
 
         try:
             generator.generate(minimal_map_data, output_path)
 
+            # Act
             errors = generator.validate(output_path)
 
+            # Assert
             assert len(errors) == 0, f"Validation errors: {errors}"
 
         finally:
@@ -417,13 +460,18 @@ class TestTscnGenerator:
 
     def test_validate_missing_file(self, generator):
         """Test validation of non-existent file."""
+        # Arrange (done via fixture)
+
+        # Act
         errors = generator.validate(Path("/nonexistent/file.tscn"))
 
+        # Assert
         assert len(errors) > 0
         assert "File not found" in errors[0]
 
     def test_make_relative_transform(self, generator):
         """Test making child transform relative to parent."""
+        # Arrange
         parent = Transform(
             position=Vector3(100.0, 50.0, 100.0),
             rotation=Rotation(0.0, 0.0, 0.0),
@@ -433,8 +481,10 @@ class TestTscnGenerator:
             rotation=Rotation(0.0, 45.0, 0.0),
         )
 
+        # Act
         result = generator._make_relative_transform(child, parent)
 
+        # Assert
         # Relative position should be (10, 0, 5)
         assert result.position.x == pytest.approx(10.0)
         assert result.position.y == pytest.approx(0.0)
@@ -442,9 +492,13 @@ class TestTscnGenerator:
 
     def test_resource_management(self, generator):
         """Test ExtResource initialization and management."""
+        # Arrange
         generator.base_terrain = "MP_Tungsten"
+
+        # Act
         generator._init_ext_resources()
 
+        # Assert
         # Check all required resources are present
         assert len(generator.ext_resources) == 6
 

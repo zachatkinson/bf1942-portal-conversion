@@ -16,8 +16,8 @@ class TestCoordinateOffsetCentroidCalculation:
 
     def test_calculate_centroid_single_object(self):
         """Test centroid calculation with a single object."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         obj = GameObject(
             name="tree_01",
             asset_type="Tree_Pine",
@@ -29,17 +29,18 @@ class TestCoordinateOffsetCentroidCalculation:
             properties={},
         )
 
+        # Act
         centroid = offset_calculator.calculate_centroid([obj])
 
-        # Centroid should be the single object's position
+        # Assert - Centroid should be the single object's position
         assert centroid.x == 100.0
         assert centroid.y == 50.0
         assert centroid.z == 200.0
 
     def test_calculate_centroid_multiple_objects(self):
         """Test centroid calculation with multiple objects."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         objects = [
             GameObject(
                 name="obj1",
@@ -73,8 +74,10 @@ class TestCoordinateOffsetCentroidCalculation:
             ),
         ]
 
+        # Act
         centroid = offset_calculator.calculate_centroid(objects)
 
+        # Assert
         # Average of (0, 100, 200) = 100 for X
         # Average of (0, 100, 200) = 100 for Z
         # Average of (10, 20, 30) = 20 for Y
@@ -84,19 +87,21 @@ class TestCoordinateOffsetCentroidCalculation:
 
     def test_calculate_centroid_empty_list(self):
         """Test centroid calculation with empty object list."""
+        # Arrange
         offset_calculator = CoordinateOffset()
 
+        # Act
         centroid = offset_calculator.calculate_centroid([])
 
-        # Should return origin for empty list
+        # Assert - Should return origin for empty list
         assert centroid.x == 0.0
         assert centroid.y == 0.0
         assert centroid.z == 0.0
 
     def test_calculate_centroid_negative_coordinates(self):
         """Test centroid calculation with negative coordinates."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         objects = [
             GameObject(
                 name="obj1",
@@ -120,9 +125,10 @@ class TestCoordinateOffsetCentroidCalculation:
             ),
         ]
 
+        # Act
         centroid = offset_calculator.calculate_centroid(objects)
 
-        # Average of (-100, 100) = 0
+        # Assert - Average of (-100, 100) = 0
         assert centroid.x == 0.0
         assert centroid.y == 10.0
         assert centroid.z == 0.0
@@ -133,56 +139,60 @@ class TestCoordinateOffsetCalculation:
 
     def test_calculate_offset_positive_shift(self):
         """Test calculating offset with positive shift."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         source_center = Vector3(100.0, 50.0, 200.0)
         target_center = Vector3(500.0, 0.0, 800.0)
 
+        # Act
         offset = offset_calculator.calculate_offset(source_center, target_center)
 
-        # Offset should move source to target
+        # Assert - Offset should move source to target
         assert offset.x == 400.0  # 500 - 100
         assert offset.y == 0.0  # Y is always 0 (not offset)
         assert offset.z == 600.0  # 800 - 200
 
     def test_calculate_offset_negative_shift(self):
         """Test calculating offset with negative shift."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         source_center = Vector3(500.0, 100.0, 800.0)
         target_center = Vector3(100.0, 0.0, 200.0)
 
+        # Act
         offset = offset_calculator.calculate_offset(source_center, target_center)
 
-        # Offset should move source to target
+        # Assert - Offset should move source to target
         assert offset.x == -400.0  # 100 - 500
         assert offset.y == 0.0  # Y is always 0
         assert offset.z == -600.0  # 200 - 800
 
     def test_calculate_offset_zero_shift(self):
         """Test calculating offset when centers are the same."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         source_center = Vector3(100.0, 50.0, 200.0)
         target_center = Vector3(100.0, 75.0, 200.0)
 
+        # Act
         offset = offset_calculator.calculate_offset(source_center, target_center)
 
-        # No X/Z offset needed, Y ignored
+        # Assert - No X/Z offset needed, Y ignored
         assert offset.x == 0.0
         assert offset.y == 0.0
         assert offset.z == 0.0
 
     def test_calculate_offset_ignores_y(self):
         """Test that offset calculation ignores Y coordinate."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         source_center = Vector3(0.0, 1000.0, 0.0)
         target_center = Vector3(0.0, -1000.0, 0.0)
 
+        # Act
         offset = offset_calculator.calculate_offset(source_center, target_center)
 
-        # Y difference is 2000 but should be ignored
+        # Assert - Y difference is 2000 but should be ignored
         assert offset.x == 0.0
         assert offset.y == 0.0
         assert offset.z == 0.0
@@ -193,67 +203,70 @@ class TestCoordinateOffsetApplication:
 
     def test_apply_offset_positive(self):
         """Test applying positive offset to transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(45.0, 90.0, 0.0),
         )
         offset = Vector3(50.0, 0.0, 75.0)
 
+        # Act
         new_transform = offset_calculator.apply_offset(transform, offset)
 
+        # Assert
         # Position should be adjusted
         assert new_transform.position.x == 150.0
         assert new_transform.position.y == 50.0
         assert new_transform.position.z == 275.0
-
         # Rotation should be preserved
         assert new_transform.rotation.pitch == 45.0
         assert new_transform.rotation.yaw == 90.0
         assert new_transform.rotation.roll == 0.0
-
         # Original should be unchanged
         assert transform.position.x == 100.0
         assert transform.position.z == 200.0
 
     def test_apply_offset_negative(self):
         """Test applying negative offset to transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
         offset = Vector3(-100.0, 0.0, -150.0)
 
+        # Act
         new_transform = offset_calculator.apply_offset(transform, offset)
 
+        # Assert
         assert new_transform.position.x == 0.0
         assert new_transform.position.y == 50.0
         assert new_transform.position.z == 50.0
 
     def test_apply_offset_zero(self):
         """Test applying zero offset to transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
         offset = Vector3(0.0, 0.0, 0.0)
 
+        # Act
         new_transform = offset_calculator.apply_offset(transform, offset)
 
-        # Position should be unchanged
+        # Assert - Position should be unchanged
         assert new_transform.position.x == 100.0
         assert new_transform.position.y == 50.0
         assert new_transform.position.z == 200.0
 
     def test_apply_offset_preserves_scale(self):
         """Test that applying offset preserves scale."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
@@ -261,9 +274,10 @@ class TestCoordinateOffsetApplication:
         )
         offset = Vector3(50.0, 0.0, 75.0)
 
+        # Act
         new_transform = offset_calculator.apply_offset(transform, offset)
 
-        # Scale should be preserved
+        # Assert - Scale should be preserved
         assert new_transform.scale is not None
         assert new_transform.scale.x == 2.0
         assert new_transform.scale.y == 1.5
@@ -275,80 +289,84 @@ class TestCoordinateOffsetScaling:
 
     def test_apply_scale_shrink(self):
         """Test applying scale factor to shrink a transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(45.0, 90.0, 0.0),
         )
         scale_factor = 0.5
 
+        # Act
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
+        # Assert
         # Position should be scaled (except Y)
         assert new_transform.position.x == 50.0
         assert new_transform.position.y == 50.0  # Y unchanged
         assert new_transform.position.z == 100.0
-
         # Rotation should be preserved
         assert new_transform.rotation.pitch == 45.0
         assert new_transform.rotation.yaw == 90.0
 
     def test_apply_scale_enlarge(self):
         """Test applying scale factor to enlarge a transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
         scale_factor = 2.0
 
+        # Act
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
-        # Position should be scaled (except Y)
+        # Assert - Position should be scaled (except Y)
         assert new_transform.position.x == 200.0
         assert new_transform.position.y == 50.0  # Y unchanged
         assert new_transform.position.z == 400.0
 
     def test_apply_scale_zero(self):
         """Test applying zero scale factor."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
         )
         scale_factor = 0.0
 
+        # Act
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
-        # Position should be at origin (except Y)
+        # Assert - Position should be at origin (except Y)
         assert new_transform.position.x == 0.0
         assert new_transform.position.y == 50.0  # Y unchanged
         assert new_transform.position.z == 0.0
 
     def test_apply_scale_preserves_rotation(self):
         """Test that scaling preserves rotation."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(30.0, 45.0, 60.0),
         )
         scale_factor = 0.75
 
+        # Act
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
-        # Rotation should be unchanged
+        # Assert - Rotation should be unchanged
         assert new_transform.rotation.pitch == 30.0
         assert new_transform.rotation.yaw == 45.0
         assert new_transform.rotation.roll == 60.0
 
     def test_apply_scale_preserves_original_scale(self):
         """Test that scaling preserves the original scale property."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 200.0),
             rotation=Rotation(0.0, 0.0, 0.0),
@@ -356,9 +374,10 @@ class TestCoordinateOffsetScaling:
         )
         scale_factor = 0.5
 
+        # Act
         new_transform = offset_calculator.apply_scale(transform, scale_factor)
 
-        # Scale property should be preserved (not affected)
+        # Assert - Scale property should be preserved (not affected)
         assert new_transform.scale is not None
         assert new_transform.scale.x == 2.0
         assert new_transform.scale.y == 2.0
@@ -370,8 +389,8 @@ class TestCoordinateOffsetIntegration:
 
     def test_complete_offset_workflow(self):
         """Test complete workflow: calculate centroid, offset, and apply."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         # Create objects centered around (500, 100, 500)
         objects = [
             GameObject(
@@ -396,44 +415,48 @@ class TestCoordinateOffsetIntegration:
             ),
         ]
 
+        # Act
         # Calculate centroid
         centroid = offset_calculator.calculate_centroid(objects)
-        assert centroid.x == 500.0
-        assert centroid.z == 500.0
 
         # Calculate offset to move to origin
         target_center = Vector3(0.0, 0.0, 0.0)
         offset = offset_calculator.calculate_offset(centroid, target_center)
-        assert offset.x == -500.0
-        assert offset.z == -500.0
 
         # Apply offset to first object
         new_transform = offset_calculator.apply_offset(objects[0].transform, offset)
+
+        # Assert
+        assert centroid.x == 500.0
+        assert centroid.z == 500.0
+        assert offset.x == -500.0
+        assert offset.z == -500.0
         assert new_transform.position.x == -100.0  # 400 - 500
         assert new_transform.position.z == -100.0  # 400 - 500
 
     def test_combined_offset_and_scale(self):
         """Test applying both offset and scale to transform."""
+        # Arrange
         offset_calculator = CoordinateOffset()
-
         transform = Transform(
             position=Vector3(100.0, 50.0, 100.0),
             rotation=Rotation(0.0, 45.0, 0.0),
         )
 
+        # Act
         # First apply scale
         scaled = offset_calculator.apply_scale(transform, 0.5)
-        assert scaled.position.x == 50.0
-        assert scaled.position.z == 50.0
 
         # Then apply offset
         offset = Vector3(50.0, 0.0, 50.0)
         final = offset_calculator.apply_offset(scaled, offset)
 
+        # Assert
+        assert scaled.position.x == 50.0
+        assert scaled.position.z == 50.0
         # Final position should be (100, 50, 100)
         assert final.position.x == 100.0
         assert final.position.y == 50.0
         assert final.position.z == 100.0
-
         # Rotation should be preserved
         assert final.rotation.yaw == 45.0

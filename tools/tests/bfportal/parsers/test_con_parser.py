@@ -20,19 +20,30 @@ class TestConParserCanParse:
     def test_can_parse_con_file(self):
         """Test that .con files are recognized."""
         parser = ConParser()
-        assert parser.can_parse(Path("test.con")) is True
+
+        result = parser.can_parse(Path("test.con"))
+
+        assert result is True
 
     def test_can_parse_con_file_uppercase(self):
         """Test that .CON files are recognized (case-insensitive)."""
         parser = ConParser()
-        assert parser.can_parse(Path("test.CON")) is True
+
+        result = parser.can_parse(Path("test.CON"))
+
+        assert result is True
 
     def test_cannot_parse_other_extensions(self):
         """Test that non-.con files are rejected."""
         parser = ConParser()
-        assert parser.can_parse(Path("test.txt")) is False
-        assert parser.can_parse(Path("test.sct")) is False
-        assert parser.can_parse(Path("test.json")) is False
+
+        result_txt = parser.can_parse(Path("test.txt"))
+        result_sct = parser.can_parse(Path("test.sct"))
+        result_json = parser.can_parse(Path("test.json"))
+
+        assert result_txt is False
+        assert result_sct is False
+        assert result_json is False
 
 
 class TestConParserBasicParsing:
@@ -43,6 +54,7 @@ class TestConParserBasicParsing:
         parser = ConParser()
         nonexistent_file = tmp_path / "nonexistent.con"
 
+        # Act & Assert
         with pytest.raises(ParseError, match="File not found"):
             parser.parse(nonexistent_file)
 
@@ -70,6 +82,7 @@ rem Another comment
         )
 
         result = parser.parse(con_file)
+
         assert result["objects"] == []
 
     def test_parse_objecttemplate_create(self, tmp_path):
@@ -83,8 +96,8 @@ ObjectTemplate.create ControlPoint CP1
         )
 
         result = parser.parse(con_file)
-        objects = result["objects"]
 
+        objects = result["objects"]
         assert len(objects) == 2
         assert objects[0]["name"] == "MySpawner"
         assert objects[0]["type"] == "ObjectSpawner"
@@ -102,8 +115,8 @@ Object.create Tree_Pine_Large
         )
 
         result = parser.parse(con_file)
-        objects = result["objects"]
 
+        objects = result["objects"]
         assert len(objects) == 2
         assert objects[0]["name"] == "Bunker_01"
         assert objects[0]["type"] == "Bunker_01"  # Type is same as name for instances
@@ -125,8 +138,8 @@ ObjectTemplate.setPosition 100.5/50.25/200.75
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert "position" in obj
         assert obj["position"]["x"] == 100.5
         assert obj["position"]["y"] == 50.25
@@ -143,8 +156,8 @@ Object.absolutePosition -50.0/10.0/75.5
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert "position" in obj
         assert obj["position"]["x"] == -50.0
         assert obj["position"]["y"] == 10.0
@@ -161,8 +174,8 @@ ObjectTemplate.setPosition -100.0/-50.0/-200.0
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert obj["position"]["x"] == -100.0
         assert obj["position"]["y"] == -50.0
         assert obj["position"]["z"] == -200.0
@@ -178,8 +191,8 @@ ObjectTemplate.setPosition 1.5e2/5.25e1/2.0e-1
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert obj["position"]["x"] == 150.0
         assert obj["position"]["y"] == 52.5
         assert obj["position"]["z"] == 0.2
@@ -199,8 +212,8 @@ ObjectTemplate.setRotation 0.0/90.0/0.0
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert "rotation" in obj
         assert obj["rotation"]["pitch"] == 0.0
         assert obj["rotation"]["yaw"] == 90.0
@@ -217,8 +230,8 @@ Object.rotation 45.0/180.0/90.0
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert "rotation" in obj
         assert obj["rotation"]["pitch"] == 45.0
         assert obj["rotation"]["yaw"] == 180.0
@@ -235,8 +248,8 @@ ObjectTemplate.setRotation -45.0/-90.0/-180.0
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert obj["rotation"]["pitch"] == -45.0
         assert obj["rotation"]["yaw"] == -90.0
         assert obj["rotation"]["roll"] == -180.0
@@ -259,8 +272,8 @@ ObjectTemplate.setTeam 2
         )
 
         result = parser.parse(con_file)
-        objects = result["objects"]
 
+        objects = result["objects"]
         assert objects[0]["team"] == 1
         assert objects[1]["team"] == 2
 
@@ -278,8 +291,8 @@ Object.setTeam 2
         )
 
         result = parser.parse(con_file)
-        objects = result["objects"]
 
+        objects = result["objects"]
         assert objects[0]["team"] == 1
         assert objects[1]["team"] == 2
 
@@ -294,8 +307,8 @@ ObjectTemplate.setTeam 0
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert obj["team"] == 0
 
 
@@ -316,9 +329,9 @@ ObjectTemplate.nrOfObjectToSpawn 3
         )
 
         result = parser.parse(con_file)
+
         obj = result["objects"][0]
         props = obj["properties"]
-
         assert props["activeSafe"] == "1"
         assert props["maxSpawnDelay"] == "10"
         assert props["spawnDelay"] == "5"
@@ -337,9 +350,9 @@ Object.isControlPoint 1
         )
 
         result = parser.parse(con_file)
+
         obj = result["objects"][0]
         props = obj["properties"]
-
         assert props["radius"] == "50.0"
         assert props["controlPointId"] == "1"
         assert props["isControlPoint"] == "1"
@@ -356,9 +369,9 @@ ObjectTemplate.mapMaterial 0 Concrete 0
         )
 
         result = parser.parse(con_file)
+
         obj = result["objects"][0]
         props = obj["properties"]
-
         assert props["geometry"] == "Bunker_Mesh"
         assert props["mapMaterial"] == "0 Concrete 0"
 
@@ -380,8 +393,8 @@ ObjectTemplate.activeSafe 1
         )
 
         result = parser.parse(con_file)
-        obj = result["objects"][0]
 
+        obj = result["objects"][0]
         assert obj["name"] == "SpawnPoint_1_1"
         assert obj["type"] == "ObjectSpawner"
         assert obj["position"]["x"] == 150.0
@@ -416,8 +429,8 @@ ObjectTemplate.setTeam 2
         )
 
         result = parser.parse(con_file)
-        objects = result["objects"]
 
+        objects = result["objects"]
         assert len(objects) == 3
         assert objects[0]["name"] == "CP1"
         assert objects[1]["name"] == "Spawn1"

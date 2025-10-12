@@ -18,8 +18,13 @@ class TestGameConfigLoader:
 
     def test_load_game_config_success(self, sample_game_config):
         """Test loading valid game config."""
+        # Arrange
+        # (sample_game_config provided by fixture)
+
+        # Act
         config = ConfigLoader.load_game_config(sample_game_config)
 
+        # Assert
         assert config.name == "BF1942"
         assert config.engine == "Refractor 1.0"
         assert config.engine_type == "refractor"
@@ -29,36 +34,42 @@ class TestGameConfigLoader:
 
     def test_load_game_config_missing_file(self, tmp_path):
         """Test loading game config raises error when file not found."""
+        # Arrange
         nonexistent = tmp_path / "nonexistent.json"
 
+        # Act & Assert
         with pytest.raises(FileNotFoundError):
             ConfigLoader.load_game_config(nonexistent)
 
     def test_load_game_config_invalid_json(self, tmp_path):
         """Test loading game config raises error with invalid JSON."""
+        # Arrange
         invalid_json = tmp_path / "invalid.json"
         invalid_json.write_text("{ invalid json ")
 
+        # Act & Assert
         with pytest.raises(json.JSONDecodeError):
             ConfigLoader.load_game_config(invalid_json)
 
     def test_load_game_config_missing_required_field(self, tmp_path):
         """Test loading game config raises error when required field missing."""
+        # Arrange
         config_data = {
             "name": "BF1942",
             "engine": "Refractor 1.0",
             # Missing engine_type, version, era
         }
-
         config_path = tmp_path / "incomplete.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act & Assert
         with pytest.raises(KeyError):
             ConfigLoader.load_game_config(config_path)
 
     def test_load_game_config_with_default_expansions(self, tmp_path):
         """Test loading game config with no expansions uses empty list."""
+        # Arrange
         config_data = {
             "name": "BF1942",
             "engine": "Refractor 1.0",
@@ -67,13 +78,14 @@ class TestGameConfigLoader:
             "era": "WW2",
             # No expansions field
         }
-
         config_path = tmp_path / "no_expansions.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act
         config = ConfigLoader.load_game_config(config_path)
 
+        # Assert
         assert config.expansions == []
 
 
@@ -82,8 +94,13 @@ class TestMapConfigLoader:
 
     def test_load_map_config_success(self, sample_map_config):
         """Test loading valid map config."""
+        # Arrange
+        # (sample_map_config provided by fixture)
+
+        # Act
         config = ConfigLoader.load_map_config(sample_map_config)
 
+        # Assert
         assert config.name == "Kursk"
         assert config.game == "BF1942"
         assert config.expansion == "base"
@@ -95,13 +112,16 @@ class TestMapConfigLoader:
 
     def test_load_map_config_missing_file(self, tmp_path):
         """Test loading map config raises error when file not found."""
+        # Arrange
         nonexistent = tmp_path / "nonexistent.json"
 
+        # Act & Assert
         with pytest.raises(FileNotFoundError):
             ConfigLoader.load_map_config(nonexistent)
 
     def test_load_map_config_default_expansion(self, tmp_path):
         """Test loading map config with default expansion value."""
+        # Arrange
         config_data = {
             "name": "Kursk",
             "game": "BF1942",
@@ -111,17 +131,19 @@ class TestMapConfigLoader:
             "size": "large",
             "dimensions": {"width": 2000.0, "height": 2000.0},
         }
-
         config_path = tmp_path / "map_config.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act
         config = ConfigLoader.load_map_config(config_path)
 
+        # Assert
         assert config.expansion == "base"
 
     def test_load_map_config_default_notes(self, tmp_path):
         """Test loading map config with default notes value."""
+        # Arrange
         config_data = {
             "name": "Kursk",
             "game": "BF1942",
@@ -132,20 +154,23 @@ class TestMapConfigLoader:
             "dimensions": {"width": 2000.0, "height": 2000.0},
             # No notes field
         }
-
         config_path = tmp_path / "map_config.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act
         config = ConfigLoader.load_map_config(config_path)
 
+        # Assert
         assert config.notes == ""
 
     def test_load_map_config_invalid_json(self, tmp_path):
         """Test loading map config raises error with invalid JSON."""
+        # Arrange
         invalid_json = tmp_path / "invalid.json"
         invalid_json.write_text("{ invalid json ")
 
+        # Act & Assert
         with pytest.raises(json.JSONDecodeError):
             ConfigLoader.load_map_config(invalid_json)
 
@@ -155,8 +180,13 @@ class TestConversionConfigLoader:
 
     def test_load_conversion_config_success(self, sample_conversion_config):
         """Test loading valid conversion config."""
+        # Arrange
+        # (sample_conversion_config provided by fixture)
+
+        # Act
         config = ConfigLoader.load_conversion_config(sample_conversion_config)
 
+        # Assert
         assert config.base_terrain == "MP_Tungsten"
         assert config.target_map_center == {"x": 0.0, "y": 0.0, "z": 0.0}
         assert config.scale_factor == 1.0
@@ -166,25 +196,29 @@ class TestConversionConfigLoader:
 
     def test_load_conversion_config_missing_file(self, tmp_path):
         """Test loading conversion config raises error when file not found."""
+        # Arrange
         nonexistent = tmp_path / "nonexistent.json"
 
+        # Act & Assert
         with pytest.raises(FileNotFoundError):
             ConfigLoader.load_conversion_config(nonexistent)
 
     def test_load_conversion_config_with_defaults(self, tmp_path):
         """Test loading conversion config uses default values."""
+        # Arrange
         config_data = {
             "base_terrain": "MP_Tungsten",
             "target_map_center": {"x": 0.0, "y": 0.0, "z": 0.0},
             # No optional fields
         }
-
         config_path = tmp_path / "conversion_config.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act
         config = ConfigLoader.load_conversion_config(config_path)
 
+        # Assert
         assert config.scale_factor == 1.0
         assert config.height_adjustment is True
         assert config.validate_bounds is True
@@ -192,6 +226,7 @@ class TestConversionConfigLoader:
 
     def test_load_conversion_config_custom_values(self, tmp_path):
         """Test loading conversion config with custom values."""
+        # Arrange
         config_data = {
             "base_terrain": "MP_Battery",
             "target_map_center": {"x": 100.0, "y": 50.0, "z": -200.0},
@@ -200,13 +235,14 @@ class TestConversionConfigLoader:
             "validate_bounds": False,
             "debug_mode": True,
         }
-
         config_path = tmp_path / "conversion_config.json"
         with open(config_path, "w") as f:
             json.dump(config_data, f)
 
+        # Act
         config = ConfigLoader.load_conversion_config(config_path)
 
+        # Assert
         assert config.base_terrain == "MP_Battery"
         assert config.target_map_center == {"x": 100.0, "y": 50.0, "z": -200.0}
         assert config.scale_factor == 1.5
@@ -216,9 +252,11 @@ class TestConversionConfigLoader:
 
     def test_load_conversion_config_invalid_json(self, tmp_path):
         """Test loading conversion config raises error with invalid JSON."""
+        # Arrange
         invalid_json = tmp_path / "invalid.json"
         invalid_json.write_text("{ invalid json ")
 
+        # Act & Assert
         with pytest.raises(json.JSONDecodeError):
             ConfigLoader.load_conversion_config(invalid_json)
 
@@ -228,6 +266,7 @@ class TestGameConfigDataclass:
 
     def test_game_config_creation(self):
         """Test creating GameConfig instance."""
+        # Arrange & Act
         config = GameConfig(
             name="BF1942",
             engine="Refractor 1.0",
@@ -237,6 +276,7 @@ class TestGameConfigDataclass:
             expansions=["xpack1_rtr"],
         )
 
+        # Assert
         assert config.name == "BF1942"
         assert config.engine == "Refractor 1.0"
         assert config.engine_type == "refractor"
@@ -250,6 +290,7 @@ class TestMapConfigDataclass:
 
     def test_map_config_creation(self):
         """Test creating MapConfig instance."""
+        # Arrange & Act
         config = MapConfig(
             name="Kursk",
             game="BF1942",
@@ -261,6 +302,7 @@ class TestMapConfigDataclass:
             notes="Test map",
         )
 
+        # Assert
         assert config.name == "Kursk"
         assert config.game == "BF1942"
         assert config.expansion == "base"
@@ -276,10 +318,12 @@ class TestConversionConfigDataclass:
 
     def test_conversion_config_creation_minimal(self):
         """Test creating ConversionConfig with minimal parameters."""
+        # Arrange & Act
         config = ConversionConfig(
             base_terrain="MP_Tungsten", target_map_center={"x": 0.0, "y": 0.0, "z": 0.0}
         )
 
+        # Assert
         assert config.base_terrain == "MP_Tungsten"
         assert config.target_map_center == {"x": 0.0, "y": 0.0, "z": 0.0}
         assert config.scale_factor == 1.0
@@ -289,6 +333,7 @@ class TestConversionConfigDataclass:
 
     def test_conversion_config_creation_full(self):
         """Test creating ConversionConfig with all parameters."""
+        # Arrange & Act
         config = ConversionConfig(
             base_terrain="MP_Battery",
             target_map_center={"x": 100.0, "y": 50.0, "z": -200.0},
@@ -298,6 +343,7 @@ class TestConversionConfigDataclass:
             debug_mode=True,
         )
 
+        # Assert
         assert config.base_terrain == "MP_Battery"
         assert config.target_map_center == {"x": 100.0, "y": 50.0, "z": -200.0}
         assert config.scale_factor == 1.5

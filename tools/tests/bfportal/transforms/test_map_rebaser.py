@@ -28,23 +28,29 @@ class TestMapRebaserInitialization:
 
     def test_init_stores_dependencies(self):
         """Test that initialization stores terrain, offset calculator, and bounds validator."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
         bounds_validator = Mock(spec=IBoundsValidator)
 
+        # Act
         rebaser = MapRebaser(terrain, offset_calc, bounds_validator)
 
+        # Assert
         assert rebaser.terrain is terrain
         assert rebaser.offset_calc is offset_calc
         assert rebaser.bounds_validator is bounds_validator
 
     def test_init_allows_none_bounds_validator(self):
         """Test that bounds validator can be None."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
+        # Act
         rebaser = MapRebaser(terrain, offset_calc, None)
 
+        # Assert
         assert rebaser.bounds_validator is None
 
 
@@ -53,30 +59,27 @@ class TestMapRebaserOffsetCalculation:
 
     def test_calculate_centroid_called_with_objects(self):
         """Test that centroid is calculated from parsed objects."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
         offset_calc.calculate_centroid.return_value = Vector3(100.0, 50.0, 200.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
-
         terrain.get_height_at.return_value = 50.0
-
         rebaser = MapRebaser(terrain, offset_calc, None)
-
-        # Create a simple test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_input.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 50, 200)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_output.tscn"
+        new_center = Vector3(0.0, 0.0, 0.0)
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_output.tscn"
-            new_center = Vector3(0.0, 0.0, 0.0)
-
+            # Act
             rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", new_center)
 
-            # Verify centroid calculation was called
+            # Assert
             offset_calc.calculate_centroid.assert_called_once()
             objects_arg = offset_calc.calculate_centroid.call_args[0][0]
             assert len(objects_arg) > 0
@@ -87,39 +90,32 @@ class TestMapRebaserOffsetCalculation:
 
     def test_calculate_offset_with_new_center(self):
         """Test that offset is calculated between current and new center."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
-
         current_centroid = Vector3(100.0, 50.0, 200.0)
         new_center = Vector3(50.0, 25.0, 100.0)
         expected_offset = Vector3(-50.0, -25.0, -100.0)
-
         offset_calc.calculate_centroid.return_value = current_centroid
         offset_calc.calculate_offset.return_value = expected_offset
         offset_calc.apply_offset.side_effect = lambda t, o: Transform(
             Vector3(t.position.x + o.x, t.position.y + o.y, t.position.z + o.z), t.rotation
         )
-
         terrain.get_height_at.return_value = 25.0
-
         rebaser = MapRebaser(terrain, offset_calc, None)
-
-        # Create test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_offset.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 50, 200)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_offset_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_offset_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", new_center)
 
-            # Verify offset calculation was called with correct parameters
+            # Assert
             offset_calc.calculate_offset.assert_called_once_with(current_centroid, new_center)
-
-            # Verify offset is in stats
             assert stats["offset_applied"]["x"] == expected_offset.x
             assert stats["offset_applied"]["y"] == expected_offset.y
             assert stats["offset_applied"]["z"] == expected_offset.z
@@ -130,14 +126,12 @@ class TestMapRebaserOffsetCalculation:
 
     def test_apply_offset_to_each_object(self):
         """Test that offset is applied to each rebased object."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
-
         offset = Vector3(-50.0, 0.0, -100.0)
         offset_calc.calculate_centroid.return_value = Vector3(100.0, 0.0, 200.0)
         offset_calc.calculate_offset.return_value = offset
-
-        # Track apply_offset calls
         apply_offset_calls = []
 
         def mock_apply_offset(transform, off):
@@ -151,10 +145,7 @@ class TestMapRebaserOffsetCalculation:
 
         offset_calc.apply_offset.side_effect = mock_apply_offset
         terrain.get_height_at.return_value = 0.0
-
         rebaser = MapRebaser(terrain, offset_calc, None)
-
-        # Create test .tscn with multiple objects
         test_tscn = Path(__file__).parent / "test_rebaser_multi.tscn"
         test_tscn.write_text(
             '[node name="Object1" instance=Resource("test")]\n'
@@ -162,13 +153,13 @@ class TestMapRebaserOffsetCalculation:
             '[node name="Object2" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 0, 250)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_multi_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_multi_output.tscn"
-
+            # Act
             rebaser.rebase_map(test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0))
 
-            # Verify apply_offset was called for each object
+            # Assert
             assert len(apply_offset_calls) >= 2
 
         finally:
@@ -181,33 +172,31 @@ class TestMapRebaserHeightAdjustment:
 
     def test_height_adjusted_when_above_tolerance(self):
         """Test that object height is adjusted when above terrain by more than tolerance."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
-        # Object at y=50, terrain at y=10 (40m difference > tolerance)
         terrain.get_height_at.return_value = 10.0
-
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 50.0, 0.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_height.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_height_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_height_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(
                 test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
             )
 
-            # Verify height adjustment occurred
+            # Assert
             assert stats["height_adjusted"] == 1
             terrain.get_height_at.assert_called()
 
@@ -217,33 +206,31 @@ class TestMapRebaserHeightAdjustment:
 
     def test_height_not_adjusted_within_tolerance(self):
         """Test that object height is not adjusted when within tolerance."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
-        # Object at y=11, terrain at y=10 (1m difference < tolerance of 2m)
         terrain.get_height_at.return_value = 10.0
-
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 11.0, 0.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_no_height.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, 0)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_no_height_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_no_height_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(
                 test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
             )
 
-            # Verify no height adjustment occurred
+            # Assert
             assert stats["height_adjusted"] == 0
 
         finally:
@@ -252,33 +239,31 @@ class TestMapRebaserHeightAdjustment:
 
     def test_out_of_bounds_tracked_on_terrain_error(self):
         """Test that objects outside terrain bounds are tracked."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
-        # Terrain query raises exception for out of bounds
         terrain.get_height_at.side_effect = Exception("Out of terrain bounds")
-
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_bounds.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9999, 0, 9999)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_bounds_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_bounds_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(
                 test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
             )
 
-            # Verify out of bounds was tracked
+            # Assert
             assert stats["out_of_bounds"] == 1
 
         finally:
@@ -291,12 +276,12 @@ class TestMapRebaserTscnParsing:
 
     def test_parse_tscn_extracts_objects(self):
         """Test that _parse_tscn extracts game objects correctly."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file
         test_tscn = Path(__file__).parent / "test_rebaser_parse.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
@@ -306,8 +291,10 @@ class TestMapRebaserTscnParsing:
         )
 
         try:
+            # Act
             objects = rebaser._parse_tscn(test_tscn)
 
+            # Assert
             assert len(objects) == 2
             assert objects[0].name == "TestObject"
             assert objects[1].name == "AnotherObject"
@@ -317,12 +304,12 @@ class TestMapRebaserTscnParsing:
 
     def test_parse_tscn_skips_special_nodes(self):
         """Test that special nodes (HQ, Spawn, Combat, etc.) are skipped."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file with special nodes
         test_tscn = Path(__file__).parent / "test_rebaser_special.tscn"
         test_tscn.write_text(
             '[node name="TEAM_1_HQ" instance=Resource("test")]\n'
@@ -340,9 +327,10 @@ class TestMapRebaserTscnParsing:
         )
 
         try:
+            # Act
             objects = rebaser._parse_tscn(test_tscn)
 
-            # Only RegularObject should be parsed
+            # Assert
             assert len(objects) == 1
             assert objects[0].name == "RegularObject"
 
@@ -351,12 +339,12 @@ class TestMapRebaserTscnParsing:
 
     def test_parse_tscn_extracts_position_correctly(self):
         """Test that positions are extracted correctly from transform matrix."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn file with specific position
         test_tscn = Path(__file__).parent / "test_rebaser_position.tscn"
         test_tscn.write_text(
             '[node name="TestObject" instance=Resource("test")]\n'
@@ -364,8 +352,10 @@ class TestMapRebaserTscnParsing:
         )
 
         try:
+            # Act
             objects = rebaser._parse_tscn(test_tscn)
 
+            # Assert
             assert len(objects) == 1
             assert objects[0].transform.position.x == pytest.approx(123.45)
             assert objects[0].transform.position.y == pytest.approx(67.89)
@@ -380,26 +370,28 @@ class TestMapRebaserTscnGeneration:
 
     def test_generate_tscn_creates_file(self):
         """Test that _generate_tscn creates output file."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
         output_tscn = Path(__file__).parent / "test_rebaser_output.tscn"
+        objects = [
+            GameObject(
+                name="TestObject",
+                asset_type="Tree",
+                transform=Transform(Vector3(0.0, 0.0, 0.0), Rotation(0, 0, 0)),
+                team=Team.NEUTRAL,
+                properties={},
+            )
+        ]
 
         try:
-            objects = [
-                GameObject(
-                    name="TestObject",
-                    asset_type="Tree",
-                    transform=Transform(Vector3(0.0, 0.0, 0.0), Rotation(0, 0, 0)),
-                    team=Team.NEUTRAL,
-                    properties={},
-                )
-            ]
-
+            # Act
             rebaser._generate_tscn(objects, output_tscn, "MP_Outskirts")
 
+            # Assert
             assert output_tscn.exists()
             assert output_tscn.stat().st_size > 0
 
@@ -408,17 +400,20 @@ class TestMapRebaserTscnGeneration:
 
     def test_generate_tscn_includes_base_terrain_name(self):
         """Test that generated .tscn includes base terrain name."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
         output_tscn = Path(__file__).parent / "test_rebaser_terrain_name.tscn"
+        objects: list[GameObject] = []
 
         try:
-            objects: list[GameObject] = []
+            # Act
             rebaser._generate_tscn(objects, output_tscn, "MP_CustomTerrain")
 
+            # Assert
             content = output_tscn.read_text()
             assert "MP_CustomTerrain" in content
 
@@ -431,6 +426,7 @@ class TestMapRebaserStatistics:
 
     def test_stats_includes_total_objects(self):
         """Test that statistics include total object count."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
@@ -441,7 +437,6 @@ class TestMapRebaserStatistics:
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn with 3 objects
         test_tscn = Path(__file__).parent / "test_rebaser_stats.tscn"
         test_tscn.write_text(
             '[node name="Object1" instance=Resource("test")]\n'
@@ -451,14 +446,15 @@ class TestMapRebaserStatistics:
             '[node name="Object3" instance=Resource("test")]\n'
             "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 20)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_stats_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_stats_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(
                 test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
             )
 
+            # Assert
             assert stats["total_objects"] == 3
 
         finally:
@@ -467,12 +463,10 @@ class TestMapRebaserStatistics:
 
     def test_stats_tracks_height_adjusted_and_out_of_bounds(self):
         """Test that statistics track height adjustments and out of bounds objects."""
+        # Arrange
         terrain = Mock(spec=ITerrainProvider)
         offset_calc = Mock(spec=ICoordinateOffset)
 
-        # First object: within tolerance
-        # Second object: needs adjustment
-        # Third object: out of bounds
         heights = [5.0, 10.0, None]
         height_calls = [0]
 
@@ -484,31 +478,30 @@ class TestMapRebaserStatistics:
             return heights[idx]
 
         terrain.get_height_at.side_effect = get_height_side_effect
-
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
-        # Create test .tscn
         test_tscn = Path(__file__).parent / "test_rebaser_tracking.tscn"
         test_tscn.write_text(
             '[node name="Object1" instance=Resource("test")]\n'
-            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)\n"  # Within tolerance
+            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)\n"
             '[node name="Object2" instance=Resource("test")]\n'
-            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 50, 10)\n"  # Needs adjustment
+            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 50, 10)\n"
             '[node name="Object3" instance=Resource("test")]\n'
-            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9999, 0, 9999)\n"  # Out of bounds
+            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9999, 0, 9999)\n"
         )
+        output_tscn = test_tscn.parent / "test_rebaser_tracking_output.tscn"
 
         try:
-            output_tscn = test_tscn.parent / "test_rebaser_tracking_output.tscn"
-
+            # Act
             stats = rebaser.rebase_map(
                 test_tscn, output_tscn, "MP_Outskirts", Vector3(0.0, 0.0, 0.0)
             )
 
+            # Assert
             assert stats["height_adjusted"] == 1
             assert stats["out_of_bounds"] == 1
 
