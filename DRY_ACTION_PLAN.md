@@ -159,18 +159,16 @@ if target_map in portal_asset.level_restrictions:
 
 ## Warnings (Priority 2) - Future Work
 
-### 1. Portal CLI Tools Could Import TscnTransformParser
+### 1. ✅ Portal CLI Tools Could Import TscnTransformParser
 
-**Current State**: CLI tools still use inline transform parsing logic
+**Current State**: ✅ COMPLETED in Sprint 2
 
-**Recommendation**: Refactor to use new `TscnTransformParser` utility
+**Solution**:
+- Refactored `portal_adjust_heights.py` to use `TscnTransformParser`
+- `portal_reposition_combat_area.py` was vestigial (deleted in Sprint 1)
+- `portal_map_assets.py` doesn't use transform parsing (skipped)
 
-**Affected Files**:
-- `portal_adjust_heights.py`
-- `portal_reposition_combat_area.py`
-- `portal_map_assets.py`
-
-**Effort**: Low (1-2 hours)
+**Effort**: Completed (1 hour actual)
 
 ---
 
@@ -226,16 +224,17 @@ if target_map in portal_asset.level_restrictions:
 
 ---
 
-### 6. Magic Numbers in Coordinate Transformations
+### 6. ✅ Magic Numbers in Coordinate Transformations
 
-**Current State**: Some magic numbers in transformation calculations
+**Current State**: ✅ COMPLETED in Sprint 2
 
-**Recommendation**: Extract to named constants with explanatory comments
+**Solution**:
+- Extracted `HEIGHT_ADJUSTMENT_TOLERANCE_M = 2.0` constant in `map_rebaser.py`
+- Added comprehensive documentation explaining the constant's purpose
+- No magic numbers found in `coordinate_transformer.py` (doesn't exist)
+- Improved code readability and maintainability
 
-**Affected Files**:
-- `tools/bfportal/transforms/coordinate_transformer.py`
-
-**Effort**: Low (1 hour)
+**Effort**: Completed (30 minutes actual)
 
 ---
 
