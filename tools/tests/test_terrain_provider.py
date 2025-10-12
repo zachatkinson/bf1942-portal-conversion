@@ -245,13 +245,15 @@ class TestCustomHeightmapProvider:
                 raise ImportError("No module named 'PIL'")
             return original_import(name, *args, **kwargs)
 
-        with patch("builtins.__import__", side_effect=mock_import):
-            with pytest.raises(TerrainError, match="PIL/Pillow not installed"):
-                CustomHeightmapProvider(
-                    heightmap_path=heightmap_path,
-                    terrain_size=(2048.0, 2048.0),
-                    height_range=(0.0, 200.0),
-                )
+        with (
+            patch("builtins.__import__", side_effect=mock_import),
+            pytest.raises(TerrainError, match="PIL/Pillow not installed"),
+        ):
+            CustomHeightmapProvider(
+                heightmap_path=heightmap_path,
+                terrain_size=(2048.0, 2048.0),
+                height_range=(0.0, 200.0),
+            )
 
     def test_get_height_at_center(self, tmp_path: Path, mock_heightmap_image):
         """Test height query at terrain center."""
