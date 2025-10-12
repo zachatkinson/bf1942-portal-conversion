@@ -19,46 +19,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "AA_AllCockpitInternal": {
-    "asset_type": "AA_AllCockpitInternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "AA_AlliesSeat": {
-    "asset_type": "AA_AlliesSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "AA_Allies_Camera": {
-    "asset_type": "AA_Allies_Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "AA_Allies_Entry": {
-    "asset_type": "AA_Allies_Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "ANDCompositeObjective": {
     "asset_type": "ANDCompositeObjective",
     "category": "unknown",
@@ -72,16 +32,6 @@
       "Telemark"
     ],
     "usage_count": 7,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "AT25BodyInfo": {
-    "asset_type": "AT25BodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 2,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -107,36 +57,6 @@
   },
   "Allies_Factory_AI_Spawn_Bundle": {
     "asset_type": "Allies_Factory_AI_Spawn_Bundle",
-    "category": "building",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Allies_Factory_Camera": {
-    "asset_type": "Allies_Factory_Camera",
-    "category": "building",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Allies_Factory_Entry": {
-    "asset_type": "Allies_Factory_Entry",
-    "category": "building",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Allies_Factory_Seat": {
-    "asset_type": "Allies_Factory_Seat",
     "category": "building",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -542,16 +462,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "BrittJeep_Cockpit_M1": {
-    "asset_type": "BrittJeep_Cockpit_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "BrittJeep_Hull_L1": {
     "asset_type": "BrittJeep_Hull_L1",
     "category": "unknown",
@@ -564,26 +474,6 @@
   },
   "BrittJeep_Hull_M1": {
     "asset_type": "BrittJeep_Hull_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "BrittJeep_LWheel_M1": {
-    "asset_type": "BrittJeep_LWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "BrittJeep_RWheel_M1": {
-    "asset_type": "BrittJeep_RWheel_M1",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -615,38 +505,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "CDNRaftBodyInfo": {
-    "asset_type": "CDNRaftBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "CDNRaftComplex": {
     "asset_type": "CDNRaftComplex",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaftDriverSeat": {
-    "asset_type": "CDNRaftDriverSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaftEngineInfo": {
-    "asset_type": "CDNRaftEngineInfo",
     "category": "unknown",
     "found_in_maps": [
       "Liberation_of_Caen"
@@ -665,48 +525,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "CDNRaftPassengerCamera": {
-    "asset_type": "CDNRaftPassengerCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "CDNRaftPassengerInfo": {
     "asset_type": "CDNRaftPassengerInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaftPassengerPCO2": {
-    "asset_type": "CDNRaftPassengerPCO2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaftPassengerSeat": {
-    "asset_type": "CDNRaftPassengerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaftPropeller": {
-    "asset_type": "CDNRaftPropeller",
     "category": "unknown",
     "found_in_maps": [
       "Liberation_of_Caen"
@@ -735,16 +555,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "CDNRaft_Camera": {
-    "asset_type": "CDNRaft_Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "CDNRaft_Engine": {
     "asset_type": "CDNRaft_Engine",
     "category": "unknown",
@@ -752,26 +562,6 @@
       "Liberation_of_Caen"
     ],
     "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaft_Entry": {
-    "asset_type": "CDNRaft_Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 4,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "CDNRaft_Floater": {
-    "asset_type": "CDNRaft_Floater",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 4,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -792,19 +582,6 @@
       "Liberation_of_Caen"
     ],
     "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Camera": {
-    "asset_type": "Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Coral_sea",
-      "Liberation_of_Caen",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 27,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -1096,16 +873,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "Em_ScrapRocketPlatform_Seat": {
-    "asset_type": "Em_ScrapRocketPlatform_Seat",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "Em_SpawnAmmobox": {
     "asset_type": "Em_SpawnAmmobox",
     "category": "unknown",
@@ -1157,26 +924,6 @@
       "Coral_sea"
     ],
     "usage_count": 8,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "EnterpriseBodyInfo": {
-    "asset_type": "EnterpriseBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 6,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "EnterpriseEngineInfo": {
-    "asset_type": "EnterpriseEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -1240,16 +987,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Enterprise_Camera": {
-    "asset_type": "Enterprise_Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Enterprise_Engine": {
     "asset_type": "Enterprise_Engine",
     "category": "unknown",
@@ -1257,26 +994,6 @@
       "Coral_sea"
     ],
     "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Enterprise_Entry": {
-    "asset_type": "Enterprise_Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Enterprise_Floater": {
-    "asset_type": "Enterprise_Floater",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 8,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -1347,49 +1064,6 @@
       "Coral_sea"
     ],
     "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "EntryPoint": {
-    "asset_type": "EntryPoint",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Coral_sea",
-      "Liberation_of_Caen",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 14,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Essen_SiloWreckBodyInfo": {
-    "asset_type": "Essen_SiloWreckBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Essen_SilosBodyInfo": {
-    "asset_type": "Essen_SilosBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FactoryBodyInfo": {
-    "asset_type": "FactoryBodyInfo",
-    "category": "building",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 3,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -1501,46 +1175,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "FlettnerBodyInfo": {
-    "asset_type": "FlettnerBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 3,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerCamera": {
-    "asset_type": "FlettnerCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerCockpitExternal": {
-    "asset_type": "FlettnerCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerCockpitInternal": {
-    "asset_type": "FlettnerCockpitInternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "FlettnerComplex": {
     "asset_type": "FlettnerComplex",
     "category": "unknown",
@@ -1558,36 +1192,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerEngineInfo": {
-    "asset_type": "FlettnerEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 3,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerEntry": {
-    "asset_type": "FlettnerEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerInvisibleWheel": {
-    "asset_type": "FlettnerInvisibleWheel",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 3,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -1621,48 +1225,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "FlettnerSeat": {
-    "asset_type": "FlettnerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "FlettnerSimple": {
     "asset_type": "FlettnerSimple",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerWheelFront": {
-    "asset_type": "FlettnerWheelFront",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerWheelLeft": {
-    "asset_type": "FlettnerWheelLeft",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "FlettnerWheelRight": {
-    "asset_type": "FlettnerWheelRight",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -1691,38 +1255,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "Flettner_Cockpit_M1": {
-    "asset_type": "Flettner_Cockpit_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "Flettner_Engine": {
     "asset_type": "Flettner_Engine",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Flettner_Flap_m1": {
-    "asset_type": "Flettner_Flap_m1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Flettner_FrontWheel_M1": {
-    "asset_type": "Flettner_FrontWheel_M1",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -1771,28 +1305,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "Flettner_LWheel_M1": {
-    "asset_type": "Flettner_LWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "Flettner_LeftRotor": {
     "asset_type": "Flettner_LeftRotor",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Flettner_RWheel_M1": {
-    "asset_type": "Flettner_RWheel_M1",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -1804,16 +1318,6 @@
   "Flettner_RightRotor": {
     "asset_type": "Flettner_RightRotor",
     "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Flettner_RotaryPlane_M1": {
-    "asset_type": "Flettner_RotaryPlane_M1",
-    "category": "vehicle",
     "found_in_maps": [
       "Raid_on_Agheila"
     ],
@@ -1902,16 +1406,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "GreyHound_GunRotate_M1": {
-    "asset_type": "GreyHound_GunRotate_M1",
-    "category": "weapon",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "GreyHound_Turret_M1": {
     "asset_type": "GreyHound_Turret_M1",
     "category": "unknown",
@@ -1982,78 +1476,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "GreyhoundBodyInfo": {
-    "asset_type": "GreyhoundBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundBrowningSeat": {
-    "asset_type": "GreyhoundBrowningSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "GreyhoundBrowning_Holder": {
     "asset_type": "GreyhoundBrowning_Holder",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundBrowning_PCO1": {
-    "asset_type": "GreyhoundBrowning_PCO1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundCamera": {
-    "asset_type": "GreyhoundCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundCamera2": {
-    "asset_type": "GreyhoundCamera2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundCockpitExternal": {
-    "asset_type": "GreyhoundCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundCockpitInternal": {
-    "asset_type": "GreyhoundCockpitInternal",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -2082,26 +1506,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "GreyhoundEngineInfo": {
-    "asset_type": "GreyhoundEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundEntry": {
-    "asset_type": "GreyhoundEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 4,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "GreyhoundFrontSpringL": {
     "asset_type": "GreyhoundFrontSpringL",
     "category": "unknown",
@@ -2115,36 +1519,6 @@
   "GreyhoundFrontSpringR": {
     "asset_type": "GreyhoundFrontSpringR",
     "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundFrontWheelL": {
-    "asset_type": "GreyhoundFrontWheelL",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundFrontWheelR": {
-    "asset_type": "GreyhoundFrontWheelR",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundGunBarrel": {
-    "asset_type": "GreyhoundGunBarrel",
-    "category": "weapon",
     "found_in_maps": [
       "Raid_on_Agheila"
     ],
@@ -2169,16 +1543,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "GreyhoundSteeringInfo": {
-    "asset_type": "GreyhoundSteeringInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -2229,26 +1593,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Greyhound_LWheel_M1": {
-    "asset_type": "Greyhound_LWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Greyhound_RWheel_M1": {
-    "asset_type": "Greyhound_RWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -2322,16 +1666,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "HornetComplex": {
-    "asset_type": "HornetComplex",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Hornet_AirCraftSoldierSpawn": {
     "asset_type": "Hornet_AirCraftSoldierSpawn",
     "category": "unknown",
@@ -2382,16 +1716,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88ABodyInfo": {
-    "asset_type": "Ju88ABodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 8,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88ABodyWingVertical": {
     "asset_type": "Ju88ABodyWingVertical",
     "category": "unknown",
@@ -2404,26 +1728,6 @@
   },
   "Ju88ABombRack": {
     "asset_type": "Ju88ABombRack",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88ACockpitExternal": {
-    "asset_type": "Ju88ACockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88ACockpitInternal": {
-    "asset_type": "Ju88ACockpitInternal",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -2452,48 +1756,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88AEngineInfo": {
-    "asset_type": "Ju88AEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88ANoseTurretInfo": {
     "asset_type": "Ju88ANoseTurretInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88APropellerBlurred": {
-    "asset_type": "Ju88APropellerBlurred",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88APropellerStatic": {
-    "asset_type": "Ju88APropellerStatic",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88ARearTopCamera": {
-    "asset_type": "Ju88ARearTopCamera",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -2542,48 +1806,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88A_BellyGunner_PCO": {
-    "asset_type": "Ju88A_BellyGunner_PCO",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_BellyGunner_WeaponBase": {
-    "asset_type": "Ju88A_BellyGunner_WeaponBase",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88A_Body_Wing": {
     "asset_type": "Ju88A_Body_Wing",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Camera": {
-    "asset_type": "Ju88A_Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Camera3": {
-    "asset_type": "Ju88A_Camera3",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -2604,96 +1828,6 @@
   },
   "Ju88A_EngineRight": {
     "asset_type": "Ju88A_EngineRight",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Entry": {
-    "asset_type": "Ju88A_Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 4,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapLeftInner": {
-    "asset_type": "Ju88A_FlapLeftInner",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapLeftMiddle": {
-    "asset_type": "Ju88A_FlapLeftMiddle",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapLeftOuter": {
-    "asset_type": "Ju88A_FlapLeftOuter",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapRightInner": {
-    "asset_type": "Ju88A_FlapRightInner",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapRightMiddle": {
-    "asset_type": "Ju88A_FlapRightMiddle",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapRightOuter": {
-    "asset_type": "Ju88A_FlapRightOuter",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapTailLeft": {
-    "asset_type": "Ju88A_FlapTailLeft",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_FlapTailRight": {
-    "asset_type": "Ju88A_FlapTailRight",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -2742,79 +1876,9 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88A_NoseGunnerSeat": {
-    "asset_type": "Ju88A_NoseGunnerSeat",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_NoseGunner_Camera": {
-    "asset_type": "Ju88A_NoseGunner_Camera",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88A_NoseGunner_Gun": {
     "asset_type": "Ju88A_NoseGunner_Gun",
     "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_NoseGunner_LeftFoot": {
-    "asset_type": "Ju88A_NoseGunner_LeftFoot",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_NoseGunner_PCO": {
-    "asset_type": "Ju88A_NoseGunner_PCO",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_NoseGunner_RightFoot": {
-    "asset_type": "Ju88A_NoseGunner_RightFoot",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_NoseGunner_WeaponBase": {
-    "asset_type": "Ju88A_NoseGunner_WeaponBase",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_PilotSeat": {
-    "asset_type": "Ju88A_PilotSeat",
-    "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
     ],
@@ -2842,26 +1906,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88A_RearGunnerSeat": {
-    "asset_type": "Ju88A_RearGunnerSeat",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_RearGunner_CameraBase": {
-    "asset_type": "Ju88A_RearGunner_CameraBase",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88A_RearGunner_LeftGun": {
     "asset_type": "Ju88A_RearGunner_LeftGun",
     "category": "weapon",
@@ -2874,16 +1918,6 @@
   },
   "Ju88A_RearGunner_LeftGunBase": {
     "asset_type": "Ju88A_RearGunner_LeftGunBase",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_RearGunner_PCO": {
-    "asset_type": "Ju88A_RearGunner_PCO",
     "category": "weapon",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -2912,118 +1946,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Ju88A_RearGunner_WeaponBase": {
-    "asset_type": "Ju88A_RearGunner_WeaponBase",
-    "category": "weapon",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Ju88A_Rudder": {
     "asset_type": "Ju88A_Rudder",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Wheel_Back": {
-    "asset_type": "Ju88A_Wheel_Back",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Wheel_Left": {
-    "asset_type": "Ju88A_Wheel_Left",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Ju88A_Wheel_Right": {
-    "asset_type": "Ju88A_Wheel_Right",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_Cockpit_M1": {
-    "asset_type": "Junker_Cockpit_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapLeftMiddle_M1": {
-    "asset_type": "Junker_FlapLeftMiddle_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapLeftOuter_M1": {
-    "asset_type": "Junker_FlapLeftOuter_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapRightMiddle_M1": {
-    "asset_type": "Junker_FlapRightMiddle_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapRightOuter_M1": {
-    "asset_type": "Junker_FlapRightOuter_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapTailLeft_M1": {
-    "asset_type": "Junker_FlapTailLeft_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_FlapTailRight_M1": {
-    "asset_type": "Junker_FlapTailRight_M1",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -3082,16 +2006,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Junker_Propeller_M1": {
-    "asset_type": "Junker_Propeller_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Junker_Rim42_M1": {
     "asset_type": "Junker_Rim42_M1",
     "category": "unknown",
@@ -3104,36 +2018,6 @@
   },
   "Junker_Rudder_M1": {
     "asset_type": "Junker_Rudder_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_WheelBack_M1": {
-    "asset_type": "Junker_WheelBack_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_WheelLeft_M1": {
-    "asset_type": "Junker_WheelLeft_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Junker_WheelRight_M1": {
-    "asset_type": "Junker_WheelRight_M1",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain"
@@ -3228,66 +2112,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "KruppBodyInfo": {
-    "asset_type": "KruppBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppCamera": {
-    "asset_type": "KruppCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppCameraPC01": {
-    "asset_type": "KruppCameraPC01",
-    "category": "vehicle",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppCockpitExternal": {
-    "asset_type": "KruppCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppCockpitInternal": {
-    "asset_type": "KruppCockpitInternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppComplex": {
-    "asset_type": "KruppComplex",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "KruppEngine": {
     "asset_type": "KruppEngine",
     "category": "unknown",
@@ -3295,26 +2119,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppEngineInfo": {
-    "asset_type": "KruppEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppEntry": {
-    "asset_type": "KruppEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 4,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -3338,96 +2142,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "KruppFrontWheelL": {
-    "asset_type": "KruppFrontWheelL",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppFrontWheelR": {
-    "asset_type": "KruppFrontWheelR",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppHighRSteering": {
-    "asset_type": "KruppHighRSteering",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppHorizontalPCO1": {
-    "asset_type": "KruppHorizontalPCO1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppHorn": {
-    "asset_type": "KruppHorn",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppLowSteering": {
-    "asset_type": "KruppLowSteering",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppPassengerPCO": {
-    "asset_type": "KruppPassengerPCO",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppPassengerSeat": {
-    "asset_type": "KruppPassengerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppSeat": {
-    "asset_type": "KruppSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "KruppSimple": {
     "asset_type": "KruppSimple",
     "category": "unknown",
@@ -3435,36 +2149,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppSteering": {
-    "asset_type": "KruppSteering",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppSteeringDummy": {
-    "asset_type": "KruppSteeringDummy",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "KruppSteeringInfo": {
-    "asset_type": "KruppSteeringInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 4,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -3498,16 +2182,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "Krupp_Cockpit_M1": {
-    "asset_type": "Krupp_Cockpit_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "Krupp_Hull_M1": {
     "asset_type": "Krupp_Hull_M1",
     "category": "unknown",
@@ -3515,26 +2189,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Krupp_LWheel_M1": {
-    "asset_type": "Krupp_LWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Krupp_RWheel_M1": {
-    "asset_type": "Krupp_RWheel_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -3560,16 +2214,6 @@
   },
   "Krupp_Rocket_Base_M1": {
     "asset_type": "Krupp_Rocket_Base_M1",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Krupp_Rocket_Seat_M1": {
-    "asset_type": "Krupp_Rocket_Seat_M1",
     "category": "prop",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -3730,26 +2374,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M3A1_Wheel1_M1": {
-    "asset_type": "M3A1_Wheel1_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1BodyInfo": {
-    "asset_type": "M4A1BodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1BrowningConsoleInfo": {
     "asset_type": "M4A1BrowningConsoleInfo",
     "category": "unknown",
@@ -3770,68 +2394,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1BrowningSeat": {
-    "asset_type": "M4A1BrowningSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1Browning_Holder": {
     "asset_type": "M4A1Browning_Holder",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1Browning_PCO1": {
-    "asset_type": "M4A1Browning_PCO1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1Camera": {
-    "asset_type": "M4A1Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1Camera2": {
-    "asset_type": "M4A1Camera2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1CockpitExternal": {
-    "asset_type": "M4A1CockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1CockpitInternal": {
-    "asset_type": "M4A1CockpitInternal",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -3860,26 +2424,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1EngineInfo": {
-    "asset_type": "M4A1EngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1Entry": {
-    "asset_type": "M4A1Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 10,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1MortarBarrel": {
     "asset_type": "M4A1MortarBarrel",
     "category": "prop",
@@ -3900,16 +2444,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1MortarCamera": {
-    "asset_type": "M4A1MortarCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1MortarFirearm": {
     "asset_type": "M4A1MortarFirearm",
     "category": "unknown",
@@ -3920,28 +2454,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1MortarPCO": {
-    "asset_type": "M4A1MortarPCO",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1MortarPad": {
     "asset_type": "M4A1MortarPad",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1MortarSeat": {
-    "asset_type": "M4A1MortarSeat",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -3980,16 +2494,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1PassangerCamera": {
-    "asset_type": "M4A1PassangerCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1PassengerInfo": {
     "asset_type": "M4A1PassengerInfo",
     "category": "unknown",
@@ -3997,26 +2501,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1PassengerSeat": {
-    "asset_type": "M4A1PassengerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1Seat": {
-    "asset_type": "M4A1Seat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -4060,16 +2544,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "M4A1Wheel1": {
-    "asset_type": "M4A1Wheel1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "M4A1Wreck": {
     "asset_type": "M4A1Wreck",
     "category": "unknown",
@@ -4102,26 +2576,6 @@
   },
   "M4A1_Hull_M1": {
     "asset_type": "M4A1_Hull_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1_Passanger_PCO2": {
-    "asset_type": "M4A1_Passanger_PCO2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "M4A1_Passanger_PCO3": {
-    "asset_type": "M4A1_Passanger_PCO3",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -4200,16 +2654,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "MunitionsPanzerBodyInfo": {
-    "asset_type": "MunitionsPanzerBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "MunitionsPanzerBrowningConsole": {
     "asset_type": "MunitionsPanzerBrowningConsole",
     "category": "unknown",
@@ -4230,58 +2674,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "MunitionsPanzerBrowningSeat": {
-    "asset_type": "MunitionsPanzerBrowningSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "MunitionsPanzerBrowningShield": {
     "asset_type": "MunitionsPanzerBrowningShield",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerCamera": {
-    "asset_type": "MunitionsPanzerCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerCamera2": {
-    "asset_type": "MunitionsPanzerCamera2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerCockpitExternal": {
-    "asset_type": "MunitionsPanzerCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerCockpitInternal": {
-    "asset_type": "MunitionsPanzerCockpitInternal",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -4307,26 +2701,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerEngineInfo": {
-    "asset_type": "MunitionsPanzerEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzerEntry": {
-    "asset_type": "MunitionsPanzerEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 12,
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
@@ -4380,16 +2754,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "MunitionsPanzer_Browning_PCO1": {
-    "asset_type": "MunitionsPanzer_Browning_PCO1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "MunitionsPanzer_Hull_L1": {
     "asset_type": "MunitionsPanzer_Hull_L1",
     "category": "unknown",
@@ -4402,66 +2766,6 @@
   },
   "MunitionsPanzer_Hull_M1": {
     "asset_type": "MunitionsPanzer_Hull_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_PassangerCamera": {
-    "asset_type": "MunitionsPanzer_PassangerCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 4,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_PassangerSeat": {
-    "asset_type": "MunitionsPanzer_PassangerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 4,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_Passenger_PCO1": {
-    "asset_type": "MunitionsPanzer_Passenger_PCO1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_Passenger_PCO2": {
-    "asset_type": "MunitionsPanzer_Passenger_PCO2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_Passenger_PCO3": {
-    "asset_type": "MunitionsPanzer_Passenger_PCO3",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "MunitionsPanzer_Passenger_PCO4": {
-    "asset_type": "MunitionsPanzer_Passenger_PCO4",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -4561,76 +2865,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "PAK40_wheel1_m1": {
-    "asset_type": "PAK40_wheel1_m1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "PAK40_wheel2_m1": {
-    "asset_type": "PAK40_wheel2_m1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40BodyInfo": {
-    "asset_type": "Pak40BodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40Camera": {
-    "asset_type": "Pak40Camera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40CockpitExternal": {
-    "asset_type": "Pak40CockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40CockpitInternal": {
-    "asset_type": "Pak40CockpitInternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40Entry": {
-    "asset_type": "Pak40Entry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Pak40Gun": {
     "asset_type": "Pak40Gun",
     "category": "weapon",
@@ -4671,38 +2905,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Pak40Seat": {
-    "asset_type": "Pak40Seat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Pak40Slider": {
     "asset_type": "Pak40Slider",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40Wheel1": {
-    "asset_type": "Pak40Wheel1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Pak40Wheel2": {
-    "asset_type": "Pak40Wheel2",
     "category": "unknown",
     "found_in_maps": [
       "Liberation_of_Caen"
@@ -5127,16 +3331,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Radar_AA_AllCockpitExternal": {
-    "asset_type": "Radar_AA_AllCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Radar_AA_Allies_Cannon": {
     "asset_type": "Radar_AA_Allies_Cannon",
     "category": "unknown",
@@ -5147,29 +3341,9 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Radar_AA_Allies_Carriage": {
-    "asset_type": "Radar_AA_Allies_Carriage",
-    "category": "vehicle",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Radar_AA_Allies_Crank": {
     "asset_type": "Radar_AA_Allies_Crank",
     "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Radar_AA_Allies_GunBarrel": {
-    "asset_type": "Radar_AA_Allies_GunBarrel",
-    "category": "weapon",
     "found_in_maps": [
       "Battle_of_Britain"
     ],
@@ -5217,16 +3391,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "Radar_AA_Allies_carriage_m1": {
-    "asset_type": "Radar_AA_Allies_carriage_m1",
-    "category": "vehicle",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "Radar_AA_Allies_crank_m1": {
     "asset_type": "Radar_AA_Allies_crank_m1",
     "category": "unknown",
@@ -5265,76 +3429,6 @@
     ],
     "usage_count": 1,
     "expansion": "base",
-    "sample_properties": {}
-  },
-  "RocketLauncherBodyInfo": {
-    "asset_type": "RocketLauncherBodyInfo",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherCameraPC01": {
-    "asset_type": "RocketLauncherCameraPC01",
-    "category": "vehicle",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherCockpitExternal": {
-    "asset_type": "RocketLauncherCockpitExternal",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherCockpitInternal": {
-    "asset_type": "RocketLauncherCockpitInternal",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherEntry": {
-    "asset_type": "RocketLauncherEntry",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherHorizontalPCO1": {
-    "asset_type": "RocketLauncherHorizontalPCO1",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "RocketLauncherPassengerSeat": {
-    "asset_type": "RocketLauncherPassengerSeat",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
     "sample_properties": {}
   },
   "RocketLauncherTurretInfo": {
@@ -5427,16 +3521,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "RocketStation_seat_M1": {
-    "asset_type": "RocketStation_seat_M1",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "RotationalBundle": {
     "asset_type": "RotationalBundle",
     "category": "unknown",
@@ -5447,38 +3531,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 47,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SeatObject": {
-    "asset_type": "SeatObject",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Liberation_of_Caen",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 21,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonBodyInfo": {
-    "asset_type": "SextonBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonCamera": {
-    "asset_type": "SextonCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -5494,26 +3546,6 @@
   },
   "SextonCannonBase": {
     "asset_type": "SextonCannonBase",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonCockpitExternal": {
-    "asset_type": "SextonCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonCockpitInternal": {
-    "asset_type": "SextonCockpitInternal",
     "category": "unknown",
     "found_in_maps": [
       "Liberation_of_Caen"
@@ -5542,16 +3574,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "SextonEntry": {
-    "asset_type": "SextonEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "SextonGunBase": {
     "asset_type": "SextonGunBase",
     "category": "weapon",
@@ -5572,26 +3594,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "SextonGunnerCamera": {
-    "asset_type": "SextonGunnerCamera",
-    "category": "weapon",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonGunnerSeat": {
-    "asset_type": "SextonGunnerSeat",
-    "category": "weapon",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "SextonSimple": {
     "asset_type": "SextonSimple",
     "category": "unknown",
@@ -5602,139 +3604,9 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "SextonWheelL1": {
-    "asset_type": "SextonWheelL1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelL2": {
-    "asset_type": "SextonWheelL2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelL3": {
-    "asset_type": "SextonWheelL3",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelL3Dummy": {
-    "asset_type": "SextonWheelL3Dummy",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelL3DummySmoke": {
-    "asset_type": "SextonWheelL3DummySmoke",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelL4": {
-    "asset_type": "SextonWheelL4",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR1": {
-    "asset_type": "SextonWheelR1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR2": {
-    "asset_type": "SextonWheelR2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR3": {
-    "asset_type": "SextonWheelR3",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR3Dummy": {
-    "asset_type": "SextonWheelR3Dummy",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR3DummySmoke": {
-    "asset_type": "SextonWheelR3DummySmoke",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "SextonWheelR4": {
-    "asset_type": "SextonWheelR4",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "SextonWreck": {
     "asset_type": "SextonWreck",
     "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "Sexton_Gunner_PCO1": {
-    "asset_type": "Sexton_Gunner_PCO1",
-    "category": "weapon",
     "found_in_maps": [
       "Liberation_of_Caen"
     ],
@@ -5842,26 +3714,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "ShokakuBodyInfo": {
-    "asset_type": "ShokakuBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 6,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "ShokakuCamera": {
-    "asset_type": "ShokakuCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "ShokakuDaiHatsuSpawner": {
     "asset_type": "ShokakuDaiHatsuSpawner",
     "category": "spawner",
@@ -5879,36 +3731,6 @@
       "Coral_sea"
     ],
     "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "ShokakuEngineInfo": {
-    "asset_type": "ShokakuEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "ShokakuEntry": {
-    "asset_type": "ShokakuEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "ShokakuFloater": {
-    "asset_type": "ShokakuFloater",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 8,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -6573,26 +4395,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "Vehicle_M1919A4_Info": {
-    "asset_type": "Vehicle_M1919A4_Info",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "Vehicle_MG42_Info": {
-    "asset_type": "Vehicle_MG42_Info",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "WestAirfield_SoldierSpawn": {
     "asset_type": "WestAirfield_SoldierSpawn",
     "category": "unknown",
@@ -6623,48 +4425,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "WillyBodyInfo": {
-    "asset_type": "WillyBodyInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 3,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillyCamera": {
-    "asset_type": "WillyCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillyCockpitExternal": {
-    "asset_type": "WillyCockpitExternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillyCockpitInternal": {
-    "asset_type": "WillyCockpitInternal",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "WillyComplex": {
     "asset_type": "WillyComplex",
     "category": "unknown",
@@ -6684,27 +4444,6 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillyEngineInfo": {
-    "asset_type": "WillyEngineInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillyEntry": {
-    "asset_type": "WillyEntry",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 6,
     "expansion": "base",
     "sample_properties": {}
   },
@@ -6728,79 +4467,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "WillyFrontWheelL": {
-    "asset_type": "WillyFrontWheelL",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillyFrontWheelR": {
-    "asset_type": "WillyFrontWheelR",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillyGunnerCamera": {
-    "asset_type": "WillyGunnerCamera",
-    "category": "weapon",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillyHorn": {
-    "asset_type": "WillyHorn",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillyPassengerPCO": {
-    "asset_type": "WillyPassengerPCO",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillyPassengerSeat": {
-    "asset_type": "WillyPassengerSeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "WillySeat": {
-    "asset_type": "WillySeat",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "WillySimple": {
     "asset_type": "WillySimple",
     "category": "unknown",
@@ -6810,27 +4476,6 @@
     ],
     "usage_count": 2,
     "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillySteeringDummy": {
-    "asset_type": "WillySteeringDummy",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "WillySteeringInfo": {
-    "asset_type": "WillySteeringInfo",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "xpack2_sw",
     "sample_properties": {}
   },
   "WillyTurretInfo": {
@@ -7288,26 +4933,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "e_wdustWheelF": {
-    "asset_type": "e_wdustWheelF",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 16,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "e_wdustWheelFL": {
-    "asset_type": "e_wdustWheelFL",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 16,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "enterprise_hatch_m1": {
     "asset_type": "enterprise_hatch_m1",
     "category": "unknown",
@@ -7409,16 +5034,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "lodFlettnerCockpit": {
-    "asset_type": "lodFlettnerCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "lodFlettner_Rotary": {
     "asset_type": "lodFlettner_Rotary",
     "category": "unknown",
@@ -7439,28 +5054,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "lodGreyhoundCockpit": {
-    "asset_type": "lodGreyhoundCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "lodHiryu": {
     "asset_type": "lodHiryu",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "lodHornet": {
-    "asset_type": "lodHornet",
     "category": "unknown",
     "found_in_maps": [
       "Coral_sea"
@@ -7479,48 +5074,8 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "lodJu88ACockpit": {
-    "asset_type": "lodJu88ACockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "lodJu88APropeller": {
-    "asset_type": "lodJu88APropeller",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "lodKrupp": {
     "asset_type": "lodKrupp",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "lodKruppCockpit": {
-    "asset_type": "lodKruppCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "lodKruppSteering": {
-    "asset_type": "lodKruppSteering",
     "category": "unknown",
     "found_in_maps": [
       "Raid_on_Agheila"
@@ -7539,16 +5094,6 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "lodM4A1Cockpit": {
-    "asset_type": "lodM4A1Cockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "lodMunitionsPanzer": {
     "asset_type": "lodMunitionsPanzer",
     "category": "unknown",
@@ -7557,26 +5102,6 @@
     ],
     "usage_count": 1,
     "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "lodMunitionsPanzerCockpit": {
-    "asset_type": "lodMunitionsPanzerCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
-  "lodPak40Cockpit": {
-    "asset_type": "lodPak40Cockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
     "sample_properties": {}
   },
   "lodRadarTower": {
@@ -7589,26 +5114,6 @@
     "expansion": "base",
     "sample_properties": {}
   },
-  "lodRadar_AA_AllCockpit": {
-    "asset_type": "lodRadar_AA_AllCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "lodRocketLauncherCockpit": {
-    "asset_type": "lodRocketLauncherCockpit",
-    "category": "prop",
-    "found_in_maps": [
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 1,
-    "expansion": "xpack2_sw",
-    "sample_properties": {}
-  },
   "lodRocketPlatform": {
     "asset_type": "lodRocketPlatform",
     "category": "prop",
@@ -7619,29 +5124,8 @@
     "expansion": "xpack2_sw",
     "sample_properties": {}
   },
-  "lodSextonCockpit": {
-    "asset_type": "lodSextonCockpit",
-    "category": "unknown",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
   "lodWilly": {
     "asset_type": "lodWilly",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 2,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "lodWillyCockpit": {
-    "asset_type": "lodWillyCockpit",
     "category": "unknown",
     "found_in_maps": [
       "Battle_of_Britain",
@@ -7714,16 +5198,6 @@
   "pak40_barrel_M1": {
     "asset_type": "pak40_barrel_M1",
     "category": "prop",
-    "found_in_maps": [
-      "Liberation_of_Caen"
-    ],
-    "usage_count": 1,
-    "expansion": "base",
-    "sample_properties": {}
-  },
-  "pak40_carriage_M1": {
-    "asset_type": "pak40_carriage_M1",
-    "category": "vehicle",
     "found_in_maps": [
       "Liberation_of_Caen"
     ],
@@ -7939,17 +5413,6 @@
     ],
     "usage_count": 4,
     "description": "Light tank spawner - fast armored vehicle"
-  },
-  "1": {
-    "bf1942_type": "1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_Britain",
-      "Liberation_of_Caen",
-      "Raid_on_Agheila"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
   },
   "AA_Allies": {
     "bf1942_type": "AA_Allies",
@@ -9550,101 +7013,6 @@
     "category": "unknown",
     "found_in_maps": [
       "aberdeen"
-    ],
-    "usage_count": 1,
-    "description": "Asset discovered in 1 map(s)"
-  },
-  "City_entry_1": {
-    "bf1942_type": "City_entry_1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_2": {
-    "bf1942_type": "City_entry_2",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_3": {
-    "bf1942_type": "City_entry_3",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_4": {
-    "bf1942_type": "City_entry_4",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_5": {
-    "bf1942_type": "City_entry_5",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_6": {
-    "bf1942_type": "City_entry_6",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_7": {
-    "bf1942_type": "City_entry_7",
-    "category": "unknown",
-    "found_in_maps": [
-      "Essen",
-      "Omaha_Beach",
-      "husky"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
-  },
-  "City_entry_8": {
-    "bf1942_type": "City_entry_8",
-    "category": "unknown",
-    "found_in_maps": [
-      "Omaha_Beach"
-    ],
-    "usage_count": 1,
-    "description": "Asset discovered in 1 map(s)"
-  },
-  "City_entry_9": {
-    "bf1942_type": "City_entry_9",
-    "category": "unknown",
-    "found_in_maps": [
-      "Omaha_Beach"
     ],
     "usage_count": 1,
     "description": "Asset discovered in 1 map(s)"
@@ -12026,15 +9394,6 @@
     "usage_count": 1,
     "description": "Asset discovered in 1 map(s)"
   },
-  "Hornet": {
-    "bf1942_type": "Hornet",
-    "category": "unknown",
-    "found_in_maps": [
-      "Coral_sea"
-    ],
-    "usage_count": 1,
-    "description": "Asset discovered in 1 map(s)"
-  },
   "HorseStatue_M1": {
     "bf1942_type": "HorseStatue_M1",
     "category": "unknown",
@@ -13477,22 +10836,6 @@
     ],
     "usage_count": 23,
     "description": "Asset discovered in 23 map(s)"
-  },
-  "MultiPlayerFreeCamera": {
-    "bf1942_type": "MultiPlayerFreeCamera",
-    "category": "unknown",
-    "found_in_maps": [
-      "Eagles_Nest",
-      "Essen",
-      "Gothic_Line",
-      "Hellendoorn",
-      "Kbely_Airfield",
-      "Mimoyecques",
-      "Peenemunde",
-      "Telemark"
-    ],
-    "usage_count": 8,
-    "description": "Asset discovered in 8 map(s)"
   },
   "Mustang": {
     "bf1942_type": "Mustang",
@@ -19751,20 +17094,6 @@
     "usage_count": 1,
     "description": "Asset discovered in 1 map(s)"
   },
-  "eu_cart_2wheel_M1": {
-    "bf1942_type": "eu_cart_2wheel_M1",
-    "category": "vehicle",
-    "found_in_maps": [
-      "Essen",
-      "Gothic_Line",
-      "Liberation_of_Caen",
-      "Mimoyecques",
-      "Omaha_Beach",
-      "Telemark"
-    ],
-    "usage_count": 6,
-    "description": "Asset discovered in 6 map(s)"
-  },
   "eu_cart_M1": {
     "bf1942_type": "eu_cart_M1",
     "category": "vehicle",
@@ -23729,17 +21058,6 @@
     ],
     "usage_count": 7,
     "description": "Asset discovered in 7 map(s)"
-  },
-  "wheelbarrow_M1": {
-    "bf1942_type": "wheelbarrow_M1",
-    "category": "unknown",
-    "found_in_maps": [
-      "Battle_of_the_Bulge",
-      "Peenemunde",
-      "Telemark"
-    ],
-    "usage_count": 3,
-    "description": "Asset discovered in 3 map(s)"
   },
   "whetstone_M1": {
     "bf1942_type": "whetstone_M1",

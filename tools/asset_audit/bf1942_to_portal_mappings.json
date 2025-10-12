@@ -69,30 +69,6 @@
       "auto_suggested": true,
       "confidence_score": 0.615
     },
-    "Flettner_RotaryPlane_M1": {
-      "bf1942_type": "Flettner_RotaryPlane_M1",
-      "portal_equivalent": "OceanPlane_01",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.6
-    },
-    "KruppCameraPC01": {
-      "bf1942_type": "KruppCameraPC01",
-      "portal_equivalent": "ScrapContainer_01",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.537
-    },
     "PlaneFireArmInfo": {
       "bf1942_type": "PlaneFireArmInfo",
       "portal_equivalent": "FX_Airplane_Jetwash_Snow",
@@ -105,42 +81,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.65
-    },
-    "Radar_AA_Allies_Carriage": {
-      "bf1942_type": "Radar_AA_Allies_Carriage",
-      "portal_equivalent": "FX_CivCar_Tire_fire_S_GS",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.575
-    },
-    "Radar_AA_Allies_carriage_m1": {
-      "bf1942_type": "Radar_AA_Allies_carriage_m1",
-      "portal_equivalent": "FX_CarFire_Bumper_01",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.583
-    },
-    "RocketLauncherCameraPC01": {
-      "bf1942_type": "RocketLauncherCameraPC01",
-      "portal_equivalent": "OrdinanceCrate_01",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.488
     },
     "ShipLadder01": {
       "bf1942_type": "ShipLadder01",
@@ -302,18 +242,6 @@
       "auto_suggested": true,
       "confidence_score": 0.562
     },
-    "pak40_carriage_M1": {
-      "bf1942_type": "pak40_carriage_M1",
-      "portal_equivalent": "FX_CarFire_Bumper_01",
-      "category": "vehicle",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.686
-    },
     "tank_MGun_mount_M1": {
       "bf1942_type": "tank_MGun_mount_M1",
       "portal_equivalent": "FX_Grenade_AntiTank_Detonation",
@@ -364,54 +292,6 @@
       "auto_suggested": true,
       "confidence_score": 0.45
     },
-    "AA_AllCockpitInternal": {
-      "bf1942_type": "AA_AllCockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
-    "AA_AlliesSeat": {
-      "bf1942_type": "AA_AlliesSeat",
-      "portal_equivalent": "FX_BASE_Flies_Small",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "AA_Allies_Camera": {
-      "bf1942_type": "AA_Allies_Camera",
-      "portal_equivalent": "FX_BASE_Flies_Small",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.457
-    },
-    "AA_Allies_Entry": {
-      "bf1942_type": "AA_Allies_Entry",
-      "portal_equivalent": "AmmoChest_Small_Ext_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.432
-    },
     "ANDCompositeObjective": {
       "bf1942_type": "ANDCompositeObjective",
       "portal_equivalent": "FX_Gadget_EODBot_ObjectiveInteraction",
@@ -425,18 +305,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.483
-    },
-    "AT25BodyInfo": {
-      "bf1942_type": "AT25BodyInfo",
-      "portal_equivalent": "CapturePoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
     },
     "Allies_EastAirfield_Spawn": {
       "bf1942_type": "Allies_EastAirfield_Spawn",
@@ -488,15 +356,15 @@
     },
     "AmmoboxVehicleSupplyDepot": {
       "bf1942_type": "AmmoboxVehicleSupplyDepot",
-      "portal_equivalent": "VehicleSpawner",
+      "portal_equivalent": "SupplyCrate",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Supply depot/ammo cache",
       "auto_suggested": true,
-      "confidence_score": 0.513
+      "confidence_score": 0.8
     },
     "AnimatedBundle": {
       "bf1942_type": "AnimatedBundle",
@@ -554,7 +422,7 @@
     },
     "AnimatedItFlag": {
       "bf1942_type": "AnimatedItFlag",
-      "portal_equivalent": "FX_Impact_LootCrate_Dirt",
+      "portal_equivalent": "ACUnit_03_animated",
       "category": "unknown",
       "found_in_maps": [
         "Coral_sea",
@@ -562,9 +430,9 @@
         "baytown"
       ],
       "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: animated, it",
       "auto_suggested": true,
-      "confidence_score": 0.421
+      "confidence_score": 0.6000000000000001
     },
     "AnimatedSoFlag": {
       "bf1942_type": "AnimatedSoFlag",
@@ -737,77 +605,41 @@
       "auto_suggested": true,
       "confidence_score": 0.5
     },
-    "BrittJeep_Cockpit_M1": {
-      "bf1942_type": "BrittJeep_Cockpit_M1",
-      "portal_equivalent": "BarrierStoneBlock_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.476
-    },
     "BrittJeep_Hull_L1": {
       "bf1942_type": "BrittJeep_Hull_L1",
-      "portal_equivalent": "CrateWeapon_01",
+      "portal_equivalent": "Jeep_01",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Jeep vehicle or component",
       "auto_suggested": true,
-      "confidence_score": 0.452
+      "confidence_score": 0.7
     },
     "BrittJeep_Hull_M1": {
       "bf1942_type": "BrittJeep_Hull_M1",
-      "portal_equivalent": "CrateWeapon_01",
+      "portal_equivalent": "Jeep_01",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Jeep vehicle or component",
       "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "BrittJeep_LWheel_M1": {
-      "bf1942_type": "BrittJeep_LWheel_M1",
-      "portal_equivalent": "BusWreckWheels_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.456
-    },
-    "BrittJeep_RWheel_M1": {
-      "bf1942_type": "BrittJeep_RWheel_M1",
-      "portal_equivalent": "BusWreckWheels_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.456
+      "confidence_score": 0.7
     },
     "BrittJeep_rotate_M1": {
       "bf1942_type": "BrittJeep_rotate_M1",
-      "portal_equivalent": "OrdinanceCrate_01",
+      "portal_equivalent": "Jeep_01",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Jeep vehicle or component",
       "auto_suggested": true,
-      "confidence_score": 0.5
+      "confidence_score": 0.7
     },
     "Bundle": {
       "bf1942_type": "Bundle",
@@ -823,18 +655,6 @@
       "auto_suggested": true,
       "confidence_score": 0.4
     },
-    "CDNRaftBodyInfo": {
-      "bf1942_type": "CDNRaftBodyInfo",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
     "CDNRaftComplex": {
       "bf1942_type": "CDNRaftComplex",
       "portal_equivalent": "CratePile_01",
@@ -846,30 +666,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
       "auto_suggested": true,
       "confidence_score": 0.438
-    },
-    "CDNRaftDriverSeat": {
-      "bf1942_type": "CDNRaftDriverSeat",
-      "portal_equivalent": "CrateWeapon_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "CDNRaftEngineInfo": {
-      "bf1942_type": "CDNRaftEngineInfo",
-      "portal_equivalent": "FiringRange_Floor_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
     },
     "CDNRaftEngineModel": {
       "bf1942_type": "CDNRaftEngineModel",
@@ -883,18 +679,6 @@
       "auto_suggested": true,
       "confidence_score": 0.488
     },
-    "CDNRaftPassengerCamera": {
-      "bf1942_type": "CDNRaftPassengerCamera",
-      "portal_equivalent": "FiringRange_CableTray_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.478
-    },
     "CDNRaftPassengerInfo": {
       "bf1942_type": "CDNRaftPassengerInfo",
       "portal_equivalent": "VanPassenger_01",
@@ -906,42 +690,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
       "auto_suggested": true,
       "confidence_score": 0.471
-    },
-    "CDNRaftPassengerPCO2": {
-      "bf1942_type": "CDNRaftPassengerPCO2",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
-    "CDNRaftPassengerSeat": {
-      "bf1942_type": "CDNRaftPassengerSeat",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
-    "CDNRaftPropeller": {
-      "bf1942_type": "CDNRaftPropeller",
-      "portal_equivalent": "AreaTrigger",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
     },
     "CDNRaftSimple": {
       "bf1942_type": "CDNRaftSimple",
@@ -967,18 +715,6 @@
       "auto_suggested": true,
       "confidence_score": 0.452
     },
-    "CDNRaft_Camera": {
-      "bf1942_type": "CDNRaft_Camera",
-      "portal_equivalent": "Crate_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
     "CDNRaft_Engine": {
       "bf1942_type": "CDNRaft_Engine",
       "portal_equivalent": "InteractPoint",
@@ -990,30 +726,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.444
-    },
-    "CDNRaft_Entry": {
-      "bf1942_type": "CDNRaft_Entry",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.462
-    },
-    "CDNRaft_Floater": {
-      "bf1942_type": "CDNRaft_Floater",
-      "portal_equivalent": "FiringRange_Floor_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.471
     },
     "CDNRaft_Rudder_Aft": {
       "bf1942_type": "CDNRaft_Rudder_Aft",
@@ -1038,20 +750,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.429
-    },
-    "Camera": {
-      "bf1942_type": "Camera",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Coral_sea",
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 27,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
     },
     "ClimbingNet_3mx4m": {
       "bf1942_type": "ClimbingNet_3mx4m",
@@ -1275,30 +973,6 @@
       "auto_suggested": true,
       "confidence_score": 0.488
     },
-    "EnterpriseBodyInfo": {
-      "bf1942_type": "EnterpriseBodyInfo",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 6,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.516
-    },
-    "EnterpriseEngineInfo": {
-      "bf1942_type": "EnterpriseEngineInfo",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.424
-    },
     "EnterpriseSimple": {
       "bf1942_type": "EnterpriseSimple",
       "portal_equivalent": "SFX_Gadgets_EIDOS_Idle_SimpleLoop3D",
@@ -1361,27 +1035,15 @@
     },
     "Enterprise_Bridge": {
       "bf1942_type": "Enterprise_Bridge",
-      "portal_equivalent": "HighwayOverpass_Bridge_01",
+      "portal_equivalent": "RoadBridge_01_Large",
       "category": "unknown",
       "found_in_maps": [
         "Coral_sea"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Bridge structure",
       "auto_suggested": true,
-      "confidence_score": 0.524
-    },
-    "Enterprise_Camera": {
-      "bf1942_type": "Enterprise_Camera",
-      "portal_equivalent": "FX_Gadget_InterativeSpectator_Camera_Light_Red",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
+      "confidence_score": 0.85
     },
     "Enterprise_Engine": {
       "bf1942_type": "Enterprise_Engine",
@@ -1394,30 +1056,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.467
-    },
-    "Enterprise_Entry": {
-      "bf1942_type": "Enterprise_Entry",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.552
-    },
-    "Enterprise_Floater": {
-      "bf1942_type": "Enterprise_Floater",
-      "portal_equivalent": "EntrancePrivate_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 8,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.456
     },
     "Enterprise_HullWing": {
       "bf1942_type": "Enterprise_HullWing",
@@ -1491,44 +1129,6 @@
       "auto_suggested": true,
       "confidence_score": 0.463
     },
-    "EntryPoint": {
-      "bf1942_type": "EntryPoint",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Coral_sea",
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 14,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.696
-    },
-    "Essen_SiloWreckBodyInfo": {
-      "bf1942_type": "Essen_SiloWreckBodyInfo",
-      "portal_equivalent": "WeaponBench_Storagebox_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
-    },
-    "Essen_SilosBodyInfo": {
-      "bf1942_type": "Essen_SilosBodyInfo",
-      "portal_equivalent": "SFX_UI_Submenu_Close_2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.429
-    },
     "FireArms": {
       "bf1942_type": "FireArms",
       "portal_equivalent": "FireAlarmButton_01",
@@ -1557,54 +1157,6 @@
       "auto_suggested": true,
       "confidence_score": 0.462
     },
-    "FlettnerBodyInfo": {
-      "bf1942_type": "FlettnerBodyInfo",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.414
-    },
-    "FlettnerCamera": {
-      "bf1942_type": "FlettnerCamera",
-      "portal_equivalent": "FX_Missile_Stinger_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.474
-    },
-    "FlettnerCockpitExternal": {
-      "bf1942_type": "FlettnerCockpitExternal",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.486
-    },
-    "FlettnerCockpitInternal": {
-      "bf1942_type": "FlettnerCockpitInternal",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.486
-    },
     "FlettnerComplex": {
       "bf1942_type": "FlettnerComplex",
       "portal_equivalent": "FX_Gadget_Drone_ThermalVE",
@@ -1628,42 +1180,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.4
-    },
-    "FlettnerEngineInfo": {
-      "bf1942_type": "FlettnerEngineInfo",
-      "portal_equivalent": "FX_Gadget_AdrenalineShot",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.476
-    },
-    "FlettnerEntry": {
-      "bf1942_type": "FlettnerEntry",
-      "portal_equivalent": "FX_Missile_Stinger_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.486
-    },
-    "FlettnerInvisibleWheel": {
-      "bf1942_type": "FlettnerInvisibleWheel",
-      "portal_equivalent": "SFX_Soldier_Revive_GettingRevived_SimpleLoop3D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.412
     },
     "FlettnerMG": {
       "bf1942_type": "FlettnerMG",
@@ -1689,18 +1205,6 @@
       "auto_suggested": true,
       "confidence_score": 0.432
     },
-    "FlettnerSeat": {
-      "bf1942_type": "FlettnerSeat",
-      "portal_equivalent": "FX_Gadget_AT_Mine_Detonation",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.45
-    },
     "FlettnerSimple": {
       "bf1942_type": "FlettnerSimple",
       "portal_equivalent": "FX_Missile_Stinger_Trail",
@@ -1712,42 +1216,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.474
-    },
-    "FlettnerWheelFront": {
-      "bf1942_type": "FlettnerWheelFront",
-      "portal_equivalent": "FX_Gadget_AT_Mine_Detonation",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
-    "FlettnerWheelLeft": {
-      "bf1942_type": "FlettnerWheelLeft",
-      "portal_equivalent": "HEMTT_01_Wheel",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.416
-    },
-    "FlettnerWheelRight": {
-      "bf1942_type": "FlettnerWheelRight",
-      "portal_equivalent": "FX_Gadget_RemoteTurret_Damage_Light",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.491
     },
     "FlettnerWingInfo": {
       "bf1942_type": "FlettnerWingInfo",
@@ -1773,18 +1241,6 @@
       "auto_suggested": true,
       "confidence_score": 0.485
     },
-    "Flettner_Cockpit_M1": {
-      "bf1942_type": "Flettner_Cockpit_M1",
-      "portal_equivalent": "WeaponCase_Pistol_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.462
-    },
     "Flettner_Engine": {
       "bf1942_type": "Flettner_Engine",
       "portal_equivalent": "FX_EODBot_Active_Enemy",
@@ -1796,30 +1252,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.486
-    },
-    "Flettner_Flap_m1": {
-      "bf1942_type": "Flettner_Flap_m1",
-      "portal_equivalent": "FX_Gadget_Stinger_Launch_1P",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.512
-    },
-    "Flettner_FrontWheel_M1": {
-      "bf1942_type": "Flettner_FrontWheel_M1",
-      "portal_equivalent": "FX_Gadget_Stinger_Launch_1P",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.49
     },
     "Flettner_HoverEngine": {
       "bf1942_type": "Flettner_HoverEngine",
@@ -1869,18 +1301,6 @@
       "auto_suggested": true,
       "confidence_score": 0.476
     },
-    "Flettner_LWheel_M1": {
-      "bf1942_type": "Flettner_LWheel_M1",
-      "portal_equivalent": "FX_Gadget_Stinger_Launch_1P",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.533
-    },
     "Flettner_LeftRotor": {
       "bf1942_type": "Flettner_LeftRotor",
       "portal_equivalent": "FX_Missile_Stinger_Trail",
@@ -1892,18 +1312,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.476
-    },
-    "Flettner_RWheel_M1": {
-      "bf1942_type": "Flettner_RWheel_M1",
-      "portal_equivalent": "FX_Gadget_Stinger_Launch_1P",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.489
     },
     "Flettner_RightRotor": {
       "bf1942_type": "Flettner_RightRotor",
@@ -1967,15 +1375,15 @@
     },
     "Flettner_Wreck_tail_M1": {
       "bf1942_type": "Flettner_Wreck_tail_M1",
-      "portal_equivalent": "FX_Vehicle_Wreck_PTV_Calm",
+      "portal_equivalent": "WreckUH60_Tail",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: wreck, tail",
       "auto_suggested": true,
-      "confidence_score": 0.596
+      "confidence_score": 0.8999999999999999
     },
     "Flettner_hull_m1": {
       "bf1942_type": "Flettner_hull_m1",
@@ -2086,30 +1494,6 @@
       "auto_suggested": true,
       "confidence_score": 0.473
     },
-    "GreyhoundBodyInfo": {
-      "bf1942_type": "GreyhoundBodyInfo",
-      "portal_equivalent": "SurroundingCombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.421
-    },
-    "GreyhoundBrowningSeat": {
-      "bf1942_type": "GreyhoundBrowningSeat",
-      "portal_equivalent": "FX_Gadget_ReconDrone_Light",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.511
-    },
     "GreyhoundBrowning_Holder": {
       "bf1942_type": "GreyhoundBrowning_Holder",
       "portal_equivalent": "FX_Gadget_ReconDrone_Light",
@@ -2121,66 +1505,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.48
-    },
-    "GreyhoundBrowning_PCO1": {
-      "bf1942_type": "GreyhoundBrowning_PCO1",
-      "portal_equivalent": "FiringRange_NumberNine_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.468
-    },
-    "GreyhoundCamera": {
-      "bf1942_type": "GreyhoundCamera",
-      "portal_equivalent": "SurroundingCombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "GreyhoundCamera2": {
-      "bf1942_type": "GreyhoundCamera2",
-      "portal_equivalent": "SurroundingCombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.486
-    },
-    "GreyhoundCockpitExternal": {
-      "bf1942_type": "GreyhoundCockpitExternal",
-      "portal_equivalent": "FX_Grenade_MK32A_Concussion_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.456
-    },
-    "GreyhoundCockpitInternal": {
-      "bf1942_type": "GreyhoundCockpitInternal",
-      "portal_equivalent": "FX_Grenade_Fragmentation_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
     },
     "GreyhoundComplex": {
       "bf1942_type": "GreyhoundComplex",
@@ -2206,30 +1530,6 @@
       "auto_suggested": true,
       "confidence_score": 0.45
     },
-    "GreyhoundEngineInfo": {
-      "bf1942_type": "GreyhoundEngineInfo",
-      "portal_equivalent": "FX_Grenade_AntiTank_Detonation",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.49
-    },
-    "GreyhoundEntry": {
-      "bf1942_type": "GreyhoundEntry",
-      "portal_equivalent": "GroundRocky_03",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
     "GreyhoundFrontSpringL": {
       "bf1942_type": "GreyhoundFrontSpringL",
       "portal_equivalent": "FX_Grenade_Fragmentation_Trail",
@@ -2254,30 +1554,6 @@
       "auto_suggested": true,
       "confidence_score": 0.471
     },
-    "GreyhoundFrontWheelL": {
-      "bf1942_type": "GreyhoundFrontWheelL",
-      "portal_equivalent": "FX_Gadget_Drone_ThermalVE",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
-    "GreyhoundFrontWheelR": {
-      "bf1942_type": "GreyhoundFrontWheelR",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
     "GreyhoundSimple": {
       "bf1942_type": "GreyhoundSimple",
       "portal_equivalent": "FX_Grenade_SignalSmoke",
@@ -2289,18 +1565,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.486
-    },
-    "GreyhoundSteeringInfo": {
-      "bf1942_type": "GreyhoundSteeringInfo",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.432
     },
     "GreyhoundTurretInfo": {
       "bf1942_type": "GreyhoundTurretInfo",
@@ -2349,30 +1613,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.481
-    },
-    "Greyhound_LWheel_M1": {
-      "bf1942_type": "Greyhound_LWheel_M1",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
-    "Greyhound_RWheel_M1": {
-      "bf1942_type": "Greyhound_RWheel_M1",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
     },
     "Helipad_M1": {
       "bf1942_type": "Helipad_M1",
@@ -2434,18 +1674,6 @@
       "auto_suggested": true,
       "confidence_score": 0.462
     },
-    "HornetComplex": {
-      "bf1942_type": "HornetComplex",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
     "Hornet_AirCraftSoldierSpawn": {
       "bf1942_type": "Hornet_AirCraftSoldierSpawn",
       "portal_equivalent": "FX_LoadoutCrate_AirSpawn",
@@ -2482,18 +1710,6 @@
       "auto_suggested": true,
       "confidence_score": 0.513
     },
-    "Ju88ABodyInfo": {
-      "bf1942_type": "Ju88ABodyInfo",
-      "portal_equivalent": "WorldIcon",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 8,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.364
-    },
     "Ju88ABodyWingVertical": {
       "bf1942_type": "Ju88ABodyWingVertical",
       "portal_equivalent": "UrbanBuilding_Vent_01",
@@ -2517,30 +1733,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.435
-    },
-    "Ju88ACockpitExternal": {
-      "bf1942_type": "Ju88ACockpitExternal",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.412
-    },
-    "Ju88ACockpitInternal": {
-      "bf1942_type": "Ju88ACockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.415
     },
     "Ju88AComplex": {
       "bf1942_type": "Ju88AComplex",
@@ -2566,18 +1758,6 @@
       "auto_suggested": true,
       "confidence_score": 0.429
     },
-    "Ju88AEngineInfo": {
-      "bf1942_type": "Ju88AEngineInfo",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.387
-    },
     "Ju88ANoseTurretInfo": {
       "bf1942_type": "Ju88ANoseTurretInfo",
       "portal_equivalent": "CapturePoint",
@@ -2589,42 +1769,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.452
-    },
-    "Ju88APropellerBlurred": {
-      "bf1942_type": "Ju88APropellerBlurred",
-      "portal_equivalent": "FX_ProjectileTrail_BreachingDart",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.415
-    },
-    "Ju88APropellerStatic": {
-      "bf1942_type": "Ju88APropellerStatic",
-      "portal_equivalent": "CarpetRollStack_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.426
-    },
-    "Ju88ARearTopCamera": {
-      "bf1942_type": "Ju88ARearTopCamera",
-      "portal_equivalent": "AreaTrigger",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.483
     },
     "Ju88ASimple": {
       "bf1942_type": "Ju88ASimple",
@@ -2674,30 +1818,6 @@
       "auto_suggested": true,
       "confidence_score": 0.389
     },
-    "Ju88A_Camera": {
-      "bf1942_type": "Ju88A_Camera",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.455
-    },
-    "Ju88A_Camera3": {
-      "bf1942_type": "Ju88A_Camera3",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
     "Ju88A_EngineLeft": {
       "bf1942_type": "Ju88A_EngineLeft",
       "portal_equivalent": "FX_Gadget_AdrenalineShot",
@@ -2721,114 +1841,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.465
-    },
-    "Ju88A_Entry": {
-      "bf1942_type": "Ju88A_Entry",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.381
-    },
-    "Ju88A_FlapLeftInner": {
-      "bf1942_type": "Ju88A_FlapLeftInner",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.414
-    },
-    "Ju88A_FlapLeftMiddle": {
-      "bf1942_type": "Ju88A_FlapLeftMiddle",
-      "portal_equivalent": "FX_Gadget_PTKM_EFP_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.364
-    },
-    "Ju88A_FlapLeftOuter": {
-      "bf1942_type": "Ju88A_FlapLeftOuter",
-      "portal_equivalent": "FX_Impact_LoadoutCrate_Dirt",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.391
-    },
-    "Ju88A_FlapRightInner": {
-      "bf1942_type": "Ju88A_FlapRightInner",
-      "portal_equivalent": "AreaTrigger",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "Ju88A_FlapRightMiddle": {
-      "bf1942_type": "Ju88A_FlapRightMiddle",
-      "portal_equivalent": "FX_Gadget_MPAPS_Lights_Active",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "Ju88A_FlapRightOuter": {
-      "bf1942_type": "Ju88A_FlapRightOuter",
-      "portal_equivalent": "AreaTrigger",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "Ju88A_FlapTailLeft": {
-      "bf1942_type": "Ju88A_FlapTailLeft",
-      "portal_equivalent": "FX_BASE_Flies_Small",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.378
-    },
-    "Ju88A_FlapTailRight": {
-      "bf1942_type": "Ju88A_FlapTailRight",
-      "portal_equivalent": "Flashlight_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.4
     },
     "Ju88A_Gear_Back": {
       "bf1942_type": "Ju88A_Gear_Back",
@@ -2878,18 +1890,6 @@
       "auto_suggested": true,
       "confidence_score": 0.444
     },
-    "Ju88A_PilotSeat": {
-      "bf1942_type": "Ju88A_PilotSeat",
-      "portal_equivalent": "AI_WaypointPath",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.467
-    },
     "Ju88A_Pilots_LeftHand": {
       "bf1942_type": "Ju88A_Pilots_LeftHand",
       "portal_equivalent": "FX_Gadget_EIDOS_Standby",
@@ -2925,126 +1925,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 6 maps",
       "auto_suggested": true,
       "confidence_score": 0.376
-    },
-    "Ju88A_Wheel_Back": {
-      "bf1942_type": "Ju88A_Wheel_Back",
-      "portal_equivalent": "CrateMetal_01_B",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.387
-    },
-    "Ju88A_Wheel_Left": {
-      "bf1942_type": "Ju88A_Wheel_Left",
-      "portal_equivalent": "WreckTruck_01_WheelFlat_Left_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.411
-    },
-    "Ju88A_Wheel_Right": {
-      "bf1942_type": "Ju88A_Wheel_Right",
-      "portal_equivalent": "WreckTruck_01_WheelFlat_Right_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 8 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.431
-    },
-    "Junker_Cockpit_M1": {
-      "bf1942_type": "Junker_Cockpit_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.488
-    },
-    "Junker_FlapLeftMiddle_M1": {
-      "bf1942_type": "Junker_FlapLeftMiddle_M1",
-      "portal_equivalent": "BeverageFridge_01_B",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.465
-    },
-    "Junker_FlapLeftOuter_M1": {
-      "bf1942_type": "Junker_FlapLeftOuter_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.45
-    },
-    "Junker_FlapRightMiddle_M1": {
-      "bf1942_type": "Junker_FlapRightMiddle_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.424
-    },
-    "Junker_FlapRightOuter_M1": {
-      "bf1942_type": "Junker_FlapRightOuter_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.437
-    },
-    "Junker_FlapTailLeft_M1": {
-      "bf1942_type": "Junker_FlapTailLeft_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.464
-    },
-    "Junker_FlapTailRight_M1": {
-      "bf1942_type": "Junker_FlapTailRight_M1",
-      "portal_equivalent": "Flashlight_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.456
     },
     "Junker_Fus_M1": {
       "bf1942_type": "Junker_Fus_M1",
@@ -3094,18 +1974,6 @@
       "auto_suggested": true,
       "confidence_score": 0.5
     },
-    "Junker_Propeller_M1": {
-      "bf1942_type": "Junker_Propeller_M1",
-      "portal_equivalent": "BunkerCollapse_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.511
-    },
     "Junker_Rim42_M1": {
       "bf1942_type": "Junker_Rim42_M1",
       "portal_equivalent": "Junk_01",
@@ -3129,42 +1997,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.429
-    },
-    "Junker_WheelBack_M1": {
-      "bf1942_type": "Junker_WheelBack_M1",
-      "portal_equivalent": "ServerRack_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "Junker_WheelLeft_M1": {
-      "bf1942_type": "Junker_WheelLeft_M1",
-      "portal_equivalent": "WreckTruck_01_WheelFlat_Left_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.46
-    },
-    "Junker_WheelRight_M1": {
-      "bf1942_type": "Junker_WheelRight_M1",
-      "portal_equivalent": "Streetlight_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.488
     },
     "Junker_fus_L1": {
       "bf1942_type": "Junker_fus_L1",
@@ -3194,7 +2026,7 @@
     },
     "Junker_wreck_tail_M1": {
       "bf1942_type": "Junker_wreck_tail_M1",
-      "portal_equivalent": "FX_Vehicle_Wreck_PTV_Calm",
+      "portal_equivalent": "WreckUH60_Tail",
       "category": "unknown",
       "found_in_maps": [
         "Battle_of_Britain",
@@ -3202,9 +2034,9 @@
         "Raid_on_Agheila"
       ],
       "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: wreck, tail",
       "auto_suggested": true,
-      "confidence_score": 0.533
+      "confidence_score": 0.8999999999999999
     },
     "Junker_wreck_wing_M1": {
       "bf1942_type": "Junker_wreck_wing_M1",
@@ -3268,66 +2100,6 @@
       "auto_suggested": true,
       "confidence_score": 0.375
     },
-    "KruppBodyInfo": {
-      "bf1942_type": "KruppBodyInfo",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
-    "KruppCamera": {
-      "bf1942_type": "KruppCamera",
-      "portal_equivalent": "SupplyCase_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.538
-    },
-    "KruppCockpitExternal": {
-      "bf1942_type": "KruppCockpitExternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.415
-    },
-    "KruppCockpitInternal": {
-      "bf1942_type": "KruppCockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.453
-    },
-    "KruppComplex": {
-      "bf1942_type": "KruppComplex",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.385
-    },
     "KruppEngine": {
       "bf1942_type": "KruppEngine",
       "portal_equivalent": "SuppliesContainer_01",
@@ -3339,30 +2111,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.416
-    },
-    "KruppEngineInfo": {
-      "bf1942_type": "KruppEngineInfo",
-      "portal_equivalent": "FiringRange_Floor_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.412
-    },
-    "KruppEntry": {
-      "bf1942_type": "KruppEntry",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
     },
     "KruppFrontSpringL": {
       "bf1942_type": "KruppFrontSpringL",
@@ -3388,114 +2136,6 @@
       "auto_suggested": true,
       "confidence_score": 0.429
     },
-    "KruppFrontWheelL": {
-      "bf1942_type": "KruppFrontWheelL",
-      "portal_equivalent": "FX_Gadget_Drone_ThermalVE",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.39
-    },
-    "KruppFrontWheelR": {
-      "bf1942_type": "KruppFrontWheelR",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "KruppHighRSteering": {
-      "bf1942_type": "KruppHighRSteering",
-      "portal_equivalent": "HighwayStraight_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "KruppHorizontalPCO1": {
-      "bf1942_type": "KruppHorizontalPCO1",
-      "portal_equivalent": "FacadeDrainpipeHorizontal_01_640",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.449
-    },
-    "KruppHorn": {
-      "bf1942_type": "KruppHorn",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.421
-    },
-    "KruppLowSteering": {
-      "bf1942_type": "KruppLowSteering",
-      "portal_equivalent": "FX_Impact_SupplyDrop_Water",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.429
-    },
-    "KruppPassengerPCO": {
-      "bf1942_type": "KruppPassengerPCO",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.463
-    },
-    "KruppPassengerSeat": {
-      "bf1942_type": "KruppPassengerSeat",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.445
-    },
-    "KruppSeat": {
-      "bf1942_type": "KruppSeat",
-      "portal_equivalent": "SupplyCase_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
     "KruppSimple": {
       "bf1942_type": "KruppSimple",
       "portal_equivalent": "SupplyCase_01_A",
@@ -3507,42 +2147,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.385
-    },
-    "KruppSteering": {
-      "bf1942_type": "KruppSteering",
-      "portal_equivalent": "SupportCeiling_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.433
-    },
-    "KruppSteeringDummy": {
-      "bf1942_type": "KruppSteeringDummy",
-      "portal_equivalent": "OutskirtsHouseMediumRoof_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "KruppSteeringInfo": {
-      "bf1942_type": "KruppSteeringInfo",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.424
     },
     "KruppTurretInfo": {
       "bf1942_type": "KruppTurretInfo",
@@ -3580,18 +2184,6 @@
       "auto_suggested": true,
       "confidence_score": 0.471
     },
-    "Krupp_Cockpit_M1": {
-      "bf1942_type": "Krupp_Cockpit_M1",
-      "portal_equivalent": "RockPile_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
     "Krupp_Hull_M1": {
       "bf1942_type": "Krupp_Hull_M1",
       "portal_equivalent": "CarpetRoll_01",
@@ -3603,30 +2195,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.362
-    },
-    "Krupp_LWheel_M1": {
-      "bf1942_type": "Krupp_LWheel_M1",
-      "portal_equivalent": "MRAP_WeaponCage_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.485
-    },
-    "Krupp_RWheel_M1": {
-      "bf1942_type": "Krupp_RWheel_M1",
-      "portal_equivalent": "MRAP_WeaponCage_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.485
     },
     "Krupp_wreck_M1": {
       "bf1942_type": "Krupp_wreck_M1",
@@ -3642,15 +2210,15 @@
     },
     "LandingGear": {
       "bf1942_type": "LandingGear",
-      "portal_equivalent": "AreaTrigger",
+      "portal_equivalent": "FlatbedTrailer_01_Landing_Gear_01",
       "category": "unknown",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: landing, gear",
       "auto_suggested": true,
-      "confidence_score": 0.545
+      "confidence_score": 0.8
     },
     "LensFlare": {
       "bf1942_type": "LensFlare",
@@ -3752,30 +2320,6 @@
       "auto_suggested": true,
       "confidence_score": 0.5
     },
-    "M3A1_Wheel1_M1": {
-      "bf1942_type": "M3A1_Wheel1_M1",
-      "portal_equivalent": "HEMTT_01_Wheel",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
-    "M4A1BodyInfo": {
-      "bf1942_type": "M4A1BodyInfo",
-      "portal_equivalent": "WorldIcon",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.381
-    },
     "M4A1BrowningConsoleInfo": {
       "bf1942_type": "M4A1BrowningConsoleInfo",
       "portal_equivalent": "SFX_Soldier_Damage_Drowning_OneShot2D",
@@ -3800,18 +2344,6 @@
       "auto_suggested": true,
       "confidence_score": 0.474
     },
-    "M4A1BrowningSeat": {
-      "bf1942_type": "M4A1BrowningSeat",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.462
-    },
     "M4A1Browning_Holder": {
       "bf1942_type": "M4A1Browning_Holder",
       "portal_equivalent": "SFX_Soldier_Damage_Drowning_OneShot2D",
@@ -3823,66 +2355,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.464
-    },
-    "M4A1Browning_PCO1": {
-      "bf1942_type": "M4A1Browning_PCO1",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.485
-    },
-    "M4A1Camera": {
-      "bf1942_type": "M4A1Camera",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "M4A1Camera2": {
-      "bf1942_type": "M4A1Camera2",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.476
-    },
-    "M4A1CockpitExternal": {
-      "bf1942_type": "M4A1CockpitExternal",
-      "portal_equivalent": "FX_Impact_LoadoutCrate_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.426
-    },
-    "M4A1CockpitInternal": {
-      "bf1942_type": "M4A1CockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.423
     },
     "M4A1Complex": {
       "bf1942_type": "M4A1Complex",
@@ -3908,30 +2380,6 @@
       "auto_suggested": true,
       "confidence_score": 0.471
     },
-    "M4A1EngineInfo": {
-      "bf1942_type": "M4A1EngineInfo",
-      "portal_equivalent": "MannequinRotation_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.412
-    },
-    "M4A1Entry": {
-      "bf1942_type": "M4A1Entry",
-      "portal_equivalent": "AreaTrigger",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 10,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
     "M4A1MortarBipod": {
       "bf1942_type": "M4A1MortarBipod",
       "portal_equivalent": "CombatArea",
@@ -3943,18 +2391,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.4
-    },
-    "M4A1MortarCamera": {
-      "bf1942_type": "M4A1MortarCamera",
-      "portal_equivalent": "FX_MortarStrike_Trail",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.486
     },
     "M4A1MortarFirearm": {
       "bf1942_type": "M4A1MortarFirearm",
@@ -3968,18 +2404,6 @@
       "auto_suggested": true,
       "confidence_score": 0.519
     },
-    "M4A1MortarPCO": {
-      "bf1942_type": "M4A1MortarPCO",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
     "M4A1MortarPad": {
       "bf1942_type": "M4A1MortarPad",
       "portal_equivalent": "CombatArea",
@@ -3991,18 +2415,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.522
-    },
-    "M4A1MortarSeat": {
-      "bf1942_type": "M4A1MortarSeat",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.583
     },
     "M4A1MortarSupport": {
       "bf1942_type": "M4A1MortarSupport",
@@ -4040,18 +2452,6 @@
       "auto_suggested": true,
       "confidence_score": 0.488
     },
-    "M4A1PassangerCamera": {
-      "bf1942_type": "M4A1PassangerCamera",
-      "portal_equivalent": "FX_Impact_SafeImpact_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
     "M4A1PassengerInfo": {
       "bf1942_type": "M4A1PassengerInfo",
       "portal_equivalent": "VanPassenger_01",
@@ -4063,30 +2463,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
       "auto_suggested": true,
       "confidence_score": 0.525
-    },
-    "M4A1PassengerSeat": {
-      "bf1942_type": "M4A1PassengerSeat",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.525
-    },
-    "M4A1Seat": {
-      "bf1942_type": "M4A1Seat",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
     },
     "M4A1Simple": {
       "bf1942_type": "M4A1Simple",
@@ -4126,27 +2502,15 @@
     },
     "M4A1VehicleSupplyDepot": {
       "bf1942_type": "M4A1VehicleSupplyDepot",
-      "portal_equivalent": "VehicleSpawner",
+      "portal_equivalent": "SupplyCrate",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Supply depot/ammo cache",
       "auto_suggested": true,
-      "confidence_score": 0.556
-    },
-    "M4A1Wheel1": {
-      "bf1942_type": "M4A1Wheel1",
-      "portal_equivalent": "HEMTT_01_Wheel",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.483
+      "confidence_score": 0.8
     },
     "M4A1Wreck": {
       "bf1942_type": "M4A1Wreck",
@@ -4195,30 +2559,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.4
-    },
-    "M4A1_Passanger_PCO2": {
-      "bf1942_type": "M4A1_Passanger_PCO2",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.488
-    },
-    "M4A1_Passanger_PCO3": {
-      "bf1942_type": "M4A1_Passanger_PCO3",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.488
     },
     "M4A1_SoldierSpawn": {
       "bf1942_type": "M4A1_SoldierSpawn",
@@ -4292,18 +2632,6 @@
       "auto_suggested": true,
       "confidence_score": 0.545
     },
-    "MunitionsPanzerBodyInfo": {
-      "bf1942_type": "MunitionsPanzerBodyInfo",
-      "portal_equivalent": "FoundationPlanter_Long_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.442
-    },
     "MunitionsPanzerBrowningConsole": {
       "bf1942_type": "MunitionsPanzerBrowningConsole",
       "portal_equivalent": "SFX_UI_MenuNavigatin_Profile_Playercard_Loading_OneShot2D",
@@ -4328,18 +2656,6 @@
       "auto_suggested": true,
       "confidence_score": 0.474
     },
-    "MunitionsPanzerBrowningSeat": {
-      "bf1942_type": "MunitionsPanzerBrowningSeat",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_Mastery_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.459
-    },
     "MunitionsPanzerBrowningShield": {
       "bf1942_type": "MunitionsPanzerBrowningShield",
       "portal_equivalent": "SFX_UI_Notification_SidePanel_Mastery_OneShot2D",
@@ -4351,54 +2667,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.474
-    },
-    "MunitionsPanzerCamera": {
-      "bf1942_type": "MunitionsPanzerCamera",
-      "portal_equivalent": "FoundationPlanter_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.458
-    },
-    "MunitionsPanzerCamera2": {
-      "bf1942_type": "MunitionsPanzerCamera2",
-      "portal_equivalent": "FoundationPlanter_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.445
-    },
-    "MunitionsPanzerCockpitExternal": {
-      "bf1942_type": "MunitionsPanzerCockpitExternal",
-      "portal_equivalent": "SFX_UI_MenuNavigation_Home_ActivateXPBooster_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.429
-    },
-    "MunitionsPanzerCockpitInternal": {
-      "bf1942_type": "MunitionsPanzerCockpitInternal",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_CenterSwipeOut_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.429
     },
     "MunitionsPanzerComplex": {
       "bf1942_type": "MunitionsPanzerComplex",
@@ -4423,30 +2691,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
       "auto_suggested": true,
       "confidence_score": 0.465
-    },
-    "MunitionsPanzerEngineInfo": {
-      "bf1942_type": "MunitionsPanzerEngineInfo",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_Mastery_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
-    "MunitionsPanzerEntry": {
-      "bf1942_type": "MunitionsPanzerEntry",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 12,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.467
     },
     "MunitionsPanzerPassengerInfo": {
       "bf1942_type": "MunitionsPanzerPassengerInfo",
@@ -4486,15 +2730,15 @@
     },
     "MunitionsPanzerVehicleSupplyDepot": {
       "bf1942_type": "MunitionsPanzerVehicleSupplyDepot",
-      "portal_equivalent": "SFX_UI_EOR_Vehicles_JetFlyBy_OneShot2D",
+      "portal_equivalent": "SupplyCrate",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Supply depot/ammo cache",
       "auto_suggested": true,
-      "confidence_score": 0.479
+      "confidence_score": 0.8
     },
     "MunitionsPanzerWreck": {
       "bf1942_type": "MunitionsPanzerWreck",
@@ -4507,18 +2751,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.471
-    },
-    "MunitionsPanzer_Browning_PCO1": {
-      "bf1942_type": "MunitionsPanzer_Browning_PCO1",
-      "portal_equivalent": "FoundationPlanter_Long_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.53
     },
     "MunitionsPanzer_Hull_L1": {
       "bf1942_type": "MunitionsPanzer_Hull_L1",
@@ -4543,78 +2775,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
       "auto_suggested": true,
       "confidence_score": 0.525
-    },
-    "MunitionsPanzer_PassangerCamera": {
-      "bf1942_type": "MunitionsPanzer_PassangerCamera",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_ChallengeComplete_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.455
-    },
-    "MunitionsPanzer_PassangerSeat": {
-      "bf1942_type": "MunitionsPanzer_PassangerSeat",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_ChallengeProgressed_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 4,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.477
-    },
-    "MunitionsPanzer_Passenger_PCO1": {
-      "bf1942_type": "MunitionsPanzer_Passenger_PCO1",
-      "portal_equivalent": "FoundationPlanter_Long_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.482
-    },
-    "MunitionsPanzer_Passenger_PCO2": {
-      "bf1942_type": "MunitionsPanzer_Passenger_PCO2",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_ChallengeProgressed_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.494
-    },
-    "MunitionsPanzer_Passenger_PCO3": {
-      "bf1942_type": "MunitionsPanzer_Passenger_PCO3",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_ChallengeProgressed_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.472
-    },
-    "MunitionsPanzer_Passenger_PCO4": {
-      "bf1942_type": "MunitionsPanzer_Passenger_PCO4",
-      "portal_equivalent": "SFX_UI_Notification_SidePanel_ChallengeProgressed_OneShot2D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.472
     },
     "MunitionsPanzer_Shield_M1": {
       "bf1942_type": "MunitionsPanzer_Shield_M1",
@@ -4666,90 +2826,6 @@
       "auto_suggested": true,
       "confidence_score": 0.48
     },
-    "PAK40_wheel1_m1": {
-      "bf1942_type": "PAK40_wheel1_m1",
-      "portal_equivalent": "Pear_01_M",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "PAK40_wheel2_m1": {
-      "bf1942_type": "PAK40_wheel2_m1",
-      "portal_equivalent": "PegboardShelf_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "Pak40BodyInfo": {
-      "bf1942_type": "Pak40BodyInfo",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
-    "Pak40Camera": {
-      "bf1942_type": "Pak40Camera",
-      "portal_equivalent": "DeployCam",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "Pak40CockpitExternal": {
-      "bf1942_type": "Pak40CockpitExternal",
-      "portal_equivalent": "FX_Impact_LoadoutCrate_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
-    },
-    "Pak40CockpitInternal": {
-      "bf1942_type": "Pak40CockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.415
-    },
-    "Pak40Entry": {
-      "bf1942_type": "Pak40Entry",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
     "Pak40HandleGrip1": {
       "bf1942_type": "Pak40HandleGrip1",
       "portal_equivalent": "PegboardHanger_01",
@@ -4786,18 +2862,6 @@
       "auto_suggested": true,
       "confidence_score": 0.5
     },
-    "Pak40Seat": {
-      "bf1942_type": "Pak40Seat",
-      "portal_equivalent": "FX_Sparks",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
     "Pak40Slider": {
       "bf1942_type": "Pak40Slider",
       "portal_equivalent": "FX_Sparks",
@@ -4809,30 +2873,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.4
-    },
-    "Pak40Wheel1": {
-      "bf1942_type": "Pak40Wheel1",
-      "portal_equivalent": "PegboardShelf_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.444
-    },
-    "Pak40Wheel2": {
-      "bf1942_type": "Pak40Wheel2",
-      "portal_equivalent": "AI_Spawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.381
     },
     "PanzerIVTrackL": {
       "bf1942_type": "PanzerIVTrackL",
@@ -4944,15 +2984,15 @@
     },
     "Pegasus_Bridge_M1": {
       "bf1942_type": "Pegasus_Bridge_M1",
-      "portal_equivalent": "HighwayOverpass_Bridge_01",
+      "portal_equivalent": "RoadBridge_01_Large",
       "category": "unknown",
       "found_in_maps": [
         "Liberation_of_Caen"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Bridge structure",
       "auto_suggested": true,
-      "confidence_score": 0.619
+      "confidence_score": 0.85
     },
     "Pegasus_Full_M1": {
       "bf1942_type": "Pegasus_Full_M1",
@@ -5029,18 +3069,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.513
-    },
-    "Radar_AA_AllCockpitExternal": {
-      "bf1942_type": "Radar_AA_AllCockpitExternal",
-      "portal_equivalent": "FX_Autocannon_30mm_AP_Hit_Metal_GS",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.393
     },
     "Radar_AA_Allies_Cannon": {
       "bf1942_type": "Radar_AA_Allies_Cannon",
@@ -5176,44 +3204,6 @@
       "auto_suggested": true,
       "confidence_score": 0.458
     },
-    "SeatObject": {
-      "bf1942_type": "SeatObject",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Liberation_of_Caen",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 21,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "SextonBodyInfo": {
-      "bf1942_type": "SextonBodyInfo",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "SextonCamera": {
-      "bf1942_type": "SextonCamera",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.556
-    },
     "SextonCannon": {
       "bf1942_type": "SextonCannon",
       "portal_equivalent": "Cannon_01",
@@ -5237,30 +3227,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.5
-    },
-    "SextonCockpitExternal": {
-      "bf1942_type": "SextonCockpitExternal",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.457
-    },
-    "SextonCockpitInternal": {
-      "bf1942_type": "SextonCockpitInternal",
-      "portal_equivalent": "VEH_Eurocopter",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.457
     },
     "SextonComplex": {
       "bf1942_type": "SextonComplex",
@@ -5286,18 +3252,6 @@
       "auto_suggested": true,
       "confidence_score": 0.444
     },
-    "SextonEntry": {
-      "bf1942_type": "SextonEntry",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.588
-    },
     "SextonSimple": {
       "bf1942_type": "SextonSimple",
       "portal_equivalent": "SFX_UI_EOR_Counting_SimpleLoop2D",
@@ -5309,150 +3263,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.455
-    },
-    "SextonWheelL1": {
-      "bf1942_type": "SextonWheelL1",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.521
-    },
-    "SextonWheelL2": {
-      "bf1942_type": "SextonWheelL2",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "SextonWheelL3": {
-      "bf1942_type": "SextonWheelL3",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "SextonWheelL3Dummy": {
-      "bf1942_type": "SextonWheelL3Dummy",
-      "portal_equivalent": "SFX_Destruction_Tree_WhooshTest_SimpleLoop3D",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.387
-    },
-    "SextonWheelL3DummySmoke": {
-      "bf1942_type": "SextonWheelL3DummySmoke",
-      "portal_equivalent": "FX_Gadget_M320_Reload_Smoke",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "SextonWheelL4": {
-      "bf1942_type": "SextonWheelL4",
-      "portal_equivalent": "CarSedanWheel_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "SextonWheelR1": {
-      "bf1942_type": "SextonWheelR1",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.526
-    },
-    "SextonWheelR2": {
-      "bf1942_type": "SextonWheelR2",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.526
-    },
-    "SextonWheelR3": {
-      "bf1942_type": "SextonWheelR3",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.526
-    },
-    "SextonWheelR3Dummy": {
-      "bf1942_type": "SextonWheelR3Dummy",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
-    },
-    "SextonWheelR3DummySmoke": {
-      "bf1942_type": "SextonWheelR3DummySmoke",
-      "portal_equivalent": "FX_Gadget_M320_Reload_Smoke",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "SextonWheelR4": {
-      "bf1942_type": "SextonWheelR4",
-      "portal_equivalent": "Sector",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.526
     },
     "SextonWreck": {
       "bf1942_type": "SextonWreck",
@@ -5514,30 +3324,6 @@
       "auto_suggested": true,
       "confidence_score": 0.441
     },
-    "ShokakuBodyInfo": {
-      "bf1942_type": "ShokakuBodyInfo",
-      "portal_equivalent": "SurroundingCombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 6,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.389
-    },
-    "ShokakuCamera": {
-      "bf1942_type": "ShokakuCamera",
-      "portal_equivalent": "CombatArea",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
     "ShokakuEngine": {
       "bf1942_type": "ShokakuEngine",
       "portal_equivalent": "HangingRope",
@@ -5549,42 +3335,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.483
-    },
-    "ShokakuEngineInfo": {
-      "bf1942_type": "ShokakuEngineInfo",
-      "portal_equivalent": "HangingRope",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "ShokakuEntry": {
-      "bf1942_type": "ShokakuEntry",
-      "portal_equivalent": "FX_Smoke_Marker_Custom",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.412
-    },
-    "ShokakuFloater": {
-      "bf1942_type": "ShokakuFloater",
-      "portal_equivalent": "SFX_Alarm",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 8,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
     },
     "ShokakuHullWing": {
       "bf1942_type": "ShokakuHullWing",
@@ -6215,39 +3965,15 @@
     },
     "Trainbridge_m1": {
       "bf1942_type": "Trainbridge_m1",
-      "portal_equivalent": "RefineryBridge_01",
+      "portal_equivalent": "RoadBridge_01_Large",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
+      "notes": "Visual asset: Bridge structure",
       "auto_suggested": true,
-      "confidence_score": 0.61
-    },
-    "Vehicle_M1919A4_Info": {
-      "bf1942_type": "Vehicle_M1919A4_Info",
-      "portal_equivalent": "VehicleSpawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.529
-    },
-    "Vehicle_MG42_Info": {
-      "bf1942_type": "Vehicle_MG42_Info",
-      "portal_equivalent": "FX_Vehicle_Damage_PTV_Light",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.545
+      "confidence_score": 0.85
     },
     "WestAirfield_SoldierSpawn": {
       "bf1942_type": "WestAirfield_SoldierSpawn",
@@ -6285,56 +4011,6 @@
       "auto_suggested": true,
       "confidence_score": 0.452
     },
-    "WillyBodyInfo": {
-      "bf1942_type": "WillyBodyInfo",
-      "portal_equivalent": "Billboard_Sign",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.493
-    },
-    "WillyCamera": {
-      "bf1942_type": "WillyCamera",
-      "portal_equivalent": "DeployCam",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.5
-    },
-    "WillyCockpitExternal": {
-      "bf1942_type": "WillyCockpitExternal",
-      "portal_equivalent": "FX_BlackLocust_Tree_Branch_L_GS",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.392
-    },
-    "WillyCockpitInternal": {
-      "bf1942_type": "WillyCockpitInternal",
-      "portal_equivalent": "WaypointPath",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.438
-    },
     "WillyComplex": {
       "bf1942_type": "WillyComplex",
       "portal_equivalent": "WallCompoundGate_01",
@@ -6361,31 +4037,6 @@
       "auto_suggested": true,
       "confidence_score": 0.444
     },
-    "WillyEngineInfo": {
-      "bf1942_type": "WillyEngineInfo",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
-    "WillyEntry": {
-      "bf1942_type": "WillyEntry",
-      "portal_equivalent": "PlayerSpawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 6,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.435
-    },
     "WillyFrontSpringL": {
       "bf1942_type": "WillyFrontSpringL",
       "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
@@ -6410,81 +4061,6 @@
       "auto_suggested": true,
       "confidence_score": 0.429
     },
-    "WillyFrontWheelL": {
-      "bf1942_type": "WillyFrontWheelL",
-      "portal_equivalent": "FX_Gadget_Drone_ThermalVE",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.39
-    },
-    "WillyFrontWheelR": {
-      "bf1942_type": "WillyFrontWheelR",
-      "portal_equivalent": "FX_Airplane_Jetwash_Water",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.39
-    },
-    "WillyHorn": {
-      "bf1942_type": "WillyHorn",
-      "portal_equivalent": "WallAnchor_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.445
-    },
-    "WillyPassengerPCO": {
-      "bf1942_type": "WillyPassengerPCO",
-      "portal_equivalent": "PlayerSpawner",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.467
-    },
-    "WillyPassengerSeat": {
-      "bf1942_type": "WillyPassengerSeat",
-      "portal_equivalent": "VanPassenger_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 5 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.445
-    },
-    "WillySeat": {
-      "bf1942_type": "WillySeat",
-      "portal_equivalent": "SupplyCase_01_A",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
-    },
     "WillySimple": {
       "bf1942_type": "WillySimple",
       "portal_equivalent": "HighwaySignPole_01",
@@ -6497,31 +4073,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.483
-    },
-    "WillySteeringDummy": {
-      "bf1942_type": "WillySteeringDummy",
-      "portal_equivalent": "fx_ambwar_artillarystrike",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.419
-    },
-    "WillySteeringInfo": {
-      "bf1942_type": "WillySteeringInfo",
-      "portal_equivalent": "WarningSign_01_F",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.485
     },
     "WillyTurretInfo": {
       "bf1942_type": "WillyTurretInfo",
@@ -6680,15 +4231,15 @@
     },
     "coastbridge_m1": {
       "bf1942_type": "coastbridge_m1",
-      "portal_equivalent": "HighwayOverpass_Bridge_01",
+      "portal_equivalent": "RoadBridge_01_Large",
       "category": "unknown",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Visual asset: Bridge structure",
       "auto_suggested": true,
-      "confidence_score": 0.564
+      "confidence_score": 0.85
     },
     "conditions": {
       "bf1942_type": "conditions",
@@ -6863,30 +4414,6 @@
       "auto_suggested": true,
       "confidence_score": 0.567
     },
-    "e_wdustWheelF": {
-      "bf1942_type": "e_wdustWheelF",
-      "portal_equivalent": "PegboardShelf_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 16,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.483
-    },
-    "e_wdustWheelFL": {
-      "bf1942_type": "e_wdustWheelFL",
-      "portal_equivalent": "PegboardShelf_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 16,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.467
-    },
     "enterprise_hatch_m1": {
       "bf1942_type": "enterprise_hatch_m1",
       "portal_equivalent": "NASAHatch_01",
@@ -6996,18 +4523,6 @@
       "auto_suggested": true,
       "confidence_score": 0.417
     },
-    "lodFlettnerCockpit": {
-      "bf1942_type": "lodFlettnerCockpit",
-      "portal_equivalent": "InteractPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.452
-    },
     "lodFlettner_Rotary": {
       "bf1942_type": "lodFlettner_Rotary",
       "portal_equivalent": "FX_Missile_Stinger_Trail",
@@ -7032,18 +4547,6 @@
       "auto_suggested": true,
       "confidence_score": 0.438
     },
-    "lodGreyhoundCockpit": {
-      "bf1942_type": "lodGreyhoundCockpit",
-      "portal_equivalent": "FX_Gadget_ReconDrone_EMP_Hit",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.468
-    },
     "lodHiryu": {
       "bf1942_type": "lodHiryu",
       "portal_equivalent": "SiloMedium_01",
@@ -7055,18 +4558,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.376
-    },
-    "lodHornet": {
-      "bf1942_type": "lodHornet",
-      "portal_equivalent": "DoorNetting_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Coral_sea"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.422
     },
     "lodJu88A": {
       "bf1942_type": "lodJu88A",
@@ -7080,30 +4571,6 @@
       "auto_suggested": true,
       "confidence_score": 0.353
     },
-    "lodJu88ACockpit": {
-      "bf1942_type": "lodJu88ACockpit",
-      "portal_equivalent": "FX_LoadoutCrate_Drop_Trails",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.381
-    },
-    "lodJu88APropeller": {
-      "bf1942_type": "lodJu88APropeller",
-      "portal_equivalent": "FX_LoadoutCrate_Drop_Trails",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.409
-    },
     "lodKrupp": {
       "bf1942_type": "lodKrupp",
       "portal_equivalent": "Lockers_01",
@@ -7115,30 +4582,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.344
-    },
-    "lodKruppCockpit": {
-      "bf1942_type": "lodKruppCockpit",
-      "portal_equivalent": "FX_Rocket_RPG7V2_Hit",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "lodKruppSteering": {
-      "bf1942_type": "lodKruppSteering",
-      "portal_equivalent": "FX_BlackLocust_Tree_Branch_L_GS",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.426
     },
     "lodM4A1": {
       "bf1942_type": "lodM4A1",
@@ -7152,18 +4595,6 @@
       "auto_suggested": true,
       "confidence_score": 0.4
     },
-    "lodM4A1Cockpit": {
-      "bf1942_type": "lodM4A1Cockpit",
-      "portal_equivalent": "FX_DeployableCover_Deploy_Dirt",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.364
-    },
     "lodMunitionsPanzer": {
       "bf1942_type": "lodMunitionsPanzer",
       "portal_equivalent": "FoundationPlanter_01_A",
@@ -7175,54 +4606,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.5
-    },
-    "lodMunitionsPanzerCockpit": {
-      "bf1942_type": "lodMunitionsPanzerCockpit",
-      "portal_equivalent": "FoundationPlanter_01_C",
-      "category": "unknown",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.453
-    },
-    "lodPak40Cockpit": {
-      "bf1942_type": "lodPak40Cockpit",
-      "portal_equivalent": "SpawnPoint",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.4
-    },
-    "lodRadar_AA_AllCockpit": {
-      "bf1942_type": "lodRadar_AA_AllCockpit",
-      "portal_equivalent": "FiringRange_WallPanelContact_01",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.377
-    },
-    "lodSextonCockpit": {
-      "bf1942_type": "lodSextonCockpit",
-      "portal_equivalent": "PostersTorn_outskirts",
-      "category": "unknown",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.441
     },
     "lodWilly": {
       "bf1942_type": "lodWilly",
@@ -7236,19 +4619,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.353
-    },
-    "lodWillyCockpit": {
-      "bf1942_type": "lodWillyCockpit",
-      "portal_equivalent": "WorldIcon",
-      "category": "unknown",
-      "found_in_maps": [
-        "Battle_of_Britain",
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.417
     },
     "lodlandrep1_supply": {
       "bf1942_type": "lodlandrep1_supply",
@@ -7276,15 +4646,15 @@
     },
     "militable_m1": {
       "bf1942_type": "militable_m1",
-      "portal_equivalent": "DiningTable_01",
+      "portal_equivalent": "TableMilitary_01",
       "category": "unknown",
       "found_in_maps": [
         "Raid_on_Agheila"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
+      "notes": "Visual asset: Military table",
       "auto_suggested": true,
-      "confidence_score": 0.592
+      "confidence_score": 0.8
     },
     "pak40_1P": {
       "bf1942_type": "pak40_1P",
@@ -7537,42 +4907,6 @@
       "auto_suggested": true,
       "confidence_score": 0.45
     },
-    "Allies_Factory_Camera": {
-      "bf1942_type": "Allies_Factory_Camera",
-      "portal_equivalent": "FX_Gadget_InterativeSpectator_Camera_Light_Red",
-      "category": "building",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.448
-    },
-    "Allies_Factory_Entry": {
-      "bf1942_type": "Allies_Factory_Entry",
-      "portal_equivalent": "InteractPoint",
-      "category": "building",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.485
-    },
-    "Allies_Factory_Seat": {
-      "bf1942_type": "Allies_Factory_Seat",
-      "portal_equivalent": "FX_CarFire_FrameCrawl",
-      "category": "building",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.45
-    },
     "Allies_Factory_Spawn": {
       "bf1942_type": "Allies_Factory_Spawn",
       "portal_equivalent": "AI_Spawner",
@@ -7659,27 +4993,15 @@
     },
     "Em_BritainFactory_SmallSmokeStack": {
       "bf1942_type": "Em_BritainFactory_SmallSmokeStack",
-      "portal_equivalent": "FX_CIN_MF_Small_Static_Smoke",
+      "portal_equivalent": "BoxCardboardStackSmall_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: small, stack",
       "auto_suggested": true,
-      "confidence_score": 0.492
-    },
-    "FactoryBodyInfo": {
-      "bf1942_type": "FactoryBodyInfo",
-      "portal_equivalent": "BalconyBayWindow_01",
-      "category": "building",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 3,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.429
+      "confidence_score": 0.65
     },
     "FactoryComplex": {
       "bf1942_type": "FactoryComplex",
@@ -7767,99 +5089,99 @@
     },
     "RadarTowerComplex": {
       "bf1942_type": "RadarTowerComplex",
-      "portal_equivalent": "PortableLamp_TowerPole_02",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.624
+      "confidence_score": 0.8
     },
     "RadarTowerSimple": {
       "bf1942_type": "RadarTowerSimple",
-      "portal_equivalent": "PortableLamp_TowerPole_02",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.637
+      "confidence_score": 0.8
     },
     "RadarTowerSonar": {
       "bf1942_type": "RadarTowerSonar",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 5,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.7
+      "confidence_score": 0.8
     },
     "RadarTowerWreck": {
       "bf1942_type": "RadarTowerWreck",
-      "portal_equivalent": "Guard_Tower",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.638
+      "confidence_score": 0.8
     },
     "RadarTower_Bunker": {
       "bf1942_type": "RadarTower_Bunker",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.662
+      "confidence_score": 0.8
     },
     "RadarTower_Bunker_M1": {
       "bf1942_type": "RadarTower_Bunker_M1",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.671
+      "confidence_score": 0.8
     },
     "RadarTower_Bunker_wreck": {
       "bf1942_type": "RadarTower_Bunker_wreck",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.626
+      "confidence_score": 0.7333333333333334
     },
     "RadarTower_Bunker_wreck_M1": {
       "bf1942_type": "RadarTower_Bunker_wreck_M1",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.588
+      "confidence_score": 0.7333333333333334
     },
     "RadarTower_E_AISpawn": {
       "bf1942_type": "RadarTower_E_AISpawn",
@@ -7887,15 +5209,15 @@
     },
     "RadarTower_Radar": {
       "bf1942_type": "RadarTower_Radar",
-      "portal_equivalent": "RadioTower_01_A",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 3 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower, radar",
       "auto_suggested": true,
-      "confidence_score": 0.745
+      "confidence_score": 0.95
     },
     "RadarTower_Radar_M1": {
       "bf1942_type": "RadarTower_Radar_M1",
@@ -7905,9 +5227,9 @@
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower, radar",
       "auto_suggested": true,
-      "confidence_score": 0.767
+      "confidence_score": 0.95
     },
     "RadarTower_Radar_wreck1_M1": {
       "bf1942_type": "RadarTower_Radar_wreck1_M1",
@@ -7917,9 +5239,9 @@
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower, radar",
       "auto_suggested": true,
-      "confidence_score": 0.665
+      "confidence_score": 0.95
     },
     "RadarTower_Radar_wreck2_M1": {
       "bf1942_type": "RadarTower_Radar_wreck2_M1",
@@ -7929,9 +5251,9 @@
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower, radar",
       "auto_suggested": true,
-      "confidence_score": 0.665
+      "confidence_score": 0.95
     },
     "RadarTower_SE_AISpawn": {
       "bf1942_type": "RadarTower_SE_AISpawn",
@@ -7995,15 +5317,15 @@
     },
     "RadarTower_Stand_M1": {
       "bf1942_type": "RadarTower_Stand_M1",
-      "portal_equivalent": "ImprovisedGuardTower_01_Sand",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.696
+      "confidence_score": 0.8
     },
     "RadarTower_W_AISpawn": {
       "bf1942_type": "RadarTower_W_AISpawn",
@@ -8055,15 +5377,15 @@
     },
     "lodRadarTower": {
       "bf1942_type": "lodRadarTower",
-      "portal_equivalent": "Guard_Tower",
+      "portal_equivalent": "ControlTowerRadar_01",
       "category": "building",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 5,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 2 maps",
+      "notes": "Auto-improved: Matched keywords: radar, tower",
       "auto_suggested": true,
-      "confidence_score": 0.683
+      "confidence_score": 0.8
     },
     "lodfactory": {
       "bf1942_type": "lodfactory",
@@ -8105,18 +5427,6 @@
     },
     "Em_ScrapRocketPlatform_Base": {
       "bf1942_type": "Em_ScrapRocketPlatform_Base",
-      "portal_equivalent": "FX_CAP_AmbWar_Rocket_Strike",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.481
-    },
-    "Em_ScrapRocketPlatform_Seat": {
-      "bf1942_type": "Em_ScrapRocketPlatform_Seat",
       "portal_equivalent": "FX_CAP_AmbWar_Rocket_Strike",
       "category": "prop",
       "found_in_maps": [
@@ -8187,18 +5497,6 @@
       "auto_suggested": true,
       "confidence_score": 0.514
     },
-    "Krupp_Rocket_Seat_M1": {
-      "bf1942_type": "Krupp_Rocket_Seat_M1",
-      "portal_equivalent": "AmmoChest_Small_Ext_01",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.476
-    },
     "M4A1MortarBarrel": {
       "bf1942_type": "M4A1MortarBarrel",
       "portal_equivalent": "WreckTank_Abra01_Barrel",
@@ -8222,78 +5520,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
       "auto_suggested": true,
       "confidence_score": 0.715
-    },
-    "RocketLauncherBodyInfo": {
-      "bf1942_type": "RocketLauncherBodyInfo",
-      "portal_equivalent": "FX_Rocket_RPG7V2_Hit_Glancing",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.471
-    },
-    "RocketLauncherCockpitExternal": {
-      "bf1942_type": "RocketLauncherCockpitExternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.516
-    },
-    "RocketLauncherCockpitInternal": {
-      "bf1942_type": "RocketLauncherCockpitInternal",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.484
-    },
-    "RocketLauncherEntry": {
-      "bf1942_type": "RocketLauncherEntry",
-      "portal_equivalent": "FX_Gadget_AirburstLauncher_Detonation",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.464
-    },
-    "RocketLauncherHorizontalPCO1": {
-      "bf1942_type": "RocketLauncherHorizontalPCO1",
-      "portal_equivalent": "FX_Rocket_ArmorPiercing_Hit_Metal",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.459
-    },
-    "RocketLauncherPassengerSeat": {
-      "bf1942_type": "RocketLauncherPassengerSeat",
-      "portal_equivalent": "FX_Grenadelauncher_SmokeGL_Smoke",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.441
     },
     "RocketLauncherTurretInfo": {
       "bf1942_type": "RocketLauncherTurretInfo",
@@ -8403,18 +5629,6 @@
       "auto_suggested": true,
       "confidence_score": 0.545
     },
-    "RocketStation_seat_M1": {
-      "bf1942_type": "RocketStation_seat_M1",
-      "portal_equivalent": "PlayerCustomization_Headgear_01_A",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.519
-    },
     "e_rocketFume": {
       "bf1942_type": "e_rocketFume",
       "portal_equivalent": "FX_Rocket_RPG7V2_Dud",
@@ -8426,18 +5640,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.5
-    },
-    "lodRocketLauncherCockpit": {
-      "bf1942_type": "lodRocketLauncherCockpit",
-      "portal_equivalent": "FX_Gadget_AirburstLauncher_Predicted_Point",
-      "category": "prop",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.455
     },
     "lodRocketPlatform": {
       "bf1942_type": "lodRocketPlatform",
@@ -8477,30 +5679,6 @@
     }
   },
   "weapons": {
-    "GreyHound_GunRotate_M1": {
-      "bf1942_type": "GreyHound_GunRotate_M1",
-      "portal_equivalent": "FoundationGunEmplacement_01",
-      "category": "weapon",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 2,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.508
-    },
-    "GreyhoundGunBarrel": {
-      "bf1942_type": "GreyhoundGunBarrel",
-      "portal_equivalent": "SurroundingCombatArea",
-      "category": "weapon",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.513
-    },
     "GreyhoundGunBase": {
       "bf1942_type": "GreyhoundGunBase",
       "portal_equivalent": "FoundationGunEmplacement_01",
@@ -8525,54 +5703,6 @@
       "auto_suggested": true,
       "confidence_score": 0.464
     },
-    "Ju88A_BellyGunner_PCO": {
-      "bf1942_type": "Ju88A_BellyGunner_PCO",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.526
-    },
-    "Ju88A_BellyGunner_WeaponBase": {
-      "bf1942_type": "Ju88A_BellyGunner_WeaponBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.609
-    },
-    "Ju88A_NoseGunnerSeat": {
-      "bf1942_type": "Ju88A_NoseGunnerSeat",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.553
-    },
-    "Ju88A_NoseGunner_Camera": {
-      "bf1942_type": "Ju88A_NoseGunner_Camera",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.518
-    },
     "Ju88A_NoseGunner_Gun": {
       "bf1942_type": "Ju88A_NoseGunner_Gun",
       "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
@@ -8585,149 +5715,53 @@
       "auto_suggested": true,
       "confidence_score": 0.529
     },
-    "Ju88A_NoseGunner_LeftFoot": {
-      "bf1942_type": "Ju88A_NoseGunner_LeftFoot",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.556
-    },
-    "Ju88A_NoseGunner_PCO": {
-      "bf1942_type": "Ju88A_NoseGunner_PCO",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.529
-    },
-    "Ju88A_NoseGunner_RightFoot": {
-      "bf1942_type": "Ju88A_NoseGunner_RightFoot",
-      "portal_equivalent": "FX_Chaingun_30mm_HEDP_Hit",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.553
-    },
-    "Ju88A_NoseGunner_WeaponBase": {
-      "bf1942_type": "Ju88A_NoseGunner_WeaponBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_SelectGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.613
-    },
-    "Ju88A_RearGunnerSeat": {
-      "bf1942_type": "Ju88A_RearGunnerSeat",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.533
-    },
-    "Ju88A_RearGunner_CameraBase": {
-      "bf1942_type": "Ju88A_RearGunner_CameraBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.508
-    },
     "Ju88A_RearGunner_LeftGun": {
       "bf1942_type": "Ju88A_RearGunner_LeftGun",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
+      "portal_equivalent": "Car4x4_01_Door_RearLeft",
       "category": "weapon",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: rear, left",
       "auto_suggested": true,
-      "confidence_score": 0.518
+      "confidence_score": 0.65
     },
     "Ju88A_RearGunner_LeftGunBase": {
       "bf1942_type": "Ju88A_RearGunner_LeftGunBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
+      "portal_equivalent": "Car4x4_01_Door_RearLeft",
       "category": "weapon",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: rear, left",
       "auto_suggested": true,
-      "confidence_score": 0.504
-    },
-    "Ju88A_RearGunner_PCO": {
-      "bf1942_type": "Ju88A_RearGunner_PCO",
-      "portal_equivalent": "AAGun_01",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.529
+      "confidence_score": 0.6222222222222222
     },
     "Ju88A_RearGunner_RightGun": {
       "bf1942_type": "Ju88A_RearGunner_RightGun",
-      "portal_equivalent": "FX_Chaingun_30mm_HEDP_Hit",
+      "portal_equivalent": "Car4x4_01_Door_RearRight",
       "category": "weapon",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: rear, right",
       "auto_suggested": true,
-      "confidence_score": 0.52
+      "confidence_score": 0.65
     },
     "Ju88A_RearGunner_RightGunBase": {
       "bf1942_type": "Ju88A_RearGunner_RightGunBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
+      "portal_equivalent": "Car4x4_01_Door_RearRight",
       "category": "weapon",
       "found_in_maps": [
         "Battle_of_Britain"
       ],
       "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
+      "notes": "Auto-improved: Matched keywords: rear, right",
       "auto_suggested": true,
-      "confidence_score": 0.501
-    },
-    "Ju88A_RearGunner_WeaponBase": {
-      "bf1942_type": "Ju88A_RearGunner_WeaponBase",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.596
+      "confidence_score": 0.6222222222222222
     },
     "Junker_GunB_M1": {
       "bf1942_type": "Junker_GunB_M1",
@@ -8789,18 +5823,6 @@
       "auto_suggested": true,
       "confidence_score": 0.567
     },
-    "Radar_AA_Allies_GunBarrel": {
-      "bf1942_type": "Radar_AA_Allies_GunBarrel",
-      "portal_equivalent": "fx_ambwar_artillarystrike",
-      "category": "weapon",
-      "found_in_maps": [
-        "Battle_of_Britain"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.44
-    },
     "SextonGunBase": {
       "bf1942_type": "SextonGunBase",
       "portal_equivalent": "FX_Chaingun_30mm_HEDP_Hit",
@@ -8824,54 +5846,6 @@
       "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
       "auto_suggested": true,
       "confidence_score": 0.516
-    },
-    "SextonGunnerCamera": {
-      "bf1942_type": "SextonGunnerCamera",
-      "portal_equivalent": "FoundationGunEmplacement_01",
-      "category": "weapon",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW | Restricted to 1 maps",
-      "auto_suggested": true,
-      "confidence_score": 0.544
-    },
-    "SextonGunnerSeat": {
-      "bf1942_type": "SextonGunnerSeat",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.55
-    },
-    "Sexton_Gunner_PCO1": {
-      "bf1942_type": "Sexton_Gunner_PCO1",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Liberation_of_Caen"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.541
-    },
-    "WillyGunnerCamera": {
-      "bf1942_type": "WillyGunnerCamera",
-      "portal_equivalent": "SFX_UI_MenuNavigation_VehicleLoadout_EquipGunnerWeapon_OneShot2D",
-      "category": "weapon",
-      "found_in_maps": [
-        "Raid_on_Agheila"
-      ],
-      "usage_count": 1,
-      "notes": "\u26a0\ufe0f AUTO-SUGGESTED - REQUIRES MANUAL REVIEW",
-      "auto_suggested": true,
-      "confidence_score": 0.472
     },
     "e_MuzzAAgunB": {
       "bf1942_type": "e_MuzzAAgunB",
