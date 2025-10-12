@@ -513,6 +513,139 @@ class TestTscnGenerator:
         # Check next ID is correct
         assert generator.next_ext_resource_id == 7
 
+    def test_generate_with_capture_points_generates_capture_points(self, generator, minimal_map_data):
+        """Test generate method includes capture points when present."""
+        # Arrange
+        with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
+            output_path = Path(f.name)
+        minimal_map_data.capture_points = [
+            CapturePoint(
+                name="CP1",
+                transform=Transform(
+                    position=Vector3(0.0, 50.0, 0.0),
+                    rotation=Rotation(0.0, 0.0, 0.0),
+                ),
+                radius=30.0,
+                control_area=[],
+            )
+        ]
+
+        try:
+            # Act
+            generator.generate(minimal_map_data, output_path, base_terrain="MP_Tungsten")
+
+            # Assert
+            content = output_path.read_text()
+            assert 'name="CapturePoint_1"' in content
+
+        finally:
+            if output_path.exists():
+                output_path.unlink()
+
+    def test_generate_with_vehicle_spawners_generates_vehicle_spawners(self, generator, minimal_map_data):
+        """Test generate method includes vehicle spawners when present."""
+        # Arrange
+        with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
+            output_path = Path(f.name)
+        minimal_map_data.game_objects = [
+            GameObject(
+                name="Vehicle_Spawner",
+                asset_type="VehicleSpawner_Tank",
+                transform=Transform(
+                    position=Vector3(50.0, 50.0, 50.0),
+                    rotation=Rotation(0.0, 45.0, 0.0),
+                ),
+                team=Team.TEAM_1,
+                properties={},
+            )
+        ]
+
+        try:
+            # Act
+            generator.generate(minimal_map_data, output_path, base_terrain="MP_Tungsten")
+
+            # Assert
+            content = output_path.read_text()
+            assert 'name="VehicleSpawner_1"' in content
+
+        finally:
+            if output_path.exists():
+                output_path.unlink()
+
+    def test_generate_static_layer_with_terrain_rotation(self, generator, minimal_map_data):
+        """Test static layer generation with terrain rotation."""
+        # Arrange
+        generator.base_terrain = "MP_Tungsten"
+        generator._init_ext_resources()
+        minimal_map_data.metadata["terrain_rotation"] = 90
+
+        # Act
+        lines = generator._generate_static_layer(minimal_map_data)
+        content = "\n".join(lines)
+
+        # Assert
+        assert 'name="Static"' in content
+        assert 'name="MP_Tungsten_Terrain"' in content
+        # Verify that transform is present when rotation is non-zero
+        assert "transform = Transform3D" in content
+
+    def test_validate_invalid_file_missing_team1_hq(self, generator):
+        """Test validation detects missing TEAM_1_HQ node."""
+        # Arrange
+        with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
+            output_path = Path(f.name)
+            f.write('[gd_scene format=3]\n[node name="TEAM_2_HQ"]\n[node name="CombatArea"]')
+
+        try:
+            # Act
+            errors = generator.validate(output_path)
+
+            # Assert
+            assert len(errors) > 0
+            assert "Missing TEAM_1_HQ node" in errors
+
+        finally:
+            if output_path.exists():
+                output_path.unlink()
+
+    def test_validate_invalid_file_missing_team2_hq(self, generator):
+        """Test validation detects missing TEAM_2_HQ node."""
+        # Arrange
+        with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
+            output_path = Path(f.name)
+            f.write('[gd_scene format=3]\n[node name="TEAM_1_HQ"]\n[node name="CombatArea"]')
+
+        try:
+            # Act
+            errors = generator.validate(output_path)
+
+            # Assert
+            assert len(errors) > 0
+            assert "Missing TEAM_2_HQ node" in errors
+
+        finally:
+            if output_path.exists():
+                output_path.unlink()
+
+    def test_validate_invalid_file_missing_combat_area(self, generator):
+        """Test validation detects missing CombatArea node."""
+        # Arrange
+        with NamedTemporaryFile(mode="w", suffix=".tscn", delete=False) as f:
+            output_path = Path(f.name)
+            f.write('[gd_scene format=3]\n[node name="TEAM_1_HQ"]\n[node name="TEAM_2_HQ"]')
+
+        try:
+            # Act
+            errors = generator.validate(output_path)
+
+            # Assert
+            assert len(errors) > 0
+            assert "Missing CombatArea node" in errors
+
+        finally:
+            if output_path.exists():
+                output_path.unlink()
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

@@ -193,7 +193,7 @@ def sample_comparison(
 # ============================================================================
 
 
-def test_spawn_count_validator_no_issues(sample_comparison: MapComparison):
+def test_spawn_count_validator_no_issues(sample_comparison: MapComparison) -> None:
     """Test SpawnCountValidator with matching spawn counts."""
     # Arrange
     validator = SpawnCountValidator(sample_comparison)
@@ -205,7 +205,7 @@ def test_spawn_count_validator_no_issues(sample_comparison: MapComparison):
     assert len(issues) == 0, "Should have no issues when spawn counts match"
 
 
-def test_spawn_count_validator_team1_mismatch():
+def test_spawn_count_validator_team1_mismatch() -> None:
     """Test SpawnCountValidator detects Team 1 spawn count mismatch."""
     # Arrange
     comparison = MapComparison(
@@ -232,7 +232,7 @@ def test_spawn_count_validator_team1_mismatch():
     assert issues[0].actual_value == "3"
 
 
-def test_spawn_count_validator_team2_mismatch():
+def test_spawn_count_validator_team2_mismatch() -> None:
     """Test SpawnCountValidator detects Team 2 spawn count mismatch."""
     # Arrange
     comparison = MapComparison(
@@ -256,7 +256,7 @@ def test_spawn_count_validator_team2_mismatch():
     assert "Team 2" in issues[0].message
 
 
-def test_spawn_count_validator_both_teams_mismatch():
+def test_spawn_count_validator_both_teams_mismatch() -> None:
     """Test SpawnCountValidator detects both teams spawn count mismatch."""
     # Arrange
     comparison = MapComparison(
@@ -284,7 +284,7 @@ def test_spawn_count_validator_both_teams_mismatch():
 # ============================================================================
 
 
-def test_capture_point_validator_no_issues(sample_comparison: MapComparison):
+def test_capture_point_validator_no_issues(sample_comparison: MapComparison) -> None:
     """Test CapturePointValidator with matching CP counts."""
     # Arrange
     validator = CapturePointValidator(sample_comparison)
@@ -296,7 +296,7 @@ def test_capture_point_validator_no_issues(sample_comparison: MapComparison):
     assert len(issues) == 0, "Should have no issues when CP counts match"
 
 
-def test_capture_point_validator_mismatch():
+def test_capture_point_validator_mismatch() -> None:
     """Test CapturePointValidator detects CP count mismatch."""
     # Arrange
     comparison = MapComparison(
@@ -328,7 +328,7 @@ def test_capture_point_validator_mismatch():
 # ============================================================================
 
 
-def test_positioning_validator_centered():
+def test_positioning_validator_centered() -> None:
     """Test PositioningValidator with centered map."""
     # Arrange
     nodes = [
@@ -356,7 +356,7 @@ def test_positioning_validator_centered():
     assert len(issues) == 0, "Should have no issues when map is centered"
 
 
-def test_positioning_validator_off_center():
+def test_positioning_validator_off_center() -> None:
     """Test PositioningValidator detects off-center map."""
     # Arrange
     nodes = [
@@ -387,7 +387,7 @@ def test_positioning_validator_off_center():
     assert "not centered" in issues[0].message
 
 
-def test_positioning_validator_empty_nodes():
+def test_positioning_validator_empty_nodes() -> None:
     """Test PositioningValidator with no nodes."""
     # Arrange
     validator = PositioningValidator([], tolerance=50.0)
@@ -404,7 +404,7 @@ def test_positioning_validator_empty_nodes():
 # ============================================================================
 
 
-def test_height_validator_no_terrain_provider():
+def test_height_validator_no_terrain_provider() -> None:
     """Test HeightValidator with no terrain provider."""
     # Arrange
     nodes = [
@@ -425,7 +425,7 @@ def test_height_validator_no_terrain_provider():
     assert len(issues) == 0, "Should have no issues when no terrain provider"
 
 
-def test_height_validator_correct_heights():
+def test_height_validator_correct_heights() -> None:
     """Test HeightValidator with correct spawn heights."""
     # Arrange
     terrain = FixedHeightProvider(fixed_height=100.0)
@@ -454,7 +454,7 @@ def test_height_validator_correct_heights():
     assert len(issues) == 0, "Should have no issues when heights are correct"
 
 
-def test_height_validator_incorrect_heights():
+def test_height_validator_incorrect_heights() -> None:
     """Test HeightValidator detects incorrect spawn heights."""
     # Arrange
     terrain = FixedHeightProvider(fixed_height=100.0)
@@ -485,7 +485,7 @@ def test_height_validator_incorrect_heights():
     assert all(issue.category == "height" for issue in issues)
 
 
-def test_height_validator_limits_reported_issues():
+def test_height_validator_limits_reported_issues() -> None:
     """Test HeightValidator only reports first 3 height issues."""
     # Arrange
     terrain = FixedHeightProvider(fixed_height=100.0)
@@ -509,12 +509,38 @@ def test_height_validator_limits_reported_issues():
     assert len(issues) == 3, "Should only report first 3 height issues"
 
 
+def test_height_validator_handles_terrain_exception() -> None:
+    """Test HeightValidator handles exceptions from terrain provider gracefully."""
+    # Arrange
+    from unittest.mock import Mock
+
+    terrain = Mock(spec=FixedHeightProvider)
+    terrain.get_height_at.side_effect = Exception("Terrain error")
+
+    nodes = [
+        TscnNode(
+            name="SpawnPoint_1_1",
+            position=Vector3(0.0, 101.0, 0.0),
+            rotation_matrix=[1, 0, 0, 0, 1, 0, 0, 0, 1],
+            properties={},
+            raw_content="",
+        )
+    ]
+    validator = HeightValidator(nodes, terrain, tolerance=2.0, expected_offset=1.0)
+
+    # Act
+    issues = validator.validate()
+
+    # Assert
+    assert len(issues) == 0, "Should handle terrain exceptions gracefully"
+
+
 # ============================================================================
 # Test BoundsValidator
 # ============================================================================
 
 
-def test_bounds_validator_all_in_bounds():
+def test_bounds_validator_all_in_bounds() -> None:
     """Test BoundsValidator with all objects in bounds."""
     # Arrange
     nodes = [
@@ -542,7 +568,7 @@ def test_bounds_validator_all_in_bounds():
     assert len(issues) == 0, "Should have no issues when all in bounds"
 
 
-def test_bounds_validator_out_of_bounds():
+def test_bounds_validator_out_of_bounds() -> None:
     """Test BoundsValidator detects objects out of bounds."""
     # Arrange
     nodes = [
@@ -578,7 +604,7 @@ def test_bounds_validator_out_of_bounds():
 # ============================================================================
 
 
-def test_orientation_validator_mixed_rotations():
+def test_orientation_validator_mixed_rotations() -> None:
     """Test OrientationValidator with mixed rotations."""
     # Arrange
     nodes = [
@@ -606,7 +632,7 @@ def test_orientation_validator_mixed_rotations():
     assert len(issues) == 0, "Should have no issues with mixed rotations"
 
 
-def test_orientation_validator_all_identity():
+def test_orientation_validator_all_identity() -> None:
     """Test OrientationValidator detects all identity rotations."""
     # Arrange
     # Create 15 nodes with identity rotation
@@ -632,7 +658,7 @@ def test_orientation_validator_all_identity():
     assert "No objects have rotation" in issues[0].message
 
 
-def test_orientation_validator_few_nodes_all_identity():
+def test_orientation_validator_few_nodes_all_identity() -> None:
     """Test OrientationValidator doesn't flag small maps with identity rotations."""
     # Arrange
     # Only 5 nodes - shouldn't trigger the warning
@@ -655,12 +681,40 @@ def test_orientation_validator_few_nodes_all_identity():
     assert len(issues) == 0, "Should not flag small maps with identity rotations"
 
 
+def test_orientation_validator_invalid_matrix_length() -> None:
+    """Test OrientationValidator handles invalid matrix length gracefully."""
+    # Arrange
+    nodes = [
+        TscnNode(
+            name="Node1",
+            position=Vector3(0, 0, 0),
+            rotation_matrix=[1, 0, 0, 0, 1],  # Only 5 values instead of 9
+            properties={},
+            raw_content="",
+        ),
+        TscnNode(
+            name="Node2",
+            position=Vector3(10, 0, 0),
+            rotation_matrix=[1, 0, 0, 0, 1, 0, 0, 0, 1],  # Valid
+            properties={},
+            raw_content="",
+        ),
+    ]
+    validator = OrientationValidator(nodes)
+
+    # Act
+    issues = validator.validate()
+
+    # Assert
+    assert len(issues) == 0, "Should handle invalid matrix length gracefully"
+
+
 # ============================================================================
 # Test ValidationIssue
 # ============================================================================
 
 
-def test_validation_issue_creation():
+def test_validation_issue_creation() -> None:
     """Test ValidationIssue dataclass creation."""
     # Arrange & Act
     issue = ValidationIssue(
@@ -681,7 +735,7 @@ def test_validation_issue_creation():
     assert issue.actual_value == "3"
 
 
-def test_validation_issue_minimal():
+def test_validation_issue_minimal() -> None:
     """Test ValidationIssue with minimal fields."""
     # Arrange & Act
     issue = ValidationIssue(severity="warning", category="positioning", message="Test warning")

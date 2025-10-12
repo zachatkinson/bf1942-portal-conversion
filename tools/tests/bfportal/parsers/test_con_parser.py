@@ -3,6 +3,8 @@
 
 import sys
 from pathlib import Path
+from typing import Any
+from unittest.mock import mock_open, patch
 
 import pytest
 
@@ -11,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from bfportal.core.exceptions import ParseError
 from bfportal.core.interfaces import Team
-from bfportal.parsers.con_parser import ConParser
+from bfportal.parsers.con_parser import ConFileSet, ConParser
 
 
 class TestConParserCanParse:
@@ -567,3 +569,198 @@ class TestConParserTeamExtraction:
 
         assert team_3 == Team.NEUTRAL
         assert team_neg == Team.NEUTRAL
+
+
+class TestConParserErrorHandling:
+    """Test cases for error handling in ConParser."""
+
+    def test_parse_file_read_error_raises_parseerror(self, tmp_path):
+        """Test that file read errors raise ParseError."""
+        # Arrange
+        parser = ConParser()
+        con_file = tmp_path / "test.con"
+        con_file.write_text("test content")
+
+        # Act & Assert
+        with patch("builtins.open", mock_open()) as mock_file:
+            mock_file.side_effect = OSError("Permission denied")
+            with pytest.raises(ParseError, match="Failed to read"):
+                parser.parse(con_file)
+
+
+class TestConFileSetInitialization:
+    """Test cases for ConFileSet initialization."""
+
+    def test_init_with_existing_directory_finds_con_files(self, tmp_path):
+        """Test initialization with existing directory finds .con files."""
+        # Arrange
+        (tmp_path / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+        (tmp_path / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
+        subdir = tmp_path / "subdir"
+        subdir.mkdir()
+        (subdir / "ControlPoints.con").write_text("ObjectTemplate.create CP CP1")
+
+        # Act
+        fileset = ConFileSet(tmp_path)
+
+        # Assert
+        assert len(fileset.con_files) == 3
+        assert tmp_path / "Objects.con" in fileset.con_files
+        assert tmp_path / "Spawns.con" in fileset.con_files
+        assert subdir / "ControlPoints.con" in fileset.con_files
+
+    def test_init_with_nonexistent_directory_has_empty_list(self, tmp_path):
+        """Test initialization with nonexistent directory creates empty file list."""
+        # Arrange
+        nonexistent_dir = tmp_path / "nonexistent"
+
+        # Act
+        fileset = ConFileSet(nonexistent_dir)
+
+        # Assert
+        assert fileset.con_files == []
+        assert fileset.map_dir == nonexistent_dir
+
+
+class TestConFileSetFindFile:
+    """Test cases for ConFileSet.find_file()."""
+
+    def test_find_file_finds_matching_file(self, tmp_path):
+        """Test finding file by pattern match."""
+        # Arrange
+        (tmp_path / "Objects.con").write_text("test")
+        (tmp_path / "Spawns.con").write_text("test")
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        result = fileset.find_file("Objects")
+
+        # Assert
+        assert result == tmp_path / "Objects.con"
+
+    def test_find_file_case_insensitive_match(self, tmp_path):
+        """Test finding file with case-insensitive pattern."""
+        # Arrange
+        (tmp_path / "Objects.con").write_text("test")
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        result = fileset.find_file("objects")
+
+        # Assert
+        assert result == tmp_path / "Objects.con"
+
+    def test_find_file_no_match_returns_none(self, tmp_path):
+        """Test finding file returns None when no match found."""
+        # Arrange
+        (tmp_path / "Objects.con").write_text("test")
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        result = fileset.find_file("Vehicles")
+
+        # Assert
+        assert result is None
+
+
+class TestConFileSetParseAll:
+    """Test cases for ConFileSet.parse_all()."""
+
+    def test_parse_all_parses_multiple_files(self, tmp_path):
+        """Test parsing all .con files in directory."""
+        # Arrange
+        (tmp_path / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+        (tmp_path / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        results = fileset.parse_all()
+
+        # Assert
+        assert "Objects.con" in results
+        assert "Spawns.con" in results
+        assert len(results["Objects.con"]["objects"]) == 1
+        assert len(results["Spawns.con"]["objects"]) == 1
+
+    def test_parse_all_handles_parse_errors_gracefully(self, tmp_path, capsys):
+        """Test parse_all continues on errors and prints warning."""
+        # Arrange
+        (tmp_path / "valid.con").write_text("ObjectTemplate.create Test TestObj")
+        (tmp_path / "invalid.con").write_text("valid content")
+        fileset = ConFileSet(tmp_path)
+
+        def mock_parse_with_error(file_path: Path) -> dict[str, Any]:
+            if "invalid" in str(file_path):
+                raise ParseError("Test error")
+            # Parse valid file normally
+            return {"file": str(file_path), "objects": [{"name": "TestObj", "type": "Test", "properties": {}}], "raw_content": "ObjectTemplate.create Test TestObj"}
+
+        # Act
+        with patch.object(fileset.parser, "parse", side_effect=mock_parse_with_error):
+            results = fileset.parse_all()
+
+        # Assert
+        assert "valid.con" in results
+        assert "invalid.con" not in results
+        captured = capsys.readouterr()
+        assert "Failed to parse invalid.con" in captured.out
+
+
+class TestConFileSetGetObjectsByType:
+    """Test cases for ConFileSet.get_objects_by_type()."""
+
+    def test_get_objects_by_type_finds_matching_objects(self, tmp_path):
+        """Test finding objects by type across multiple files."""
+        # Arrange
+        (tmp_path / "file1.con").write_text(
+            """ObjectTemplate.create ControlPoint CP1
+ObjectTemplate.create ObjectSpawner Spawn1
+"""
+        )
+        (tmp_path / "file2.con").write_text(
+            """ObjectTemplate.create ControlPoint CP2
+ObjectTemplate.create Vehicle Tank1
+"""
+        )
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        control_points = fileset.get_objects_by_type("ControlPoint")
+
+        # Assert
+        assert len(control_points) == 2
+        assert control_points[0]["name"] == "CP1"
+        assert control_points[1]["name"] == "CP2"
+
+    def test_get_objects_by_type_handles_parse_errors_gracefully(self, tmp_path):
+        """Test get_objects_by_type continues on parse errors."""
+        # Arrange
+        (tmp_path / "valid.con").write_text("ObjectTemplate.create Test TestObj")
+        (tmp_path / "invalid.con").write_text("valid content")
+        fileset = ConFileSet(tmp_path)
+
+        def mock_parse_with_error(file_path: Path) -> dict[str, Any]:
+            if "invalid" in str(file_path):
+                raise ParseError("Test error")
+            # Parse valid file normally
+            return {"file": str(file_path), "objects": [{"name": "TestObj", "type": "Test", "properties": {}}], "raw_content": "ObjectTemplate.create Test TestObj"}
+
+        # Act
+        with patch.object(fileset.parser, "parse", side_effect=mock_parse_with_error):
+            results = fileset.get_objects_by_type("Test")
+
+        # Assert
+        assert len(results) == 1
+        assert results[0]["name"] == "TestObj"
+
+    def test_get_objects_by_type_returns_empty_list_when_no_match(self, tmp_path):
+        """Test get_objects_by_type returns empty list when no matches."""
+        # Arrange
+        (tmp_path / "file1.con").write_text("ObjectTemplate.create Test TestObj")
+        fileset = ConFileSet(tmp_path)
+
+        # Act
+        results = fileset.get_objects_by_type("NonexistentType")
+
+        # Assert
+        assert results == []

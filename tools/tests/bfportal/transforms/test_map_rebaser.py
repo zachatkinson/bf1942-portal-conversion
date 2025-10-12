@@ -364,6 +364,33 @@ class TestMapRebaserTscnParsing:
         finally:
             test_tscn.unlink(missing_ok=True)
 
+    def test_parse_tscn_handles_invalid_transform_data(self, capsys):
+        """Test that invalid transform data is handled gracefully and error is printed."""
+        # Arrange
+        terrain = Mock(spec=ITerrainProvider)
+        offset_calc = Mock(spec=ICoordinateOffset)
+        rebaser = MapRebaser(terrain, offset_calc, None)
+        test_tscn = Path(__file__).parent / "test_rebaser_invalid.tscn"
+        test_tscn.write_text(
+            '[node name="InvalidObject" instance=Resource("test")]\n'
+            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, invalid, data, here)\n"
+            '[node name="ValidObject" instance=Resource("test")]\n'
+            "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 20, 30)\n"
+        )
+
+        try:
+            # Act
+            objects = rebaser._parse_tscn(test_tscn)
+            captured = capsys.readouterr()
+
+            # Assert
+            assert len(objects) == 1
+            assert objects[0].name == "ValidObject"
+            assert "Failed to parse transform for InvalidObject" in captured.out
+
+        finally:
+            test_tscn.unlink(missing_ok=True)
+
 
 class TestMapRebaserTscnGeneration:
     """Test cases for .tscn file generation."""
