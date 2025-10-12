@@ -85,12 +85,33 @@ python3 tools/portal_convert.py --map Kursk --base-terrain MP_Tungsten
 
 Output: `GodotProject/levels/Kursk.tscn`
 
-### Test in Godot
+### Export to Portal Format
 
-1. Open `GodotProject/` in Godot 4.5
-2. Open `levels/Kursk.tscn`
-3. Use BFPortal panel → "Export Current Level"
-4. Upload `.spatial.json` to Portal web builder
+```bash
+# Export TSCN to spatial.json format
+python3 tools/export_to_portal.py Kursk
+```
+
+Output: `FbExportData/levels/Kursk.spatial.json`
+
+### Create Portal Experience
+
+```bash
+# Generate Portal-ready experience file (single map)
+python3 tools/create_experience.py Kursk
+
+# Or generate multi-map experience (supports map rotation)
+python3 tools/create_multi_map_experience.py --template all_maps_conquest
+```
+
+Output: `experiences/1942_Revisited_Experience.json`
+
+### Import to Portal
+
+1. Go to **portal.battlefield.com**
+2. Click **IMPORT** button
+3. Select `experiences/1942_Revisited_Experience.json`
+4. Your map(s) appear in Map Rotation - save and test!
 
 ## Conversion Results (Kursk Example)
 
@@ -179,16 +200,31 @@ python3 tools/portal_convert.py \
 PortalSDK/
 ├── bf1942_source/          # BF1942 extracted maps (gitignored)
 ├── GodotProject/           # Portal Godot project
-│   ├── levels/            # Converted maps (.tscn)
+│   ├── levels/            # Converted maps (.tscn) - TRACKED IN GIT
 │   ├── raw/models/        # Portal SDK .glb files (gitignored)
 │   └── static/            # Portal terrain meshes
-├── FbExportData/          # Portal asset catalog & exports
+├── FbExportData/
+│   ├── asset_types.json   # Portal asset catalog
+│   └── levels/            # Exported .spatial.json - TRACKED IN GIT
+├── experiences/            # Portal experience files (gitignored - regenerate on demand)
 ├── tools/
 │   ├── bfportal/         # Conversion pipeline modules
 │   ├── asset_audit/      # Asset mapping database
 │   └── portal_convert.py # Main CLI tool
 └── README.html            # Portal SDK documentation
 ```
+
+### Version Control Strategy
+
+**Tracked in git:**
+- ✅ `.tscn` files (Godot scene format - source maps)
+- ✅ `.spatial.json` files (~400KB - canonical conversion output, human-readable)
+
+**Gitignored (regenerated on demand):**
+- ❌ `experiences/` directory (~1.2MB - base64-encoded spatial data + metadata)
+- ❌ Regenerate with: `python3 tools/create_multi_map_experience.py`
+
+This approach keeps git history clean while version-controlling the true conversion outputs.
 
 ## Known Limitations
 
