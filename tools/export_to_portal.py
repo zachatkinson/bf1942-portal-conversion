@@ -106,11 +106,14 @@ def create_experience_file(
         )
 
     # Create the complete experience structure following the official pattern
+    # ALL official examples include these universal mutator fields
     experience = {
         "mutators": {
             "MaxPlayerCount_PerTeam": max_players_per_team,
             "AiMaxCount_PerTeam": 0,
             "AiSpawnType": 2,
+            "AI_ManDownExperienceType_PerTeam": 1,  # Universal field - AI respawn behavior
+            "ModBuilder_GameMode": 2,  # Universal field - game mode configuration
             "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
             "AimAssistSnapCapsuleRadiusMultiplier": 1,
             "FriendlyFireDamageReflectionMaxTeamKills": 2,
@@ -132,7 +135,8 @@ def create_experience_file(
                     "isProcessable": True,
                     "processingStatus": 2,
                     "attachmentData": {
-                        "original": spatial_base64
+                        "original": spatial_base64,
+                        "compiled": ""  # Empty - Portal compiles server-side
                     },
                     "attachmentType": "application/json",
                     "errors": []
@@ -148,8 +152,12 @@ def create_experience_file(
         "attachments": []
     }
 
+    # Create experiences directory if it doesn't exist
+    experiences_dir = Path("experiences")
+    experiences_dir.mkdir(exist_ok=True)
+
     # Write the experience file
-    output_file = Path(f"{map_name}_Experience.json")
+    output_file = experiences_dir / f"{map_name}_Experience.json"
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(experience, f, indent=2)
 

@@ -130,6 +130,9 @@ $RECYCLE.BIN/
 # Exported map files (can be regenerated)
 FbExportData/levels/*.spatial.json
 
+# Generated Portal experience files (large, can be regenerated)
+experiences/
+
 # Conversion tool outputs (temporary)
 /conversion_output/
 /temp_extractions/
