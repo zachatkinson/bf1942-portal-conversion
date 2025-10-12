@@ -68,7 +68,7 @@ def fix_spawn_counts(input_path: Path, output_path: Path) -> None:
 
         # If we're skipping, check if we hit the next node
         if skip_until_next_node:
-            if line.startswith("[node name=") or line.startswith("[ext_resource"):
+            if line.startswith(("[node name=", "[ext_resource")):
                 skip_until_next_node = False
             else:
                 i += 1

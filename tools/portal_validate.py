@@ -355,7 +355,7 @@ class PortalMapValidator:
             return
 
         # Parse polygon points
-        points_str = combat_area_match.group(1)
+        combat_area_match.group(1)
         # This is simplified - actual parsing would be more robust
 
         self.results.append(
@@ -409,7 +409,7 @@ class PortalMapValidator:
             print()
 
         # Summary
-        total = len(self.results)
+        len(self.results)
         passed = len([r for r in self.results if r.passed])
 
         print("=" * 70)

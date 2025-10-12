@@ -127,41 +127,43 @@ class AssetMapper(IAssetMapper):
         portal_asset = self.portal_assets[portal_type]
 
         # Check level restrictions
-        if portal_asset.level_restrictions:
-            if context.target_base_map not in portal_asset.level_restrictions:
-                # Asset is restricted and not available on this map
+        if (
+            portal_asset.level_restrictions
+            and context.target_base_map not in portal_asset.level_restrictions
+        ):
+            # Asset is restricted and not available on this map
 
-                # Step 1: Check for map-specific fallback
-                fallbacks = mapping.get("fallbacks", {})
-                if context.target_base_map in fallbacks:
-                    fallback_type = fallbacks[context.target_base_map]
-                    if fallback_type in self.portal_assets:
-                        fallback_asset = self.portal_assets[fallback_type]
-                        # Verify fallback is available on target map
-                        if (
-                            not fallback_asset.level_restrictions
-                            or context.target_base_map in fallback_asset.level_restrictions
-                        ):
-                            print(
-                                f"  🔄 Using map-specific fallback: {fallback_type} "
-                                f"for {source_asset} on {context.target_base_map}"
-                            )
-                            return fallback_asset
+            # Step 1: Check for map-specific fallback
+            fallbacks = mapping.get("fallbacks", {})
+            if context.target_base_map in fallbacks:
+                fallback_type = fallbacks[context.target_base_map]
+                if fallback_type in self.portal_assets:
+                    fallback_asset = self.portal_assets[fallback_type]
+                    # Verify fallback is available on target map
+                    if (
+                        not fallback_asset.level_restrictions
+                        or context.target_base_map in fallback_asset.level_restrictions
+                    ):
+                        print(
+                            f"  🔄 Using map-specific fallback: {fallback_type} "
+                            f"for {source_asset} on {context.target_base_map}"
+                        )
+                        return fallback_asset
 
-                # Step 2: Try to find an alternative (unrestricted or available on target map)
-                alternative = self._find_alternative(
-                    source_asset, mapping["category"], context.target_base_map
+            # Step 2: Try to find an alternative (unrestricted or available on target map)
+            alternative = self._find_alternative(
+                source_asset, mapping["category"], context.target_base_map
+            )
+
+            if alternative:
+                return alternative
+            else:
+                raise MappingError(
+                    f"Portal asset '{portal_type}' is restricted to "
+                    f"{portal_asset.level_restrictions} and not available on "
+                    f"'{context.target_base_map}'. No fallback or alternative found. "
+                    f"BF1942 asset: {source_asset}"
                 )
-
-                if alternative:
-                    return alternative
-                else:
-                    raise MappingError(
-                        f"Portal asset '{portal_type}' is restricted to "
-                        f"{portal_asset.level_restrictions} and not available on "
-                        f"'{context.target_base_map}'. No fallback or alternative found. "
-                        f"BF1942 asset: {source_asset}"
-                    )
 
         return portal_asset
 
@@ -307,7 +309,7 @@ class AssetMapper(IAssetMapper):
         total = len(self.mappings)
         categories: dict[str, int] = {}
 
-        for asset, mapping in self.mappings.items():
+        for _asset, mapping in self.mappings.items():
             category = mapping["category"]
             categories[category] = categories.get(category, 0) + 1
 

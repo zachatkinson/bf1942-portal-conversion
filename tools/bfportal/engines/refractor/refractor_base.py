@@ -213,12 +213,10 @@ class RefractorEngine(IGameEngine):
         # These are instances created from SpawnPoint templates but have instance name as type
         import re
 
-        if re.search(r"_\d+_\d+$", obj_name) and (
-            "spawn" in obj_name or "open" in obj_name or "base" in obj_name
-        ):
-            return True
-
-        return False
+        return bool(
+            re.search(r"_\d+_\d+$", obj_name)
+            and ("spawn" in obj_name or "open" in obj_name or "base" in obj_name)
+        )
 
     def _classify_spawn_ownership(self, obj_name: str) -> str:
         """Classify spawn point ownership by team.
@@ -277,7 +275,7 @@ class RefractorEngine(IGameEngine):
         # Parse all .con files to find spawn points
         parsed_files = con_files.parse_all()
 
-        for filename, parsed_data in parsed_files.items():
+        for _filename, parsed_data in parsed_files.items():
             for obj in parsed_data["objects"]:
                 obj_name = obj.get("name", "").lower()
                 obj_type = obj.get("type", "").lower()
@@ -356,7 +354,7 @@ class RefractorEngine(IGameEngine):
         parsed_files = con_files.parse_all()
 
         # Step 1: Find all control points
-        for filename, parsed_data in parsed_files.items():
+        for _filename, parsed_data in parsed_files.items():
             for obj in parsed_data["objects"]:
                 obj_name = obj.get("name", "").lower()
                 obj_type = obj.get("type", "").lower()
@@ -389,7 +387,7 @@ class RefractorEngine(IGameEngine):
                     capture_points.append(cp)
 
         # Step 2: Find neutral spawns and associate them with capture points
-        for filename, parsed_data in parsed_files.items():
+        for _filename, parsed_data in parsed_files.items():
             for obj in parsed_data["objects"]:
                 obj_name = obj.get("name", "").lower()
                 obj_type = obj.get("type", "").lower()
@@ -467,7 +465,7 @@ class RefractorEngine(IGameEngine):
         game_objects = []
         parsed_files = con_files.parse_all()
 
-        for filename, parsed_data in parsed_files.items():
+        for _filename, parsed_data in parsed_files.items():
             for obj in parsed_data["objects"]:
                 # Skip spawners and control points (already handled)
                 if obj["type"] in ["ObjectSpawner", "ControlPoint"]:

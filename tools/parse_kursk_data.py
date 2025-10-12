@@ -156,12 +156,7 @@ class ConFileParser:
         """
         # Skip empty lines and comments
         stripped = line.strip()
-        if (
-            not stripped
-            or stripped.startswith("rem")
-            or stripped.startswith("if")
-            or stripped.startswith("endIf")
-        ):
+        if not stripped or stripped.startswith(("rem", "if", "endIf")):
             return
 
         # Object creation: Object.create <type>

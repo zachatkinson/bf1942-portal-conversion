@@ -171,7 +171,7 @@ Supported Games:
                 if "asset_type" in obj:
                     assets.add(obj["asset_type"])
 
-        return sorted(list(assets))
+        return sorted(assets)
 
     def run(self) -> int:
         """Execute asset mapping.

@@ -209,7 +209,7 @@ class AssetMapper:
             cat_mapped = 0
             cat_auto = 0
 
-            for asset_type, asset_info in category.items():
+            for _asset_type, asset_info in category.items():
                 if not isinstance(asset_info, dict):
                     continue
 

@@ -126,9 +126,7 @@ class PortalConverter:
             # Step 2: Calculate map offset
             print("\n📐 Calculating coordinate offset...")
             all_objects = (
-                [s for s in map_data.team1_spawns]
-                + [s for s in map_data.team2_spawns]
-                + map_data.game_objects
+                list(map_data.team1_spawns) + list(map_data.team2_spawns) + map_data.game_objects
             )
 
             if all_objects:

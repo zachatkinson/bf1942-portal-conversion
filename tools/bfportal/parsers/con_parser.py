@@ -76,7 +76,7 @@ class ConParser(IParser):
             line = line.strip()
 
             # Skip empty lines and comments
-            if not line or line.startswith("rem ") or line.startswith("//"):
+            if not line or line.startswith(("rem ", "//")):
                 continue
 
             # ObjectTemplate.create <type> <name> (template definition)

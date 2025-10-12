@@ -330,8 +330,8 @@ class MeshTerrainProvider(ITerrainProvider):
                 if magic != b"glTF":
                     raise TerrainError(f"Invalid GLB file: {self.mesh_path}")
 
-                version = struct.unpack("<I", f.read(4))[0]
-                length = struct.unpack("<I", f.read(4))[0]
+                struct.unpack("<I", f.read(4))[0]
+                struct.unpack("<I", f.read(4))[0]
 
                 # Read JSON chunk
                 json_length = struct.unpack("<I", f.read(4))[0]
@@ -399,9 +399,12 @@ class MeshTerrainProvider(ITerrainProvider):
             grid_z = int(norm_z * (self.grid_resolution - 1))
 
             # Keep maximum height at each grid cell
-            if 0 <= grid_x < self.grid_resolution and 0 <= grid_z < self.grid_resolution:
-                if np.isnan(grid[grid_z, grid_x]) or y > grid[grid_z, grid_x]:
-                    grid[grid_z, grid_x] = y
+            if (
+                0 <= grid_x < self.grid_resolution
+                and 0 <= grid_z < self.grid_resolution
+                and (np.isnan(grid[grid_z, grid_x]) or y > grid[grid_z, grid_x])
+            ):
+                grid[grid_z, grid_x] = y
 
         # Fill gaps using nearest neighbor interpolation
         self._fill_grid_gaps(grid)

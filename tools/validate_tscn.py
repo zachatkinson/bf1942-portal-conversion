@@ -203,7 +203,7 @@ class TscnValidator:
         resource_ids: set[int] = set()
         duplicate_res_ids = []
 
-        for res_type, res_path, res_id in ext_resources:
+        for _res_type, _res_path, res_id in ext_resources:
             res_id_int = int(res_id)
             if res_id_int in resource_ids:
                 duplicate_res_ids.append(res_id_int)
