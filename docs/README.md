@@ -33,7 +33,7 @@ New to the project? Start here:
 1. 📖 **[Project README](../README.md)** - Project overview, features, and quick start
 2. ⚙️ **[Godot Setup Guide](./setup/Godot_Setup_Guide.md)** - Install and configure Godot 4 for Portal development
 3. 🎓 **[Converting Your First Map](./tutorials/Converting_Your_First_Map.md)** - Step-by-step tutorial for first conversion
-4. 🧪 **[Testing Guide](../TESTING.md)** - Validate your converted maps
+4. 🧪 **[Testing Guide](../Testing_Guide.md)** - Validate your converted maps
 5. 🍎 **[macOS Users](./setup/macOS_Compatibility_Patch.md)** - macOS-specific setup instructions
 
 ---
@@ -117,7 +117,7 @@ System design and technical architecture:
 
 | Document | Description |
 |----------|-------------|
-| [**BF_TO_PORTAL_TOOLSET_PLAN**](./architecture/BF_TO_PORTAL_TOOLSET_PLAN.md) | Master architecture plan, SOLID design principles, modular CLI structure |
+| [**BF_TO_PORTAL_TOOLSET_PLAN**](./architecture/BF_To_Portal_Toolset_Plan.md) | Master architecture plan, SOLID design principles, modular CLI structure |
 | [**Multi-Game Support Architecture**](./architecture/Multi_Era_Support.md) | Extensible design for supporting all Battlefield games (BF1942, Vietnam, BF2, 2142, Frostbite) |
 
 **Key Topics:**
@@ -154,7 +154,7 @@ Installation and environment configuration:
 
 ### For Developers
 
-1. **Architecture Overview** - Read [Toolset Plan](./architecture/BF_TO_PORTAL_TOOLSET_PLAN.md)
+1. **Architecture Overview** - Read [Toolset Plan](./architecture/BF_To_Portal_Toolset_Plan.md)
 2. **Multi-Game Design** - Study [Multi-Game Support](./architecture/Multi_Era_Support.md)
 3. **Source Formats** - Reference [BF1942 Data Structures](./reference/BF1942_Data_Structures.md)
 4. **CLI Tools** - Master [CLI Tools Reference](./reference/CLI_Tools.md) for command usage
@@ -163,7 +163,7 @@ Installation and environment configuration:
 ### For Contributors
 
 1. **Read Contributing Guide** - Start with [CONTRIBUTING.md](../CONTRIBUTING.md) for complete guidelines
-2. **Architecture Principles** - Understand SOLID/DRY patterns in [Toolset Plan](./architecture/BF_TO_PORTAL_TOOLSET_PLAN.md)
+2. **Architecture Principles** - Understand SOLID/DRY patterns in [Toolset Plan](./architecture/BF_To_Portal_Toolset_Plan.md)
 3. **Adding New Games** - Follow the guide in [Multi-Game Support](./architecture/Multi_Era_Support.md#adding-a-new-game)
 4. **Code Quality** - Ensure compliance with project standards in [CONTRIBUTING.md](../CONTRIBUTING.md#code-standards)
 5. **Submit Changes** - Follow the [PR process](../CONTRIBUTING.md#submitting-changes)
@@ -193,7 +193,7 @@ We welcome contributions! Please read our [**Contributing Guide**](../CONTRIBUTI
 
 - [Main README](../README.md) - Project overview and quick start
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines and code standards
-- [TESTING.md](../TESTING.md) - Testing procedures and validation
+- [Testing_Guide.md](../Testing_Guide.md) - Testing procedures and validation
 - [Portal SDK Docs](../README.html) - Official EA/DICE Portal SDK documentation
 
 ### External Resources
@@ -221,5 +221,5 @@ Some documentation remains in `.claude/` for AI assistant context:
 **See Also:**
 - [Project README](../README.md) - Main project overview
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines
-- [Style Guide](./STYLE_GUIDE.md) - Documentation standards
-- [TESTING.md](../TESTING.md) - Testing procedures
+- [Style Guide](./Style_Guide.md) - Documentation standards
+- [Testing_Guide.md](../Testing_Guide.md) - Testing procedures

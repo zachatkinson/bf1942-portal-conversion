@@ -632,6 +632,6 @@ When adding a new game engine:
 3. Implement BF2/BF2142 support (Refractor 2.0)
 
 **See Also:**
-- [Toolset Plan](./BF_TO_PORTAL_TOOLSET_PLAN.md) - Complete architecture and phase breakdown
+- [Toolset Plan](./BF_To_Portal_Toolset_Plan.md) - Complete architecture and phase breakdown
 - [BF1942 Data Structures](../reference/BF1942_Data_Structures.md) - Source game format reference
 - [Main README](../../README.md) - Project overview

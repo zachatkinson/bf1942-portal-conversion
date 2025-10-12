@@ -281,5 +281,5 @@ Built with the Portal SDK provided by EA/DICE.
 
 **See Also:**
 - [Documentation](./docs/README.md) - Full documentation
-- [Testing Guide](./TESTING.md) - Validation procedures
-- [Style Guide](./docs/STYLE_GUIDE.md) - Documentation standards
+- [Testing Guide](./Testing_Guide.md) - Validation procedures
+- [Style Guide](./docs/Style_Guide.md) - Documentation standards

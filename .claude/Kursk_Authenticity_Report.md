@@ -281,7 +281,7 @@ Both bases in BF1942 Kursk have airfields with 2 aircraft each:
 ### Test Suite (Sprint 3)
 - `tools/tests/` - 241 tests with 64% coverage
 - `tools/tests/README.md` - Test documentation
-- `tools/tests/COVERAGE_REPORT.md` - Coverage analysis
+- `tools/tests/Coverage_Report.md` - Coverage analysis
 
 ### Output
 - `GodotProject/levels/Kursk.tscn` - Final authentic BF6 map

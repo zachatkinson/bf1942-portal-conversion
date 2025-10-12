@@ -421,5 +421,5 @@ Transform coordinates, generate .tscn scene file, and test in Godot editor.
 
 **See Also:**
 - [Multi-Game Support Architecture](../architecture/Multi_Era_Support.md) - How BF1942 data is parsed by the engine
-- [Toolset Plan](../architecture/BF_TO_PORTAL_TOOLSET_PLAN.md) - Complete conversion pipeline
+- [Toolset Plan](../architecture/BF_To_Portal_Toolset_Plan.md) - Complete conversion pipeline
 - [Main README](../../README.md) - Project overview

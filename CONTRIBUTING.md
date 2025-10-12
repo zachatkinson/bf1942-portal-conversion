@@ -110,7 +110,7 @@ Implement support for other Battlefield games.
 - Write additional tutorials
 - Translate documentation
 
-**See:** [Documentation Style Guide](docs/STYLE_GUIDE.md)
+**See:** [Documentation Style Guide](docs/Style_Guide.md)
 
 ### 6. Code Contributions
 
@@ -324,7 +324,7 @@ mypy tools/
 
 ### Follow the Style Guide
 
-All documentation must follow [Documentation Style Guide](docs/STYLE_GUIDE.md).
+All documentation must follow [Documentation Style Guide](docs/Style_Guide.md).
 
 **Key requirements:**
 - Headers: tagline, Purpose, Last Updated, Status
@@ -492,7 +492,7 @@ Contributors will be:
 **Status:** Active - Contributions Welcome
 
 **See Also:**
-- [Documentation Style Guide](docs/STYLE_GUIDE.md) - Writing standards
+- [Documentation Style Guide](docs/Style_Guide.md) - Writing standards
 - [Multi-Game Support](docs/architecture/Multi_Era_Support.md) - Adding new games
 - [CLI Tools Reference](docs/reference/CLI_Tools.md) - Command documentation
 - [Main README](README.md) - Project overview

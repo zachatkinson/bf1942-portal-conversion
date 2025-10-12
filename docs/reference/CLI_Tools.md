@@ -486,7 +486,7 @@ bfportal/ (Core Library)
 **Design:** Modular pipeline with SOLID principles. Each tool uses core library components.
 
 **See Also:**
-- [Architecture Plan](../architecture/BF_TO_PORTAL_TOOLSET_PLAN.md) - Complete system design
+- [Architecture Plan](../architecture/BF_To_Portal_Toolset_Plan.md) - Complete system design
 - [Multi-Game Support](../architecture/Multi_Era_Support.md) - Extensibility for other Battlefield games
 
 ---

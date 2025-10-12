@@ -236,7 +236,7 @@ bfportal/ (Core Library)
     └── terrain/terrain_provider.py
 ```
 
-See `.claude/BF_TO_PORTAL_TOOLSET_PLAN.md` for complete architecture.
+See `.claude/BF_To_Portal_Toolset_Plan.md` for complete architecture.
 
 ## Development
 
@@ -269,11 +269,11 @@ open tools/tests/htmlcov/index.html
 
 See:
 - `tools/tests/README.md` - Test documentation
-- `tools/tests/COVERAGE_REPORT.md` - Coverage report
+- `tools/tests/Coverage_Report.md` - Coverage report
 
 ## Support
 
-- **Master Plan**: `docs/architecture/BF_TO_PORTAL_TOOLSET_PLAN.md`
+- **Master Plan**: `docs/architecture/BF_To_Portal_Toolset_Plan.md`
 - **Project Docs**: `.claude/CLAUDE.md`
 - **Test Suite**: `tools/tests/README.md`
 

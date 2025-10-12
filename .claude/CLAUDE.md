@@ -41,7 +41,7 @@ PortalSDK/
 │   ├── portal_*.py           # Modular CLIs
 │   └── bfportal/             # Core library modules
 ├── README.md                  # Project documentation
-├── TESTING.md                 # Testing procedures
+├── Testing_Guide.md                 # Testing procedures
 └── README.html                # Portal SDK documentation
 ```
 
@@ -871,7 +871,7 @@ def test_macos_gdconverter_export():
 - Portal web builder import testing
 - In-game gameplay validation
 
-**See:** TESTING.md for complete manual testing procedures
+**See:** Testing_Guide.md for complete manual testing procedures
 
 ## Common Pitfalls & Solutions
 
@@ -1006,7 +1006,7 @@ See `tools/README.md` for detailed extraction instructions.
 - 241 tests (237 passing, 1 skipped, 3 expected failures)
 - 64% overall code coverage
 - Unit tests + integration tests
-- See `tools/tests/README.md` and `tools/tests/COVERAGE_REPORT.md`
+- See `tools/tests/README.md` and `tools/tests/Coverage_Report.md`
 
 **Next Steps**:
 - Test Kursk in Portal web builder and in-game

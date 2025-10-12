@@ -15,7 +15,7 @@ Usage:
 
 Output:
     - asset_audit/portal_asset_index.json (machine-readable index)
-    - asset_audit/PORTAL_ASSET_CATALOG.md (human-readable catalog)
+    - asset_audit/Portal_Asset_Catalog.md (human-readable catalog)
 """
 
 import sys
@@ -35,7 +35,7 @@ def main() -> None:
     asset_types_path = portal_sdk_root / "asset_types.json"
 
     json_output = Path("asset_audit/portal_asset_index.json")
-    markdown_output = Path("asset_audit/PORTAL_ASSET_CATALOG.md")
+    markdown_output = Path("asset_audit/Portal_Asset_Catalog.md")
 
     # Validate Portal SDK file exists
     if not asset_types_path.exists():
@@ -88,7 +88,7 @@ def main() -> None:
         print("=" * 80)
         print()
         print("Next steps:")
-        print("  1. Review: Open PORTAL_ASSET_CATALOG.md to browse Portal assets")
+        print("  1. Review: Open Portal_Asset_Catalog.md to browse Portal assets")
         print("  2. Use: portal_asset_index.json is ready for tool integration")
         print("  3. Map: Create BF1942→Portal mappings with full asset palette visibility")
         print()

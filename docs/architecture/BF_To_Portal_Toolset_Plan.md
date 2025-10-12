@@ -474,7 +474,7 @@ python3 -c "import json; print(json.load(open('tools/asset_audit/bf1942_asset_st
 # Should output: 733
 
 # 3. Check current phase
-cat .claude/BF_TO_PORTAL_TOOLSET_PLAN.md | grep "Phase 1"
+cat .claude/BF_To_Portal_Toolset_Plan.md | grep "Phase 1"
 ```
 
 ### Where We Left Off
@@ -500,7 +500,7 @@ cat .claude/BF_TO_PORTAL_TOOLSET_PLAN.md | grep "Phase 1"
 - `tools/audit_bf1942_assets.py` - Asset auditor
 - `tools/asset_audit/bf1942_to_portal_mappings_template.json` - 733 assets to map
 - `FbExportData/asset_types.json` - Portal asset catalog
-- `.claude/BF_TO_PORTAL_TOOLSET_PLAN.md` - This file!
+- `.claude/BF_To_Portal_Toolset_Plan.md` - This file!
 
 ### Commands to Resume Work
 ```bash

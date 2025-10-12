@@ -259,7 +259,7 @@ After setting up Godot:
 3. **Portal Web Builder** - Upload the `.spatial.json` to BF6 Portal builder
 4. **In-Game Testing** - Play your map in BF6 Portal
 
-For detailed testing procedures, see [TESTING.md](../../TESTING.md)
+For detailed testing procedures, see [Testing_Guide.md](../../Testing_Guide.md)
 
 ---
 
@@ -278,5 +278,5 @@ For detailed testing procedures, see [TESTING.md](../../TESTING.md)
 
 **See Also:**
 - [macOS Compatibility](./macOS_Compatibility_Patch.md) - macOS-specific workarounds
-- [TESTING.md](../../TESTING.md) - Testing procedures for converted maps
+- [Testing_Guide.md](../../Testing_Guide.md) - Testing procedures for converted maps
 - [Main README](../../README.md) - Project overview

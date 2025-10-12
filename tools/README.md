@@ -150,7 +150,7 @@ The conversion tools have comprehensive test coverage:
 
 See:
 - `tools/tests/README.md` - Test documentation
-- `tools/tests/COVERAGE_REPORT.md` - Coverage analysis
+- `tools/tests/Coverage_Report.md` - Coverage analysis
 
 Run tests:
 ```bash
@@ -160,7 +160,7 @@ python3 -m pytest tools/tests/ -v
 ## References
 
 - **Documentation**: `README_CLI.md` - Detailed CLI reference
-- **Architecture**: `.claude/BF_TO_PORTAL_TOOLSET_PLAN.md` - SOLID design
+- **Architecture**: `.claude/BF_To_Portal_Toolset_Plan.md` - SOLID design
 - **BGA GitHub**: https://github.com/yann-papouin/bga
 - **BF1942 Modding**: https://bfmods.com/mdt/
 - **RFA Format**: https://www.realtimerendering.com/erich/bf1942/mdt/tutorials/Overview/Overview.html
