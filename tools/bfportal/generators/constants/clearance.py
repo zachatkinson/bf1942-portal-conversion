@@ -25,6 +25,15 @@ VEHICLE_SPAWN_CLEARANCE_M = 0.5  # Slightly above ground for physics
 CAPTURE_POINT_CLEARANCE_M = 0.0  # Flush with ground (trigger area)
 
 # ==============================================================================
+# Initial Placement Safety (Before Terrain Snapping)
+# ==============================================================================
+
+# Safety clearance for initial object placement above highest terrain point
+# Ensures objects start ABOVE terrain so terrain snapping can raycast downward
+# Without this, objects placed underground cannot snap to terrain (no collision below them)
+INITIAL_PLACEMENT_SAFETY_CLEARANCE_M = 50.0  # Start 50m above max terrain height
+
+# ==============================================================================
 # DeployCam (Spawn Screen Camera) Constants
 # ==============================================================================
 
@@ -50,6 +59,7 @@ __all__ = [
     "SPAWN_CLEARANCE_M",
     "VEHICLE_SPAWN_CLEARANCE_M",
     "CAPTURE_POINT_CLEARANCE_M",
+    "INITIAL_PLACEMENT_SAFETY_CLEARANCE_M",
     "DEPLOY_CAM_VIEWING_DISTANCE_MULTIPLIER",
     "DEPLOY_CAM_SAFETY_CLEARANCE_M",
     "DEPLOY_CAM_DEFAULT_HEIGHT_M",

@@ -14,7 +14,7 @@ Portal SDK best practices:
 
 import math
 
-from ...core.interfaces import MapData, Vector3
+from ...core.interfaces import MapData, Transform, Vector3
 from ...mappers.vehicle_mapper import VehicleMapper
 from ..components.asset_registry import AssetRegistry
 from ..components.transform_formatter import TransformFormatter
@@ -92,6 +92,7 @@ class VehicleSpawnerGenerator(BaseNodeGenerator):
         map_data: MapData,
         asset_registry: AssetRegistry,
         transform_formatter: TransformFormatter,
+        min_safe_y: float = 0.0,
     ) -> list[str]:
         """Generate vehicle spawner nodes with Portal SDK hierarchy.
 
@@ -104,6 +105,7 @@ class VehicleSpawnerGenerator(BaseNodeGenerator):
             map_data: Complete map data with HQs and game objects
             asset_registry: Registry for ExtResource IDs
             transform_formatter: Formatter for Transform3D strings
+            min_safe_y: Minimum safe Y height for spawner placement (above terrain)
 
         Returns:
             List of .tscn node lines for vehicle spawners
@@ -171,7 +173,21 @@ class VehicleSpawnerGenerator(BaseNodeGenerator):
             lines.append(
                 f'[node name="{node_name}" parent="{parent_path}" instance=ExtResource("4")]'
             )
-            lines.append(f"transform = {transform_formatter.format(spawner.transform)}")
+
+            # Ensure spawner is above terrain for snapping
+            spawner_transform = spawner.transform
+            if spawner_transform.position.y < min_safe_y:
+                # Clamp Y to minimum safe height
+                safe_pos = Vector3(
+                    spawner_transform.position.x,
+                    min_safe_y,
+                    spawner_transform.position.z,
+                )
+                spawner_transform = Transform(
+                    safe_pos, spawner_transform.rotation, spawner_transform.scale
+                )
+
+            lines.append(f"transform = {transform_formatter.format(spawner_transform)}")
 
             # Enable auto-spawning so vehicles appear without TypeScript code
             lines.append("P_AutoSpawnEnabled = true")

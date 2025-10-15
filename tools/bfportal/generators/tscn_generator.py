@@ -59,6 +59,7 @@ class TscnGenerator(ISceneGenerator):
         self.terrain_bounds: tuple[float, float, float, float] | None = (
             None  # (min_x, max_x, min_z, max_z)
         )
+        self.min_safe_y: float = 0.0  # Minimum safe Y for object placement (above terrain)
         self.asset_type_to_ext_id: dict[str, str] = {}  # Maps asset type to ExtResource ID
         self.asset_catalog: dict[str, dict] = {}  # Maps asset type to Portal metadata
         self._load_asset_catalog()
@@ -207,6 +208,15 @@ class TscnGenerator(ISceneGenerator):
         self.terrain_center_x = terrain_center_x
         self.terrain_center_z = terrain_center_z
         self.terrain_bounds = terrain_bounds
+
+        # Calculate minimum safe Y for object placement (above terrain)
+        # This ensures all physical objects start ABOVE terrain so terrain snapping can work
+        if map_data.bounds and map_data.bounds.max_point:
+            terrain_max_y = map_data.bounds.max_point.y
+            self.min_safe_y = terrain_max_y + INITIAL_PLACEMENT_SAFETY_CLEARANCE_M
+        else:
+            # Fallback: use terrain Y offset + safety clearance
+            self.min_safe_y = terrain_y_offset + INITIAL_PLACEMENT_SAFETY_CLEARANCE_M
 
         # Store rotation flag for use in generation
         if rotate_terrain:
@@ -436,7 +446,7 @@ class TscnGenerator(ISceneGenerator):
         lines = []
 
         # Team 1 HQ
-        team1_hq_transform = map_data.team1_hq
+        team1_hq_transform = self._ensure_safe_height(map_data.team1_hq)
         team1_spawns = map_data.team1_spawns
 
         # Build spawn paths array
@@ -475,7 +485,7 @@ class TscnGenerator(ISceneGenerator):
             lines.append("")
 
         # Team 2 HQ
-        team2_hq_transform = map_data.team2_hq
+        team2_hq_transform = self._ensure_safe_height(map_data.team2_hq)
         team2_spawns = map_data.team2_spawns
 
         spawn_paths = [f'NodePath("SpawnPoint_2_{i + 1}")' for i in range(len(team2_spawns))]
@@ -533,6 +543,28 @@ class TscnGenerator(ISceneGenerator):
         # Keep rotation as-is for now (proper solution would account for parent rotation)
         return Transform(rel_pos, child.rotation, child.scale)
 
+    def _ensure_safe_height(self, transform: Transform) -> Transform:
+        """Ensure transform Y position is above minimum safe height.
+
+        This prevents objects from being placed underground where terrain snapping
+        cannot work (raycast finds no collision below them).
+
+        Args:
+            transform: Original transform
+
+        Returns:
+            Transform with Y position clamped to min_safe_y if needed
+        """
+        if transform.position.y < self.min_safe_y:
+            # Clamp Y to minimum safe height
+            safe_pos = Vector3(
+                transform.position.x,
+                self.min_safe_y,
+                transform.position.z,
+            )
+            return Transform(safe_pos, transform.rotation, transform.scale)
+        return transform
+
     def _generate_capture_points(self, capture_points: list[CapturePoint]) -> list[str]:
         """Generate capture point nodes with spawn points.
 
@@ -571,7 +603,9 @@ class TscnGenerator(ISceneGenerator):
             lines.append(
                 f'[node name="CapturePoint_{i}" parent="." node_paths=PackedStringArray({node_paths_str}) instance=ExtResource("{EXT_RESOURCE_CAPTURE_POINT}")]'
             )
-            lines.append(f"transform = {self.transform_formatter.format(cp.transform)}")
+            # Ensure capture point is above terrain for snapping
+            safe_cp_transform = self._ensure_safe_height(cp.transform)
+            lines.append(f"transform = {self.transform_formatter.format(safe_cp_transform)}")
             lines.append("Team = 0")  # Neutral
             lines.append(f"ObjId = {OBJID_CAPTURE_POINTS_START + i}")
             lines.append(f'CaptureArea = NodePath("CaptureZone_{i}")')
@@ -650,6 +684,7 @@ class TscnGenerator(ISceneGenerator):
             map_data=map_data,
             asset_registry=self.asset_registry,
             transform_formatter=self.transform_formatter,
+            min_safe_y=self.min_safe_y,
         )
 
     def _generate_stationary_emplacements(self, emplacements: list[GameObject]) -> list[str]:
@@ -686,6 +721,7 @@ class TscnGenerator(ISceneGenerator):
             map_data=temp_map_data,
             asset_registry=self.asset_registry,
             transform_formatter=self.transform_formatter,
+            min_safe_y=self.min_safe_y,
         )
 
     def _generate_combat_area(self, map_data: MapData) -> list[str]:
@@ -988,7 +1024,9 @@ class TscnGenerator(ISceneGenerator):
                 # Fallback: create placeholder Node3D (no visual mesh)
                 lines.append(f'[node name="{obj.asset_type}_{i}" type="Node3D" parent="Static"]')
 
-            lines.append(f"transform = {self.transform_formatter.format(obj.transform)}")
+            # Ensure static object is above terrain for snapping
+            safe_transform = self._ensure_safe_height(obj.transform)
+            lines.append(f"transform = {self.transform_formatter.format(safe_transform)}")
             lines.append("")
 
         return lines

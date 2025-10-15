@@ -7,7 +7,7 @@ This generator extracts weapon emplacement objects (machine guns, TOW launchers,
 from MapData and creates properly formatted Godot nodes with StationaryEmplacementSpawner instances.
 """
 
-from ...core.interfaces import MapData
+from ...core.interfaces import MapData, Transform, Vector3
 from ..components.asset_registry import AssetRegistry
 from ..components.transform_formatter import TransformFormatter
 from .base_generator import BaseNodeGenerator
@@ -33,6 +33,7 @@ class StationaryEmplacementGenerator(BaseNodeGenerator):
         map_data: MapData,
         asset_registry: AssetRegistry,
         transform_formatter: TransformFormatter,
+        min_safe_y: float = 0.0,
     ) -> list[str]:
         """Generate stationary weapon emplacement nodes.
 
@@ -40,6 +41,7 @@ class StationaryEmplacementGenerator(BaseNodeGenerator):
             map_data: Complete map data
             asset_registry: Registry for ExtResource IDs
             transform_formatter: Formatter for Transform3D strings
+            min_safe_y: Minimum safe Y height for emplacement placement (above terrain)
 
         Returns:
             List of .tscn node lines for weapon emplacements
@@ -60,7 +62,21 @@ class StationaryEmplacementGenerator(BaseNodeGenerator):
             lines.append(
                 f'[node name="StationaryEmplacement_{i}" parent="." instance=ExtResource("5")]'
             )
-            lines.append(f"transform = {transform_formatter.format(emplacement.transform)}")
+
+            # Ensure emplacement is above terrain for snapping
+            emplacement_transform = emplacement.transform
+            if emplacement_transform.position.y < min_safe_y:
+                # Clamp Y to minimum safe height
+                safe_pos = Vector3(
+                    emplacement_transform.position.x,
+                    min_safe_y,
+                    emplacement_transform.position.z,
+                )
+                emplacement_transform = Transform(
+                    safe_pos, emplacement_transform.rotation, emplacement_transform.scale
+                )
+
+            lines.append(f"transform = {transform_formatter.format(emplacement_transform)}")
             lines.append(f"Team = {emplacement.team.value if emplacement.team else 0}")
             lines.append(f"ObjId = {2000 + i}")
 
