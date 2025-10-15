@@ -54,8 +54,8 @@ class TestRefractorCoordinateSystem:
         assert result.y == 50.0
         assert result.z == -200.0  # Portal: -Z is north (negated)
 
-    def test_to_portal_rotation_preserves_angles(self):
-        """Test rotation conversion preserves angles."""
+    def test_to_portal_rotation_adds_180_to_yaw(self):
+        """Test rotation conversion adds 180° to yaw (compensates for Z-axis flip)."""
         # Arrange
         coord_system = RefractorCoordinateSystem()
         rotation = Rotation(45.0, 90.0, 180.0)
@@ -63,10 +63,47 @@ class TestRefractorCoordinateSystem:
         # Act
         result = coord_system.to_portal_rotation(rotation)
 
-        # Assert
+        # Assert - Pitch and roll preserved, yaw += 180° (normalized)
         assert result.pitch == 45.0
-        assert result.yaw == 90.0
+        assert result.yaw == -90.0  # 90 + 180 = 270, normalized to -90
         assert result.roll == 180.0
+
+    def test_to_portal_rotation_normalizes_yaw_to_negative_180_to_180(self):
+        """Test rotation normalization keeps yaw within [-180, 180] range."""
+        # Arrange
+        coord_system = RefractorCoordinateSystem()
+
+        # Act & Assert - Test boundary cases
+        # yaw=0 + 180 = 180 (stays at 180)
+        result1 = coord_system.to_portal_rotation(Rotation(0, 0, 0))
+        assert result1.yaw == 180.0
+
+        # yaw=1 + 180 = 181, normalized to -179
+        result2 = coord_system.to_portal_rotation(Rotation(0, 1, 0))
+        assert result2.yaw == pytest.approx(-179.0)
+
+        # yaw=-180 + 180 = 0
+        result3 = coord_system.to_portal_rotation(Rotation(0, -180, 0))
+        assert result3.yaw == 0.0
+
+        # yaw=-90 + 180 = 90
+        result4 = coord_system.to_portal_rotation(Rotation(0, -90, 0))
+        assert result4.yaw == 90.0
+
+    def test_to_portal_rotation_preserves_pitch_and_roll(self):
+        """Test rotation conversion preserves pitch and roll (only modifies yaw)."""
+        # Arrange
+        coord_system = RefractorCoordinateSystem()
+        rotation = Rotation(-30.0, 45.0, 75.0)
+
+        # Act
+        result = coord_system.to_portal_rotation(rotation)
+
+        # Assert - Pitch and roll unchanged
+        assert result.pitch == -30.0
+        assert result.roll == 75.0
+        # Yaw modified: 45 + 180 = 225, normalized to -135
+        assert result.yaw == pytest.approx(-135.0)
 
     def test_get_scale_factor_returns_one(self):
         """Test scale factor is 1.0 (both use meters)."""

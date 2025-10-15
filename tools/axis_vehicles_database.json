@@ -1,0 +1,160 @@
+{
+  "metadata": {
+    "title": "Complete AXIS Vehicle Database - Battlefield 1942",
+    "generated": "2025-10-15",
+    "total_vehicles": 59,
+    "total_maps": 36,
+    "expansions": ["base_game", "road_to_rome", "secret_weapons"]
+  },
+  "summary": {
+    "by_faction": {
+      "German": 34,
+      "Italian": 10,
+      "Japanese": 15
+    },
+    "by_category": {
+      "Tanks/Armored": 15,
+      "Aircraft": 17,
+      "Infantry/Emplacements": 13,
+      "Naval": 5,
+      "Transports": 9
+    }
+  },
+  "vehicles": {
+    "tanks_armored": [
+      {"id": "PanzerIV", "name": "Panzer IV", "faction": "German", "expansion": "base_game", "frequency": "very_common"},
+      {"id": "Tiger", "name": "Tiger I", "faction": "German", "expansion": "base_game", "frequency": "common"},
+      {"id": "Wespe", "name": "Wespe (Self-Propelled Artillery)", "faction": "German", "expansion": "base_game", "frequency": "common"},
+      {"id": "SturmGeschutz", "name": "StuG III (Assault Gun)", "faction": "German", "expansion": "road_to_rome", "frequency": "rare"},
+      {"id": "Flakpanzer", "name": "Flakpanzer IV (AA Tank)", "faction": "German", "expansion": "secret_weapons", "frequency": "rare"},
+      {"id": "Sturmtiger", "name": "Sturmtiger", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare"},
+      {"id": "SturmTiger", "name": "Sturmtiger (Heavy Assault Gun)", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare"},
+      {"id": "T95", "name": "Captured T95 (Heavy Tank)", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare"},
+      {"id": "Goliath", "name": "Goliath (Remote Demolition Vehicle)", "faction": "German", "expansion": "secret_weapons", "frequency": "rare"},
+      {"id": "M13_40", "name": "M13/40 (Tank)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare"},
+      {"id": "M11-39", "name": "M11/39 (Light Tank)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare"},
+      {"id": "AB41", "name": "AB 41 (Armored Car)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare"},
+      {"id": "Autoblinda", "name": "Autoblinda AB 41", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare"},
+      {"id": "Chi-ha", "name": "Type 97 Chi-Ha (Tank)", "faction": "Japanese", "expansion": "base_game", "frequency": "common"},
+      {"id": "Ho-Ha", "name": "Type 2 Ho-Ha (Half-track)", "faction": "Japanese", "expansion": "base_game", "frequency": "common"}
+    ],
+    "aircraft": [
+      {"id": "bf109", "name": "Bf 109 (Fighter)", "faction": "German", "expansion": "base_game", "frequency": "very_common", "type": "fighter"},
+      {"id": "Stuka", "name": "Ju 87 Stuka (Dive Bomber)", "faction": "German", "expansion": "base_game", "frequency": "common", "type": "bomber"},
+      {"id": "bf110", "name": "Bf 110 (Heavy Fighter)", "faction": "German", "expansion": "base_game", "frequency": "common", "type": "heavy_fighter"},
+      {"id": "FW190", "name": "Fw 190 (Fighter)", "faction": "German", "expansion": "base_game", "frequency": "common", "type": "fighter"},
+      {"id": "Ju88", "name": "Ju 88 (Bomber)", "faction": "German", "expansion": "base_game", "frequency": "common", "type": "bomber"},
+      {"id": "He111", "name": "He 111 (Bomber)", "faction": "German", "expansion": "base_game", "frequency": "common", "type": "bomber"},
+      {"id": "Me262", "name": "Me 262 (Jet Fighter)", "faction": "German", "expansion": "base_game", "frequency": "rare", "type": "jet"},
+      {"id": "Horton", "name": "Horten Ho 229 (Jet Fighter)", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare", "type": "jet"},
+      {"id": "HO229", "name": "Horten Ho 229 (Jet Fighter)", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare", "type": "jet"},
+      {"id": "Natter", "name": "Bachem Ba 349 Natter (Rocket Interceptor)", "faction": "German", "expansion": "secret_weapons", "frequency": "very_rare", "type": "rocket"},
+      {"id": "MC202", "name": "Macchi C.202 (Fighter)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare", "type": "fighter"},
+      {"id": "G50", "name": "Fiat G.50 (Fighter)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare", "type": "fighter"},
+      {"id": "SM79", "name": "SM.79 Sparviero (Bomber)", "faction": "Italian", "expansion": "road_to_rome", "frequency": "rare", "type": "bomber"},
+      {"id": "Zero", "name": "A6M Zero (Fighter)", "faction": "Japanese", "expansion": "base_game", "frequency": "very_common", "type": "fighter"},
+      {"id": "AichiVal", "name": "Aichi D3A Val (Dive Bomber)", "faction": "Japanese", "expansion": "base_game", "frequency": "common", "type": "bomber"},
+      {"id": "AichiVal-T", "name": "Aichi D3A Val Torpedo Bomber", "faction": "Japanese", "expansion": "base_game", "frequency": "common", "type": "torpedo_bomber"},
+      {"id": "Kate", "name": "Nakajima B5N Kate (Torpedo Bomber)", "faction": "Japanese", "expansion": "base_game", "frequency": "common", "type": "torpedo_bomber"}
+    ],
+    "infantry_emplacements": [
+      {"id": "Defgun", "name": "Defensive Gun", "faction": "German", "expansion": "base_game", "type": "artillery"},
+      {"id": "Flak_38", "name": "Flak 38 (AA Gun)", "faction": "German", "expansion": "base_game", "type": "anti_aircraft"},
+      {"id": "Flak18", "name": "Flak 18 (AA Gun)", "faction": "German", "expansion": "base_game", "type": "anti_aircraft"},
+      {"id": "Pak40", "name": "Pak 40 (Anti-Tank Gun)", "faction": "German", "expansion": "road_to_rome", "type": "anti_tank"},
+      {"id": "MG42", "name": "MG42 (Machine Gun)", "faction": "German", "expansion": "base_game", "type": "machine_gun"},
+      {"id": "MG42_Lafette", "name": "MG42 on Lafette Mount", "faction": "German", "expansion": "base_game", "type": "machine_gun"},
+      {"id": "V2Rocket", "name": "V-2 Rocket", "faction": "German", "expansion": "secret_weapons", "type": "rocket", "frequency": "very_rare"},
+      {"id": "Wasserfall", "name": "Wasserfall (AA Missile)", "faction": "German", "expansion": "secret_weapons", "type": "sam", "frequency": "very_rare"},
+      {"id": "WasserfallRocket", "name": "Wasserfall Rocket (Ammunition)", "faction": "German", "expansion": "secret_weapons", "type": "sam_ammo", "frequency": "very_rare"},
+      {"id": "Breda", "name": "Breda M37 (Machine Gun)", "faction": "Italian", "expansion": "road_to_rome", "type": "machine_gun"},
+      {"id": "AT25", "name": "Ansaldo 25mm Anti-Tank Gun", "faction": "Italian", "expansion": "road_to_rome", "type": "anti_tank"},
+      {"id": "Type93", "name": "Type 93 (Machine Gun)", "faction": "Japanese", "expansion": "base_game", "type": "machine_gun"},
+      {"id": "Type88", "name": "Type 88 (AA Gun)", "faction": "Japanese", "expansion": "base_game", "type": "anti_aircraft"}
+    ],
+    "naval": [
+      {"id": "Yamato", "name": "Yamato (Battleship)", "faction": "Japanese", "expansion": "base_game", "type": "battleship", "frequency": "very_rare"},
+      {"id": "Shokaku", "name": "Shokaku (Aircraft Carrier)", "faction": "Japanese", "expansion": "base_game", "type": "carrier", "frequency": "rare"},
+      {"id": "Hatsuzuki", "name": "Hatsuzuki (Destroyer)", "faction": "Japanese", "expansion": "base_game", "type": "destroyer", "frequency": "common"},
+      {"id": "Type38", "name": "Type 38 Torpedo Boat", "faction": "Japanese", "expansion": "base_game", "type": "torpedo_boat", "frequency": "common"},
+      {"id": "Sub7C", "name": "I-Class Submarine", "faction": "Japanese", "expansion": "base_game", "type": "submarine", "frequency": "rare"}
+    ],
+    "transports": [
+      {"id": "Kubelwagen", "name": "Kübelwagen", "faction": "German", "expansion": "base_game", "type": "car", "frequency": "very_common"},
+      {"id": "Hanomag", "name": "Sd.Kfz. 251 Hanomag", "faction": "German", "expansion": "base_game", "type": "halftrack", "frequency": "common"},
+      {"id": "KettenKrad", "name": "Sd.Kfz. 2 Kettenkrad", "faction": "German", "expansion": "base_game", "type": "motorcycle", "frequency": "common"},
+      {"id": "SdKfz7", "name": "Sd.Kfz. 7 (Half-track)", "faction": "German", "expansion": "road_to_rome", "type": "halftrack", "frequency": "rare"},
+      {"id": "R75", "name": "BMW R75 (Motorcycle with Sidecar)", "faction": "German", "expansion": "secret_weapons", "type": "motorcycle", "frequency": "rare"},
+      {"id": "Schwimmwagen", "name": "VW Type 166 Schwimmwagen (Amphibious Car)", "faction": "German", "expansion": "secret_weapons", "type": "amphibious", "frequency": "rare"},
+      {"id": "ItLcvp", "name": "Italian Landing Craft", "faction": "Italian", "expansion": "road_to_rome", "type": "landing_craft", "frequency": "rare"},
+      {"id": "Daihatsu", "name": "Daihatsu Landing Craft", "faction": "Japanese", "expansion": "base_game", "type": "landing_craft", "frequency": "common"},
+      {"id": "Type38Raft", "name": "Type 38 Landing Craft", "faction": "Japanese", "expansion": "base_game", "type": "landing_craft", "frequency": "common"}
+    ]
+  },
+  "maps": {
+    "base_game": [
+      {"id": "Aberdeen", "faction": "German", "theater": "Western Europe"},
+      {"id": "Battle_of_Britain", "faction": "German", "theater": "Western Europe"},
+      {"id": "Battle_of_the_Bulge", "faction": "German", "theater": "Western Europe"},
+      {"id": "Battleaxe", "faction": "German", "theater": "North Africa"},
+      {"id": "Berlin", "faction": "German", "theater": "Eastern Front"},
+      {"id": "Bocage", "faction": "German", "theater": "Western Europe"},
+      {"id": "Coral_Sea", "faction": "Japanese", "theater": "Pacific"},
+      {"id": "El_Alamein", "faction": "German", "theater": "North Africa"},
+      {"id": "Gazala", "faction": "German", "theater": "North Africa"},
+      {"id": "Guadalcanal", "faction": "Japanese", "theater": "Pacific"},
+      {"id": "Invasion_of_the_Philippines", "faction": "Japanese", "theater": "Pacific"},
+      {"id": "Iwo_Jima", "faction": "Japanese", "theater": "Pacific"},
+      {"id": "Kharkov", "faction": "German", "theater": "Eastern Front"},
+      {"id": "Kursk", "faction": "German", "theater": "Eastern Front"},
+      {"id": "Liberation_of_Caen", "faction": "German", "theater": "Western Europe"},
+      {"id": "Market_Garden", "faction": "German", "theater": "Western Europe"},
+      {"id": "Midway", "faction": "Japanese", "theater": "Pacific"},
+      {"id": "Omaha_Beach", "faction": "German", "theater": "Western Europe"},
+      {"id": "Stalingrad", "faction": "German", "theater": "Eastern Front"},
+      {"id": "Tobruk", "faction": "German", "theater": "North Africa"},
+      {"id": "Wake", "faction": "Japanese", "theater": "Pacific"}
+    ],
+    "road_to_rome": [
+      {"id": "Anzio", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Baytown", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Cassino", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Husky", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Salerno", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Santo_Croce", "factions": ["German", "Italian"], "theater": "Italy"}
+    ],
+    "secret_weapons": [
+      {"id": "Eagles_Nest", "faction": "German", "theater": "Western Europe"},
+      {"id": "Essen", "faction": "German", "theater": "Western Europe"},
+      {"id": "Gothic_Line", "factions": ["German", "Italian"], "theater": "Italy"},
+      {"id": "Hellendoorn", "faction": "German", "theater": "Western Europe"},
+      {"id": "Kbely_Airfield", "faction": "German", "theater": "Eastern Europe"},
+      {"id": "Mimoyecques", "faction": "German", "theater": "Western Europe"},
+      {"id": "Peenemunde", "faction": "German", "theater": "Eastern Europe"},
+      {"id": "Raid_on_Agheila", "factions": ["German", "Italian"], "theater": "North Africa"},
+      {"id": "Telemark", "faction": "German", "theater": "Scandinavia"}
+    ]
+  },
+  "notes": {
+    "most_common_vehicles": [
+      "Kubelwagen (20+ maps)",
+      "PanzerIV (15+ maps)",
+      "bf109 (14+ maps)",
+      "Tiger (12+ maps)",
+      "Stuka (11+ maps)",
+      "Hanomag (10+ maps)"
+    ],
+    "rarest_vehicles": [
+      "Yamato (Midway, Iwo Jima only)",
+      "V2Rocket (Hellendoorn, Peenemunde only)",
+      "Natter (Kbely Airfield only)",
+      "Sturmtiger (Berlin, Essen only)"
+    ],
+    "missing_vehicles": [
+      "German U-boats (submarines)",
+      "Panther tank",
+      "King Tiger (Tiger II)",
+      "Italian capital ships"
+    ]
+  }
+}

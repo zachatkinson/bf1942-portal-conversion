@@ -3,7 +3,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import create_autospec
 
 import pytest
 
@@ -51,8 +51,8 @@ class TestRefractorEngineParseMap:
         map_dir = tmp_path / "TestMap"
         map_dir.mkdir()
 
-        # Create mock ConFileSet that returns parsed data
-        mock_con_files = MagicMock(spec=ConFileSet)
+        # Create mock ConFileSet that returns parsed data using autospec
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.con_files = ["init.con"]
         mock_con_files.parse_all.return_value = {
             "init.con": {
@@ -106,7 +106,7 @@ class TestRefractorEngineParseMap:
         map_dir = tmp_path / "Kursk"
         map_dir.mkdir()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.con_files = ["init.con", "objects.con"]
         mock_con_files.parse_all.return_value = {"init.con": {"objects": []}}
 
@@ -133,7 +133,7 @@ class TestRefractorEngineParseSpawns:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "spawns.con": {
                 "objects": [
@@ -163,7 +163,7 @@ class TestRefractorEngineParseSpawns:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "spawns.con": {
                 "objects": [
@@ -193,7 +193,7 @@ class TestRefractorEngineParseSpawns:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "spawns.con": {
                 "objects": [
@@ -221,7 +221,7 @@ class TestRefractorEngineParseSpawns:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "spawns.con": {
                 "objects": [
@@ -254,7 +254,7 @@ class TestRefractorEngineParseSpawns:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "spawns.con": {
                 "objects": [
@@ -284,7 +284,7 @@ class TestRefractorEngineParseHQ:
         """Test _parse_hq calculates HQ position as spawn centroid."""
         # Arrange
         engine = ConcreteRefractorEngine()
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
 
         from bfportal.core.interfaces import SpawnPoint
 
@@ -332,7 +332,7 @@ class TestRefractorEngineParseHQ:
         """Test _parse_hq returns default position when no spawns."""
         # Arrange
         engine = ConcreteRefractorEngine()
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
 
         # Act
         hq = engine._parse_hq(mock_con_files, Team.TEAM_1, [])
@@ -351,7 +351,7 @@ class TestRefractorEngineParseGameObjects:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "objects.con": {
                 "objects": [
@@ -393,7 +393,7 @@ class TestRefractorEngineParseGameObjects:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "objects.con": {
                 "objects": [
@@ -453,7 +453,7 @@ class TestRefractorEngineParseGameObjects:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "objects.con": {
                 "objects": [
@@ -493,7 +493,7 @@ class TestRefractorEngineParseCapturePoints:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "controlpoints.con": {
                 "objects": [
@@ -531,7 +531,7 @@ class TestRefractorEngineParseCapturePoints:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "controlpoints.con": {
                 "objects": [
@@ -571,7 +571,7 @@ class TestRefractorEngineParseCapturePoints:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "map.con": {
                 "objects": [
@@ -617,7 +617,7 @@ class TestRefractorEngineParseCapturePoints:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "map.con": {
                 "objects": [
@@ -678,7 +678,7 @@ class TestRefractorEngineParseCapturePoints:
         # Arrange
         engine = ConcreteRefractorEngine()
 
-        mock_con_files = MagicMock(spec=ConFileSet)
+        mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
             "controlpoints.con": {
                 "objects": [

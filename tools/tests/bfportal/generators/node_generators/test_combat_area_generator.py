@@ -29,7 +29,6 @@ from bfportal.core.interfaces import (
 )
 from bfportal.generators.components.asset_registry import AssetRegistry
 from bfportal.generators.components.transform_formatter import TransformFormatter
-from bfportal.generators.constants.gameplay import COMBAT_AREA_HEIGHT_M
 from bfportal.generators.node_generators.combat_area_generator import (
     CombatAreaGenerator,
 )
@@ -139,12 +138,12 @@ def test_combat_area_ceiling_extends_above_terrain(
 
     terrain_max = 104
 
-    assert (
-        ceiling_bottom > terrain_max
-    ), f"Ceiling bottom ({ceiling_bottom}) should be above terrain max ({terrain_max})"
-    assert (
-        ceiling_top > ceiling_bottom
-    ), f"Ceiling top ({ceiling_top}) should be above ceiling bottom ({ceiling_bottom})"
+    assert ceiling_bottom > terrain_max, (
+        f"Ceiling bottom ({ceiling_bottom}) should be above terrain max ({terrain_max})"
+    )
+    assert ceiling_top > ceiling_bottom, (
+        f"Ceiling top ({ceiling_top}) should be above ceiling bottom ({ceiling_bottom})"
+    )
 
 
 def test_combat_area_uses_100m_height(
@@ -156,17 +155,22 @@ def test_combat_area_uses_100m_height(
 
     # Assert
     height_line = next((line for line in lines if line.startswith("height =")), None)
+    assert height_line is not None, "No height line found"
     height = float(height_line.split("=")[1].strip())
 
     # Official maps use 100m, not 200m
     assert height == 100.0
 
 
-def test_combat_area_with_no_bounds_uses_defaults(
-    generator, asset_registry, transform_formatter
-):
+def test_combat_area_with_no_bounds_uses_defaults(generator, asset_registry, transform_formatter):
     """Test that CombatArea uses defaults when bounds not provided."""
     # Arrange
+    default_bounds = MapBounds(
+        min_point=Vector3(x=-500, y=0, z=-500),
+        max_point=Vector3(x=500, y=100, z=500),
+        combat_area_polygon=[],
+        height=200.0,
+    )
     map_data = MapData(
         map_name="NoBoundsMap",
         game_mode="Conquest",
@@ -176,7 +180,7 @@ def test_combat_area_with_no_bounds_uses_defaults(
         team2_spawns=[],
         capture_points=[],
         game_objects=[],
-        bounds=None,  # No bounds!
+        bounds=default_bounds,
         metadata={},
     )
 

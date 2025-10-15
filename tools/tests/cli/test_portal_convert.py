@@ -305,11 +305,12 @@ class TestGuessTheme:
 class TestGetTargetCenter:
     """Tests for PortalConverter._get_target_center() method."""
 
-    def test_returns_world_origin_using_centering_service(self, tmp_path: Path):
-        """Test returns world origin (0, 0, 0) using CenteringService.
+    def test_returns_terrain_mesh_center(self, tmp_path: Path):
+        """Test returns Portal terrain's mesh center coordinates.
 
-        After DRY refactoring, _get_target_center() delegates to CenteringService
-        which returns world origin for universal centering approach.
+        The implementation returns the terrain's mesh center (mesh_center_x, 0, mesh_center_z)
+        where BF1942 assets will be centered. This keeps the Portal terrain at (0,0,0) in Godot
+        while centering the assets on the terrain's geometric center.
         """
         # Arrange
         args = Namespace(
@@ -321,16 +322,16 @@ class TestGetTargetCenter:
             rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
-        converter.terrain.mesh_center_x = 512.0  # These values don't affect the result anymore
+        converter.terrain.mesh_center_x = 512.0
         converter.terrain.mesh_center_z = -256.0
 
         # Act
         result = converter._get_target_center()
 
-        # Assert - Expects world origin, not terrain mesh center
-        assert result.x == 0.0
+        # Assert - Expects terrain mesh center coordinates
+        assert result.x == 512.0
         assert result.y == 0.0
-        assert result.z == 0.0
+        assert result.z == -256.0
 
 
 class TestGuessThemeTropical:

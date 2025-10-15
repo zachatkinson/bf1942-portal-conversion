@@ -14,6 +14,7 @@ Author: Zach Atkinson
 AI Assistant: Claude (Anthropic)
 Date: 2025-10-11
 """
+# ruff: noqa: F405
 
 import json
 import math
@@ -31,7 +32,7 @@ from ..core.interfaces import (
 from ..transforms.centering_service import CenteringService
 from .components.asset_registry import AssetRegistry
 from .components.transform_formatter import TransformFormatter
-from .constants import *  # Import all constants from modular constants package  # noqa: F403
+from .constants import *  # Import all constants from modular constants package  # noqa: F403, F405
 from .node_generators.stationary_emplacement_generator import StationaryEmplacementGenerator
 from .node_generators.vehicle_spawner_generator import VehicleSpawnerGenerator
 
@@ -128,6 +129,8 @@ class TscnGenerator(ISceneGenerator):
                 paths_to_try = [
                     # Tajikistan/MP_Tungsten map-specific path
                     f"res://objects/Tajikistan/{self.base_terrain}/{directory}/{asset_type}.tscn",
+                    # Tajikistan/Shared (region-specific shared assets)
+                    f"res://objects/Tajikistan/Shared/{directory}/{asset_type}.tscn",
                     # Shared path (most common)
                     f"res://objects/Shared/{directory}/{asset_type}.tscn",
                     # Global fallback
@@ -242,6 +245,9 @@ class TscnGenerator(ISceneGenerator):
         # Combat area (must be at root level, not in Static)
         lines.extend(self._generate_combat_area(map_data))
 
+        # Deploy camera (REQUIRED for spawn screen to work correctly)
+        lines.extend(self._generate_deploy_cam(map_data))
+
         # Static layer declaration (MUST come before any nodes with parent="Static")
         lines.extend(self._generate_static_layer_declaration())
 
@@ -344,6 +350,11 @@ class TscnGenerator(ISceneGenerator):
                 "id": EXT_RESOURCE_COMBAT_AREA,
                 "type": "PackedScene",
                 "path": SCENE_PATH_COMBAT_AREA,
+            },
+            {
+                "id": EXT_RESOURCE_DEPLOY_CAM,
+                "type": "PackedScene",
+                "path": SCENE_PATH_DEPLOY_CAM,
             },
             {
                 "id": EXT_RESOURCE_TERRAIN,
@@ -549,28 +560,21 @@ class TscnGenerator(ISceneGenerator):
             team1_spawns_str = ", ".join(team1_spawn_paths) if team1_spawn_paths else ""
             team2_spawns_str = ", ".join(team2_spawn_paths) if team2_spawn_paths else ""
 
-            # Build node_paths array for properties that need NodePath -> Object resolution
-            node_paths = []
+            # Build node_paths array for Portal SDK compatibility
+            node_paths = ["CaptureArea"]
             if team1_spawn_paths:
-                node_paths.append('"InfantrySpawnPoints_Team1"')
+                node_paths.append("InfantrySpawnPoints_Team1")
             if team2_spawn_paths:
-                node_paths.append('"InfantrySpawnPoints_Team2"')
+                node_paths.append("InfantrySpawnPoints_Team2")
+            node_paths_str = ", ".join([f'"{path}"' for path in node_paths])
 
-            # Add node_paths parameter if we have any spawn arrays
-            if node_paths:
-                node_paths_str = ", ".join(node_paths)
-                lines.append(
-                    f'[node name="CapturePoint_{i}" parent="." node_paths=PackedStringArray({node_paths_str}) instance=ExtResource("{EXT_RESOURCE_CAPTURE_POINT}")]'
-                )
-            else:
-                lines.append(
-                    f'[node name="CapturePoint_{i}" parent="." instance=ExtResource("{EXT_RESOURCE_CAPTURE_POINT}")]'
-                )
-
+            lines.append(
+                f'[node name="CapturePoint_{i}" parent="." node_paths=PackedStringArray({node_paths_str}) instance=ExtResource("{EXT_RESOURCE_CAPTURE_POINT}")]'
+            )
             lines.append(f"transform = {self.transform_formatter.format(cp.transform)}")
-            # Note: Portal SDK displays CP labels (A, B, C) automatically based on node order
-            # No Label property needed - CapturePoint.gd doesn't have one
+            lines.append("Team = 0")  # Neutral
             lines.append(f"ObjId = {OBJID_CAPTURE_POINTS_START + i}")
+            lines.append(f'CaptureArea = NodePath("CaptureZone_{i}")')
 
             # Add spawn arrays if capture point has spawns
             if team1_spawn_paths:
@@ -616,12 +620,13 @@ class TscnGenerator(ISceneGenerator):
             lines.append(
                 f'[node name="CP_Label_{label}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_WORLD_ICON}")]'
             )
-            lines.append(f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)")  # 5m above CP
+            lines.append(
+                "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)"
+            )  # 5m above CP
             lines.append(f"ObjId = {obj_id}")
             lines.append(f'IconStringKey = "{label}"')
             lines.append("iconTextVisible = true")
             lines.append("iconImageVisible = false")
-            lines.append(f"# Labels set via TypeScript: mod.SetWorldIconText(mod.GetWorldIcon({obj_id}), '{label}')")
             lines.append("")
 
         return lines
@@ -815,6 +820,48 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
+    def _generate_deploy_cam(self, map_data: MapData) -> list[str]:
+        """Generate DeployCam node for spawn screen.
+
+        According to Portal documentation: "Without this, the spawn screen will not work correctly."
+        Camera should be positioned high in the sky, facing downward to show the entire map.
+
+        Args:
+            map_data: Map data with bounds
+
+        Returns:
+            List of .tscn lines
+        """
+        lines = []
+
+        # Calculate center position and appropriate height
+        if map_data.bounds:
+            center_x = (map_data.bounds.min_point.x + map_data.bounds.max_point.x) / 2
+            center_z = (map_data.bounds.min_point.z + map_data.bounds.max_point.z) / 2
+
+            # Height should be high enough to see the entire map
+            # Use max dimension * 0.75 as a reasonable height
+            map_width = map_data.bounds.max_point.x - map_data.bounds.min_point.x
+            map_depth = map_data.bounds.max_point.z - map_data.bounds.min_point.z
+            max_dimension = max(map_width, map_depth)
+            height = max_dimension * 0.75 + 100  # Extra 100m for safety
+        else:
+            center_x = 0.0
+            center_z = 0.0
+            height = 600.0  # Default height if no bounds
+
+        lines.append(
+            f'[node name="DeployCam" parent="." instance=ExtResource("{EXT_RESOURCE_DEPLOY_CAM}")]'
+        )
+        # Camera positioned high, facing straight down (rotation -90° on X axis)
+        # Transform3D: right(1,0,0), up(0,0,1), forward(0,-1,0) for downward facing
+        lines.append(
+            f"transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, {center_x}, {height}, {center_z})"
+        )
+        lines.append("")
+
+        return lines
+
     def _generate_static_layer_declaration(self) -> list[str]:
         """Generate Static layer node declaration.
 
@@ -918,11 +965,14 @@ class TscnGenerator(ISceneGenerator):
         lines = []
 
         # Other static objects (exclude gameplay elements that are handled separately)
-        # DRY: Use GAMEPLAY_KEYWORDS constant
+        # DRY: Use GAMEPLAY_KEYWORDS constant + check for vehicle_type property
+        # SOLID: Single Responsibility - only include true static props (trees, rocks, buildings)
         static_objects = [
             obj
             for obj in map_data.game_objects
             if not any(keyword in obj.asset_type.lower() for keyword in GAMEPLAY_KEYWORDS)
+            and "vehicle_type" not in obj.properties  # Exclude vehicle spawners
+            and obj.asset_type != "StationaryEmplacementSpawner"  # Exclude weapon emplacements
         ]
 
         # Generate nodes for static objects (assets were pre-registered in generate())

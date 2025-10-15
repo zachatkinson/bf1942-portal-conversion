@@ -6,6 +6,7 @@ Battlefield 1942 (2002) - Refractor Engine 1.0
 
 from pathlib import Path
 
+from ....core.interfaces import Team
 from ..refractor_base import RefractorEngine
 
 
@@ -30,6 +31,52 @@ class BF1942Engine(RefractorEngine):
     # ========================================================================
     # BF1942-Specific Methods
     # ========================================================================
+
+    def _swap_teams(self, team: Team) -> Team:
+        """Swap BF1942 teams for Portal conversion.
+
+        Swaps team assignments so that:
+        - BF1942 Team 1 (German/Axis) → Portal Team 2 (non-NATO)
+        - BF1942 Team 2 (Russian/Allied) → Portal Team 1 (NATO)
+
+        This ensures the Russian base gets NATO assets (Leopard, F16, AH64)
+        and the German base gets non-NATO assets (Abrams, JAS39, Eurocopter).
+
+        Args:
+            team: Original BF1942 team assignment
+
+        Returns:
+            Swapped team for Portal
+        """
+        if team == Team.TEAM_1:
+            return Team.TEAM_2
+        elif team == Team.TEAM_2:
+            return Team.TEAM_1
+        else:
+            return Team.NEUTRAL  # Neutral stays neutral
+
+    def _parse_spawns(self, con_files, team: Team) -> list:
+        """Override to swap teams for BF1942."""
+        # Parse with swapped team
+        swapped_team = self._swap_teams(team)
+        spawns = super()._parse_spawns(con_files, swapped_team)
+
+        # Restore original team assignment in spawns
+        # (so Portal Team 1 HQ gets the Russian base spawns)
+        for spawn in spawns:
+            spawn.team = team
+
+        return spawns
+
+    def _parse_game_objects(self, con_files) -> list:
+        """Override to swap teams for BF1942 game objects."""
+        game_objects = super()._parse_game_objects(con_files)
+
+        # Swap team assignments for all game objects
+        for obj in game_objects:
+            obj.team = self._swap_teams(obj.team)
+
+        return game_objects
 
     def get_expansion_info(self, map_path: Path) -> str:
         """Determine which BF1942 expansion this map belongs to.

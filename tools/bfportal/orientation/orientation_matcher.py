@@ -98,18 +98,24 @@ class OrientationMatcher:
                 reasoning=f"Both oriented {source_orient.value} - no rotation needed",
             )
 
-        # Case 5: Orientations differ - 90 degree rotation needed
-        # N/S source on E/W terrain (or vice versa) requires 90° rotation
-        rotation_degrees = 90
+        # Case 5: Orientations differ - PRESERVE original orientation (NO rotation)
+        # Always preserve the BF1942 map's original N/S or E/W orientation
+        # regardless of Portal terrain shape. This ensures bases stay in their
+        # original positions (e.g., Russian base north, German base south).
+        rotation_degrees = 0
 
         if source_orient == Orientation.NORTH_SOUTH and dest_orient == Orientation.EAST_WEST:
-            reasoning = "Source is N/S but destination is E/W - rotating terrain 90° clockwise"
+            reasoning = (
+                "Source is N/S, destination is E/W - preserving original orientation (no rotation)"
+            )
         else:  # source is E/W, dest is N/S
-            reasoning = "Source is E/W but destination is N/S - rotating terrain 90° clockwise"
+            reasoning = (
+                "Source is E/W, destination is N/S - preserving original orientation (no rotation)"
+            )
 
         return RotationResult(
             rotation_degrees=rotation_degrees,
-            rotation_needed=True,
+            rotation_needed=False,  # Changed from True to False
             source_orientation=source_orient,
             destination_orientation=dest_orient,
             confidence=overall_confidence,

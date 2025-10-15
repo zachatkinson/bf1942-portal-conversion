@@ -3,12 +3,12 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import create_autospec
 
 import pytest
 
 # Add tools directory to Python path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 from bfportal.core.interfaces import (
     GameObject,
@@ -29,9 +29,9 @@ class TestMapRebaserInitialization:
     def test_init_stores_dependencies(self):
         """Test that initialization stores terrain, offset calculator, and bounds validator."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
-        bounds_validator = Mock(spec=IBoundsValidator)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
+        bounds_validator = create_autospec(IBoundsValidator, instance=True)
 
         # Act
         rebaser = MapRebaser(terrain, offset_calc, bounds_validator)
@@ -44,8 +44,8 @@ class TestMapRebaserInitialization:
     def test_init_allows_none_bounds_validator(self):
         """Test that bounds validator can be None."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         # Act
         rebaser = MapRebaser(terrain, offset_calc, None)
@@ -60,8 +60,8 @@ class TestMapRebaserOffsetCalculation:
     def test_calculate_centroid_called_with_objects(self):
         """Test that centroid is calculated from parsed objects."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
         offset_calc.calculate_centroid.return_value = Vector3(100.0, 50.0, 200.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.apply_offset.side_effect = lambda t, o: t
@@ -91,8 +91,8 @@ class TestMapRebaserOffsetCalculation:
     def test_calculate_offset_with_new_center(self):
         """Test that offset is calculated between current and new center."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
         current_centroid = Vector3(100.0, 50.0, 200.0)
         new_center = Vector3(50.0, 25.0, 100.0)
         expected_offset = Vector3(-50.0, -25.0, -100.0)
@@ -127,8 +127,8 @@ class TestMapRebaserOffsetCalculation:
     def test_apply_offset_to_each_object(self):
         """Test that offset is applied to each rebased object."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
         offset = Vector3(-50.0, 0.0, -100.0)
         offset_calc.calculate_centroid.return_value = Vector3(100.0, 0.0, 200.0)
         offset_calc.calculate_offset.return_value = offset
@@ -173,8 +173,8 @@ class TestMapRebaserHeightAdjustment:
     def test_height_adjusted_when_above_tolerance(self):
         """Test that object height is adjusted when above terrain by more than tolerance."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         terrain.get_height_at.return_value = 10.0
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 50.0, 0.0)
@@ -207,8 +207,8 @@ class TestMapRebaserHeightAdjustment:
     def test_height_not_adjusted_within_tolerance(self):
         """Test that object height is not adjusted when within tolerance."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         terrain.get_height_at.return_value = 10.0
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 11.0, 0.0)
@@ -240,8 +240,8 @@ class TestMapRebaserHeightAdjustment:
     def test_out_of_bounds_tracked_on_terrain_error(self):
         """Test that objects outside terrain bounds are tracked."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         terrain.get_height_at.side_effect = Exception("Out of terrain bounds")
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 0.0, 0.0)
@@ -277,8 +277,8 @@ class TestMapRebaserTscnParsing:
     def test_parse_tscn_extracts_objects(self):
         """Test that _parse_tscn extracts game objects correctly."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
@@ -305,8 +305,8 @@ class TestMapRebaserTscnParsing:
     def test_parse_tscn_skips_special_nodes(self):
         """Test that special nodes (HQ, Spawn, Combat, etc.) are skipped."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
@@ -340,8 +340,8 @@ class TestMapRebaserTscnParsing:
     def test_parse_tscn_extracts_position_correctly(self):
         """Test that positions are extracted correctly from transform matrix."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
@@ -367,8 +367,8 @@ class TestMapRebaserTscnParsing:
     def test_parse_tscn_handles_invalid_transform_data(self, capsys):
         """Test that invalid transform data is handled gracefully and error is printed."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
         rebaser = MapRebaser(terrain, offset_calc, None)
         test_tscn = Path(__file__).parent / "test_rebaser_invalid.tscn"
         test_tscn.write_text(
@@ -398,8 +398,8 @@ class TestMapRebaserTscnGeneration:
     def test_generate_tscn_creates_file(self):
         """Test that _generate_tscn creates output file."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
@@ -428,8 +428,8 @@ class TestMapRebaserTscnGeneration:
     def test_generate_tscn_includes_base_terrain_name(self):
         """Test that generated .tscn includes base terrain name."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         rebaser = MapRebaser(terrain, offset_calc, None)
 
@@ -454,8 +454,8 @@ class TestMapRebaserStatistics:
     def test_stats_includes_total_objects(self):
         """Test that statistics include total object count."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         offset_calc.calculate_centroid.return_value = Vector3(0.0, 0.0, 0.0)
         offset_calc.calculate_offset.return_value = Vector3(0.0, 0.0, 0.0)
@@ -491,8 +491,8 @@ class TestMapRebaserStatistics:
     def test_stats_tracks_height_adjusted_and_out_of_bounds(self):
         """Test that statistics track height adjustments and out of bounds objects."""
         # Arrange
-        terrain = Mock(spec=ITerrainProvider)
-        offset_calc = Mock(spec=ICoordinateOffset)
+        terrain = create_autospec(ITerrainProvider, instance=True)
+        offset_calc = create_autospec(ICoordinateOffset, instance=True)
 
         heights = [5.0, 10.0, None]
         height_calls = [0]

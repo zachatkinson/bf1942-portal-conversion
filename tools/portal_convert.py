@@ -33,7 +33,6 @@ from bfportal.engines.refractor.games.bf1942 import BF1942Engine
 from bfportal.generators.constants.clearance import (
     MANUAL_OFFSET_X_DEFAULT,
     MANUAL_OFFSET_Z_DEFAULT,
-    SPAWN_CLEARANCE_M,
 )
 from bfportal.generators.tscn_generator import TscnGenerator
 from bfportal.mappers.asset_mapper import AssetMapper
@@ -384,7 +383,9 @@ class PortalConverter:
 
             # Step 4: Skip automatic height adjustment - use Godot manual snapping instead
             print("\n📏 Height positioning...")
-            print("   ℹ️  Heights preserved from BF1942 (use Godot trimesh snapping for final placement)")
+            print(
+                "   ℹ️  Heights preserved from BF1942 (use Godot trimesh snapping for final placement)"
+            )
             print(f"   ℹ️  Terrain: {self.args.base_terrain} (snap assets manually in Godot editor)")
 
             # Step 5: Generate .tscn
@@ -473,7 +474,9 @@ class PortalConverter:
         # Return terrain's mesh center - BF1942 assets will center on this point
         # Terrain itself stays at (0,0,0) in Godot, matching Portal requirements
         return Vector3(
-            self.terrain.mesh_center_x, 0.0, self.terrain.mesh_center_z  # Terrain center X/Z  # Y=0 baseline
+            self.terrain.mesh_center_x,
+            0.0,
+            self.terrain.mesh_center_z,  # Terrain center X/Z  # Y=0 baseline
         )
 
     def _guess_theme(self) -> str:

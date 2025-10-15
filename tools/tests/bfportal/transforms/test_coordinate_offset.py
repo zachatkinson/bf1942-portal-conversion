@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 # Add tools directory to Python path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 from bfportal.core.interfaces import GameObject, Rotation, Team, Transform, Vector3
 from bfportal.transforms.coordinate_offset import CoordinateOffset

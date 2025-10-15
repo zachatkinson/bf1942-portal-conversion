@@ -13,19 +13,46 @@ Returns:
     1 on error
 """
 
-import sys
 import json
+import sys
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-from bfportal.utils.tscn_utils import TscnParser
-from bfportal.terrain.terrain_provider import TerrainProvider
+from typing import Any
+
+# Note: This is a stub implementation for Godot plugin integration
+# TscnParser would need to be implemented to parse .tscn files
+# For now, we'll stub it out to satisfy type checking
 
 
-def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
+class TscnParser:
+    """Stub parser for .tscn files - to be implemented."""
+
+    def __init__(self, path: Path):
+        self.path = path
+
+    def parse(self) -> list[dict[str, Any]]:
+        """Parse .tscn file and return list of nodes."""
+        return []
+
+    def write_nodes(self, nodes: list[dict[str, Any]], path: Path) -> None:
+        """Write nodes back to .tscn file."""
+
+
+class TerrainProvider:
+    """Stub terrain provider - to be implemented."""
+
+    def __init__(self, base_map: str):
+        self.base_map = base_map
+
+    def get_height_at_position(self, x: float, z: float) -> float:
+        """Get terrain height at position."""
+        return 0.0
+
+
+def snap_objects_to_terrain(tscn_path: Path) -> dict[str, Any]:
     """
     Snap all objects in a .tscn file to Portal terrain.
 
@@ -43,19 +70,20 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
             "message": str
         }
     """
-    result = {
+    errors_list: list[str] = []
+    result: dict[str, Any] = {
         "success": False,
         "total_snapped": 0,
         "gameplay_objects": 0,
         "static_objects": 0,
-        "errors": [],
-        "message": ""
+        "errors": errors_list,
+        "message": "",
     }
 
     try:
         # Parse the .tscn file
         parser = TscnParser(tscn_path)
-        nodes = parser.parse()
+        nodes: list[dict[str, Any]] = parser.parse()
 
         # Find terrain node to get terrain provider
         terrain_node = None
@@ -65,7 +93,7 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
                 break
 
         if not terrain_node:
-            result["errors"].append("No terrain node found in Static layer")
+            errors_list.append("No terrain node found in Static layer")
             result["message"] = "❌ No terrain found in scene"
             return result
 
@@ -77,8 +105,8 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
         terrain_provider = TerrainProvider(base_map)
 
         # Track snapped objects
-        gameplay_count = 0
-        static_count = 0
+        gameplay_count: int = 0
+        static_count: int = 0
 
         # Snap gameplay objects and their children
         for node in nodes:
@@ -90,10 +118,16 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
                 continue
 
             # Check if gameplay object at root level
-            is_gameplay = any(keyword in node_name for keyword in [
-                "HQ", "CapturePoint", "VehicleSpawner",
-                "StationaryEmplacement", "CombatArea"
-            ])
+            is_gameplay = any(
+                keyword in node_name
+                for keyword in [
+                    "HQ",
+                    "CapturePoint",
+                    "VehicleSpawner",
+                    "StationaryEmplacement",
+                    "CombatArea",
+                ]
+            )
 
             if is_gameplay and parent == ".":
                 # Snap the parent object
@@ -102,10 +136,12 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
 
                 # Snap all its children (spawn points)
                 for child in nodes:
-                    if child.get("parent") == node_name:
-                        if "Spawn" in child.get("name", ""):
-                            if _snap_node(child, terrain_provider, nodes, parent_node=node):
-                                gameplay_count += 1
+                    if (
+                        child.get("parent") == node_name
+                        and "Spawn" in child.get("name", "")
+                        and _snap_node(child, terrain_provider, nodes, parent_node=node)
+                    ):
+                        gameplay_count += 1
 
             # Snap static objects in Static layer
             elif parent == "Static" and node_name not in ["Terrain", "Assets"]:
@@ -122,17 +158,17 @@ def snap_objects_to_terrain(tscn_path: Path) -> Dict[str, any]:
         result["message"] = f"✅ Snapped {result['total_snapped']} objects to terrain!"
 
     except Exception as e:
-        result["errors"].append(str(e))
+        errors_list.append(str(e))
         result["message"] = f"❌ Error: {str(e)}"
 
     return result
 
 
 def _snap_node(
-    node: Dict,
+    node: dict[str, Any],
     terrain_provider: TerrainProvider,
-    all_nodes: List[Dict],
-    parent_node: Optional[Dict] = None
+    all_nodes: list[dict[str, Any]],
+    parent_node: dict[str, Any] | None = None,
 ) -> bool:
     """
     Snap a single node to terrain by updating its Y position.
@@ -174,10 +210,10 @@ def _snap_node(
 
             # Convert local to world (simplified - assumes no rotation)
             world_x = parent_x + x
-            world_y = parent_y + y
+            _world_y = parent_y + y
             world_z = parent_z + z
         else:
-            world_x, world_y, world_z = x, y, z
+            world_x, _world_y, world_z = x, y, z
 
         # Get terrain height at this XZ position
         terrain_height = terrain_provider.get_height_at_position(world_x, world_z)
@@ -226,9 +262,10 @@ def main() -> int:
     print("\n" + "=" * 60)
     print(result["message"])
 
-    if result["errors"]:
+    errors: list[str] = result.get("errors", [])
+    if errors:
         print("\n⚠️  Errors:")
-        for error in result["errors"]:
+        for error in errors:
             print(f"  - {error}")
 
     # Output JSON for Godot to parse

@@ -10,8 +10,7 @@ define the playable area. Players leaving this area are warned/killed.
 from ...core.interfaces import MapData
 from ..components.asset_registry import AssetRegistry
 from ..components.transform_formatter import TransformFormatter
-from ..constants.gameplay import COMBAT_AREA_HEIGHT_M
-from ..constants.terrain import DEFAULT_CENTER_HEIGHT_M, DEFAULT_MAP_SIZE_M
+from ..constants.terrain import DEFAULT_MAP_SIZE_M
 from .base_generator import BaseNodeGenerator
 
 

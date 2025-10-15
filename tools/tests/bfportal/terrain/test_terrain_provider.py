@@ -232,7 +232,7 @@ class TestCustomHeightmapProvider:
         heightmap_path.write_bytes(b"fake png data")
 
         # Act
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),
@@ -293,7 +293,7 @@ class TestCustomHeightmapProvider:
         heightmap_path.write_bytes(b"fake png data")
         mock_heightmap_image.getpixel = Mock(spec=[], return_value=128)  # Mid-gray
 
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),
@@ -312,7 +312,7 @@ class TestCustomHeightmapProvider:
         heightmap_path = tmp_path / "heightmap.png"
         heightmap_path.write_bytes(b"fake png data")
 
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),
@@ -341,7 +341,7 @@ class TestCustomHeightmapProvider:
         heightmap_path.write_bytes(b"fake png data")
         mock_heightmap_image.getpixel = Mock(spec=[], return_value=(128, 128, 128))  # RGB tuple
 
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),
@@ -360,7 +360,7 @@ class TestCustomHeightmapProvider:
         heightmap_path = tmp_path / "heightmap.png"
         heightmap_path.write_bytes(b"fake png data")
 
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),
@@ -380,7 +380,7 @@ class TestCustomHeightmapProvider:
         heightmap_path = tmp_path / "heightmap.png"
         heightmap_path.write_bytes(b"fake png data")
 
-        with patch("PIL.Image.open", return_value=mock_heightmap_image):
+        with patch("PIL.Image.open", autospec=True, return_value=mock_heightmap_image):
             provider = CustomHeightmapProvider(
                 heightmap_path=heightmap_path,
                 terrain_size=(2048.0, 2048.0),

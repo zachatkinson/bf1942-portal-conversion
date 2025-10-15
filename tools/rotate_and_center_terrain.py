@@ -83,9 +83,7 @@ def main():
         description="Rotate MP_Tungsten terrain 90° clockwise for portrait mode"
     )
     parser.add_argument(
-        "--backup",
-        action="store_true",
-        help="Create a .tscn.backup file before modifying"
+        "--backup", action="store_true", help="Create a .tscn.backup file before modifying"
     )
     args = parser.parse_args()
 

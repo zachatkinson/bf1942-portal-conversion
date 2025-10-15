@@ -6,6 +6,19 @@ Single Responsibility: Map BF1942 vehicle types to BF6 Portal VehicleType enum v
 This module provides a mapping system that converts BF1942 vehicle identifiers
 (like "PanzerIV", "Sherman", "T34") to corresponding BF6 Portal VehicleType
 enum values (like "Leopard", "Abrams", "M2Bradley").
+
+MAPPING CONVENTION (applies to all BF1942 maps):
+================================================
+    Axis powers → non-NATO assets (Leopard, Eurocopter, SU57)
+    Allied powers → NATO/American assets (Abrams, F16, AH64)
+
+This ensures consistent faction alignment across all theaters (Europe, Pacific, Africa):
+    - German, Italian, Japanese vehicles → non-NATO modern equivalents
+    - American, British, Soviet vehicles → NATO/American modern equivalents
+
+The BF1942Engine automatically swaps teams so:
+    - BF1942 Team 1 (Axis) → Portal Team 2 (non-NATO)
+    - BF1942 Team 2 (Allied) → Portal Team 1 (NATO/American)
 """
 
 from dataclasses import dataclass
@@ -69,11 +82,13 @@ class VehicleMapper:
         # ========================================
         # TANKS - Heavy Armor
         # ========================================
+        # Convention: Axis → non-NATO (Leopard), Allied → NATO (Abrams)
 
-        # German Tanks → Leopard
+        # German Tanks (Axis) → Leopard (non-NATO)
         german_tanks = [
             "PanzerIV",
             "Panzer4",
+            "panzeriv",
             "PanzerVI",
             "Tiger",
             "TigerTank",
@@ -86,16 +101,18 @@ class VehicleMapper:
                 bf6_vehicle_type="Leopard",
                 era="WW2",
                 category="Tank",
-                notes="German WW2 tank → Modern German Leopard 2",
+                notes="German WW2 tank (Axis) → Leopard 2 (non-NATO)",
             )
 
-        # American Tanks → Abrams
+        # American Tanks (Allied) → Abrams (NATO)
         american_tanks = [
             "Sherman",
+            "sherman",
             "ShermanTank",
             "M4Sherman",
             "M4A3",
             "M10",
+            "m10",
             "M10Wolverine",
         ]
         for tank in american_tanks:
@@ -104,14 +121,15 @@ class VehicleMapper:
                 bf6_vehicle_type="Abrams",
                 era="WW2",
                 category="Tank",
-                notes="American WW2 tank → Modern American M1 Abrams",
+                notes="American WW2 tank (Allied) → M1 Abrams (NATO)",
             )
 
-        # Soviet Tanks → Abrams (closest equivalent)
+        # Soviet Tanks (Allied) → Abrams (NATO)
         soviet_tanks = [
             "T34",
             "T-34",
             "T3485",
+            "T34-85",
             "T-34-85",
             "KV1",
             "KV-1",
@@ -122,10 +140,10 @@ class VehicleMapper:
                 bf6_vehicle_type="Abrams",
                 era="WW2",
                 category="Tank",
-                notes="Soviet WW2 tank → Modern M1 Abrams",
+                notes="Soviet WW2 tank (Allied) → M1 Abrams (NATO)",
             )
 
-        # British Tanks → Leopard
+        # British Tanks (Allied) → Abrams (NATO)
         british_tanks = [
             "Churchill",
             "ChurchillTank",
@@ -134,36 +152,41 @@ class VehicleMapper:
         for tank in british_tanks:
             mappings[tank] = VehicleMapping(
                 bf1942_name=tank,
-                bf6_vehicle_type="Leopard",
+                bf6_vehicle_type="Abrams",
                 era="WW2",
                 category="Tank",
-                notes="British WW2 tank → Modern Leopard 2",
+                notes="British WW2 tank (Allied) → M1 Abrams (NATO)",
             )
 
-        # Japanese Tanks → Cheetah (lighter tanks)
+        # Japanese Tanks (Axis) → Leopard (non-NATO)
         japanese_tanks = [
             "TypeChiHa",
             "Chi-Ha",
+            "chi-ha",
             "Type97",
         ]
         for tank in japanese_tanks:
             mappings[tank] = VehicleMapping(
                 bf1942_name=tank,
-                bf6_vehicle_type="Cheetah",
+                bf6_vehicle_type="Leopard",
                 era="WW2",
                 category="Tank",
-                notes="Japanese light WW2 tank → Light modern vehicle",
+                notes="Japanese light WW2 tank (Axis) → Leopard 2 (non-NATO)",
             )
 
         # ========================================
         # TANK DESTROYERS & ASSAULT GUNS
         # ========================================
 
+        # German TD/assault guns (Axis) → CV90 (non-NATO)
         german_td = [
             "StuG",
             "StuG3",
             "StuGIII",
+            "SturmGeschutz",
+            "sturmgeschutz",
             "Wespe",
+            "wespe",
         ]
         for td in german_td:
             mappings[td] = VehicleMapping(
@@ -171,12 +194,14 @@ class VehicleMapper:
                 bf6_vehicle_type="CV90",
                 era="WW2",
                 category="Tank Destroyer",
-                notes="German assault gun/TD → Modern IFV",
+                notes="German assault gun/TD (Axis) → CV90 (non-NATO)",
             )
 
+        # American SPG (Allied) → M2Bradley (NATO)
         american_td = [
             "Priest",
             "M7Priest",
+            "Sexton",
         ]
         for td in american_td:
             mappings[td] = VehicleMapping(
@@ -184,7 +209,7 @@ class VehicleMapper:
                 bf6_vehicle_type="M2Bradley",
                 era="WW2",
                 category="SPG",
-                notes="American self-propelled gun → Modern Bradley IFV",
+                notes="American self-propelled gun (Allied) → M2Bradley (NATO)",
             )
 
         # ========================================
@@ -194,11 +219,16 @@ class VehicleMapper:
         # Jeeps & Light Vehicles → Quadbike
         light_vehicles = [
             "Willys",
+            "Willy",
+            "willy",
             "WillysMB",
             "Jeep",
             "Kubelwagen",
+            "kubelwagen",
             "GAZ",
             "GAZ67",
+            "Greyhound",
+            "greyhound",
         ]
         for vehicle in light_vehicles:
             mappings[vehicle] = VehicleMapping(
@@ -212,8 +242,10 @@ class VehicleMapper:
         # APCs & Halftracks → Vector
         apcs = [
             "Hanomag",
+            "hanomag",
             "M3",
             "M3A1",
+            "m3a1",
             "Halftrack",
         ]
         for apc in apcs:
@@ -231,9 +263,13 @@ class VehicleMapper:
 
         aa_vehicles = [
             "Flak38",
+            "flak38",
             "Flak36",
             "Flak88",
             "WirbelWind",
+            "Flakpanzer",
+            "FlakPanzer",
+            "flakpanzer",
             "M16",
             "M16AAA",
         ]
@@ -249,14 +285,16 @@ class VehicleMapper:
         # ========================================
         # AIRCRAFT - DIVE BOMBERS → ATTACK HELICOPTERS
         # ========================================
-        # User preference: Dive bombers (Stuka, IL-2) map to attack helicopters
-        # for modern ground attack role
+        # Convention: Axis → non-NATO, Allied → NATO
+        # Dive bombers map to attack helicopters for modern ground attack role
 
-        # Axis Dive Bombers → Eurocopter (non-NATO attack heli)
+        # Axis Dive Bombers (German) → Eurocopter (non-NATO)
         axis_bombers = [
             "Ju87",
             "Stuka",
+            "stuka",
             "Ju88",
+            "Ju88A",
         ]
         for aircraft in axis_bombers:
             mappings[aircraft] = VehicleMapping(
@@ -264,136 +302,384 @@ class VehicleMapper:
                 bf6_vehicle_type="Eurocopter",
                 era="WW2",
                 category="Dive Bomber",
-                notes="Axis WW2 dive bomber → Modern Eurocopter Tiger (non-NATO attack heli)",
+                notes="Axis dive bomber → Eurocopter Tiger (non-NATO)",
             )
 
-        # Soviet Dive Bombers → AH64 Apache (NATO attack heli)
-        soviet_bombers = [
+        # Allied Dive Bombers (Soviet) → AH64 Apache (NATO/American)
+        allied_bombers = [
             "IL2",
             "IL-2",
             "Ilyushin",
             "Sturmovik",
         ]
-        for aircraft in soviet_bombers:
+        for aircraft in allied_bombers:
             mappings[aircraft] = VehicleMapping(
                 bf1942_name=aircraft,
                 bf6_vehicle_type="AH64",
                 era="WW2",
                 category="Dive Bomber",
-                notes="Soviet WW2 dive bomber → Modern AH-64 Apache (NATO attack heli)",
+                notes="Allied dive bomber → AH-64 Apache (NATO/American)",
             )
 
-        # Allied Bombers → JAS39/F16 (prefer ground attack role)
-        allied_bombers = [
+        # Allied Heavy Bombers → F16 (NATO/American)
+        heavy_bombers = [
             "B17",
+            "b17",
             "B-17",
             "Lancaster",
         ]
-        for bomber in allied_bombers:
+        for bomber in heavy_bombers:
             mappings[bomber] = VehicleMapping(
                 bf1942_name=bomber,
-                bf6_vehicle_type="JAS39",
+                bf6_vehicle_type="F16",
                 era="WW2",
                 category="Bomber",
-                notes="WW2 strategic bomber → Modern JAS39 multirole",
+                notes="WW2 strategic bomber (Allied) → F-16 (NATO/American)",
             )
 
         # ========================================
-        # AIRCRAFT - FIGHTERS (Keep for maps with pure fighters)
+        # AIRCRAFT - FIGHTERS
         # ========================================
+        # Convention: Axis → non-NATO (SU57), Allied → NATO (F16)
 
-        # Axis Fighters → F16 (prefer multirole)
+        # Axis Fighters (German, Japanese) → SU57 (non-NATO)
         axis_fighters = [
             "BF109",
             "Bf109",
+            "bf109",
             "Me109",
             "Messerschmitt",
             "FW190",
             "Focke-Wulf",
+            "bf110",
             "Zero",
+            "zero",
             "A6M",
         ]
         for fighter in axis_fighters:
             mappings[fighter] = VehicleMapping(
                 bf1942_name=fighter,
-                bf6_vehicle_type="F16",
+                bf6_vehicle_type="SU57",
                 era="WW2",
                 category="Fighter",
-                notes="Axis WW2 fighter → Modern F-16 multirole (better for ground attack)",
+                notes="Axis fighter → SU-57 (non-NATO)",
             )
 
-        # Allied Fighters → JAS39/F16
+        # Allied Fighters → F16 (NATO/American)
         allied_fighters = [
             "P51",
             "P-51",
             "Mustang",
+            "mustang",
             "Spitfire",
+            "spitfire",
             "Yak9",
+            "yak9",
             "Yak-9",
+            "jak9",
+            "Corsair",
+            "corsair",
         ]
-        for i, fighter in enumerate(allied_fighters):
-            # Alternate between JAS39 and F16 for variety
-            vehicle_type = "JAS39" if i % 2 == 0 else "F16"
+        for fighter in allied_fighters:
             mappings[fighter] = VehicleMapping(
                 bf1942_name=fighter,
-                bf6_vehicle_type=vehicle_type,
+                bf6_vehicle_type="F16",
                 era="WW2",
                 category="Fighter",
-                notes=f"Allied WW2 fighter → Modern {vehicle_type} multirole",
+                notes="Allied fighter → F-16 (NATO/American)",
             )
 
         # ========================================
-        # HELICOPTERS
+        # TRANSPORT AIRCRAFT & HELICOPTERS
         # ========================================
-        # BF1942 had no helicopters, but we can add attack helis for modern gameplay
+        # Convention: Axis → non-NATO (Eurocopter), Allied → NATO (UH60)
 
-        # Attack Helicopters (for custom/modern variants)
-        attack_helis = [
-            "AttackHeli",
-            "Apache",
-            "AH64",
+        # Allied Transport Aircraft → UH60 (NATO)
+        allied_transports = [
+            "C47",
+            "c47",
+            "Dakota",
+            "SBD",
+            "sbd",
+            "Dauntless",
         ]
-        for heli in attack_helis:
-            mappings[heli] = VehicleMapping(
-                bf1942_name=heli,
-                bf6_vehicle_type="AH64",
-                era="Modern",
-                category="Attack Helicopter",
-                notes="Attack helicopter → AH-64 Apache",
-            )
-
-        # Transport Helicopters
-        transport_helis = [
-            "TransportHeli",
-            "BlackHawk",
-            "UH60",
-        ]
-        for heli in transport_helis:
-            mappings[heli] = VehicleMapping(
-                bf1942_name=heli,
+        for transport in allied_transports:
+            mappings[transport] = VehicleMapping(
+                bf1942_name=transport,
                 bf6_vehicle_type="UH60",
-                era="Modern",
-                category="Transport Helicopter",
-                notes="Transport helicopter → UH-60 Black Hawk",
+                era="WW2",
+                category="Transport Aircraft",
+                notes="Allied transport aircraft → UH-60 Black Hawk (NATO)",
+            )
+
+        # German Transport/Recon Aircraft → Eurocopter (non-NATO)
+        axis_transports = [
+            "Fi156",
+            "fi156",
+            "Storch",
+            "Flettner",
+            "flettner",
+        ]
+        for transport in axis_transports:
+            mappings[transport] = VehicleMapping(
+                bf1942_name=transport,
+                bf6_vehicle_type="Eurocopter",
+                era="WW2",
+                category="Transport Aircraft",
+                notes="Axis transport/recon aircraft → Eurocopter Tiger (non-NATO)",
             )
 
         # ========================================
-        # BOATS & NAVAL
+        # EXPERIMENTAL & SECRET WEAPONS
+        # ========================================
+        # Convention: Axis → non-NATO, Allied → NATO
+
+        # Axis Experimental Aircraft → SU57 (non-NATO)
+        axis_experimental = [
+            "Natter",
+            "natter",
+            "HO229",
+            "ho229",
+            "Ho229",
+            "Me163",
+            "me163",
+            "Komet",
+            "V2",
+            "v2",
+        ]
+        for experimental in axis_experimental:
+            mappings[experimental] = VehicleMapping(
+                bf1942_name=experimental,
+                bf6_vehicle_type="SU57",
+                era="WW2",
+                category="Experimental Aircraft",
+                notes="Axis experimental/rocket aircraft → SU-57 (non-NATO)",
+            )
+
+        # Allied Experimental Aircraft → F16 (NATO)
+        allied_experimental = [
+            "Goblin",
+            "goblin",
+            "XF85",
+            "xf85",
+            "AW52",
+            "aw52",
+        ]
+        for experimental in allied_experimental:
+            mappings[experimental] = VehicleMapping(
+                bf1942_name=experimental,
+                bf6_vehicle_type="F16",
+                era="WW2",
+                category="Experimental Aircraft",
+                notes="Allied experimental aircraft → F-16 (NATO/American)",
+            )
+
+        # ========================================
+        # ARTILLERY & STATIONARY WEAPONS
+        # ========================================
+        # These don't convert to vehicles, but map them for completeness
+
+        # Axis Artillery → Gepard (closest available)
+        axis_artillery = [
+            "Wespe",
+            "wespe",
+            "Nebelwerfer",
+            "nebelwerfer",
+            "Wasserfall",
+            "wasserfall",
+            "Flak36",
+            "flak36",
+            "Flak88",
+            "flak88",
+            "PAK40",
+            "pak40",
+        ]
+        for arty in axis_artillery:
+            mappings[arty] = VehicleMapping(
+                bf1942_name=arty,
+                bf6_vehicle_type="Gepard",
+                era="WW2",
+                category="Artillery",
+                notes="Axis artillery/AA → Gepard SPAAG (non-NATO, stationary weapons unsupported)",
+            )
+
+        # Allied Artillery → Gepard (closest available)
+        allied_artillery = [
+            "Katyusha",
+            "katyusha",
+            "Priest",
+            "priest",
+            "Sexton",
+            "sexton",
+        ]
+        for arty in allied_artillery:
+            mappings[arty] = VehicleMapping(
+                bf1942_name=arty,
+                bf6_vehicle_type="M2Bradley",
+                era="WW2",
+                category="Artillery",
+                notes="Allied artillery/SPG → M2Bradley (NATO, mobile fire support)",
+            )
+
+        # ========================================
+        # NAVAL - CAPITAL SHIPS
+        # ========================================
+        # Large ships don't have Portal equivalents - map to hovercraft as placeholder
+        # Convention: Axis → non-NATO themed, Allied → NATO themed
+
+        # Axis Capital Ships → Flyer60 (placeholder)
+        axis_capital_ships = [
+            "Tirpitz",
+            "tirpitz",
+            "Bismarck",
+            "bismarck",
+            "Yamato",
+            "yamato",
+            "Shokaku",
+            "shokaku",
+            "Akagi",
+            "akagi",
+        ]
+        for ship in axis_capital_ships:
+            mappings[ship] = VehicleMapping(
+                bf1942_name=ship,
+                bf6_vehicle_type="Flyer60",
+                era="WW2",
+                category="Naval - Capital Ship",
+                notes="Axis capital ship → Flyer60 hovercraft (PLACEHOLDER - capital ships not supported)",
+            )
+
+        # Allied Capital Ships → Flyer60 (placeholder)
+        allied_capital_ships = [
+            "Enterprise",
+            "enterprise",
+            "Lexington",
+            "lexington",
+            "PrinceOfWales",
+            "princeofwales",
+            "Missouri",
+            "missouri",
+        ]
+        for ship in allied_capital_ships:
+            mappings[ship] = VehicleMapping(
+                bf1942_name=ship,
+                bf6_vehicle_type="Flyer60",
+                era="WW2",
+                category="Naval - Capital Ship",
+                notes="Allied capital ship → Flyer60 hovercraft (PLACEHOLDER - capital ships not supported)",
+            )
+
+        # ========================================
+        # NAVAL - DESTROYERS & CRUISERS
         # ========================================
 
-        boats = [
+        # Axis Destroyers → Flyer60
+        axis_destroyers = [
+            "Hatsuzuki",
+            "hatsuzuki",
+            "Fletcher",
+            "fletcher",
+        ]
+        for ship in axis_destroyers:
+            mappings[ship] = VehicleMapping(
+                bf1942_name=ship,
+                bf6_vehicle_type="Flyer60",
+                era="WW2",
+                category="Naval - Destroyer",
+                notes="Axis destroyer → Flyer60 hovercraft (placeholder)",
+            )
+
+        # Allied Destroyers → Flyer60
+        allied_destroyers = [
+            "Gato",
+            "gato",
+            "Type93",
+            "type93",
+        ]
+        for ship in allied_destroyers:
+            mappings[ship] = VehicleMapping(
+                bf1942_name=ship,
+                bf6_vehicle_type="Flyer60",
+                era="WW2",
+                category="Naval - Destroyer",
+                notes="Allied destroyer/submarine → Flyer60 hovercraft (placeholder)",
+            )
+
+        # ========================================
+        # NAVAL - LANDING CRAFT & SMALL BOATS
+        # ========================================
+
+        landing_craft = [
             "LandingCraft",
             "LCVP",
+            "lcvp",
             "Higgins",
             "DUKW",
+            "dukw",
+            "Daihatsu",
+            "daihatsu",
+            "LCM",
+            "lcm",
+            "LVT",
+            "lvt",
         ]
-        for boat in boats:
+        for boat in landing_craft:
             mappings[boat] = VehicleMapping(
                 bf1942_name=boat,
                 bf6_vehicle_type="Flyer60",
                 era="WW2",
-                category="Naval",
-                notes="WW2 landing craft → Modern hovercraft",
+                category="Naval - Landing Craft",
+                notes="WW2 landing craft → Modern Flyer60 hovercraft",
+            )
+
+        # ========================================
+        # MOTORCYCLES & BICYCLES
+        # ========================================
+
+        motorcycles = [
+            "Motorcycle",
+            "motorcycle",
+            "R75",
+            "r75",
+            "Zundapp",
+            "zundapp",
+            "Bicycle",
+            "bicycle",
+        ]
+        for cycle in motorcycles:
+            mappings[cycle] = VehicleMapping(
+                bf1942_name=cycle,
+                bf6_vehicle_type="Quadbike",
+                era="WW2",
+                category="Motorcycle",
+                notes="WW2 motorcycle/bicycle → Modern quadbike",
+            )
+
+        # ========================================
+        # SPECIAL STRUCTURES & OBJECTS
+        # ========================================
+        # These aren't vehicles but appear in spawner templates
+        # Map to closest available vehicle type
+
+        special_objects = [
+            "DefGun",
+            "defgun",
+            "AAGun",
+            "aagun",
+            "Radar",
+            "radar",
+            "Factory",
+            "factory",
+            "ControlTower",
+            "controltower",
+        ]
+        for obj in special_objects:
+            mappings[obj] = VehicleMapping(
+                bf1942_name=obj,
+                bf6_vehicle_type="Gepard",
+                era="WW2",
+                category="Special Structure",
+                notes="WW2 special structure → Gepard (placeholder - structures not supported as vehicles)",
             )
 
         return mappings

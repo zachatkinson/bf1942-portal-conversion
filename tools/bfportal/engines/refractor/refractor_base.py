@@ -60,10 +60,27 @@ class RefractorCoordinateSystem(ICoordinateSystem):
 
         Returns:
             Rotation in Portal coordinate system
+
+        Note:
+            Since we negate the Z-axis to flip north/south orientation,
+            we must also add 180° to the yaw rotation to keep objects
+            facing the same direction. Without this, objects would face
+            the opposite direction after the Z-flip.
+
+            Example: Tank at (0, 0, +100) facing north (+Z direction, yaw=0°)
+                    becomes (0, 0, -100) facing south (-Z direction)
+                    Must add 180° to yaw so it still faces its original direction.
         """
-        # Both use Euler angles, but may need axis adjustments
-        # Subclasses can override if needed
-        return Rotation(rotation.pitch, rotation.yaw, rotation.roll)
+        # Add 180° to yaw to compensate for Z-axis negation
+        adjusted_yaw = rotation.yaw + 180.0
+
+        # Normalize to [-180, 180] range
+        while adjusted_yaw > 180.0:
+            adjusted_yaw -= 360.0
+        while adjusted_yaw < -180.0:
+            adjusted_yaw += 360.0
+
+        return Rotation(rotation.pitch, adjusted_yaw, rotation.roll)
 
     def get_scale_factor(self) -> float:
         """Get the scale factor between Refractor and Portal.
@@ -464,7 +481,7 @@ class RefractorEngine(IGameEngine):
                     radius = float(obj.get("properties", {}).get("radius", 50.0))
 
                     # Auto-generate label (A, B, C, etc.)
-                    label = chr(ord('A') + len(capture_points))
+                    label = chr(ord("A") + len(capture_points))
 
                     cp = CapturePoint(
                         name=obj.get("name", f"CP_{len(capture_points) + 1}"),

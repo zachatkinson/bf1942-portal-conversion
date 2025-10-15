@@ -17,25 +17,28 @@ from create_experience import create_experience_file, main
 class TestCreateExperienceFile:
     """Tests for create_experience_file() function."""
 
-    def test_creates_experience_with_valid_spatial_file(self, tmp_path: Path):
+    def test_creates_experience_with_valid_spatial_file(self, tmp_path: Path, monkeypatch):
         """Test creating experience file from valid spatial.json."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path so "experiences" dir is created there
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Conquest",
+        )
 
         # Assert
         assert output_path.exists()
+        assert output_path.parent.name == "experiences"
         experience_data = json.loads(output_path.read_text())
         assert experience_data["name"] == "TestMap - BF1942 Classic"
         assert experience_data["gameMode"] == "Conquest"
@@ -57,7 +60,7 @@ class TestCreateExperienceFile:
                 game_mode="Conquest",
             )
 
-    def test_uses_custom_description_when_provided(self, tmp_path: Path):
+    def test_uses_custom_description_when_provided(self, tmp_path: Path, monkeypatch):
         """Test custom description is used when provided."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
@@ -65,59 +68,65 @@ class TestCreateExperienceFile:
         spatial_path.write_text(spatial_data)
         custom_desc = "Custom experience description"
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-                description=custom_desc,
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Conquest",
+            description=custom_desc,
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
         assert experience_data["description"] == custom_desc
 
-    def test_creates_default_description_when_none_provided(self, tmp_path: Path):
+    def test_creates_default_description_when_none_provided(self, tmp_path: Path, monkeypatch):
         """Test default description is generated when none provided."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="Kursk",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="Kursk",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Conquest",
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
         assert "Kursk" in experience_data["description"]
         assert "Battlefield 1942" in experience_data["description"]
 
-    def test_encodes_spatial_data_as_base64(self, tmp_path: Path):
+    def test_encodes_spatial_data_as_base64(self, tmp_path: Path, monkeypatch):
         """Test spatial data is properly base64 encoded."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Conquest",
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
@@ -127,44 +136,48 @@ class TestCreateExperienceFile:
         # Base64 encoded data should be present
         assert len(spatial_attachment["attachmentData"]["original"]) > 0
 
-    def test_sets_correct_map_rotation_id_pattern(self, tmp_path: Path):
+    def test_sets_correct_map_rotation_id_pattern(self, tmp_path: Path, monkeypatch):
         """Test map rotation ID follows MP_<MapName>-ModBuilderCustom0 pattern."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Outskirts",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Outskirts",
+            max_players_per_team=32,
+            game_mode="Conquest",
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
         rotation_id = experience_data["mapRotation"][0]["id"]
         assert rotation_id == "MP_Outskirts-ModBuilderCustom0"
 
-    def test_sets_team_composition_correctly(self, tmp_path: Path):
+    def test_sets_team_composition_correctly(self, tmp_path: Path, monkeypatch):
         """Test team composition is set correctly for both teams."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=64,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=64,
+            game_mode="Conquest",
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
@@ -173,42 +186,53 @@ class TestCreateExperienceFile:
         assert team_composition[0][1]["humanCapacity"] == 64
         assert team_composition[1][1]["humanCapacity"] == 64
 
-    def test_creates_experiences_directory_if_missing(self, tmp_path: Path):
+    def test_creates_experiences_directory_if_missing(self, tmp_path: Path, monkeypatch):
         """Test experiences directory is created if it doesn't exist."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
+        # Ensure experiences directory doesn't exist yet
+        experiences_dir = tmp_path / "experiences"
+        assert not experiences_dir.exists()
+
         # Act
-        with patch("create_experience.Path.mkdir") as mock_mkdir:
-            create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Conquest",
+        )
 
-            # Assert
-            mock_mkdir.assert_called_once_with(exist_ok=True)
+        # Assert - Directory should now exist
+        assert experiences_dir.exists()
+        assert experiences_dir.is_dir()
+        # Convert to absolute path for comparison (output_path.parent is relative)
+        assert output_path.parent.resolve() == experiences_dir
 
-    def test_supports_different_game_modes(self, tmp_path: Path):
+    def test_supports_different_game_modes(self, tmp_path: Path, monkeypatch):
         """Test experience creation with different game modes."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "test.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Change working directory to tmp_path
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("create_experience.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Rush",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            game_mode="Rush",
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
@@ -218,15 +242,20 @@ class TestCreateExperienceFile:
 class TestMainFunction:
     """Tests for main() CLI entry point."""
 
-    def test_returns_error_when_spatial_file_missing(self):
+    def test_returns_error_when_spatial_file_missing(self, tmp_path: Path):
         """Test main returns error code when spatial file doesn't exist."""
         # Arrange
         test_args = ["create_experience.py", "NonExistentMap"]
+        nonexistent_spatial = tmp_path / "NonExistentMap.spatial.json"
 
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.Path.exists", return_value=False),
+            patch(
+                "create_experience.get_spatial_json_path",
+                autospec=True,
+                return_value=nonexistent_spatial,
+            ),
         ):
             result = main()
 
@@ -240,18 +269,25 @@ class TestMainFunction:
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "TestMap.spatial.json"
         spatial_path.write_text(spatial_data)
+        experience_path = tmp_path / "TestMap_Experience.json"
 
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.get_spatial_json_path", return_value=spatial_path),
-            patch("create_experience.create_experience_file") as mock_create,
+            patch(
+                "create_experience.get_spatial_json_path", autospec=True, return_value=spatial_path
+            ),
+            patch(
+                "create_experience.create_experience_file",
+                autospec=True,
+                return_value=experience_path,
+            ) as mock_create,
         ):
-            mock_create.return_value = tmp_path / "TestMap_Experience.json"
             result = main()
 
         # Assert
         assert result == 0
+        mock_create.assert_called_once()  # Verify function was called
 
     def test_main_lists_available_spatial_files_when_file_missing_returns_error(
         self, tmp_path: Path, capsys
@@ -263,15 +299,21 @@ class TestMainFunction:
         levels_dir.mkdir(parents=True)
         (levels_dir / "Kursk.spatial.json").write_text("{}")
         (levels_dir / "ElAlamein.spatial.json").write_text("{}")
-
-        # Mock spatial path to non-existent file, and mock get_project_root to return tmp_path
         nonexistent_spatial = tmp_path / "FbExportData" / "levels" / "NonExistentMap.spatial.json"
 
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.get_spatial_json_path", return_value=nonexistent_spatial),
-            patch("bfportal.generators.constants.paths.get_project_root", return_value=tmp_path),
+            patch(
+                "create_experience.get_spatial_json_path",
+                autospec=True,
+                return_value=nonexistent_spatial,
+            ),
+            patch(
+                "bfportal.generators.constants.paths.get_project_root",
+                autospec=True,
+                return_value=tmp_path,
+            ),
         ):
             result = main()
 
@@ -290,15 +332,21 @@ class TestMainFunction:
         test_args = ["create_experience.py", "TestMap"]
         levels_dir = tmp_path / "FbExportData" / "levels"
         levels_dir.mkdir(parents=True)
-
-        # Mock spatial path to non-existent file, and mock get_project_root to return tmp_path
         nonexistent_spatial = tmp_path / "FbExportData" / "levels" / "TestMap.spatial.json"
 
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.get_spatial_json_path", return_value=nonexistent_spatial),
-            patch("bfportal.generators.constants.paths.get_project_root", return_value=tmp_path),
+            patch(
+                "create_experience.get_spatial_json_path",
+                autospec=True,
+                return_value=nonexistent_spatial,
+            ),
+            patch(
+                "bfportal.generators.constants.paths.get_project_root",
+                autospec=True,
+                return_value=tmp_path,
+            ),
         ):
             result = main()
 
@@ -319,9 +367,12 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.get_spatial_json_path", return_value=spatial_path),
+            patch(
+                "create_experience.get_spatial_json_path", autospec=True, return_value=spatial_path
+            ),
             patch(
                 "create_experience.create_experience_file",
+                autospec=True,
                 side_effect=ValueError("Test exception"),
             ),
         ):

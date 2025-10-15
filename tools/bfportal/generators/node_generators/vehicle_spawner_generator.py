@@ -83,17 +83,9 @@ class VehicleSpawnerGenerator(BaseNodeGenerator):
                 # Set VehicleType enum index
                 enum_index = BF6_VEHICLE_TYPE_ENUM[bf6_vehicle_type]
                 lines.append(f"VehicleType = {enum_index}")
-
-                # Add comment for clarity
-                mapping_info = self.vehicle_mapper.get_mapping_info(bf1942_vehicle)
-                if mapping_info:
-                    lines.append(
-                        f"# {bf1942_vehicle} → {bf6_vehicle_type} ({mapping_info.category})"
-                    )
             else:
-                # Unmapped vehicle - default to Abrams with warning comment
-                lines.append("VehicleType = 0  # Default: Abrams")
-                lines.append(f"# ⚠️ UNMAPPED: {bf1942_vehicle} (needs manual review)")
+                # Unmapped vehicle - default to Abrams
+                lines.append("VehicleType = 0")
 
             lines.append("")
 

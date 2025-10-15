@@ -152,7 +152,7 @@ class ExperienceValidator:
             if isinstance(max_players, (dict, list)):
                 # Complex format: per-team configuration
                 if self.verbose:
-                    self.info.append(f"Max players: Custom per-team configuration")
+                    self.info.append("Max players: Custom per-team configuration")
             elif isinstance(max_players, int):
                 if max_players < 1:
                     self.errors.append("MaxPlayerCount_PerTeam must be at least 1")
@@ -163,7 +163,9 @@ class ExperienceValidator:
                         f"MaxPlayerCount_PerTeam is {max_players} (Portal recommends 32)"
                     )
                 else:
-                    self.info.append(f"Max players: {max_players}v{max_players} ({max_players * 2} total)")
+                    self.info.append(
+                        f"Max players: {max_players}v{max_players} ({max_players * 2} total)"
+                    )
             else:
                 self.errors.append(
                     f"MaxPlayerCount_PerTeam has unexpected type: {type(max_players).__name__}"
@@ -181,7 +183,9 @@ class ExperienceValidator:
 
         # Portal supports both 2-team (standard) and multi-team configurations
         if len(team_comp) < 2:
-            self.errors.append(f"teamComposition must have at least 2 teams (found {len(team_comp)})")
+            self.errors.append(
+                f"teamComposition must have at least 2 teams (found {len(team_comp)})"
+            )
             return
         elif len(team_comp) > 2:
             if self.verbose:
@@ -269,11 +273,10 @@ class ExperienceValidator:
                 self.errors.append(f"{context} spatialAttachment missing '{field}'")
 
         # Validate attachment type
-        if "attachmentType" in attachment:
-            if attachment["attachmentType"] != 1:
-                self.errors.append(
-                    f"{context} spatialAttachment type must be 1 (spatial), found: {attachment['attachmentType']}"
-                )
+        if "attachmentType" in attachment and attachment["attachmentType"] != 1:
+            self.errors.append(
+                f"{context} spatialAttachment type must be 1 (spatial), found: {attachment['attachmentType']}"
+            )
 
         # Validate attachment data
         if "attachmentData" in attachment:
@@ -297,11 +300,12 @@ class ExperienceValidator:
                             # Try to parse as JSON
                             spatial_data = json.loads(decoded)
                             if self.verbose:
-                                self.info.append(
-                                    f"{context} spatial data: {len(decoded):,} bytes"
-                                )
+                                self.info.append(f"{context} spatial data: {len(decoded):,} bytes")
                             # Basic spatial structure check
-                            if "Portal_Dynamic" not in spatial_data and "Static" not in spatial_data:
+                            if (
+                                "Portal_Dynamic" not in spatial_data
+                                and "Static" not in spatial_data
+                            ):
                                 self.warnings.append(
                                     f"{context} spatial data missing 'Portal_Dynamic' or 'Static'"
                                 )
@@ -339,11 +343,10 @@ class ExperienceValidator:
             self.errors.append(
                 f"Attachments count ({len(attachments)}) is less than map rotation count ({len(map_rotation)})"
             )
-        elif len(attachments) > len(map_rotation):
-            if self.verbose:
-                self.info.append(
-                    f"Extra attachments: {len(attachments) - len(map_rotation)} (may include scripts/logic)"
-                )
+        elif len(attachments) > len(map_rotation) and self.verbose:
+            self.info.append(
+                f"Extra attachments: {len(attachments) - len(map_rotation)} (may include scripts/logic)"
+            )
 
         # Check that each attachment has matching spatial attachment in map rotation
         attachment_ids = {att.get("id") for att in attachments if isinstance(att, dict)}

@@ -21,10 +21,11 @@ EXT_RESOURCE_CAPTURE_POINT = "3"  # CapturePoint.tscn
 EXT_RESOURCE_VEHICLE_SPAWNER = "4"  # VehicleSpawner.tscn
 EXT_RESOURCE_STATIONARY_EMPLACEMENT = "5"  # StationaryEmplacementSpawner.tscn
 EXT_RESOURCE_COMBAT_AREA = "6"  # CombatArea.tscn
-EXT_RESOURCE_TERRAIN = "7"  # {base_terrain}_Terrain.tscn (dynamic)
-EXT_RESOURCE_ASSETS = "8"  # {base_terrain}_Assets.tscn (dynamic, hidden to suppress auto-load)
-EXT_RESOURCE_POLYGON_VOLUME = "9"  # PolygonVolume.tscn
-EXT_RESOURCE_WORLD_ICON = "10"  # WorldIcon.tscn (for capture point labels A, B, C)
+EXT_RESOURCE_DEPLOY_CAM = "7"  # DeployCam.tscn (REQUIRED for spawn screen to work)
+EXT_RESOURCE_TERRAIN = "8"  # {base_terrain}_Terrain.tscn (dynamic)
+EXT_RESOURCE_ASSETS = "9"  # {base_terrain}_Assets.tscn (dynamic, hidden to suppress auto-load)
+EXT_RESOURCE_POLYGON_VOLUME = "10"  # PolygonVolume.tscn
+EXT_RESOURCE_WORLD_ICON = "11"  # WorldIcon.tscn (for capture point labels A, B, C)
 
 # Starting ID for dynamically registered static assets
-EXT_RESOURCE_STATIC_ASSETS_START = 11
+EXT_RESOURCE_STATIC_ASSETS_START = 12

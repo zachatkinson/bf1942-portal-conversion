@@ -5,6 +5,7 @@
 (BF1942, Vietnam, BF2, BF2142) to define objects, properties, and game logic.
 """
 
+import contextlib
 import re
 from pathlib import Path
 from typing import Any
@@ -241,10 +242,8 @@ class ConParser(IParser):
         # In BF1942, setOSId 1 = Team 1, setOSId 2 = Team 2
         if team_id == 0:
             os_id = obj_dict.get("properties", {}).get("setOSId", "0")
-            try:
+            with contextlib.suppress(ValueError, TypeError):
                 team_id = int(os_id)
-            except (ValueError, TypeError):
-                pass
 
         if team_id == 1:
             return Team.TEAM_1
@@ -276,7 +275,30 @@ class ConFileSet:
 
         # Find all .con files recursively
         if map_dir.exists():
-            self.con_files = list(map_dir.rglob("*.con"))
+            all_con_files = list(map_dir.rglob("*.con"))
+
+            # Filter to ONLY Conquest mode files (avoid conflicts from TDM, CTF, SinglePlayer)
+            # This ensures we get consistent vehicle assignments and gameplay objects
+            # ALSO include shared map assets (StaticObjects.con) for trees, rocks, buildings
+            for con_file in all_con_files:
+                con_path_str = str(con_file)
+
+                # Skip non-Conquest game modes
+                if any(
+                    mode in con_path_str for mode in ["SinglePlayer", "Coop", "TDM", "Ctf", "CTF"]
+                ):
+                    continue
+
+                # Include:
+                # 1. Conquest mode files (gameplay objects: spawners, control points)
+                # 2. Init files (terrain, sky, shared config)
+                # 3. StaticObjects.con (map assets: trees, rocks, buildings, crates)
+                if (
+                    "Conquest" in con_path_str
+                    or "Init" in con_path_str
+                    or con_file.name == "StaticObjects.con"
+                ):
+                    self.con_files.append(con_file)
 
     def find_file(self, pattern: str) -> Path | None:
         """Find a .con file matching a pattern.

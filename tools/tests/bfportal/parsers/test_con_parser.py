@@ -257,6 +257,51 @@ ObjectTemplate.setRotation -45.0/-90.0/-180.0
         assert obj["rotation"]["roll"] == -180.0
 
 
+class TestConParserScaleParsing:
+    """Test cases for scale parsing."""
+
+    def test_parse_object_geometry_scale(self, tmp_path):
+        """Test parsing Object.geometry.scale (BF1942 instance format)."""
+        # Arrange
+        parser = ConParser()
+        con_file = tmp_path / "scale.con"
+        con_file.write_text(
+            """Object.create TestObject
+Object.geometry.scale 2.0/1.5/0.5
+"""
+        )
+
+        # Act
+        result = parser.parse(con_file)
+
+        # Assert
+        obj = result["objects"][0]
+        assert "scale" in obj
+        assert obj["scale"]["x"] == 2.0
+        assert obj["scale"]["y"] == 1.5
+        assert obj["scale"]["z"] == 0.5
+
+    def test_parse_scale_uniform(self, tmp_path):
+        """Test parsing uniform scale values."""
+        # Arrange
+        parser = ConParser()
+        con_file = tmp_path / "uniform_scale.con"
+        con_file.write_text(
+            """Object.create TestObject
+Object.geometry.scale 3.0/3.0/3.0
+"""
+        )
+
+        # Act
+        result = parser.parse(con_file)
+
+        # Assert
+        obj = result["objects"][0]
+        assert obj["scale"]["x"] == 3.0
+        assert obj["scale"]["y"] == 3.0
+        assert obj["scale"]["z"] == 3.0
+
+
 class TestConParserTeamParsing:
     """Test cases for team parsing."""
 
@@ -518,6 +563,75 @@ class TestConParserTransformExtraction:
         assert transform.position.y == 0.0  # Default
         assert transform.position.z == 200.0
 
+    def test_parse_transform_with_scale(self):
+        """Test extracting Transform with position, rotation, and scale."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {
+            "name": "TestObject",
+            "position": {"x": 100.0, "y": 50.0, "z": 200.0},
+            "rotation": {"pitch": 10.0, "yaw": 45.0, "roll": 0.0},
+            "scale": {"x": 2.0, "y": 1.5, "z": 0.5},
+        }
+
+        # Act
+        transform = parser.parse_transform(obj_dict)
+
+        # Assert
+        assert transform is not None
+        assert transform.position.x == 100.0
+        assert transform.position.y == 50.0
+        assert transform.position.z == 200.0
+        assert transform.rotation.pitch == 10.0
+        assert transform.rotation.yaw == 45.0
+        assert transform.rotation.roll == 0.0
+        assert transform.scale is not None
+        assert transform.scale.x == 2.0
+        assert transform.scale.y == 1.5
+        assert transform.scale.z == 0.5
+
+    def test_parse_transform_without_scale_defaults_to_one(self):
+        """Test extracting Transform without scale defaults to (1, 1, 1).
+
+        Note: Transform.__post_init__ sets scale to (1, 1, 1) if None.
+        """
+        # Arrange
+        parser = ConParser()
+        obj_dict = {
+            "name": "TestObject",
+            "position": {"x": 100.0, "y": 50.0, "z": 200.0},
+        }
+
+        # Act
+        transform = parser.parse_transform(obj_dict)
+
+        # Assert
+        assert transform is not None
+        assert transform.scale is not None
+        assert transform.scale.x == 1.0
+        assert transform.scale.y == 1.0
+        assert transform.scale.z == 1.0
+
+    def test_parse_transform_partial_scale(self):
+        """Test extracting Transform with partial scale data (defaults to 1.0)."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {
+            "name": "TestObject",
+            "position": {"x": 100.0, "y": 50.0, "z": 200.0},
+            "scale": {"x": 2.0, "z": 3.0},  # Missing y
+        }
+
+        # Act
+        transform = parser.parse_transform(obj_dict)
+
+        # Assert
+        assert transform is not None
+        assert transform.scale is not None
+        assert transform.scale.x == 2.0
+        assert transform.scale.y == 1.0  # Default
+        assert transform.scale.z == 3.0
+
 
 class TestConParserTeamExtraction:
     """Test cases for parse_team() method."""
@@ -570,6 +684,54 @@ class TestConParserTeamExtraction:
         assert team_3 == Team.NEUTRAL
         assert team_neg == Team.NEUTRAL
 
+    def test_parse_team_fallback_to_osid_team1(self):
+        """Test team extraction falls back to setOSId property for Team 1."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {"team": 0, "properties": {"setOSId": "1"}}
+
+        # Act
+        team = parser.parse_team(obj_dict)
+
+        # Assert
+        assert team == Team.TEAM_1
+
+    def test_parse_team_fallback_to_osid_team2(self):
+        """Test team extraction falls back to setOSId property for Team 2."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {"team": 0, "properties": {"setOSId": "2"}}
+
+        # Act
+        team = parser.parse_team(obj_dict)
+
+        # Assert
+        assert team == Team.TEAM_2
+
+    def test_parse_team_explicit_team_overrides_osid(self):
+        """Test that explicit team value overrides setOSId."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {"team": 1, "properties": {"setOSId": "2"}}
+
+        # Act
+        team = parser.parse_team(obj_dict)
+
+        # Assert - Should use explicit team value, not OSId
+        assert team == Team.TEAM_1
+
+    def test_parse_team_fallback_osid_invalid_defaults_neutral(self):
+        """Test that invalid setOSId value defaults to NEUTRAL."""
+        # Arrange
+        parser = ConParser()
+        obj_dict = {"team": 0, "properties": {"setOSId": "invalid"}}
+
+        # Act
+        team = parser.parse_team(obj_dict)
+
+        # Assert
+        assert team == Team.NEUTRAL
+
 
 class TestConParserErrorHandling:
     """Test cases for error handling in ConParser."""
@@ -592,22 +754,28 @@ class TestConFileSetInitialization:
     """Test cases for ConFileSet initialization."""
 
     def test_init_with_existing_directory_finds_con_files(self, tmp_path):
-        """Test initialization with existing directory finds .con files."""
-        # Arrange
-        (tmp_path / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
-        (tmp_path / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
-        subdir = tmp_path / "subdir"
-        subdir.mkdir()
-        (subdir / "ControlPoints.con").write_text("ObjectTemplate.create CP CP1")
+        """Test initialization with existing directory finds .con files.
+
+        Note: ConFileSet only includes Conquest mode files, Init files, and StaticObjects.con
+        to avoid conflicts from TDM, CTF, and SinglePlayer modes.
+        """
+        # Arrange - Create files that match the Conquest/Init/StaticObjects filters
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+        (conquest_dir / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
+        (tmp_path / "Init.con").write_text("game.setCustomGameVersion 1.6")
+        (tmp_path / "StaticObjects.con").write_text("ObjectTemplate.create StaticMesh Tree1")
 
         # Act
         fileset = ConFileSet(tmp_path)
 
         # Assert
-        assert len(fileset.con_files) == 3
-        assert tmp_path / "Objects.con" in fileset.con_files
-        assert tmp_path / "Spawns.con" in fileset.con_files
-        assert subdir / "ControlPoints.con" in fileset.con_files
+        assert len(fileset.con_files) == 4
+        assert conquest_dir / "Objects.con" in fileset.con_files
+        assert conquest_dir / "Spawns.con" in fileset.con_files
+        assert tmp_path / "Init.con" in fileset.con_files
+        assert tmp_path / "StaticObjects.con" in fileset.con_files
 
     def test_init_with_nonexistent_directory_has_empty_list(self, tmp_path):
         """Test initialization with nonexistent directory creates empty file list."""
@@ -621,39 +789,90 @@ class TestConFileSetInitialization:
         assert fileset.con_files == []
         assert fileset.map_dir == nonexistent_dir
 
+    def test_init_filters_out_non_conquest_game_modes(self, tmp_path):
+        """Test initialization excludes TDM, CTF, and SinglePlayer modes."""
+        # Arrange - Create files from different game modes
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+
+        tdm_dir = tmp_path / "TDM"
+        tdm_dir.mkdir()
+        (tdm_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+
+        ctf_dir = tmp_path / "Ctf"
+        ctf_dir.mkdir()
+        (ctf_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+
+        sp_dir = tmp_path / "SinglePlayer"
+        sp_dir.mkdir()
+        (sp_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+
+        # Act
+        fileset = ConFileSet(tmp_path)
+
+        # Assert - Only Conquest file should be included
+        assert len(fileset.con_files) == 1
+        assert conquest_dir / "Objects.con" in fileset.con_files
+        assert tdm_dir / "Objects.con" not in fileset.con_files
+        assert ctf_dir / "Objects.con" not in fileset.con_files
+        assert sp_dir / "Objects.con" not in fileset.con_files
+
+    def test_init_includes_staticobjects_regardless_of_path(self, tmp_path):
+        """Test initialization includes StaticObjects.con even without Conquest in path."""
+        # Arrange
+        (tmp_path / "StaticObjects.con").write_text("ObjectTemplate.create Test TestObj")
+        subdir = tmp_path / "subdir"
+        subdir.mkdir()
+        (subdir / "StaticObjects.con").write_text("ObjectTemplate.create Test TestObj")
+
+        # Act
+        fileset = ConFileSet(tmp_path)
+
+        # Assert - Both StaticObjects.con files should be included
+        assert len(fileset.con_files) == 2
+        assert tmp_path / "StaticObjects.con" in fileset.con_files
+        assert subdir / "StaticObjects.con" in fileset.con_files
+
 
 class TestConFileSetFindFile:
     """Test cases for ConFileSet.find_file()."""
 
     def test_find_file_finds_matching_file(self, tmp_path):
         """Test finding file by pattern match."""
-        # Arrange
-        (tmp_path / "Objects.con").write_text("test")
-        (tmp_path / "Spawns.con").write_text("test")
+        # Arrange - Create Conquest mode files
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("test")
+        (conquest_dir / "Spawns.con").write_text("test")
         fileset = ConFileSet(tmp_path)
 
         # Act
         result = fileset.find_file("Objects")
 
         # Assert
-        assert result == tmp_path / "Objects.con"
+        assert result == conquest_dir / "Objects.con"
 
     def test_find_file_case_insensitive_match(self, tmp_path):
         """Test finding file with case-insensitive pattern."""
-        # Arrange
-        (tmp_path / "Objects.con").write_text("test")
+        # Arrange - Create Conquest mode file
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("test")
         fileset = ConFileSet(tmp_path)
 
         # Act
         result = fileset.find_file("objects")
 
         # Assert
-        assert result == tmp_path / "Objects.con"
+        assert result == conquest_dir / "Objects.con"
 
     def test_find_file_no_match_returns_none(self, tmp_path):
         """Test finding file returns None when no match found."""
-        # Arrange
-        (tmp_path / "Objects.con").write_text("test")
+        # Arrange - Create Conquest mode file
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("test")
         fileset = ConFileSet(tmp_path)
 
         # Act
@@ -668,9 +887,11 @@ class TestConFileSetParseAll:
 
     def test_parse_all_parses_multiple_files(self, tmp_path):
         """Test parsing all .con files in directory."""
-        # Arrange
-        (tmp_path / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
-        (tmp_path / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
+        # Arrange - Create Conquest mode files
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "Objects.con").write_text("ObjectTemplate.create Test TestObj")
+        (conquest_dir / "Spawns.con").write_text("ObjectTemplate.create Spawner Spawn1")
         fileset = ConFileSet(tmp_path)
 
         # Act
@@ -684,9 +905,11 @@ class TestConFileSetParseAll:
 
     def test_parse_all_handles_parse_errors_gracefully(self, tmp_path, capsys):
         """Test parse_all continues on errors and prints warning."""
-        # Arrange
-        (tmp_path / "valid.con").write_text("ObjectTemplate.create Test TestObj")
-        (tmp_path / "invalid.con").write_text("valid content")
+        # Arrange - Create Conquest mode files
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "valid.con").write_text("ObjectTemplate.create Test TestObj")
+        (conquest_dir / "invalid.con").write_text("valid content")
         fileset = ConFileSet(tmp_path)
 
         def mock_parse_with_error(file_path: Path) -> dict[str, Any]:
@@ -715,13 +938,15 @@ class TestConFileSetGetObjectsByType:
 
     def test_get_objects_by_type_finds_matching_objects(self, tmp_path):
         """Test finding objects by type across multiple files."""
-        # Arrange
-        (tmp_path / "file1.con").write_text(
+        # Arrange - Create Conquest mode files
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "file1.con").write_text(
             """ObjectTemplate.create ControlPoint CP1
 ObjectTemplate.create ObjectSpawner Spawn1
 """
         )
-        (tmp_path / "file2.con").write_text(
+        (conquest_dir / "file2.con").write_text(
             """ObjectTemplate.create ControlPoint CP2
 ObjectTemplate.create Vehicle Tank1
 """
@@ -738,9 +963,11 @@ ObjectTemplate.create Vehicle Tank1
 
     def test_get_objects_by_type_handles_parse_errors_gracefully(self, tmp_path):
         """Test get_objects_by_type continues on parse errors."""
-        # Arrange
-        (tmp_path / "valid.con").write_text("ObjectTemplate.create Test TestObj")
-        (tmp_path / "invalid.con").write_text("valid content")
+        # Arrange - Create Conquest mode files
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "valid.con").write_text("ObjectTemplate.create Test TestObj")
+        (conquest_dir / "invalid.con").write_text("valid content")
         fileset = ConFileSet(tmp_path)
 
         def mock_parse_with_error(file_path: Path) -> dict[str, Any]:
@@ -763,8 +990,10 @@ ObjectTemplate.create Vehicle Tank1
 
     def test_get_objects_by_type_returns_empty_list_when_no_match(self, tmp_path):
         """Test get_objects_by_type returns empty list when no matches."""
-        # Arrange
-        (tmp_path / "file1.con").write_text("ObjectTemplate.create Test TestObj")
+        # Arrange - Create Conquest mode file
+        conquest_dir = tmp_path / "Conquest"
+        conquest_dir.mkdir()
+        (conquest_dir / "file1.con").write_text("ObjectTemplate.create Test TestObj")
         fileset = ConFileSet(tmp_path)
 
         # Act

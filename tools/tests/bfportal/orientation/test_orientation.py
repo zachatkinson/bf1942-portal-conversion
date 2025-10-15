@@ -152,8 +152,8 @@ class TestOrientationMatcher:
         assert result.rotation_degrees == 0
         assert "north_south" in result.reasoning.lower()
 
-    def test_match_north_south_to_east_west_needs_rotation(self):
-        """Test matching N/S source to E/W destination needs 90° rotation."""
+    def test_match_north_south_to_east_west_preserves_orientation(self):
+        """Test matching N/S source to E/W destination preserves original orientation."""
         # Arrange
         matcher = OrientationMatcher()
         source = OrientationAnalysis(Orientation.NORTH_SOUTH, 1000.0, 2000.0, 2.0, "high")
@@ -163,13 +163,14 @@ class TestOrientationMatcher:
         result = matcher.match(source, dest)
 
         # Assert
-        assert result.rotation_needed is True
-        assert result.rotation_degrees == 90
+        assert result.rotation_needed is False
+        assert result.rotation_degrees == 0
         assert "n/s" in result.reasoning.lower()
         assert "e/w" in result.reasoning.lower()
+        assert "preserving" in result.reasoning.lower()
 
-    def test_match_east_west_to_north_south_needs_rotation(self):
-        """Test matching E/W source to N/S destination needs 90° rotation."""
+    def test_match_east_west_to_north_south_preserves_orientation(self):
+        """Test matching E/W source to N/S destination preserves original orientation."""
         # Arrange
         matcher = OrientationMatcher()
         source = OrientationAnalysis(Orientation.EAST_WEST, 3000.0, 1500.0, 2.0, "high")
@@ -179,10 +180,11 @@ class TestOrientationMatcher:
         result = matcher.match(source, dest)
 
         # Assert
-        assert result.rotation_needed is True
-        assert result.rotation_degrees == 90
+        assert result.rotation_needed is False
+        assert result.rotation_degrees == 0
         assert "e/w" in result.reasoning.lower()
         assert "n/s" in result.reasoning.lower()
+        assert "preserving" in result.reasoning.lower()
 
     def test_match_confidence_propagates_low(self):
         """Test confidence is low if either analysis is low."""

@@ -107,6 +107,8 @@ class TestLoadSpatialData:
     def test_loads_and_encodes_spatial_data(self, tmp_path: Path):
         """Test loading and base64 encoding spatial data."""
         # Arrange
+        import base64
+
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_dir = tmp_path / "FbExportData" / "levels"
         spatial_dir.mkdir(parents=True)
@@ -116,15 +118,19 @@ class TestLoadSpatialData:
 
         # Act
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
-            patch("create_multi_map_experience.get_spatial_json_path", return_value=spatial_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                autospec=True,
+                return_value=spatial_path,
+            ),
         ):
             result = load_spatial_data(map_entry)
 
         # Assert
         assert len(result) > 0  # Base64 encoded data
-        import base64
-
         decoded = base64.b64decode(result).decode("utf-8")
         assert decoded == spatial_data
 
@@ -136,11 +142,44 @@ class TestLoadSpatialData:
 
         # Act & Assert
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
-            patch("create_multi_map_experience.get_spatial_json_path", return_value=missing_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                autospec=True,
+                return_value=missing_path,
+            ),
+            pytest.raises(FileNotFoundError, match="Spatial file not found"),
         ):
-            with pytest.raises(FileNotFoundError, match="Spatial file not found"):
-                load_spatial_data(map_entry)
+            load_spatial_data(map_entry)
+
+    def test_uses_custom_spatial_path_when_provided(self, tmp_path: Path):
+        """Test uses custom spatial_path from map entry when provided."""
+        # Arrange
+        import base64
+
+        spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
+        custom_spatial_dir = tmp_path / "custom" / "path"
+        custom_spatial_dir.mkdir(parents=True)
+        custom_spatial_path = custom_spatial_dir / "custom.spatial.json"
+        custom_spatial_path.write_text(spatial_data)
+        map_entry = {
+            "id": "custom_map",
+            "display_name": "CustomMap",
+            "spatial_path": "custom/path/custom.spatial.json",
+        }
+
+        # Act
+        with patch(
+            "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+        ):
+            result = load_spatial_data(map_entry)
+
+        # Assert
+        assert len(result) > 0
+        decoded = base64.b64decode(result).decode("utf-8")
+        assert decoded == spatial_data
 
 
 class TestCreateMultiMapExperience:
@@ -174,7 +213,9 @@ class TestCreateMultiMapExperience:
 
         # Act
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
             patch(
                 "create_multi_map_experience.get_spatial_json_path",
                 side_effect=lambda name: tmp_path
@@ -223,7 +264,9 @@ class TestCreateMultiMapExperience:
 
         # Act
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
             patch(
                 "create_multi_map_experience.get_spatial_json_path",
                 side_effect=lambda name: tmp_path
@@ -258,7 +301,9 @@ class TestCreateMultiMapExperience:
 
         # Act & Assert
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
             patch(
                 "create_multi_map_experience.get_spatial_json_path",
                 side_effect=lambda name: tmp_path
@@ -304,7 +349,9 @@ class TestCreateMultiMapExperience:
 
         # Act
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
             patch(
                 "create_multi_map_experience.get_spatial_json_path",
                 side_effect=lambda name: tmp_path
@@ -345,7 +392,9 @@ class TestCreateMultiMapExperience:
 
         # Act
         with (
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
             patch(
                 "create_multi_map_experience.get_spatial_json_path",
                 side_effect=lambda name: tmp_path
@@ -479,7 +528,9 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
         ):
             result = main()
 
@@ -526,7 +577,9 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
         ):
             result = main()
 
@@ -579,7 +632,9 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
         ):
             result = main()
 
@@ -628,9 +683,200 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
         ):
             result = main()
 
         # Assert
         assert result == 0
+
+    def test_custom_mode_sets_modbuilder_gamemode_custom(self, tmp_path: Path):
+        """Test --mode custom sets modbuilder_gamemode to CUSTOM."""
+        # Arrange
+        spatial_dir = tmp_path / "FbExportData" / "levels"
+        spatial_dir.mkdir(parents=True)
+        spatial_path = spatial_dir / "Kursk.spatial.json"
+        spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "complete",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Test",
+                    "description": "Test",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {"status": "complete"},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+            "--mode",
+            "custom",
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 0
+        # Verify experience file created with custom mode
+        experiences_dir = tmp_path / "experiences" / "multi"
+        experience_file = experiences_dir / "Test_Experience.json"
+        assert experience_file.exists()
+
+        with open(experience_file, encoding="utf-8") as f:
+            experience = json.load(f)
+            # MODBUILDER_GAMEMODE_CUSTOM = 2
+            assert experience["mutators"]["ModBuilder_GameMode"] == 2
+
+    def test_verified_mode_sets_modbuilder_gamemode_verified(self, tmp_path: Path):
+        """Test --mode verified (default) sets modbuilder_gamemode to VERIFIED."""
+        # Arrange
+        spatial_dir = tmp_path / "FbExportData" / "levels"
+        spatial_dir.mkdir(parents=True)
+        spatial_path = spatial_dir / "Kursk.spatial.json"
+        spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "complete",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Test",
+                    "description": "Test",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {"status": "complete"},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+            "--mode",
+            "verified",
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 0
+        # Verify experience file created with verified mode
+        experiences_dir = tmp_path / "experiences" / "multi"
+        experience_file = experiences_dir / "Test_Experience.json"
+        assert experience_file.exists()
+
+        with open(experience_file, encoding="utf-8") as f:
+            experience = json.load(f)
+            # MODBUILDER_GAMEMODE_VERIFIED = 0
+            assert experience["mutators"]["ModBuilder_GameMode"] == 0
+
+    def test_override_flags_take_precedence_over_template(self, tmp_path: Path):
+        """Test CLI override flags take precedence over template values."""
+        # Arrange
+        spatial_dir = tmp_path / "FbExportData" / "levels"
+        spatial_dir.mkdir(parents=True)
+        spatial_path = spatial_dir / "Kursk.spatial.json"
+        spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
+        registry_data = {
+            "maps": [
+                {
+                    "id": "kursk",
+                    "display_name": "Kursk",
+                    "base_map": "MP_Tungsten",
+                    "base_map_display": "Tungsten",
+                    "status": "complete",
+                }
+            ],
+            "experience_templates": {
+                "test_template": {
+                    "name": "Template Name",
+                    "description": "Template Description",
+                    "game_mode": "Conquest",
+                    "max_players": 32,
+                    "map_filter": {"status": "complete"},
+                }
+            },
+        }
+        registry_path = tmp_path / "registry.json"
+        registry_path.write_text(json.dumps(registry_data))
+        test_args = [
+            "create_multi_map_experience.py",
+            "--registry",
+            str(registry_path),
+            "--template",
+            "test_template",
+            "--name",
+            "Custom Name",
+            "--description",
+            "Custom Description",
+            "--game-mode",
+            "TeamDeathmatch",
+            "--max-players",
+            "64",
+        ]
+
+        # Act
+        with (
+            patch("sys.argv", test_args),
+            patch(
+                "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
+            ),
+        ):
+            result = main()
+
+        # Assert
+        assert result == 0
+        experiences_dir = tmp_path / "experiences" / "multi"
+        experience_file = experiences_dir / "Custom_Name_Experience.json"
+        assert experience_file.exists()
+
+        with open(experience_file, encoding="utf-8") as f:
+            experience = json.load(f)
+            assert experience["name"] == "Custom Name"
+            assert experience["description"] == "Custom Description"
+            assert experience["teamComposition"][0][1]["humanCapacity"] == 64

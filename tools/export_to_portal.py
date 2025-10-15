@@ -151,7 +151,7 @@ def create_experience_file(
     print(f"✅ Created {output_file}")
     print(f"   Base map: {base_map}")
     print(f"   Max players: {max_players_per_team * 2}")
-    print(f"   Mode: Custom (ModBuilderCustom)")
+    print("   Mode: Custom (ModBuilderCustom)")
     print(f"   Spatial data: {len(spatial_data):,} bytes")
     print(f"   Experience file: {output_file.stat().st_size:,} bytes")
 

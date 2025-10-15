@@ -29,12 +29,13 @@ class TestExportTscnToSpatial:
         output_dir.mkdir()
         spatial_path = output_dir / "TestMap.spatial.json"
         spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
+
         mock_result = MagicMock(spec=subprocess.CompletedProcess)
         mock_result.returncode = 0
         mock_result.stderr = ""
 
         # Act
-        with patch("export_to_portal.subprocess.run", return_value=mock_result):
+        with patch("export_to_portal.subprocess.run", autospec=True, return_value=mock_result):
             result = export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
         # Assert
@@ -48,9 +49,15 @@ class TestExportTscnToSpatial:
         asset_dir = tmp_path / "FbExportData"
         output_dir = tmp_path / "output"
 
+        # Mock Path("code/gdconverter/src/gdconverter/export_tscn.py").exists()
+        def mock_path_exists(self):
+            if str(self) == "code/gdconverter/src/gdconverter/export_tscn.py":
+                return False
+            return Path.exists(self)
+
         # Act & Assert
         with (
-            patch("export_to_portal.Path.exists", return_value=False),
+            patch("pathlib.Path.exists", mock_path_exists),
             pytest.raises(RuntimeError, match="Export script not found"),
         ):
             export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
@@ -64,13 +71,14 @@ class TestExportTscnToSpatial:
         asset_dir.mkdir()
         output_dir = tmp_path / "output"
         output_dir.mkdir()
+
         mock_result = MagicMock(spec=subprocess.CompletedProcess)
         mock_result.returncode = 1
         mock_result.stderr = "Export failed"
 
         # Act & Assert
         with (
-            patch("export_to_portal.subprocess.run", return_value=mock_result),
+            patch("export_to_portal.subprocess.run", autospec=True, return_value=mock_result),
             pytest.raises(RuntimeError, match="Export failed"),
         ):
             export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
@@ -84,12 +92,13 @@ class TestExportTscnToSpatial:
         asset_dir.mkdir()
         output_dir = tmp_path / "output"
         output_dir.mkdir()
+
         mock_result = MagicMock(spec=subprocess.CompletedProcess)
         mock_result.returncode = 0
 
         # Act & Assert
         with (
-            patch("export_to_portal.subprocess.run", return_value=mock_result),
+            patch("export_to_portal.subprocess.run", autospec=True, return_value=mock_result),
             pytest.raises(RuntimeError, match="Expected output file not created"),
         ):
             export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
@@ -98,30 +107,32 @@ class TestExportTscnToSpatial:
 class TestCreateExperienceFileFromExportToPortal:
     """Tests for create_experience_file() in export_to_portal."""
 
-    def test_creates_experience_from_spatial_file(self, tmp_path: Path):
+    def test_creates_experience_from_spatial_file(self, tmp_path: Path, monkeypatch):
         """Test creating experience file from spatial.json."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_path = tmp_path / "TestMap.spatial.json"
         spatial_path.write_text(spatial_data)
 
+        # Use tmp_path as working directory
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("export_to_portal.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+        )
 
         # Assert
         assert output_path.exists()
         experience_data = json.loads(output_path.read_text())
         assert experience_data["name"] == "TestMap - BF1942 Classic"
-        assert experience_data["gameMode"] == "Conquest"
+        assert experience_data["gameMode"] == "ModBuilderCustom"
+        assert experience_data["mutators"]["ModBuilder_GameMode"] == 2
 
-    def test_uses_custom_description(self, tmp_path: Path):
+    def test_uses_custom_description(self, tmp_path: Path, monkeypatch):
         """Test custom description is used when provided."""
         # Arrange
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
@@ -129,16 +140,17 @@ class TestCreateExperienceFileFromExportToPortal:
         spatial_path.write_text(spatial_data)
         custom_desc = "Custom description"
 
+        # Use tmp_path as working directory
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with patch("export_to_portal.Path.mkdir"):
-            output_path = create_experience_file(
-                map_name="TestMap",
-                spatial_path=spatial_path,
-                base_map="MP_Tungsten",
-                max_players_per_team=32,
-                game_mode="Conquest",
-                description=custom_desc,
-            )
+        output_path = create_experience_file(
+            map_name="TestMap",
+            spatial_path=spatial_path,
+            base_map="MP_Tungsten",
+            max_players_per_team=32,
+            description=custom_desc,
+        )
 
         # Assert
         experience_data = json.loads(output_path.read_text())
@@ -148,22 +160,20 @@ class TestCreateExperienceFileFromExportToPortal:
 class TestMainFunctionFromExportToPortal:
     """Tests for main() CLI entry point in export_to_portal."""
 
-    def test_returns_error_when_tscn_file_missing(self):
+    def test_returns_error_when_tscn_file_missing(self, tmp_path: Path, monkeypatch):
         """Test main returns error code when .tscn file doesn't exist."""
         # Arrange
         test_args = ["export_to_portal.py", "NonExistentMap"]
+        monkeypatch.chdir(tmp_path)
 
         # Act
-        with (
-            patch("sys.argv", test_args),
-            patch("export_to_portal.Path.exists", return_value=False),
-        ):
+        with patch("sys.argv", test_args):
             result = main()
 
         # Assert
         assert result == 1
 
-    def test_lists_available_maps_when_tscn_file_missing(self, tmp_path: Path):
+    def test_lists_available_maps_when_tscn_file_missing(self, tmp_path: Path, monkeypatch):
         """Test main lists available maps when .tscn file doesn't exist and levels dir exists."""
         # Arrange
         levels_dir = tmp_path / "GodotProject" / "levels"
@@ -172,17 +182,16 @@ class TestMainFunctionFromExportToPortal:
         (levels_dir / "Map2.tscn").write_text("[gd_scene]\n")
         test_args = ["export_to_portal.py", "NonExistentMap"]
 
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with (
-            patch("sys.argv", test_args),
-            patch("export_to_portal.Path.cwd", return_value=tmp_path),
-        ):
+        with patch("sys.argv", test_args):
             result = main()
 
         # Assert
         assert result == 1
 
-    def test_returns_error_when_asset_dir_missing(self, tmp_path: Path):
+    def test_returns_error_when_asset_dir_missing(self, tmp_path: Path, monkeypatch):
         """Test main returns error code when FbExportData doesn't exist."""
         # Arrange
         tscn_path = tmp_path / "GodotProject" / "levels" / "TestMap.tscn"
@@ -190,17 +199,16 @@ class TestMainFunctionFromExportToPortal:
         tscn_path.write_text("[gd_scene]\n")
         test_args = ["export_to_portal.py", "TestMap"]
 
+        monkeypatch.chdir(tmp_path)
+
         # Act
-        with (
-            patch("sys.argv", test_args),
-            patch("export_to_portal.Path.cwd", return_value=tmp_path),
-        ):
+        with patch("sys.argv", test_args):
             result = main()
 
         # Assert
         assert result == 1
 
-    def test_returns_success_when_export_completes(self, tmp_path: Path):
+    def test_returns_success_when_export_completes(self, tmp_path: Path, monkeypatch):
         """Test main returns success code when export completes."""
         # Arrange
         tscn_path = tmp_path / "GodotProject" / "levels" / "TestMap.tscn"
@@ -212,15 +220,17 @@ class TestMainFunctionFromExportToPortal:
         output_dir.mkdir()
         spatial_path = output_dir / "TestMap.spatial.json"
         spatial_path.write_text(json.dumps({"Portal_Dynamic": [], "Static": []}))
-
         test_args = ["export_to_portal.py", "TestMap"]
+
+        monkeypatch.chdir(tmp_path)
 
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("export_to_portal.Path.cwd", return_value=tmp_path),
-            patch("export_to_portal.export_tscn_to_spatial", return_value=spatial_path),
-            patch("export_to_portal.create_experience_file") as mock_create,
+            patch(
+                "export_to_portal.export_tscn_to_spatial", autospec=True, return_value=spatial_path
+            ),
+            patch("export_to_portal.create_experience_file", autospec=True) as mock_create,
         ):
             mock_create.return_value = tmp_path / "TestMap_Experience.json"
             result = main()
@@ -228,7 +238,7 @@ class TestMainFunctionFromExportToPortal:
         # Assert
         assert result == 0
 
-    def test_returns_error_when_exception_occurs_during_export(self, tmp_path: Path):
+    def test_returns_error_when_exception_occurs_during_export(self, tmp_path: Path, monkeypatch):
         """Test main returns error code when exception is raised during export."""
         # Arrange
         tscn_path = tmp_path / "GodotProject" / "levels" / "TestMap.tscn"
@@ -240,12 +250,15 @@ class TestMainFunctionFromExportToPortal:
         output_dir.mkdir()
         test_args = ["export_to_portal.py", "TestMap"]
 
+        monkeypatch.chdir(tmp_path)
+
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("export_to_portal.Path.cwd", return_value=tmp_path),
             patch(
-                "export_to_portal.export_tscn_to_spatial", side_effect=RuntimeError("Test error")
+                "export_to_portal.export_tscn_to_spatial",
+                autospec=True,
+                side_effect=RuntimeError("Test error"),
             ),
         ):
             result = main()

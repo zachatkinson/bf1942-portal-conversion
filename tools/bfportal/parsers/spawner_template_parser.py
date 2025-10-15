@@ -148,6 +148,9 @@ class SpawnerTemplateParser:
         Searches recursively for ObjectSpawnTemplates.con files (usually in
         Conquest/, TDM/, CTF/ subdirectories) and parses all of them.
 
+        IMPORTANT: Skips SinglePlayer directories as they have different
+        vehicle assignments for the campaign (e.g., yak9 instead of Ilyushin).
+
         Args:
             level_dir: Path to BF1942 level directory
 
@@ -161,6 +164,9 @@ class SpawnerTemplateParser:
         template_files = list(level_dir.glob("**/ObjectSpawnTemplates.con"))
 
         for template_file in template_files:
+            # Skip SinglePlayer directories - they have campaign-specific vehicle assignments
+            if "SinglePlayer" in str(template_file) or "Coop" in str(template_file):
+                continue
             self.parse_template_file(template_file)
 
     def get_template(self, spawner_name: str) -> SpawnerTemplate | None:

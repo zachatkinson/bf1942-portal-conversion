@@ -97,7 +97,7 @@ class SnappingOrchestrator:
         current_parent = None  # Track if node has a parent
         skip_terrain_node = False
         adjustments_shown = 0
-        MAX_ADJUSTMENTS_TO_SHOW = 10
+        max_adjustments_to_show = 10
 
         for line in lines:
             # Track current node and its parent
@@ -109,11 +109,7 @@ class SnappingOrchestrator:
                 current_asset_type = re.sub(r"_\d+$", "", current_node_name)
 
                 # Check if THIS node is terrain (and should be skipped), or if we're exiting terrain skip
-                if "_Terrain" in current_node_name:
-                    skip_terrain_node = True
-                else:
-                    # We hit a new node that's not terrain - clear skip flag
-                    skip_terrain_node = False
+                skip_terrain_node = "_Terrain" in current_node_name
 
             # Check for transform lines
             if (
@@ -175,7 +171,7 @@ class SnappingOrchestrator:
                             )
 
                             # Log adjustment
-                            if adjustments_shown < MAX_ADJUSTMENTS_TO_SHOW:
+                            if adjustments_shown < max_adjustments_to_show:
                                 delta = final_y - result.original_y
                                 reason = result.reason
                                 if was_lifted:
@@ -214,7 +210,7 @@ class SnappingOrchestrator:
             print(f"   ✅ Wrote updated .tscn to {output_path}")
 
         # Print summary
-        self._print_stats(stats, adjustments_shown, MAX_ADJUSTMENTS_TO_SHOW)
+        self._print_stats(stats, adjustments_shown, max_adjustments_to_show)
 
         return stats
 

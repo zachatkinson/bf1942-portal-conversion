@@ -51,22 +51,20 @@ class WorldIconGenerator(BaseNodeGenerator):
         lines: list[str] = []
 
         # Get capture points
-        capture_points = [
-            obj for obj in map_data.game_objects if obj.asset_type == "CapturePoint"
-        ]
+        capture_points = [obj for obj in map_data.game_objects if obj.asset_type == "CapturePoint"]
 
         if not capture_points:
             return lines
 
         # Register WorldIcon asset if not already registered
-        world_icon_id = asset_registry.get_or_register(
-            "res://objects/Gameplay/Common/WorldIcon.tscn", "WorldIcon"
+        world_icon_id = asset_registry.register_asset(
+            "WorldIcon", "res://objects/Gameplay/Common/WorldIcon.tscn"
         )
 
         # Generate labels A, B, C, etc.
         labels = [chr(65 + i) for i in range(len(capture_points))]  # A, B, C, ...
 
-        for i, (cp, label) in enumerate(zip(capture_points, labels), 1):
+        for i, (cp, label) in enumerate(zip(capture_points, labels, strict=False), 1):
             # WorldIcon ObjId starts at 20 (convention from BombSquad mod)
             obj_id = 20 + i - 1
 
@@ -79,9 +77,7 @@ class WorldIconGenerator(BaseNodeGenerator):
             lines.append(f'IconStringKey = "{label}"')
             lines.append("iconTextVisible = true")
             lines.append("iconImageVisible = false")
-            lines.append(
-                f"# Portal SDK: Labels set via TypeScript using mod.SetWorldIconText()"
-            )
+            lines.append("# Portal SDK: Labels set via TypeScript using mod.SetWorldIconText()")
             lines.append("")
 
         return lines

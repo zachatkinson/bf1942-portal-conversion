@@ -72,7 +72,11 @@ class TestAssetMapperInitialization:
         keywords_file.write_text(json.dumps(keywords_data))
 
         # Act
-        with patch("bfportal.mappers.asset_mapper.get_project_root", return_value=tmp_path):
+        with patch(
+            "bfportal.mappers.asset_mapper.get_project_root",
+            autospec=True,
+            return_value=tmp_path,
+        ):
             mapper = AssetMapper(sample_portal_assets)
 
         # Assert
@@ -88,7 +92,11 @@ class TestAssetMapperInitialization:
         # No keywords file created - should gracefully handle missing file
 
         # Act
-        with patch("bfportal.mappers.asset_mapper.get_project_root", return_value=tmp_path):
+        with patch(
+            "bfportal.mappers.asset_mapper.get_project_root",
+            autospec=True,
+            return_value=tmp_path,
+        ):
             mapper = AssetMapper(sample_portal_assets)
 
         # Assert
@@ -540,3 +548,205 @@ class TestAssetMapperStats:
 
         # Assert
         assert info is None
+
+
+class TestAssetMapperErrorHandling:
+    """Test cases for error handling and edge cases."""
+
+    def test_map_asset_nonexistent_portal_asset_no_fallback_raises_error(
+        self, sample_portal_assets, sample_map_context, tmp_path
+    ):
+        """Test MappingError when mapped Portal asset doesn't exist and no fallback available.
+
+        This tests the error path in asset_mapper.py lines 133-136.
+        """
+        # Arrange
+        import json
+
+        from bfportal.core.exceptions import MappingError
+
+        # Create mapping to nonexistent asset with no alternatives
+        mappings_data = {
+            "isolated_category": {
+                "unique_asset": {
+                    "portal_equivalent": "CompletelyNonExistent_Asset",
+                    "category": "unique_isolated_type",
+                    "confidence_score": 5,
+                }
+            }
+        }
+
+        mappings_path = tmp_path / "mappings.json"
+        with open(mappings_path, "w") as f:
+            json.dump(mappings_data, f)
+
+        mapper = AssetMapper(sample_portal_assets)
+        mapper.load_mappings(mappings_path)
+
+        # Act/Assert
+        with pytest.raises(
+            MappingError,
+            match="Mapped Portal asset 'CompletelyNonExistent_Asset' not found in Portal catalog",
+        ):
+            mapper.map_asset("unique_asset", sample_map_context)
+
+    def test_map_asset_restricted_no_alternative_raises_error(
+        self, sample_portal_assets, sample_map_context, tmp_path
+    ):
+        """Test MappingError when restricted asset has no alternative available.
+
+        This tests the error path in asset_mapper.py lines 169-174.
+        """
+        # Arrange
+        import json
+
+        from bfportal.core.exceptions import MappingError
+
+        # Create asset restricted to different map with no alternatives
+        assets_data = {
+            "AssetTypes": [
+                {
+                    "type": "Unique_Restricted_Asset",
+                    "directory": "UniqueCategory",
+                    "levelRestrictions": ["MP_DifferentMap"],
+                    "properties": [],
+                }
+            ]
+        }
+
+        assets_path = tmp_path / "restricted_assets.json"
+        with open(assets_path, "w") as f:
+            json.dump(assets_data, f)
+
+        mappings_data = {
+            "unique": {
+                "unique_bf1942_asset": {
+                    "portal_equivalent": "Unique_Restricted_Asset",
+                    "category": "unique_restricted_category",
+                    "confidence_score": 5,
+                }
+            }
+        }
+
+        mappings_path = tmp_path / "mappings.json"
+        with open(mappings_path, "w") as f:
+            json.dump(mappings_data, f)
+
+        mapper = AssetMapper(assets_path)
+        mapper.load_mappings(mappings_path)
+
+        # Act/Assert - Asset restricted to MP_DifferentMap, we're on MP_Tungsten
+        with pytest.raises(
+            MappingError,
+            match="Portal asset 'Unique_Restricted_Asset' is restricted to.*No fallback or alternative found",
+        ):
+            mapper.map_asset("unique_bf1942_asset", sample_map_context)
+
+    def test_find_best_guess_fallback_with_keyword_match(
+        self, sample_portal_assets, sample_fallback_keywords, sample_map_context
+    ):
+        """Test best-guess fallback finds Portal asset via keyword matching.
+
+        This tests _find_best_guess_fallback (lines 394-424) which is used
+        when asset is not in mappings file but matches keywords.
+        """
+        # Arrange
+        import json
+
+        mapper = AssetMapper(sample_portal_assets)
+
+        # Load fallback keywords
+        with open(sample_fallback_keywords) as f:
+            data = json.load(f)
+            mapper.fallback_keywords = data.get("type_categories", [])
+
+        # Don't load any mappings - force best-guess path
+
+        # Act - "pine_tree_large" not in mappings, but should match "tree" keywords
+        result = mapper._find_best_guess_fallback("pine_tree_large", "MP_Tungsten")
+
+        # Assert
+        assert result is not None
+        assert "Tree" in result.type or "Pine" in result.type
+
+    def test_find_best_guess_fallback_no_match_returns_none(
+        self, sample_portal_assets, sample_map_context
+    ):
+        """Test best-guess fallback returns None when no keyword match found."""
+        # Arrange
+        mapper = AssetMapper(sample_portal_assets)
+        mapper.fallback_keywords = []  # No keywords loaded
+
+        # Act
+        result = mapper._find_best_guess_fallback(
+            "completely_unknown_unmappable_asset", "MP_Tungsten"
+        )
+
+        # Assert
+        assert result is None
+
+    def test_find_alternative_uses_catalog_search_when_no_mapped_alternatives(
+        self, sample_portal_assets, sample_fallback_keywords, tmp_path
+    ):
+        """Test _find_alternative searches Portal catalog when no mapped alternatives exist.
+
+        This tests the catalog search fallback in asset_mapper.py lines 250-261.
+        """
+        # Arrange
+        import json
+
+        # Create mapping with restricted asset in isolated category
+        mappings_data = {
+            "isolated": {
+                "isolated_tree": {
+                    "portal_equivalent": "Tree_Oak_Medium",  # Restricted to MP_Tungsten
+                    "category": "isolated_vegetation",
+                    "confidence_score": 5,
+                }
+            }
+        }
+
+        mappings_path = tmp_path / "mappings.json"
+        with open(mappings_path, "w") as f:
+            json.dump(mappings_data, f)
+
+        mapper = AssetMapper(sample_portal_assets)
+        mapper.load_mappings(mappings_path)
+
+        # Load fallback keywords
+        with open(sample_fallback_keywords) as f:
+            data = json.load(f)
+            mapper.fallback_keywords = data.get("type_categories", [])
+
+        # Act - Asset restricted, no alternatives in "isolated_vegetation" category,
+        # but should find "tree" in catalog
+        alternative = mapper._find_alternative("isolated_tree", "isolated_vegetation", "MP_Battery")
+
+        # Assert
+        assert alternative is not None
+        assert "Tree" in alternative.type  # Found tree in catalog
+
+
+class TestAssetMapperBestGuessFallback:
+    """Test cases for best-guess fallback functionality."""
+
+    def test_map_asset_unmapped_with_keywords_finds_best_guess(
+        self, sample_portal_assets, sample_fallback_keywords, sample_map_context
+    ):
+        """Test unmapped asset with matching keywords finds best-guess Portal asset."""
+        # Arrange
+        import json
+
+        mapper = AssetMapper(sample_portal_assets)
+
+        # Load fallback keywords but no mappings
+        with open(sample_fallback_keywords) as f:
+            data = json.load(f)
+            mapper.fallback_keywords = data.get("type_categories", [])
+
+        # Act - "unmapped_rock_boulder" not in mappings, should match "rock" keywords
+        result = mapper.map_asset("unmapped_rock_boulder", sample_map_context)
+
+        # Assert
+        assert result is not None
+        assert "Rock" in result.type or "Boulder" in result.type

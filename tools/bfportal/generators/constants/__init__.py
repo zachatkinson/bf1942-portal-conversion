@@ -28,6 +28,7 @@ Date: 2025-10-13
 """
 
 # Re-export all constants for convenience
+# ruff: noqa: F405
 from .clearance import *  # noqa: F403
 from .experience import *  # noqa: F403
 from .extresource_ids import *  # noqa: F403
@@ -69,6 +70,7 @@ __all__ = [  # noqa: F405
     "EXT_RESOURCE_VEHICLE_SPAWNER",
     "EXT_RESOURCE_STATIONARY_EMPLACEMENT",
     "EXT_RESOURCE_COMBAT_AREA",
+    "EXT_RESOURCE_DEPLOY_CAM",
     "EXT_RESOURCE_TERRAIN",
     "EXT_RESOURCE_ASSETS",
     "EXT_RESOURCE_POLYGON_VOLUME",
@@ -81,6 +83,7 @@ __all__ = [  # noqa: F405
     "SCENE_PATH_VEHICLE_SPAWNER",
     "SCENE_PATH_STATIONARY_EMPLACEMENT",
     "SCENE_PATH_COMBAT_AREA",
+    "SCENE_PATH_DEPLOY_CAM",
     "SCENE_PATH_POLYGON_VOLUME",
     "SCENE_PATH_WORLD_ICON",
     "SCENE_PATH_TERRAIN_FORMAT",
