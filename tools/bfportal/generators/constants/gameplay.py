@@ -19,7 +19,7 @@ HQ_PROTECTION_HEIGHT_M = 50.0  # Height of HQ safety zone
 # Combat Area
 # ==============================================================================
 
-COMBAT_AREA_HEIGHT_M = 200.0  # Vertical extent of combat zone
+COMBAT_AREA_HEIGHT_M = 500.0  # Vertical extent of combat zone (Portal SDK standard)
 COMBAT_AREA_EXCLUSION_ZONE_M = 20.0  # Inset from terrain edges
 
 # ==============================================================================

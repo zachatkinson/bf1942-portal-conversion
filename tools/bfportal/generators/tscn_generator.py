@@ -447,7 +447,6 @@ class TscnGenerator(ISceneGenerator):
             f'[node name="TEAM_1_HQ" parent="." node_paths=PackedStringArray("HQArea", "InfantrySpawns") instance=ExtResource("{EXT_RESOURCE_HQ_SPAWNER}")]'
         )
         lines.append(f"transform = {self.transform_formatter.format(team1_hq_transform)}")
-        lines.append("Team = 1")
         lines.append("AltTeam = 0")
         lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START}")
@@ -486,7 +485,6 @@ class TscnGenerator(ISceneGenerator):
             f'[node name="TEAM_2_HQ" parent="." node_paths=PackedStringArray("HQArea", "InfantrySpawns") instance=ExtResource("{EXT_RESOURCE_HQ_SPAWNER}")]'
         )
         lines.append(f"transform = {self.transform_formatter.format(team2_hq_transform)}")
-        lines.append("Team = 2")
         lines.append("AltTeam = 0")
         lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START + 1}")
@@ -764,13 +762,17 @@ class TscnGenerator(ISceneGenerator):
                 f"{-sin_r:.6g}, 0, {cos_r:.6g}, "
                 f"0, {center_y}, 0)"
             )
-            lines.append('CombatVolume = NodePath("CombatVolume")')
+            lines.append('CombatVolume = NodePath("CollisionPolygon3D")')
             lines.append("")
 
             # Polygon points stay in local space (relative to rotated CombatArea parent)
             # So we DON'T need to rotate the points - the parent's rotation handles it
             lines.append(
-                f'[node name="CombatVolume" parent="CombatArea" instance=ExtResource("{EXT_RESOURCE_POLYGON_VOLUME}")]'
+                f'[node name="CollisionPolygon3D" parent="CombatArea" instance=ExtResource("{EXT_RESOURCE_POLYGON_VOLUME}")]'
+            )
+            # Add Y offset to lift collision volume above terrain (ceiling height)
+            lines.append(
+                f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, {COMBAT_AREA_HEIGHT_M}, 0)"
             )
             lines.append(
                 f"points = PackedVector2Array({-half_width}, {-half_depth}, "
@@ -788,11 +790,15 @@ class TscnGenerator(ISceneGenerator):
             lines.append(
                 f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {center_x}, {center_y}, {center_z})"
             )
-            lines.append('CombatVolume = NodePath("CombatVolume")')
+            lines.append('CombatVolume = NodePath("CollisionPolygon3D")')
             lines.append("")
 
             lines.append(
-                f'[node name="CombatVolume" parent="CombatArea" instance=ExtResource("{EXT_RESOURCE_POLYGON_VOLUME}")]'
+                f'[node name="CollisionPolygon3D" parent="CombatArea" instance=ExtResource("{EXT_RESOURCE_POLYGON_VOLUME}")]'
+            )
+            # Add Y offset to lift collision volume above terrain (ceiling height)
+            lines.append(
+                f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, {COMBAT_AREA_HEIGHT_M}, 0)"
             )
             lines.append(
                 f"points = PackedVector2Array({-half_width}, {-half_depth}, "
