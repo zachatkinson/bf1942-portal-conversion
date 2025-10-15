@@ -262,14 +262,14 @@ class TscnGenerator(ISceneGenerator):
             lines.extend(self._generate_capture_points(map_data.capture_points))
 
         # Vehicle spawners (can now snap to terrain)
-        # DRY: Use same filter logic as VehicleSpawnerGenerator
+        # Pass full map_data so generator has access to HQ positions for team assignment
         vehicle_spawners = [
             obj
             for obj in map_data.game_objects
             if "vehicle_type" in obj.properties or "spawner" in obj.asset_type.lower()
         ]
         if vehicle_spawners:
-            lines.extend(self._generate_vehicle_spawners(vehicle_spawners))
+            lines.extend(self._generate_vehicle_spawners(map_data))
 
         # Stationary weapon emplacements (can now snap to terrain)
         stationary_emplacements = [
@@ -449,6 +449,7 @@ class TscnGenerator(ISceneGenerator):
         lines.append(f"transform = {self.transform_formatter.format(team1_hq_transform)}")
         lines.append("Team = 1")
         lines.append("AltTeam = 0")
+        lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START}")
         lines.append('HQArea = NodePath("HQ_Team1")')
         lines.append(f"InfantrySpawns = [{spawn_paths_str}]")
@@ -487,6 +488,7 @@ class TscnGenerator(ISceneGenerator):
         lines.append(f"transform = {self.transform_formatter.format(team2_hq_transform)}")
         lines.append("Team = 2")
         lines.append("AltTeam = 0")
+        lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START + 1}")
         lines.append('HQArea = NodePath("HQ_Team2")')
         lines.append(f"InfantrySpawns = [{spawn_paths_str}]")
@@ -631,40 +633,23 @@ class TscnGenerator(ISceneGenerator):
 
         return lines
 
-    def _generate_vehicle_spawners(self, spawners: list[GameObject]) -> list[str]:
+    def _generate_vehicle_spawners(self, map_data: MapData) -> list[str]:
         """Generate vehicle spawner nodes.
 
         SOLID/DRY: Delegates to VehicleSpawnerGenerator for proper vehicle mapping.
 
         Args:
-            spawners: List of vehicle spawner objects (from game_objects)
+            map_data: Complete map data with HQs and vehicle spawners
 
         Returns:
             List of .tscn lines with VehicleType enum and BF1942→BF6 mappings
         """
-        # Create temporary MapData with just spawners for delegation
-        # (VehicleSpawnerGenerator expects MapData interface)
-        from ..core.interfaces import MapData as TempMapData
-        from ..core.interfaces import Rotation, Transform, Vector3
-
-        temp_map_data = TempMapData(
-            map_name="temp",
-            game_mode="Conquest",
-            team1_hq=Transform(Vector3(0, 0, 0), Rotation(0, 0, 0)),  # Dummy HQ
-            team2_hq=Transform(Vector3(0, 0, 0), Rotation(0, 0, 0)),  # Dummy HQ
-            team1_spawns=[],
-            team2_spawns=[],
-            game_objects=spawners,  # Pass only spawners
-            capture_points=[],
-            bounds=None,  # type: ignore
-            metadata={},
-        )
-
         # Delegate to VehicleSpawnerGenerator
         # SOLID: Single Responsibility - vehicle spawner logic centralized
         # DRY: No duplicated vehicle mapping code
+        # IMPORTANT: Pass complete map_data so generator can access HQ positions for team assignment
         return self.vehicle_spawner_generator.generate(
-            map_data=temp_map_data,
+            map_data=map_data,
             asset_registry=self.asset_registry,
             transform_formatter=self.transform_formatter,
         )
@@ -840,15 +825,24 @@ class TscnGenerator(ISceneGenerator):
             center_z = (map_data.bounds.min_point.z + map_data.bounds.max_point.z) / 2
 
             # Height should be high enough to see the entire map
-            # Use max dimension * 0.75 as a reasonable height
+            # Camera must be ABOVE terrain, then high enough for wide-angle view
             map_width = map_data.bounds.max_point.x - map_data.bounds.min_point.x
             map_depth = map_data.bounds.max_point.z - map_data.bounds.min_point.z
             max_dimension = max(map_width, map_depth)
-            height = max_dimension * 0.75 + 100  # Extra 100m for safety
+            terrain_max_y = map_data.bounds.max_point.y  # Highest point on terrain
+
+            # Formula: terrain_height + viewing_distance + clearance
+            # This makes camera height relative to terrain elevation
+            # DRY: Use constants from clearance module
+            height = (
+                terrain_max_y
+                + (max_dimension * DEPLOY_CAM_VIEWING_DISTANCE_MULTIPLIER)
+                + DEPLOY_CAM_SAFETY_CLEARANCE_M
+            )
         else:
             center_x = 0.0
             center_z = 0.0
-            height = 600.0  # Default height if no bounds
+            height = DEPLOY_CAM_DEFAULT_HEIGHT_M  # Default height if no bounds
 
         lines.append(
             f'[node name="DeployCam" parent="." instance=ExtResource("{EXT_RESOURCE_DEPLOY_CAM}")]'

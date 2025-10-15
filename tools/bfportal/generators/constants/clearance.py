@@ -25,6 +25,20 @@ VEHICLE_SPAWN_CLEARANCE_M = 0.5  # Slightly above ground for physics
 CAPTURE_POINT_CLEARANCE_M = 0.0  # Flush with ground (trigger area)
 
 # ==============================================================================
+# DeployCam (Spawn Screen Camera) Constants
+# ==============================================================================
+
+# Viewing distance multiplier for deploy camera height calculation
+# Camera height = terrain_max_y + (max_dimension * multiplier) + clearance
+DEPLOY_CAM_VIEWING_DISTANCE_MULTIPLIER = 0.75  # 75% of map dimension for good angle
+
+# Safety clearance above calculated viewing distance
+DEPLOY_CAM_SAFETY_CLEARANCE_M = 100.0  # Extra 100m above viewing distance
+
+# Default deploy camera height when bounds unknown
+DEPLOY_CAM_DEFAULT_HEIGHT_M = 600.0  # Fallback height for unbounded maps
+
+# ==============================================================================
 # Manual Offset Defaults (for rotated terrain recentering)
 # ==============================================================================
 
@@ -36,6 +50,9 @@ __all__ = [
     "SPAWN_CLEARANCE_M",
     "VEHICLE_SPAWN_CLEARANCE_M",
     "CAPTURE_POINT_CLEARANCE_M",
+    "DEPLOY_CAM_VIEWING_DISTANCE_MULTIPLIER",
+    "DEPLOY_CAM_SAFETY_CLEARANCE_M",
+    "DEPLOY_CAM_DEFAULT_HEIGHT_M",
     "MANUAL_OFFSET_X_DEFAULT",
     "MANUAL_OFFSET_Z_DEFAULT",
 ]
