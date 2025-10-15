@@ -4,7 +4,7 @@
 import json
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -244,8 +244,7 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.Path", return_value=spatial_path),
-            patch("create_experience.Path.exists", return_value=True),
+            patch("create_experience.get_spatial_json_path", return_value=spatial_path),
             patch("create_experience.create_experience_file") as mock_create,
         ):
             mock_create.return_value = tmp_path / "TestMap_Experience.json"
@@ -265,13 +264,14 @@ class TestMainFunction:
         (levels_dir / "Kursk.spatial.json").write_text("{}")
         (levels_dir / "ElAlamein.spatial.json").write_text("{}")
 
+        # Mock spatial path to non-existent file, and mock get_project_root to return tmp_path
+        nonexistent_spatial = tmp_path / "FbExportData" / "levels" / "NonExistentMap.spatial.json"
+
         # Act
         with (
             patch("sys.argv", test_args),
-            patch(
-                "create_experience.Path",
-                side_effect=lambda x: (tmp_path / x if x.startswith("FbExportData") else Path(x)),
-            ),
+            patch("create_experience.get_spatial_json_path", return_value=nonexistent_spatial),
+            patch("bfportal.generators.constants.paths.get_project_root", return_value=tmp_path),
         ):
             result = main()
 
@@ -291,13 +291,14 @@ class TestMainFunction:
         levels_dir = tmp_path / "FbExportData" / "levels"
         levels_dir.mkdir(parents=True)
 
+        # Mock spatial path to non-existent file, and mock get_project_root to return tmp_path
+        nonexistent_spatial = tmp_path / "FbExportData" / "levels" / "TestMap.spatial.json"
+
         # Act
         with (
             patch("sys.argv", test_args),
-            patch(
-                "create_experience.Path",
-                side_effect=lambda x: (tmp_path / x if x.startswith("FbExportData") else Path(x)),
-            ),
+            patch("create_experience.get_spatial_json_path", return_value=nonexistent_spatial),
+            patch("bfportal.generators.constants.paths.get_project_root", return_value=tmp_path),
         ):
             result = main()
 
@@ -318,15 +319,12 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_experience.Path") as mock_path_cls,
+            patch("create_experience.get_spatial_json_path", return_value=spatial_path),
             patch(
                 "create_experience.create_experience_file",
                 side_effect=ValueError("Test exception"),
             ),
         ):
-            mock_path_instance = MagicMock(spec=Path)
-            mock_path_instance.exists.return_value = True
-            mock_path_cls.return_value = mock_path_instance
             result = main()
 
         # Assert

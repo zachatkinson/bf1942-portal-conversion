@@ -32,7 +32,14 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from bfportal.exporters import create_spatial_attachment
+from bfportal.exporters import create_portal_experience, create_spatial_attachment
+from bfportal.generators.constants import (
+    MAX_PLAYERS_PER_TEAM_DEFAULT,
+    MODBUILDER_GAMEMODE_CUSTOM,
+    MODBUILDER_GAMEMODE_VERIFIED,
+    get_project_root,
+    get_spatial_json_path,
+)
 
 
 def load_registry(registry_path: Path) -> dict[str, Any]:
@@ -55,12 +62,15 @@ def filter_maps(
     return filtered
 
 
-def load_spatial_data(map_entry: dict[str, Any], project_root: Path) -> str:
+def load_spatial_data(map_entry: dict[str, Any]) -> str:
     """Load and base64 encode spatial data for a map."""
     map_id = map_entry["id"]
-    spatial_path = (
-        project_root / "FbExportData" / "levels" / f"{map_entry['display_name']}.spatial.json"
-    )
+
+    # Use custom spatial_path if provided, otherwise use display_name with helper
+    if "spatial_path" in map_entry:
+        spatial_path = get_project_root() / map_entry["spatial_path"]
+    else:
+        spatial_path = get_spatial_json_path(map_entry["display_name"])
 
     if not spatial_path.exists():
         raise FileNotFoundError(
@@ -80,7 +90,7 @@ def create_multi_map_experience(
     description: str,
     game_mode: str,
     max_players_per_team: int,
-    project_root: Path,
+    modbuilder_gamemode: int = MODBUILDER_GAMEMODE_VERIFIED,
 ) -> dict[str, Any]:
     """Create a multi-map Portal experience."""
     print(f"\nCreating multi-map experience: {experience_name}")
@@ -104,7 +114,7 @@ def create_multi_map_experience(
             continue
 
         try:
-            spatial_base64 = load_spatial_data(map_entry, project_root)
+            spatial_base64 = load_spatial_data(map_entry)
             print(f"  ✅ Loaded spatial data ({len(spatial_base64):,} bytes)")
 
             # Create spatial attachment (used in both mapRotation and root attachments)
@@ -138,34 +148,18 @@ def create_multi_map_experience(
     print(f"✅ Successfully loaded {len(map_rotation)} map(s)")
     print(f"{'=' * 60}\n")
 
-    # Create the complete experience structure
-    experience = {
-        "mutators": {
-            "MaxPlayerCount_PerTeam": max_players_per_team,
-            "AiMaxCount_PerTeam": 0,
-            "AiSpawnType": 2,
-            "AI_ManDownExperienceType_PerTeam": 1,
-            "ModBuilder_GameMode": 0,  # Custom mode
-            "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
-            "AimAssistSnapCapsuleRadiusMultiplier": 1,
-            "FriendlyFireDamageReflectionMaxTeamKills": 2,
-            "SpawnBalancing_GamemodeStartTimer": 0,
-            "SpawnBalancing_GamemodePlayerCountRatio": 0.75,
-        },
-        "assetRestrictions": {},
-        "name": experience_name,
-        "description": description,
-        "mapRotation": map_rotation,
-        "workspace": {},
-        "teamComposition": [
-            [1, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-        ],
-        "gameMode": game_mode,
-        "attachments": attachments,  # ✅ Populated with spatial attachments
-    }
-
-    return experience
+    # Use shared DRY experience builder
+    # NOTE: gameMode must be "ModBuilderCustom" for custom spatial data
+    # The actual game mode is determined by the map's gameplay setup, not this field
+    return create_portal_experience(
+        name=experience_name,
+        description=description,
+        map_rotation=map_rotation,
+        attachments=attachments,
+        max_players_per_team=max_players_per_team,
+        # game_mode defaults to "ModBuilderCustom" (required for custom spatial)
+        modbuilder_gamemode=modbuilder_gamemode,
+    )
 
 
 def main() -> int:
@@ -216,7 +210,7 @@ Examples:
         "--max-players",
         type=int,
         choices=[16, 32, 64],
-        help="Override max players per team from template",
+        help=f"Override max players per team from template (default from template or {MAX_PLAYERS_PER_TEAM_DEFAULT})",
     )
 
     parser.add_argument(
@@ -232,10 +226,17 @@ Examples:
         help="Output path for experience file (default: experiences/multi/<name>_Experience.json)",
     )
 
+    parser.add_argument(
+        "--mode",
+        choices=["custom", "verified"],
+        default="verified",
+        help="Experience mode: 'custom' (local only) or 'verified' (publishable) (default: verified)",
+    )
+
     args = parser.parse_args()
 
     # Determine project root
-    project_root = Path.cwd()
+    project_root = get_project_root()
     registry_path = project_root / args.registry
 
     try:
@@ -278,6 +279,11 @@ Examples:
         game_mode = args.game_mode or template["game_mode"]
         max_players = args.max_players or template["max_players"]
 
+        # Parse mode flag
+        modbuilder_gamemode = (
+            MODBUILDER_GAMEMODE_CUSTOM if args.mode == "custom" else MODBUILDER_GAMEMODE_VERIFIED
+        )
+
         # Create experience
         experience = create_multi_map_experience(
             maps=selected_maps,
@@ -285,7 +291,7 @@ Examples:
             description=description,
             game_mode=game_mode,
             max_players_per_team=max_players,
-            project_root=project_root,
+            modbuilder_gamemode=modbuilder_gamemode,
         )
 
         # Determine output path

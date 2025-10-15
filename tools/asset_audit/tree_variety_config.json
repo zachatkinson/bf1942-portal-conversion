@@ -1,0 +1,58 @@
+{
+  "_metadata": {
+    "description": "Tree variety configuration for Portal map conversion",
+    "purpose": "Defines tree alternatives by size for visual variety",
+    "updated": "2025-10-12"
+  },
+  "tree_varieties": {
+    "large": [
+      "Birch_01_L",
+      "Birch_01_L_B",
+      "Birch_01_L_C",
+      "PoplarWhite_01_L_A",
+      "JuniperPencil_01_L",
+      "Hawthorn_01_L",
+      "PearCallery_01_L_A",
+      "Walnut_01_L"
+    ],
+    "medium": [
+      "Birch_01_M_A",
+      "Birch_01_M_B",
+      "Birch_01_M_C",
+      "Birch_01_M_D",
+      "Birch_01_M_E",
+      "Birch_01_M_F",
+      "Hawthorn_01_M",
+      "JuniperPencil_01_M_A",
+      "FigWeeping_01_M"
+    ],
+    "small": [
+      "Birch_01_S",
+      "Hawthorn_01_S",
+      "JuniperPencil_01_S_A",
+      "JuniperPencil_01_S_B",
+      "Hydrangea_01_S"
+    ],
+    "dead": [
+      "TrunkDead_01_L_A",
+      "TrunkDead_01_L_B",
+      "TrunkDead_01_L_C",
+      "TrunkDead_01_L_D",
+      "TrunkDead_01_M_E",
+      "TrunkDead_01_M_F",
+      "Dead_01_M_A",
+      "Dead_01_M_B"
+    ],
+    "burnt": [
+      "TrunkDead_01_L_B_Burning",
+      "TrunkDead_01_M_C_Burning",
+      "Walnut_01_L_A_Burnt"
+    ]
+  },
+  "clustering_rules": {
+    "burnt_cluster_distance": 50.0,
+    "dead_cluster_distance": 30.0,
+    "min_cluster_size": 3,
+    "variety_percentage": 0.8
+  }
+}

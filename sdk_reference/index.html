@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Official Battlefield 6 Portal SDK Documentation - Create custom experiences with spatial editing and TypeScript scripting">
+ <title>Battlefield 6 Portal SDK Documentation</title>
+
+ <!-- Tailwind CSS -->
+ <script src="https://cdn.tailwindcss.com"></script>
+ <script>
+ tailwind.config = {
+ darkMode: 'media', // Auto-detect system preference
+ theme: {
+ extend: {
+ colors: {
+ // Official Battlefield Portal Colors (from portal.battlefield.com)
+ 'bf': {
+ 'primary': '#ff4747', // Primary Portal red
+ 'secondary': '#ff8e8e', // Secondary/lighter red
+ 'dark': {
+ 'bg': '#000000', // True black background
+ 'surface': '#0D0D0D', // Dark surface/cards
+ 'border': '#1A1A1A', // Dark borders
+ },
+ 'light': {
+ 'bg': '#FFFFFF', // Pure white background
+ 'surface': '#F5F5F5', // Light surface/cards
+ 'border': '#E0E0E0', // Light borders
+ },
+ 'gray': {
+ 'disabled': '#bfbfbf', // Disabled elements
+ 'default': '#878787', // Default gray
+ },
+ 'text': {
+ 'primary': '#FFFFFF',
+ 'secondary': 'rgba(255, 255, 255, 0.7)',
+ 'dark': '#000000',
+ }
+ }
+ },
+ fontFamily: {
+ // Official Battlefield fonts from sdk_reference/fonts
+ 'headline': ['BF_Headline', 'sans-serif'],
+ 'subheadline': ['BF_SubHeadline', 'sans-serif'],
+ 'body': ['BF_Text', 'sans-serif'],
+ 'mono': ['BF_Mono', 'monospace'],
+ 'sans': ['BF_Text', 'sans-serif'],
+ },
+ fontSize: {
+ // Official Portal typography scale
+ 'd4': '40px', // Display 4
+ 'd3': '54px', // Display 3
+ 'd2': '68px', // Display 2
+ 'body': '18px', // Body text
+ },
+ lineHeight: {
+ 'tight': '120%', // Official Portal line height
+ },
+ animation: {
+ 'fade-in': 'fadeIn 0.6s ease-out',
+ 'slide-up': 'slideUp 0.5s ease-out',
+ 'slide-down': 'slideDown 0.4s ease-out',
+ 'scale-in': 'scaleIn 0.3s ease-out',
+ },
+ keyframes: {
+ fadeIn: {
+ '0%': { opacity: '0' },
+ '100%': { opacity: '1' },
+ },
+ slideUp: {
+ '0%': { transform: 'translateY(20px)', opacity: '0' },
+ '100%': { transform: 'translateY(0)', opacity: '1' },
+ },
+ slideDown: {
+ '0%': { transform: 'translateY(-10px)', opacity: '0' },
+ '100%': { transform: 'translateY(0)', opacity: '1' },
+ },
+ scaleIn: {
+ '0%': { transform: 'scale(0.95)', opacity: '0' },
+ '100%': { transform: 'scale(1)', opacity: '1' },
+ },
+ }
+ }
+ }
+ }
+ </script>
+
+ <style>
+ /* Official Battlefield Font Faces */
+ @font-face {
+ font-family: 'BF_Headline';
+ src: url('fonts/BF_HEADLINE_NARROW-BOLD.ttf') format('truetype');
+ font-weight: bold;
+ font-style: normal;
+ font-display: swap;
+ }
+
+ @font-face {
+ font-family: 'BF_SubHeadline';
+ src: url('fonts/BF_SUB_HEADLINE_BOLD.ttf') format('truetype');
+ font-weight: bold;
+ font-style: normal;
+ font-display: swap;
+ }
+
+ @font-face {
+ font-family: 'BF_Text';
+ src: url('fonts/BF_TEXT_REGULAR.ttf') format('truetype');
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+ }
+
+ @font-face {
+ font-family: 'BF_Mono';
+ src: url('fonts/BF_MONO_BOOK.ttf') format('truetype');
+ font-weight: normal;
+ font-style: normal;
+ font-display: swap;
+ }
+
+ /* Mobile-First Base Styles */
+ * {
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ }
+
+ body {
+ font-family: 'BF_Text', sans-serif;
+ font-size: 18px;
+ line-height: 120%;
+ }
+
+ /* Official Battlefield Typography Hierarchy */
+ h1, h2 {
+ font-family: 'BF_Headline', sans-serif;
+ font-weight: normal; /* Font is already bold - don't artificially add weight */
+ text-transform: uppercase;
+ line-height: 120%;
+ letter-spacing: 0.05em; /* Subtle spacing for readability */
+ }
+
+ h3, h4 {
+ font-family: 'BF_SubHeadline', sans-serif;
+ font-weight: normal; /* Font is already bold - don't artificially add weight */
+ text-transform: uppercase;
+ line-height: 120%;
+ letter-spacing: 0.03em; /* Subtle spacing for readability */
+ }
+
+ h5, h6 {
+ font-family: 'BF_SubHeadline', sans-serif;
+ font-weight: normal; /* Font is already bold - don't artificially add weight */
+ letter-spacing: 0.02em; /* Subtle spacing for readability */
+ }
+
+ /* Don't artificially add font weight - use proper font files instead */
+ strong, b {
+ font-weight: normal;
+ }
+
+ code, pre {
+ font-family: 'BF_Mono', monospace;
+ }
+
+ /* Portal Button Styles */
+ .btn-primary {
+ background: #ff4747;
+ color: #FFFFFF;
+ font-family: 'BF_SubHeadline', sans-serif;
+ font-weight: normal; /* Font is already bold */
+ text-transform: uppercase;
+ padding: 1rem 2rem;
+ border-radius: 4px;
+ transition: all 0.2s ease;
+ border: none;
+ cursor: pointer;
+ }
+
+ .btn-primary:hover {
+ background: #ff6565;
+ transform: translateY(-2px);
+ box-shadow: 0 8px 16px rgba(255, 71, 71, 0.3);
+ }
+
+ .btn-secondary {
+ background: transparent;
+ color: #FFFFFF;
+ font-family: 'BF_SubHeadline', sans-serif;
+ font-weight: normal; /* Font is already bold */
+ text-transform: uppercase;
+ padding: 1rem 2rem;
+ border-radius: 4px;
+ border: 2px solid #1A1A1A;
+ transition: all 0.2s ease;
+ cursor: pointer;
+ }
+
+ .btn-secondary:hover {
+ border-color: #878787;
+ background: rgba(135, 135, 135, 0.1);
+ }
+
+ /* Official Portal Color System - Auto-detect system preference */
+ /* Dark mode (Portal default) */
+ @media (prefers-color-scheme: dark) {
+ :root {
+ --bg-primary: #000000; /* True black (Portal background) */
+ --bg-surface: #0D0D0D; /* Dark surface */
+ --bg-hover: #1A1A1A; /* Hover state */
+ --text-primary: #FFFFFF; /* Primary white text */
+ --text-secondary: rgba(255, 255, 255, 0.7);
+ --text-tertiary: #878787; /* Portal gray-default */
+ --border-color: #1A1A1A; /* Dark borders */
+ --accent-primary: #ff4747; /* Portal primary red */
+ --accent-secondary: #ff8e8e; /* Portal secondary red */
+ }
+ }
+
+ /* Light mode */
+ @media (prefers-color-scheme: light) {
+ :root {
+ --bg-primary: #FFFFFF; /* Pure white */
+ --bg-surface: #F5F5F5; /* Light surface */
+ --bg-hover: #E0E0E0; /* Hover state */
+ --text-primary: #000000; /* Black text */
+ --text-secondary: rgba(0, 0, 0, 0.7);
+ --text-tertiary: #878787; /* Portal gray-default */
+ --border-color: #E0E0E0; /* Light borders */
+ --accent-primary: #ff4747; /* Portal primary red */
+ --accent-secondary: #ff8e8e; /* Portal secondary red */
+ }
+ }
+
+ /* Custom Scrollbar - Desktop only */
+ @media (min-width: 768px) {
+ @media (prefers-color-scheme: dark) {
+ ::-webkit-scrollbar { width: 12px; }
+ ::-webkit-scrollbar-track { background: #1A1A1A; }
+ ::-webkit-scrollbar-thumb {
+ background: #3A3A3A;
+ border-radius: 6px;
+ border: 2px solid #1A1A1A;
+ }
+ ::-webkit-scrollbar-thumb:hover { background: #4A4A4A; }
+ }
+
+ @media (prefers-color-scheme: light) {
+ ::-webkit-scrollbar { width: 12px; }
+ ::-webkit-scrollbar-track { background: #F5F5F5; }
+ ::-webkit-scrollbar-thumb {
+ background: #BFBFBF;
+ border-radius: 6px;
+ border: 2px solid #F5F5F5;
+ }
+ ::-webkit-scrollbar-thumb:hover { background: #A0A0A0; }
+ }
+ }
+
+ /* Mobile Menu Animation */
+ .mobile-menu {
+ transform: translateX(-100%);
+ transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ .mobile-menu.open {
+ transform: translateX(0);
+ }
+
+ /* Smooth transitions */
+ a, button {
+ transition: all 0.2s ease;
+ }
+
+ /* Focus styles for accessibility */
+ a:focus-visible, button:focus-visible {
+ outline: 2px solid #ff4747;
+ outline-offset: 2px;
+ }
+
+ /* Code blocks - Use Battlefield Mono */
+ code {
+ font-family: 'BF_Mono', monospace;
+ font-size: 0.9em;
+ }
+
+ /* Hover animations */
+ .hover-lift {
+ transition: transform 0.2s ease, box-shadow 0.2s ease;
+ }
+ .hover-lift:hover {
+ transform: translateY(-2px);
+ }
+
+ /* Print styles */
+ @media print {
+ nav, .mobile-menu, footer { display: none; }
+ body { background: white !important; color: black !important; }
+ }
+ </style>
+</head>
+
+<body class="bg-bf-dark-bg dark:bg-bf-dark-bg bg-bf-light-bg text-white dark:text-white text-bf-gray-900 min-h-screen antialiased">
+
+ <!-- Mobile Menu Overlay -->
+ <div id="menuOverlay"
+ class="fixed inset-0 bg-black/90 backdrop-blur-sm z-40 hidden transition-opacity duration-300"
+ onclick="toggleMobileMenu()"
+ role="presentation"></div>
+
+ <!-- Mobile Slide-Out Menu -->
+ <nav id="mobileMenu"
+ class="mobile-menu fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface z-50 overflow-y-auto border-r border-bf-dark-border dark:border-bf-dark-border border-bf-light-border"
+ role="navigation"
+ aria-label="Mobile navigation">
+ <div class="p-6">
+ <!-- Menu Header -->
+ <div class="flex items-center justify-between mb-8 pb-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <div>
+ <h2 class="text-xl font-bold text-bf-primary uppercase tracking-wider tracking-wide">Menu</h2>
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mt-1">Portal SDK Docs</p>
+ </div>
+ <button onclick="toggleMobileMenu()"
+ class="p-2 hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-colors"
+ aria-label="Close menu">
+ <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+ </svg>
+ </button>
+ </div>
+
+ <!-- Menu Items -->
+ <ul class="space-y-2">
+ <li>
+ <a href="#getting-started"
+ onclick="toggleMobileMenu()"
+ class="flex items-center gap-3 p-3 text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all group">
+ <svg class="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+ </svg>
+ <span class="font-medium">Getting Started</span>
+ </a>
+ </li>
+ <li>
+ <a href="#key-features"
+ onclick="toggleMobileMenu()"
+ class="flex items-center gap-3 p-3 text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all group">
+ <svg class="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+ </svg>
+ <span class="font-medium">Key Features</span>
+ </a>
+ </li>
+ <li>
+ <a href="#scripting"
+ onclick="toggleMobileMenu()"
+ class="flex items-center gap-3 p-3 text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all group">
+ <svg class="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+ </svg>
+ <span class="font-medium">Gameplay Scripting</span>
+ </a>
+ </li>
+ <li>
+ <a href="#examples"
+ onclick="toggleMobileMenu()"
+ class="flex items-center gap-3 p-3 text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all group">
+ <svg class="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+ </svg>
+ <span class="font-medium">Example Experiences</span>
+ </a>
+ </li>
+ </ul>
+
+ <!-- CTA Button -->
+ <div class="mt-8 pt-6 border-t border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <a href="https://portal.battlefield.com"
+ target="_blank"
+ rel="noopener noreferrer"
+ class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-bf-primary hover:bg-bf-secondary text-white font-bold uppercase tracking-wide transition-all hover-lift font-subheadline text-sm tracking-wide">
+ <span>Open Portal Builder</span>
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+ </svg>
+ </a>
+ </div>
+ </div>
+ </nav>
+
+ <!-- Sticky Header Navigation -->
+ <header class="sticky top-0 z-30 bg-bf-dark-surface/95 dark:bg-bf-dark-surface/95 bg-bf-light-surface/95 backdrop-blur-md border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border animate-slide-down"
+ role="banner">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="flex items-center justify-between h-16">
+
+ <!-- Mobile Menu Button -->
+ <button onclick="toggleMobileMenu()"
+ class="lg:hidden p-2 hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-colors"
+ aria-label="Open menu"
+ aria-expanded="false">
+ <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+ </svg>
+ </button>
+
+ <!-- Logo -->
+ <div class="flex items-center gap-3">
+ <div class="w-8 h-8 bg-bf-primary flex items-center justify-center">
+ <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+ <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+ </svg>
+ </div>
+ <h1 class="text-lg sm:text-xl font-bold text-bf-primary uppercase tracking-tight tracking-wide">
+ BF6 Portal SDK
+ </h1>
+ </div>
+
+ <!-- Desktop Navigation -->
+ <nav class="hidden lg:flex items-center gap-2" aria-label="Main navigation">
+ <a href="#getting-started"
+ class="px-4 py-2 text-sm font-medium text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all">
+ Getting Started
+ </a>
+ <a href="#key-features"
+ class="px-4 py-2 text-sm font-medium text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all">
+ Features
+ </a>
+ <a href="#scripting"
+ class="px-4 py-2 text-sm font-medium text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 hover:text-bf-primary hover:bg-bf-dark-bg dark:hover:bg-bf-dark-bg hover:bg-bf-light-bg transition-all">
+ Scripting
+ </a>
+ <a href="https://portal.battlefield.com"
+ target="_blank"
+ rel="noopener noreferrer"
+ class="ml-2 px-4 py-2 bg-bf-primary hover:bg-bf-secondary text-white text-sm font-bold uppercase tracking-wide transition-all hover: hover-lift font-subheadline tracking-wide">
+ Open Portal Builder →
+ </a>
+ </nav>
+ </div>
+ </div>
+ </header>
+
+ <!-- Hero Section -->
+ <section class="relative bg-gradient-to-b from-bf-dark-surface via-bf-dark-bg to-bf-dark-bg dark:from-bf-dark-surface dark:via-bf-dark-bg dark:to-bf-dark-bg from-white via-bf-light-bg to-bf-light-bg border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border animate-fade-in">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+ <div class="max-w-4xl mx-auto text-center">
+
+ <!-- Badge -->
+ <div class="inline-flex items-center gap-2 px-4 py-2 bg-bf-primary/10 border border-bf-primary/20 mb-6 sm:mb-8 animate-scale-in">
+ <span class="w-2 h-2 bg-bf-primary animate-pulse"></span>
+ <span class="text-sm font-medium text-bf-primary">Official SDK Documentation</span>
+ </div>
+
+ <!-- Main Heading -->
+ <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 tracking-tight leading-tight animate-slide-up uppercase tracking-wide">
+ <span class="text-bf-primary">BATTLEFIELD 6</span>
+ <br>
+ <span class="text-white dark:text-white text-bf-gray-900">PORTAL SDK</span>
+ </h2>
+
+ <!-- Description -->
+ <p class="text-base sm:text-lg lg:text-xl text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 leading-relaxed mb-4 sm:mb-6 max-w-3xl mx-auto font-light animate-slide-up" style="animation-delay: 0.1s;">
+ Create custom Battlefield experiences with spatial editing, TypeScript scripting, and unlimited creative freedom. Build the game modes you've always imagined.
+ </p>
+
+ <!-- CTA Buttons -->
+ <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 animate-slide-up" style="animation-delay: 0.2s;">
+ <a href="#getting-started"
+ class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-bf-primary hover:bg-bf-secondary text-white font-bold uppercase tracking-wide transition-all text-sm sm:text-base hover-lift font-subheadline tracking-wide">
+ <span>Get Started</span>
+ <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+ </svg>
+ </a>
+ <a href="https://portal.battlefield.com"
+ target="_blank"
+ rel="noopener noreferrer"
+ class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-bf-dark-border dark:bg-bf-dark-border bg-bf-light-border hover:bg-bf-gray-700 dark:hover:bg-bf-gray-700 hover:bg-bf-gray-300 text-white dark:text-white text-bf-gray-900 font-semibold transition-all text-sm sm:text-base hover-lift">
+ <span>Visit Portal Builder</span>
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+ </svg>
+ </a>
+ </div>
+
+ <!-- Stats -->
+ <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-bf-dark-border dark:border-bf-dark-border border-bf-light-border animate-slide-up" style="animation-delay: 0.3s;">
+ <div class="text-center">
+ <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-bf-primary mb-1 sm:mb-2">9</div>
+ <div class="text-xs sm:text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 font-medium">Available Maps</div>
+ </div>
+ <div class="text-center">
+ <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-bf-primary mb-1 sm:mb-2">∞</div>
+ <div class="text-xs sm:text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 font-medium">Possibilities</div>
+ </div>
+ <div class="text-center">
+ <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-bf-primary mb-1 sm:mb-2">TS</div>
+ <div class="text-xs sm:text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 font-medium">TypeScript API</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Main Content -->
+ <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+
+ <!-- Getting Started Section -->
+ <section id="getting-started" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border transition-shadow duration-300">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Getting Started
+ </h2>
+ </div>
+
+ <p class="text-base sm:text-lg text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-8 sm:mb-10 leading-relaxed">
+ Follow these steps to set up the Battlefield 6 Portal SDK and start creating custom experiences.
+ </p>
+
+ <ol class="space-y-6 sm:space-y-8">
+ <li class="flex gap-4 sm:gap-6">
+ <span class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary text-white flex items-center justify-center font-bold text-base sm:text-lg">
+ 1
+ </span>
+ <div class="flex-1 pt-1 sm:pt-2">
+ <p class="text-base sm:text-lg text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ Open the included <strong class="text-white dark:text-white text-bf-gray-900">Godot executable</strong>.
+ </p>
+ </div>
+ </li>
+ <li class="flex gap-4 sm:gap-6">
+ <span class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary text-white flex items-center justify-center font-bold text-base sm:text-lg">
+ 2
+ </span>
+ <div class="flex-1 pt-1 sm:pt-2">
+ <p class="text-base sm:text-lg text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ A"Project Selection" window will open. Drag the <code class="px-2 py-1 bg-bf-dark-bg dark:bg-bf-dark-bg bg-bf-light-bg text-bf-primary text-sm">GodotProject</code> folder into this window to import automatically, or press"Import" to find it manually.
+ </p>
+ </div>
+ </li>
+ <li class="flex gap-4 sm:gap-6">
+ <span class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary text-white flex items-center justify-center font-bold text-base sm:text-lg">
+ 3
+ </span>
+ <div class="flex-1 pt-1 sm:pt-2">
+ <p class="text-base sm:text-lg text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ Open the Battlefield 6 Portal Project and wait for it to start up. <span class="text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600">This can take a few minutes.</span>
+ </p>
+ </div>
+ </li>
+ <li class="flex gap-4 sm:gap-6">
+ <span class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary text-white flex items-center justify-center font-bold text-base sm:text-lg">
+ 4
+ </span>
+ <div class="flex-1 pt-1 sm:pt-2">
+ <p class="text-base sm:text-lg text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ Click the <strong class="text-white dark:text-white text-bf-gray-900">"Portal Setup"</strong> button in the <strong class="text-white dark:text-white text-bf-gray-900">"BFPortal"</strong> tab on the right side of the Godot UI and wait for setup to finish. <span class="text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600">This can take several minutes.</span>
+ </p>
+ </div>
+ </li>
+ <li class="flex gap-4 sm:gap-6">
+ <span class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary text-white flex items-center justify-center font-bold text-base sm:text-lg">
+ 5
+ </span>
+ <div class="flex-1 pt-1 sm:pt-2">
+ <p class="text-base sm:text-lg text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ To begin spatial editing, open a level by opening the <strong class="text-white dark:text-white text-bf-gray-900">"Scene"</strong> dropdown and selecting <strong class="text-white dark:text-white text-bf-gray-900">"Open Scene"</strong>. Open the <code class="px-2 py-1 bg-bf-dark-bg dark:bg-bf-dark-bg bg-bf-light-bg text-bf-primary text-sm">levels</code> directory and select the level you wish to edit.
+ </p>
+ </div>
+ </li>
+ </ol>
+
+ <div class="mt-8 sm:mt-10 p-4 sm:p-6 bg-blue-500/10 dark:bg-blue-500/10 bg-blue-100 border-l-4 border-blue-500">
+ <div class="flex gap-3">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ <div>
+ <p class="text-sm sm:text-base text-blue-200 dark:text-blue-200 text-blue-900 leading-relaxed">
+ <strong class="font-semibold">Tip:</strong> Level geometry will often be above the default camera location in Godot. Look up if you can't find the level.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Quick Reference Cards -->
+ <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16 lg:mb-24">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all group hover-lift">
+ <div class="w-12 h-12 bg-bf-primary/10 flex items-center justify-center mb-4 group-hover:bg-bf-primary/20 transition-colors">
+ <svg class="w-6 h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+ </svg>
+ </div>
+ <h3 class="text-lg font-bold text-white dark:text-white text-bf-gray-900 mb-2 uppercase tracking-wide">Spatial Editor</h3>
+ <p class="text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 leading-relaxed">
+ Drag, move, rotate, and scale objects to build custom map layouts
+ </p>
+ </div>
+
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all group hover-lift">
+ <div class="w-12 h-12 bg-bf-primary/10 flex items-center justify-center mb-4 group-hover:bg-bf-primary/20 transition-colors">
+ <svg class="w-6 h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+ </svg>
+ </div>
+ <h3 class="text-lg font-bold text-white dark:text-white text-bf-gray-900 mb-2 uppercase tracking-wide">TypeScript API</h3>
+ <p class="text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 leading-relaxed">
+ Full scripting control with TypeScript for custom game modes
+ </p>
+ </div>
+
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all group sm:col-span-2 lg:col-span-1 hover-lift">
+ <div class="w-12 h-12 bg-bf-primary/10 flex items-center justify-center mb-4 group-hover:bg-bf-primary/20 transition-colors">
+ <svg class="w-6 h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+ </svg>
+ </div>
+ <h3 class="text-lg font-bold text-white dark:text-white text-bf-gray-900 mb-2 uppercase tracking-wide">Custom UI</h3>
+ <p class="text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 leading-relaxed">
+ Build interactive menus, stores, and HUD elements
+ </p>
+ </div>
+ </div>
+
+ <!-- Key Features Section -->
+ <section id="key-features" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Key Features
+ </h2>
+ </div>
+
+ <!-- Spatial Editor -->
+ <div class="mb-12">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Spatial Editor</h3>
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-6">
+ Battlefield 6 Portal allows for additive spatial editing of all levels via the included Godot editor. You may add new instances of most objects that appear in a level to that level, and move, rotate, and scale them to build whatever you can imagine. In addition to environmental objects, Portal includes a number of gameplay objects that can be added and modified on every map, such as Headquarters, Spawn Points, Combat Areas, etc. Map edits are exported from Godot and can be attached to Custom Experiences via the Portal Web Builder.
+ </p>
+
+ <!-- Object Manipulation -->
+ <h4 class="text-lg sm:text-xl font-bold text-white dark:text-white text-bf-gray-900 mb-4 mt-8">Object Manipulation</h4>
+
+ <!-- Camera Navigation -->
+ <div class="mb-6 p-4 sm:p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-bold text-bf-primary mb-3">Camera Navigation</h5>
+ <div class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p class="font-semibold">While Holding down the Right Mouse Button:</p>
+ <ul class="ml-4 space-y-1">
+ <li>• Move the mouse to Tilt and Pan the camera</li>
+ <li>• Use W, A, S, D keys to move the camera position</li>
+ <li>• Scroll the mouse wheel to change the camera movement speed</li>
+ </ul>
+ <p class="mt-3">Scroll the mouse wheel to zoom in and out.</p>
+ </div>
+ </div>
+
+ <!-- Grid of manipulation controls -->
+ <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Selecting Objects</h5>
+ <ul class="space-y-1 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Click object in Scene Outliner</li>
+ <li>• Press <kbd class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-xs">Q</kbd> then click object</li>
+ <li>• Press <kbd class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-xs">F</kbd> to frame object</li>
+ </ul>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Moving Objects</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ Press <kbd class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-xs">W</kbd> with an object selected to enter Move mode
+ </p>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Rotating Objects</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ Press <kbd class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-xs">E</kbd> with an object selected to enter Rotate mode
+ </p>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Scaling Objects</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-2">
+ Press <kbd class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-xs">R</kbd> with an object selected to enter Scale mode
+ </p>
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 italic">
+ Note: Objects should always be uniformly scaled. Non-uniform scaling is not officially supported.
+ </p>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Object Library</h5>
+ <ul class="space-y-1 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Drag objects into 3D Scene</li>
+ <li>• Use matching level tab only</li>
+ <li>• Check asset availability</li>
+ </ul>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h5 class="font-bold text-bf-primary mb-2">Exporting Map Edits</h5>
+ <ul class="space-y-1 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Click"Export Current Level"</li>
+ <li>• Creates .spatial.json file</li>
+ <li>• Add to Portal Web Builder</li>
+ </ul>
+ </div>
+
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift sm:col-span-2 lg:col-span-1">
+ <h5 class="font-bold text-bf-primary mb-2">Static Layers</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ Each map contains a"Static" layer with Terrain and baked Assets. These objects are not currently editable.
+ </p>
+ </div>
+ </div>
+
+ <!-- Important Gameplay Objects -->
+ <h4 class="text-lg sm:text-xl font-bold text-white dark:text-white text-bf-gray-900 mb-4 mt-8">Important Gameplay Objects</h4>
+
+ <div class="space-y-4">
+ <!-- Combat Area -->
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>Combat Area</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 space-y-3 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p><strong class="text-white">Important:</strong> CombatArea acts as a <strong class="text-bf-primary">vertical ceiling</strong>, not a ground-level boundary!</p>
+
+ <div class="pl-4 border-l-2 border-bf-primary/50 space-y-2">
+ <p class="font-semibold text-white dark:text-white text-bf-gray-900">How CombatArea Works:</p>
+ <p>• <strong>Purpose:</strong> Prevents players from flying/climbing too high</p>
+ <p>• <strong>Positioning:</strong> Placed ~140m above ground (40-50m above highest terrain)</p>
+ <p>• <strong>Height:</strong> Typically 100m vertical extent</p>
+ <p>• <strong>Ground Boundaries:</strong> Defined by terrain geometry, not CombatArea</p>
+ </div>
+
+ <div class="pl-4 border-l-2 border-bf-red/50 space-y-2">
+ <p class="font-semibold text-white dark:text-white text-bf-gray-900">Structure:</p>
+ <p>• CombatArea parent node has no transform (stays at origin)</p>
+ <p>• CollisionPolygon3D child has the Y-position offset (ceiling height)</p>
+ <p>• PolygonVolume height extends <strong>upward</strong> from Y position</p>
+ </div>
+
+ <div class="pl-4 border-l-2 border-yellow-500/50 space-y-1">
+ <p class="font-semibold text-white dark:text-white text-bf-gray-900">Editing Tips:</p>
+ <p>• Move polygon points: Hold left-click and drag</p>
+ <p>• Create new points: Ctrl+left-click on edge</p>
+ <p>• Remove points: Ctrl+right-click on point</p>
+ <p>• Working Combat Areas are pre-placed on all maps</p>
+ </div>
+
+ <p class="pt-2 text-xs italic">Example: Terrain at Y=70-104, ceiling at Y=140, height=100 → Volume extends Y=140 to Y=240 (36-70m above ground)</p>
+ </div>
+ </details>
+
+ <!-- HQs and Player Spawners -->
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>HQ's and Player Spawners</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 space-y-3 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>To deploy into a level, you must set up either <strong class="text-bf-primary">HQ_PlayerSpawner</strong> or <strong class="text-bf-primary">PlayerSpawner</strong> objects.</p>
+
+ <div class="pl-4 border-l-2 border-bf-primary/50 space-y-1">
+ <p class="font-semibold text-white dark:text-white text-bf-gray-900">HQ_PlayerSpawner:</p>
+ <p>• Standard Battlefield HQ spawner</p>
+ <p>• Players manually spawn using their team's HQ</p>
+ <p>• Assigned to specific team via Inspector Panel</p>
+ </div>
+
+ <div class="pl-4 border-l-2 border-bf-red/50 space-y-1">
+ <p class="font-semibold text-white dark:text-white text-bf-gray-900">PlayerSpawner:</p>
+ <p>• Alternate spawning method without HQ</p>
+ <p>• Script player deployment directly</p>
+ <p>• Not team-specific, can spawn any players</p>
+ </div>
+
+ <p class="pt-2">Both spawner types must be linked to one or more <strong class="text-bf-primary">SpawnPoint</strong> objects to function. Working HQ examples are pre-placed on all levels.</p>
+ </div>
+ </details>
+
+ <!-- Other Gameplay Objects -->
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>SpawnPoints</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>Objects which, when connected to HQ_PlayerSpawners and PlayerSpawners, determine where players are able to spawn into a level.</p>
+ </div>
+ </details>
+
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>Area Triggers</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>AreaTrigger objects, when paired with a PolygonVolume, can trigger events in scripting such as:</p>
+ <ul class="ml-4 space-y-1">
+ <li>• OnPlayerEnterAreaTrigger</li>
+ <li>• OnPlayerExitAreaTrigger</li>
+ </ul>
+ </div>
+ </details>
+
+ <div class="grid sm:grid-cols-2 gap-4">
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>DeployCam</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>Sets up the camera used in Deploy Screen when deploying into a level</p>
+ </div>
+ </details>
+
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>VehicleSpawners</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>Trigger vehicles to spawn into the map via script</p>
+ </div>
+ </details>
+
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>WorldIcon</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>Create in-world icons and text</p>
+ </div>
+ </details>
+
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>Interact Point</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>Trigger events in script via interactive objects</p>
+ </div>
+ </details>
+ </div>
+
+ <details class="group border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border overflow-hidden hover-lift">
+ <summary class="cursor-pointer p-4 flex items-center justify-between font-bold text-bf-primary hover:bg-bf-dark-bg/30 dark:hover:bg-bf-dark-bg/30 hover:bg-gray-50 transition-colors">
+ <span>AI_Spawner</span>
+ <svg class="w-5 h-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+ </svg>
+ </summary>
+ <div class="p-4 pt-0 space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <p>• Spawn Custom AI Bots into a level</p>
+ <p>• Bot behavior is controllable and customizable via script</p>
+ </div>
+ </details>
+ </div>
+
+ <!-- Available Levels - Link to Full Maps Section -->
+ <h4 class="text-lg sm:text-xl font-bold text-white dark:text-white text-bf-gray-900 mb-4 mt-8">Available Levels</h4>
+ <div class="p-6 bg-gradient-to-r from-bf-primary/10 to-transparent border-l-4 border-bf-primary">
+ <p class="text-sm text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 mb-3">
+ 9 base maps available for spatial editing, each with unique terrain, location, and asset libraries.
+ </p>
+ <a href="#maps" class="inline-flex items-center gap-2 text-bf-primary hover:text-bf-secondary transition-colors text-sm font-subheadline uppercase tracking-wide">
+ <span>View Detailed Map Reference</span>
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+ </svg>
+ </a>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Maps Reference Section -->
+ <section id="maps" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Maps Reference
+ </h2>
+ </div>
+
+ <p class="text-base sm:text-lg text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-8 leading-relaxed">
+ Complete reference guide for all 9 base maps, including terrain characteristics, location details, and available asset libraries for spatial editing.
+ </p>
+
+ <!-- Map: Mirak Valley (MP_Tungsten) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Mirak Valley <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Tungsten)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Middle Eastern Valley</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Desert Valley</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Hills & Open Plains</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,164 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Wide-open vehicle combat zones with scattered villages. Natural valley terrain provides tactical cover. Ideal for combined arms warfare with mix of long-range and close-quarters combat.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">142</td>
+ <td class="px-3 py-2 text-xs">Awning_02_B, Awning_02_C, BR_VillageShackWall_01, ... (+139 more)</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">160</td>
+ <td class="px-3 py-2 text-xs">AppleCluster_02, Apple_01, Birch_01_L, ... (+157 more)</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">637</td>
+ <td class="px-3 py-2 text-xs">ACUnit_04, AftermathDebrisPileConstruction_Ramp_512_01, ... (+634 more)</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">3</td>
+ <td class="px-3 py-2 text-xs">PortableLamp_TowerPole_02, PortableLamp_TowerTop_01, StreetWallLamp_Rect_01</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,190</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileConcrete_Center_120, AftermathDebrisPileConcrete_Center_60, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Operation Firestorm (MP_FireStorm) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Operation Firestorm <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_FireStorm)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Middle Eastern Oil Fields</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Desert Industrial</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Flat Desert</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,031 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Massive open desert ideal for vehicle warfare. Oil refinery and industrial zones provide infantry cover. Sandstorms can reduce visibility dynamically. Excellent for large-scale tank battles and air support.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">154</td>
+ <td class="px-3 py-2 text-xs">BR_StorageRoof_01_A_1024x512, BR_StorageRoof_01_A_512, BarrierConstruction_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">44</td>
+ <td class="px-3 py-2 text-xs">AcaciaUrban_01_S, AsphaltChunks_01, AsphaltChunks_02, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">672</td>
+ <td class="px-3 py-2 text-xs">ACUnit_04, AirDuct_02_A_256, AirDuct_02_A_512, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">2</td>
+ <td class="px-3 py-2 text-xs">LampPostStadium_01, PortalLightSimple_01</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,127</td>
+ <td class="px-3 py-2 text-xs">ConcreteDebris, ConcreteDebris_01, ConcreteDebris_02, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Siege of Cairo (MP_Abbasid) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Siege of Cairo <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Abbasid)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Cairo, Egypt</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Urban Historical</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Dense Urban</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,638 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Historic Cairo setting with narrow streets and ancient architecture. Dense urban environment favors infantry combat and close-quarters battles. Rich visual detail with Middle Eastern architectural elements throughout.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">168</td>
+ <td class="px-3 py-2 text-xs">Awning_02_C, BR_OutskirtsHouseMediumGround_01, BR_OutskirtsHouseMediumIntermediate_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">147</td>
+ <td class="px-3 py-2 text-xs">AppleCluster_01, AppleCluster_02, Apple_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">909</td>
+ <td class="px-3 py-2 text-xs">ACModule_01, ACModule_02, ACModule_03, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">39</td>
+ <td class="px-3 py-2 text-xs">CeilingHangingLamp_02_Static, CeilingLamp_Round_01, FlourescentLamp_Tube_02_Abbasid, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,343</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileConcrete_Skew_210_B, AftermathDebrisPileConcrete_Skew_210_D, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Empire State (MP_Aftermath) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Empire State <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Aftermath)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">New York City</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Urban Ruins</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Destroyed Cityscape</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,736 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Post-apocalyptic Manhattan with collapsed buildings and debris-filled streets. Vertical combat across multiple building levels. Earthquake aftermath creates dynamic rubble-based cover and choke points. Intense urban warfare environment.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">247</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileBrickPlaster_120_A_1, AftermathDebrisPileBrickPlaster_210_A_1, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">156</td>
+ <td class="px-3 py-2 text-xs">AsphaltChunks_01, AsphaltChunks_02, AsphaltChunks_03, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">1,060</td>
+ <td class="px-3 py-2 text-xs">ACModule_01, ACModule_02, ACModule_03, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">54</td>
+ <td class="px-3 py-2 text-xs">BarebulbPendant_01, CeilingLED_Square_01, CeilingLamp_Bulb_01_h_128, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,187</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileBrickPlaster_120_01, AftermathDebrisPileBrickPlaster_210_01, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Iberian Offensive (MP_Battery) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Iberian Offensive <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Battery)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Iberian Peninsula</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Mediterranean Coastal</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Hillside Villages</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,516 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Picturesque Mediterranean setting with whitewashed buildings and coastal fortifications. Rolling hills and terraced villages create natural defensive positions. Mix of open countryside and dense village clusters supports diverse tactical approaches.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">411</td>
+ <td class="px-3 py-2 text-xs">BR_RoofFlat_01_640x1280, BR_RoofFlat_01_640x640, BR_RoofShed_01_640x896, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">141</td>
+ <td class="px-3 py-2 text-xs">AgaveAmericanaPotted_01_S_B, AgaveAmericana_01_S_A, AgaveAmericana_01_S_B, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">714</td>
+ <td class="px-3 py-2 text-xs">AAGun_01, ACModule_01, ACModule_02, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">12</td>
+ <td class="px-3 py-2 text-xs">EmptyPointLight_Fire_01, FacadeLight_Curved_01, StreetLamp_Rect_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,206</td>
+ <td class="px-3 py-2 text-xs">AirControlTower_02, AirportTerminalLarge_01, AirportTerminalStorage_01, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Liberation Peak (MP_Capstone) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Liberation Peak <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Capstone)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Mountain Pass</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Alpine Military Base</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Rocky Mountains</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">1,902 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ High-altitude military installation carved into mountainside. Dramatic elevation changes with cliffs and rocky outcrops. Narrow mountain paths and fortified bunkers create intense infantry engagements. Spectacular alpine vistas throughout.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">72</td>
+ <td class="px-3 py-2 text-xs">Awning_02_A, Awning_02_B, Awning_02_C, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">127</td>
+ <td class="px-3 py-2 text-xs">AsphaltChunks_01, AsphaltChunks_02, AsphaltChunks_03, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">504</td>
+ <td class="px-3 py-2 text-xs">ACModule_03, ACUnit_03, ACUnit_04, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">3</td>
+ <td class="px-3 py-2 text-xs">LampPostStadium_01, PortableLamp_Rect_02, StreetWallLamp_Rect_01</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,164</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileVillage_120_01, CliffsCapstone_01_A, CliffsCapstone_01_B, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Manhattan Bridge (MP_Dumbo) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Manhattan Bridge <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Dumbo)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">New York City - Brooklyn</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Urban Waterfront</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Bridge & Streets</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,798 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Iconic Manhattan Bridge dominates the battlefield with massive suspension structure. Fight on bridge deck, through urban streets, and along waterfront. Multi-level combat from subway tunnels to bridge towers. Dense urban warfare with explosive set pieces.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">329</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileBrickPlaster_120_A_1, AftermathDebrisPileBrickPlaster_210_A_1, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">135</td>
+ <td class="px-3 py-2 text-xs">AgaveAmericanaPotted_01_S_A, AgaveAmericana_01_S_A, Ailanthis_01_S, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">1,046</td>
+ <td class="px-3 py-2 text-xs">ACModule_01_VFX, ACModule_02, ACModule_02_VFX, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">29</td>
+ <td class="px-3 py-2 text-xs">CeilingLamp_Exit_01_nbrk, CeilingLamp_Long_01_nbrk, CeilingLamp_Round_01_nbrk, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,227</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileBrickPlaster_120, AftermathDebrisPileBrickPlaster_120_01, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: Saint's Quarter (MP_Limestone) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">Saint's Quarter <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Limestone)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Historic Mediterranean</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Old Town Historic</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Stone Architecture</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,207 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Beautiful limestone buildings and ancient streets create authentic Mediterranean atmosphere. Narrow alleyways and stone archways favor close-quarters infantry tactics. Church bells and fountains add atmospheric detail. Perfect for urban tactical gameplay.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">259</td>
+ <td class="px-3 py-2 text-xs">BR_Archway_03, BR_StoneFoundationWall_01_192x384_B, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">125</td>
+ <td class="px-3 py-2 text-xs">AgaveAmericanaPotted_01_S_A, AgaveAmericana_01_S_A, AgaveAmericana_01_S_B, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">583</td>
+ <td class="px-3 py-2 text-xs">ACModule_02, ACModule_03, ACModule_04, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">8</td>
+ <td class="px-3 py-2 text-xs">StreetLamp_Rect_03, StreetLightPoleElegant_01_A, StreetLightPoleElegant_01_B, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,200</td>
+ <td class="px-3 py-2 text-xs">AirControlTower_02, AirportTerminalStorage_01, Architecture_01_A, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <!-- Map: New Sobek City (MP_Outskirts) -->
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h3 class="text-xl sm:text-2xl font-subheadline text-bf-primary uppercase mb-4 tracking-wide">New Sobek City <span class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">(MP_Outskirts)</span></h3>
+
+ <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Location</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">North African Suburbs</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Type</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Suburban Sprawl</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Terrain</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">Mixed Residential</p>
+ </div>
+ <div class="p-3 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-xs text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-1">Total Assets</p>
+ <p class="text-sm text-white dark:text-white text-bf-gray-900">2,136 assets</p>
+ </div>
+ </div>
+
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ Sprawling suburban neighborhoods on city outskirts with residential compounds and commercial districts. Mix of open streets and tight alleyways. Rooftop access enables vertical gameplay. Balanced environment supporting multiple combat ranges and playstyles.
+ </p>
+
+ <h4 class="font-subheadline text-white dark:text-white text-bf-gray-900 uppercase text-sm mb-3 tracking-wide">Available Assets</h4>
+ <div class="overflow-x-auto">
+ <table class="w-full text-xs text-left">
+ <thead class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-gray-200 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <tr>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Category</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Count</th>
+ <th class="px-3 py-2 text-bf-primary uppercase tracking-wide">Examples</th>
+ </tr>
+ </thead>
+ <tbody class="text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-800">
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Architecture</td>
+ <td class="px-3 py-2">197</td>
+ <td class="px-3 py-2 text-xs">Awning_02_B, Awning_02_C, BR_OutskirtsHouseMediumGround_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Nature</td>
+ <td class="px-3 py-2">56</td>
+ <td class="px-3 py-2 text-xs">AppleCluster_01, AppleCluster_02, Apple_01, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Props</td>
+ <td class="px-3 py-2">703</td>
+ <td class="px-3 py-2 text-xs">ACModule_03, ACUnit_03, ACUnit_03_Running, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Lighting</td>
+ <td class="px-3 py-2">5</td>
+ <td class="px-3 py-2 text-xs">LampPostStadium_01, PortalLightSimple_01, StreetLamp_Rect_03, ...</td>
+ </tr>
+ <tr class="border-b border-bf-dark-border/30 dark:border-bf-dark-border/30 border-bf-light-border/50">
+ <td class="px-3 py-2">Gameplay</td>
+ <td class="px-3 py-2">32</td>
+ <td class="px-3 py-2 text-xs">AI_Spawner, AI_WaypointPath, AreaTrigger, CapturePoint, CombatArea, DeployCam, ...</td>
+ </tr>
+ <tr>
+ <td class="px-3 py-2">Other</td>
+ <td class="px-3 py-2">1,143</td>
+ <td class="px-3 py-2 text-xs">AftermathDebrisPileConcrete_Skew_210_A, AftermathDebrisPileConcrete_Skew_210_D, ...</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+
+ <div class="p-4 bg-blue-500/10 dark:bg-blue-500/10 bg-blue-100 border-l-4 border-blue-500">
+ <div class="flex gap-3">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ <div>
+ <p class="text-sm text-blue-200 dark:text-blue-200 text-blue-900 leading-relaxed">
+ <strong class="font-semibold">Asset Discovery:</strong> To find which assets are available for your map, check the map's tab in the Object Library at the bottom of the Godot editor, or query <code class="px-2 py-1 bg-blue-900/30 dark:bg-blue-900/30 bg-blue-200 text-xs">asset_types.json</code> for assets where <code class="px-2 py-1 bg-blue-900/30 dark:bg-blue-900/30 bg-blue-200 text-xs">levelRestrictions</code> includes your map.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Portal Experience Options Section -->
+ <section id="portal-options" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Portal Experience Options
+ </h2>
+ </div>
+
+ <p class="text-base sm:text-lg text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-8 leading-relaxed">
+ Comprehensive settings and mutators available in the Portal Web Builder to customize your experience.
+ </p>
+
+ <!-- Verified vs Custom Modes -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Verified vs Custom Experiences</h3>
+ <div class="grid sm:grid-cols-2 gap-4 mb-6">
+ <div class="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 dark:from-green-500/10 dark:to-green-600/5 from-green-100 to-green-50 border border-green-500/30 dark:border-green-500/30 border-green-300">
+ <div class="flex items-center gap-3 mb-3">
+ <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+ </svg>
+ <h4 class="text-lg font-subheadline text-green-500 uppercase tracking-wide">Verified Experiences</h4>
+ </div>
+ <ul class="space-y-2 text-sm text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800">
+ <li class="flex gap-2">
+ <span class="text-green-500 flex-shrink-0">✓</span>
+ <span><strong>Full XP & Progression</strong> - Players earn standard XP and unlock rewards</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-green-500 flex-shrink-0">✓</span>
+ <span><strong>Limited Modifications</strong> - Can modify existing modes but not create entirely new gameplay</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-green-500 flex-shrink-0">✓</span>
+ <span><strong>No Custom Scripting</strong> - Spatial editing only, no TypeScript/Blockly</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-green-500 flex-shrink-0">✓</span>
+ <span><strong>Portal Publishing</strong> - Can be published to portal.battlefield.com</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-green-500 flex-shrink-0">✓</span>
+ <span><strong>ModBuilder_GameMode: 2</strong> - Experience JSON setting</span>
+ </li>
+ </ul>
+ </div>
+
+ <div class="p-6 bg-gradient-to-br from-bf-primary/10 to-bf-secondary/5 dark:from-bf-primary/10 dark:to-bf-secondary/5 from-red-100 to-red-50 border border-bf-primary/30 dark:border-bf-primary/30 border-red-300">
+ <div class="flex items-center gap-3 mb-3">
+ <svg class="w-6 h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+ </svg>
+ <h4 class="text-lg font-subheadline text-bf-primary uppercase tracking-wide">Custom Experiences</h4>
+ </div>
+ <ul class="space-y-2 text-sm text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800">
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">✓</span>
+ <span><strong>Modified XP</strong> - Players earn reduced XP (not full progression)</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">✓</span>
+ <span><strong>Full Portal Tools</strong> - Spatial editing + TypeScript/Blockly scripting</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">✓</span>
+ <span><strong>Custom Gameplay</strong> - Create entirely new game modes and mechanics</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">✓</span>
+ <span><strong>Custom UI & AI</strong> - Build interactive menus and scripted bot behavior</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">✓</span>
+ <span><strong>ModBuilder_GameMode: 0</strong> - Experience JSON setting</span>
+ </li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="p-4 bg-blue-500/10 dark:bg-blue-500/10 bg-blue-100 border-l-4 border-blue-500">
+ <div class="flex gap-3">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ <div>
+ <p class="text-sm text-blue-200 dark:text-blue-200 text-blue-900 leading-relaxed">
+ <strong class="font-semibold">Choosing Mode Type:</strong> Use Verified for traditional Battlefield experiences with full progression. Use Custom for experimental game modes, training scenarios, or creative projects where modified XP is acceptable.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Mutator Options -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Experience Mutators & Settings</h3>
+
+ <!-- TODO: Need to verify complete list of mutators from Portal Web Builder -->
+ <div class="mb-4 p-3 bg-yellow-500/10 dark:bg-yellow-500/10 bg-yellow-100 border border-yellow-500/30 dark:border-yellow-500/30 border-yellow-400 text-xs text-yellow-200 dark:text-yellow-200 text-yellow-900">
+ <strong>TODO:</strong> Verify complete list of mutators and options from Portal Web Builder. This section includes known options - may be incomplete.
+ </div>
+
+ <div class="grid sm:grid-cols-2 gap-4">
+ <!-- Player & Team Settings -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-subheadline text-bf-primary mb-3 uppercase text-sm tracking-wide">Player & Team Settings</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">MaxPlayerCount_PerTeam</strong> - Players per team (16/32/64)</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">AiMaxCount_PerTeam</strong> - AI bots per team</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">AiSpawnType</strong> - Bot spawn behavior (0-2)</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">AI_ManDownExperienceType</strong> - Bot difficulty (0-2)</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Team Composition</strong> - Human/AI capacity per team</li>
+ </ul>
+ </div>
+
+ <!-- Gameplay Settings -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-subheadline text-bf-primary mb-3 uppercase text-sm tracking-wide">Gameplay Settings</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Friendly Fire</strong> - Enable/disable team damage</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">FriendlyFireDamageReflectionMaxTeamKills</strong> - TK limit before reflection</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Aim Assist</strong> - Controller aim assist strength</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">AimAssistSnapCapsuleRadiusMultiplier</strong> - Snap radius modifier</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Round Timing</strong> - Match duration and time limits</li>
+ </ul>
+ </div>
+
+ <!-- Spawn Settings -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-subheadline text-bf-primary mb-3 uppercase text-sm tracking-wide">Spawn & Balance Settings</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">SpawnBalancing_GamemodeStartTimer</strong> - Delay before match starts</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">SpawnBalancing_GamemodePlayerCountRatio</strong> - Balance threshold (0.0-1.0)</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Respawn Delay</strong> - Time before respawn available</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Force Spawn</strong> - Auto-spawn players after delay</li>
+ </ul>
+ </div>
+
+ <!-- Asset Restrictions -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-subheadline text-bf-primary mb-3 uppercase text-sm tracking-wide">Asset Restrictions</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Weapon Restrictions</strong> - Limit specific weapons per team</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Vehicle Restrictions</strong> - Control available vehicles</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Gadget Restrictions</strong> - Restrict equipment/gadgets</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Class Restrictions</strong> - Limit player classes</li>
+ <li>• <strong class="text-white dark:text-white text-bf-gray-900">Era-Specific Loadouts</strong> - Historical accuracy options</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="mt-6 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-subheadline text-bf-primary mb-3 uppercase text-sm tracking-wide">Example Experience JSON Structure</h4>
+ <pre class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-white p-4 text-xs overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border"><code>{
+"mutators": {
+"MaxPlayerCount_PerTeam": 32,
+"AiMaxCount_PerTeam": 0,
+"AiSpawnType": 2,
+"AI_ManDownExperienceType_PerTeam": 1,
+"ModBuilder_GameMode": 2, // 2=Verified, 0=Custom
+"AimAssistSnapCapsuleRadiusMultiplier": 1,
+"FriendlyFireDamageReflectionMaxTeamKills": 2,
+"SpawnBalancing_GamemodeStartTimer": 0,
+"SpawnBalancing_GamemodePlayerCountRatio": 0.75
+ },
+"assetRestrictions": {
+ // Weapon/vehicle/class restrictions
+ },
+"teamComposition": [
+ [1, {"humanCapacity": 32,"aiCapacity": 0,"aiType": 0}],
+ [2, {"humanCapacity": 32,"aiCapacity": 0,"aiType": 0}]
+ ]
+}</code></pre>
+ </div>
+ </div>
+
+ <!-- Server Settings -->
+ <div>
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Server Configuration</h3>
+ <div class="grid sm:grid-cols-3 gap-4">
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-subheadline text-white dark:text-white text-bf-gray-900 mb-2 text-sm">Server Name & Description</h5>
+ <p class="text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Custom server name, description, and welcome message visible in server browser</p>
+ </div>
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-subheadline text-white dark:text-white text-bf-gray-900 mb-2 text-sm">Password Protection</h5>
+ <p class="text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Optional password for private servers. Players must enter password to join</p>
+ </div>
+ <div class="p-4 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-subheadline text-white dark:text-white text-bf-gray-900 mb-2 text-sm">Tags & Filters</h5>
+ <p class="text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Category tags for server browser filtering (Conquest, Infantry Only, etc.)</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Gameplay Logic Scripting Section -->
+ <section id="scripting" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Gameplay Logic Scripting
+ </h2>
+ </div>
+
+ <div class="mb-8 p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ Battlefield 6 Portal now supports multiple ways to script custom gameplay logic for your Custom Experiences. For veterans of the previous Portal builder tool, and people looking to dip their toes into scripting, the Blockly logic editing tool is still available in the Portal Web Builder Tool.
+ </p>
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed">
+ However for more advanced users, and creators looking to build large bespoke experiences, Portal now supports logic scripting via <strong class="text-bf-primary">TypeScript</strong>.
+ </p>
+ </div>
+
+ <!-- Gameplay Scripting Overview -->
+ <div class="mb-8 space-y-3">
+ <h3 class="text-xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Gameplay Scripting</h3>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">•</span>
+ <span>Gameplay scripting can be done either through the Portal Web Tool via Blockly, or in TypeScript</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">•</span>
+ <span>TypeScript can be written directly within the Portal Web Tool's script page, or can be developed externally and uploaded via the script page</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">•</span>
+ <span>More information about TypeScript functions can be found in the"index.d.ts" file contained in the SDK</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">•</span>
+ <span>Below is a brief list of key new functions and capabilities in the Portal scripting system</span>
+ </li>
+ </ul>
+ </div>
+
+ <!-- Scripting Features Grid -->
+ <div class="grid sm:grid-cols-2 gap-4">
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Custom UI</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Fully customizable UI system now available in Portal</li>
+ <li>• Supports interactive and non-interactive UI elements</li>
+ <li>• Build interactive menus and stores</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">AI Behavior</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Spawn Custom AI Bots via <strong class="text-bf-primary">AI_Spawner</strong> object</li>
+ <li>• Direct scripting of target, stance, speed, movement</li>
+ <li>• Great deal of customization and flexibility</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Object Spawning</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Spawn objects at runtime via <strong class="text-bf-primary">SpawnObject</strong> function</li>
+ <li>• Restricted to existing map objects or Global object list</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">VFX Spawning</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Spawn via runtime spawner or place in Spatial editor</li>
+ <li>• Trigger at runtime via <strong class="text-bf-primary">EnableVFX</strong> function</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Audio Triggering</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Spawn via runtime spawner or place in Spatial editor</li>
+ <li>• Trigger at runtime via <strong class="text-bf-primary">PlaySound</strong> function</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Object Moving</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Move at runtime via <strong class="text-bf-primary">MoveObject</strong> function</li>
+ <li>• Or use <strong class="text-bf-primary">SetObjectTransform</strong></li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Player Spawning</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Deploy players directly into level</li>
+ <li>• Use PlayerSpawner and <strong class="text-bf-primary">SpawnPlayerFromSpawnPoint</strong></li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Referencing Objects In Script</h4>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-2">Objects with"Obj Id" field can be referenced using:</p>
+ <ul class="space-y-1 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• <strong class="text-bf-primary">GetSpatialObject</strong></li>
+ <li>• <strong class="text-bf-primary">GetSpawner</strong></li>
+ <li>• <strong class="text-bf-primary">GetInteractPoint</strong></li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Advanced Tips & Best Practices Section -->
+ <section id="advanced-tips" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Advanced Tips & Best Practices
+ </h2>
+ </div>
+
+ <p class="text-base sm:text-lg text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-8 leading-relaxed">
+ Production-tested techniques and optimizations discovered through extensive development work.
+ </p>
+
+ <!-- Portal_Reference Layer -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Portal_Reference Layer for Terrain</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border mb-4">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ <strong class="text-white dark:text-white text-bf-gray-900">Critical Optimization:</strong> Keep terrain meshes in a separate <code class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-bf-primary text-sm">Portal_Reference</code> layer instead of the <code class="px-2 py-1 bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface text-bf-primary text-sm">Static</code> layer.
+ </p>
+
+ <h4 class="font-bold text-bf-primary mb-3">Why This Matters:</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <li>• Terrain data is NOT exported to .spatial.json files (Portal uses base map terrain)</li>
+ <li>• Including terrain in Static layer adds megabytes of unnecessary data to your experience</li>
+ <li>• Portal_Reference layer is automatically excluded from exports</li>
+ <li>• Keeps your experience files lightweight and fast to load</li>
+ </ul>
+
+ <h4 class="font-bold text-bf-primary mb-3">Implementation:</h4>
+ <pre class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-white p-4 text-xs sm:text-sm overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border"><code>[node name="Portal_Reference" type="Node3D" parent="."]
+
+[node name="MP_Tungsten_Terrain" parent="Portal_Reference" instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.2, 0)
+
+[node name="Static" type="Node3D" parent="."]
+# Only custom objects here - NO terrain!</code></pre>
+ </div>
+ </div>
+
+ <!-- Terrain Snap/Alignment -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Terrain Height Alignment</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border mb-4">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ <strong class="text-white dark:text-white text-bf-gray-900">Challenge:</strong> GLB terrain meshes have internal Y-coordinate baked in, but Portal expects objects positioned relative to Y=0.
+ </p>
+
+ <h4 class="font-bold text-bf-primary mb-3">Solution - Y-Offset Compensation:</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <li>• Read terrain bounds from GLB mesh (e.g., Y min = 15.2m)</li>
+ <li>• Apply negative Y-offset to terrain instance (e.g., -15.2m)</li>
+ <li>• This moves mesh DOWN so surface aligns with Y=0 plane</li>
+ <li>• Objects placed at Y=0 now sit correctly on terrain surface</li>
+ </ul>
+
+ <div class="bg-blue-500/10 dark:bg-blue-500/10 bg-blue-100 border-l-4 border-blue-500 p-4">
+ <div class="flex gap-3">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ <div>
+ <p class="text-sm text-blue-200 dark:text-blue-200 text-blue-900 leading-relaxed">
+ <strong class="font-semibold">Pro Tip:</strong> Use <code class="px-2 py-1 bg-blue-900/30 dark:bg-blue-900/30 bg-blue-200 text-xs">terrain_provider.py</code> to automate height lookups and object snapping to terrain.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Terrain Centering & Rotation -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Terrain Centering & Rotation</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border mb-4">
+ <h4 class="font-bold text-bf-primary mb-3">Centering Terrain:</h4>
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ GLB terrain meshes may not be centered at world origin (0, 0, 0). To center terrain for easier object placement:
+ </p>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <li>• Read terrain bounds from GLB (AABB bounding box)</li>
+ <li>• Calculate center offset: <code class="text-bf-primary">center = (min + max) / 2</code></li>
+ <li>• Apply negative offset to terrain transform</li>
+ <li>• Now terrain is centered at world origin (0, 0, 0)</li>
+ </ul>
+
+ <h4 class="font-bold text-bf-primary mb-3 mt-6">Rotating Terrain:</h4>
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ Some maps require terrain rotation to align with gameplay direction (e.g., north-facing).
+ </p>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <li>• Define <code class="text-bf-primary">terrain_rotation</code> in map metadata (degrees)</li>
+ <li>• Convert to radians and apply Y-axis rotation matrix</li>
+ <li>• All placed objects automatically reference rotated coordinate system</li>
+ <li>• Maintains proper north/south/east/west alignment</li>
+ </ul>
+ </div>
+ </div>
+
+ <!-- Snap to Floor/Terrain -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Snap to Floor/Terrain</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border mb-4">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ <strong class="text-white dark:text-white text-bf-gray-900">Critical Feature:</strong> Automatically position objects on terrain surface instead of floating or underground.
+ </p>
+
+ <h4 class="font-bold text-bf-primary mb-3">How Terrain Snap Works:</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <li>• TerrainProvider loads heightmap data from GLB mesh</li>
+ <li>• For each object, query terrain height at (X, Z) position</li>
+ <li>• Set object Y coordinate to terrain height</li>
+ <li>• Objects now sit perfectly on terrain surface</li>
+ </ul>
+
+ <div class="grid sm:grid-cols-2 gap-4 mt-6">
+ <div class="p-4 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-bold text-bf-primary mb-2">Snap to Floor (Y=0)</h5>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>✅ Fast - no heightmap lookup</li>
+ <li>✅ Good for flat terrain maps</li>
+ <li>❌ Objects float on hills</li>
+ <li>❌ Objects underground in valleys</li>
+ </ul>
+ </div>
+ <div class="p-4 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h5 class="font-bold text-bf-primary mb-2">Snap to Terrain (Dynamic Y)</h5>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>✅ Perfect terrain alignment</li>
+ <li>✅ Works on any terrain</li>
+ <li>✅ No floating/underground objects</li>
+ <li>⚠️ Requires GLB heightmap</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Centering Assets -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Centering Assets & Objects</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ Object pivot points may not align with their visual center, causing rotation and placement issues.
+ </p>
+
+ <h4 class="font-bold text-bf-primary mb-3">Common Centering Scenarios:</h4>
+ <div class="space-y-3 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <div class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">1.</span>
+ <div>
+ <strong class="text-white dark:text-white text-bf-gray-900">Buildings:</strong> Often pivoted at corner instead of center. Apply offset for proper rotation.
+ </div>
+ </div>
+ <div class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">2.</span>
+ <div>
+ <strong class="text-white dark:text-white text-bf-gray-900">Trees:</strong> Usually centered horizontally, base at Y=0. No adjustment needed.
+ </div>
+ </div>
+ <div class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">3.</span>
+ <div>
+ <strong class="text-white dark:text-white text-bf-gray-900">Vehicles:</strong> Check asset catalog for pivot metadata. Some have offset centers for gameplay.
+ </div>
+ </div>
+ <div class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">4.</span>
+ <div>
+ <strong class="text-white dark:text-white text-bf-gray-900">Decals (Lakes):</strong> Non-uniform scale often required. Define width/height in mappings.
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Asset Mapping & Lookup Strategy -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Asset Mapping & Lookup Strategy</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border mb-4">
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-4">
+ <strong class="text-white dark:text-white text-bf-gray-900">Essential for Map Porting:</strong> When converting maps from other Battlefield games (or other games entirely), you need to map original assets to equivalent Portal assets.
+ </p>
+
+ <h4 class="font-bold text-bf-primary mb-3">The Asset Mapping Problem:</h4>
+ <div class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-4">
+ <p><strong class="text-white dark:text-white text-bf-gray-900">Example:</strong> BF1942 map has"Birch_01" tree → Portal has 200+ tree variants → Which Portal tree should we use?</p>
+ <p>Without mapping, your converted map will have missing objects or placeholders everywhere.</p>
+ </div>
+
+ <h4 class="font-bold text-bf-primary mb-3 mt-6">Lookup Strategy Architecture:</h4>
+ <div class="space-y-4">
+ <div class="p-4 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border-l-4 border-bf-primary">
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2">1. Create Mappings Database (JSON)</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-2">
+ Store mappings in <code class="text-bf-primary">tools/asset_audit/[game]_to_portal_mappings.json</code>
+ </p>
+ <pre class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-3 text-xs overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono"><code>{
+"static_objects": {
+"Birch_01": {
+"portal_asset":"Birch_01_L",
+"category":"nature/trees",
+"notes":"Large birch tree"
+ },
+"Bunker_German_01": {
+"portal_asset":"Military_Bunker_02",
+"category":"architecture",
+"scale": {"x": 1.2,"y": 1.0,"z": 1.2}
+ }
+ }
+}</code></pre>
+ </div>
+
+ <div class="p-4 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border-l-4 border-bf-primary">
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2">2. AssetMapper Component</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-2">
+ Centralized lookup service for asset translation
+ </p>
+ <pre class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-3 text-xs overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono"><code>class AssetMapper:
+ def map_asset(self, source_type: str) -> str:
+"""Map source game asset to Portal asset."""
+ mapping = self.mappings.get(source_type)
+ if mapping:
+ return mapping["portal_asset"]
+ # Fallback: return placeholder
+ return"Placeholder_Object"</code></pre>
+ </div>
+
+ <div class="p-4 bg-bf-dark-surface/50 dark:bg-bf-dark-surface/50 bg-white border-l-4 border-bf-primary">
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2">3. Validation & Asset Audit</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700 mb-2">
+ Check which assets need mappings before conversion
+ </p>
+ <pre class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-3 text-xs overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono"><code># Run asset audit to find unmapped assets
+python3 tools/validate_map_assets.py --map Kursk
+
+# Output: List of unmapped assets needing attention</code></pre>
+ </div>
+ </div>
+
+ <h4 class="font-bold text-bf-primary mb-3 mt-6">Finding Equivalent Portal Assets:</h4>
+ <div class="grid sm:grid-cols-2 gap-3">
+ <div class="p-3 bg-bf-dark-surface/30 dark:bg-bf-dark-surface/30 bg-gray-50 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h6 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2 text-sm">By Name Similarity</h6>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Search <code class="text-bf-primary">asset_types.json</code></li>
+ <li>• Look for similar names (Birch → Birch)</li>
+ <li>• Check visual resemblance in Godot</li>
+ </ul>
+ </div>
+
+ <div class="p-3 bg-bf-dark-surface/30 dark:bg-bf-dark-surface/30 bg-gray-50 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h6 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2 text-sm">By Function</h6>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• What does this object DO?</li>
+ <li>• Bunker → Military cover structure</li>
+ <li>• Find Portal asset with same purpose</li>
+ </ul>
+ </div>
+
+ <div class="p-3 bg-bf-dark-surface/30 dark:bg-bf-dark-surface/30 bg-gray-50 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h6 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2 text-sm">By Era/Theme</h6>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• WW2 → Use era-appropriate assets</li>
+ <li>• Don't mix futuristic with historical</li>
+ <li>• Maintain thematic consistency</li>
+ </ul>
+ </div>
+
+ <div class="p-3 bg-bf-dark-surface/30 dark:bg-bf-dark-surface/30 bg-gray-50 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h6 class="font-bold text-white dark:text-white text-bf-gray-900 mb-2 text-sm">By Size/Scale</h6>
+ <ul class="space-y-1 text-xs text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Match original object dimensions</li>
+ <li>• Store scale adjustments in mappings</li>
+ <li>• Test in Godot for gameplay fit</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="mt-6 bg-green-500/10 dark:bg-green-500/10 bg-green-100 border-l-4 border-green-500 p-4">
+ <div class="flex gap-3">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+ </svg>
+ <div>
+ <p class="text-sm text-green-200 dark:text-green-200 text-green-900 leading-relaxed">
+ <strong class="font-semibold">Pro Tip:</strong> Create mappings incrementally. Start with most common assets (trees, rocks, buildings), then fill in gaps. Use <code class="px-2 py-1 bg-green-900/30 dark:bg-green-900/30 bg-green-200 text-xs">find_asset_alternatives.py</code> to discover similar Portal assets automatically.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Asset Management -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Asset Management & Optimization</h3>
+ <div class="grid sm:grid-cols-2 gap-4">
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Level Restrictions</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Assets in Portal have <code class="text-bf-primary">levelRestrictions</code></li>
+ <li>• Only use assets approved for your base map</li>
+ <li>• Check <code class="text-bf-primary">asset_types.json</code> before placement</li>
+ <li>• Cross-map assets will fail to load in-game</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Asset Variety</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Use AssetRandomizer for natural variety</li>
+ <li>• Define tree/rock/shrub variant pools</li>
+ <li>• Prevents repetitive visual patterns</li>
+ <li>• Automatically applied during conversion</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Coordinate Systems</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Portal uses Godot coordinate system (Y-up)</li>
+ <li>• Right-handed coordinate space</li>
+ <li>• Transform matrices: 3x3 rotation + translation</li>
+ <li>• Use <code class="text-bf-primary">TransformFormatter</code> for conversions</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover-lift">
+ <h4 class="font-bold text-bf-primary mb-3">Scale Handling</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• Portal supports non-uniform scaling</li>
+ <li>• Lake decals use dynamic X/Z scaling</li>
+ <li>• Store scale metadata in mappings JSON</li>
+ <li>• Always test scaled objects in-game</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+
+ <!-- Experience Builder -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Portal Experience Builder</h3>
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-bold text-bf-primary mb-3">Critical Experience Structure:</h4>
+ <ul class="space-y-3 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">1.</span>
+ <span><strong class="text-white dark:text-white text-bf-gray-900">Dual Attachment Reference:</strong> Spatial attachments MUST appear in BOTH <code class="text-bf-primary">mapRotation[i].spatialAttachment</code> AND root <code class="text-bf-primary">attachments[]</code> array</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">2.</span>
+ <span><strong class="text-white dark:text-white text-bf-gray-900">UUID Consistency:</strong> Both references must use the SAME UUID or Portal UI won't recognize the attachment</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">3.</span>
+ <span><strong class="text-white dark:text-white text-bf-gray-900">ModBuilderCustom Mode:</strong> Use <code class="text-bf-primary">"gameMode":"ModBuilderCustom"</code> for custom spatial data (not"Conquest")</span>
+ </li>
+ <li class="flex gap-2">
+ <span class="text-bf-primary flex-shrink-0">4.</span>
+ <span><strong class="text-white dark:text-white text-bf-gray-900">Verified Status:</strong> Set <code class="text-bf-primary">"ModBuilder_GameMode": 2</code> for portal.battlefield.com publishing capability</span>
+ </li>
+ </ul>
+
+ <pre class="mt-4 bg-bf-dark-surface dark:bg-bf-dark-surface bg-white p-4 text-xs overflow-x-auto text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 font-mono border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border"><code>{
+"gameMode":"ModBuilderCustom",
+"mutators": {
+"ModBuilder_GameMode": 2
+ },
+"mapRotation": [{
+"id":"MP_Tungsten-ModBuilderCustom0",
+"spatialAttachment": {
+"id":"kursk-bf1942-spatial",
+"filename":"Kursk.spatial.json",
+"data":"&lt;base64&gt;"
+ }
+ }],
+"attachments": [
+ // CRITICAL: Duplicate spatialAttachment here
+ {
+"id":"kursk-bf1942-spatial",
+"filename":"Kursk.spatial.json",
+"data":"&lt;base64&gt;"
+ }
+ ]
+}</code></pre>
+ </div>
+ </div>
+
+ <!-- Development Workflow -->
+ <div class="mb-8">
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Recommended Development Workflow</h3>
+ <div class="space-y-4">
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">1</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Plan & Design</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Map out objectives, spawn points, and gameplay flow before opening Godot</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">2</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Build in Godot</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Use Portal_Reference for terrain, Static for objects. Test camera navigation (RMB + WASD)</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">3</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Export & Validate</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Click"Export Current Level" in BFPortal tab. Verify .spatial.json structure</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">4</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Create Experience</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Use create_experience.py or create_multi_map_experience.py to generate Portal-ready JSON</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">5</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Import & Test</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Import to portal.battlefield.com, verify map rotation appears, test in-game</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="p-4 bg-bf-dark-bg/50 dark:bg-bf-dark-bg/50 bg-gray-100 border-l-4 border-bf-primary">
+ <div class="flex gap-3">
+ <span class="flex-shrink-0 w-8 h-8 bg-bf-primary text-white flex items-center justify-center font-bold text-sm">6</span>
+ <div>
+ <h5 class="font-bold text-white dark:text-white text-bf-gray-900 mb-1">Iterate & Polish</h5>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">Adjust spawn points, add details, optimize performance. Repeat 2-5 as needed</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Testing Checklist -->
+ <div>
+ <h3 class="text-xl sm:text-2xl font-bold text-bf-primary mb-4 uppercase tracking-wide">Pre-Release Testing Checklist</h3>
+ <div class="grid sm:grid-cols-2 gap-4">
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-bold text-bf-primary mb-3">Godot Editor</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>☐ All HQs have minimum 4 spawn points</li>
+ <li>☐ Combat Area covers entire playable space</li>
+ <li>☐ No objects outside combat bounds</li>
+ <li>☐ Terrain in Portal_Reference layer only</li>
+ <li>☐ All assets match base map restrictions</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+ <h4 class="font-bold text-bf-primary mb-3">Portal Web Builder</h4>
+ <ul class="space-y-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>☐ Experience imports without errors</li>
+ <li>☐ Map rotation shows all maps correctly</li>
+ <li>☐ File size is reasonable (&lt;50MB)</li>
+ <li>☐ Team balance is 50/50</li>
+ <li>☐ Server settings configured</li>
+ </ul>
+ </div>
+
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border sm:col-span-2">
+ <h4 class="font-bold text-bf-primary mb-3">In-Game Testing</h4>
+ <ul class="grid sm:grid-cols-2 gap-2 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>☐ Players can spawn on both teams</li>
+ <li>☐ Combat area boundaries work correctly</li>
+ <li>☐ Objects align with terrain surface</li>
+ <li>☐ No floating or underground objects</li>
+ <li>☐ Vehicle spawners functional</li>
+ <li>☐ No performance issues (FPS drops)</li>
+ <li>☐ Objectives/flags accessible</li>
+ <li>☐ Map rotation transitions smoothly</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Example Experiences Section -->
+ <section id="examples" class="mb-12 sm:mb-16 lg:mb-24 scroll-mt-20">
+ <div class="bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface p-6 sm:p-8 lg:p-12 border border-bf-dark-border dark:border-bf-dark-border border-bf-light-border">
+
+ <div class="flex items-center gap-3 mb-6 sm:mb-8">
+ <div class="w-10 h-10 sm:w-12 sm:h-12 bg-bf-primary/10 flex items-center justify-center">
+ <svg class="w-5 h-5 sm:w-6 sm:h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+ </svg>
+ </div>
+ <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white dark:text-white text-bf-gray-900 uppercase tracking-wide">
+ Example Experiences
+ </h2>
+ </div>
+
+ <p class="text-base text-bf-gray-300 dark:text-bf-gray-300 text-bf-gray-800 leading-relaxed mb-8">
+ Example experiences can be found in the <strong class="text-bf-primary">"mods"</strong> directory.
+ </p>
+
+ <h3 class="text-xl font-bold text-bf-primary mb-6 uppercase tracking-wide">Mod Components</h3>
+
+ <div class="space-y-4">
+ <!-- modname.ts -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <div class="flex items-start gap-4">
+ <div class="w-12 h-12 bg-bf-primary/10 flex items-center justify-center flex-shrink-0">
+ <svg class="w-6 h-6 text-bf-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+ </svg>
+ </div>
+ <div>
+ <h4 class="font-bold text-lg mb-2">
+ <span class="text-bf-primary">modname</span><span class="text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600">.ts</span>
+ </h4>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ This is the gameplay script for a mod.
+ </p>
+ </div>
+ </div>
+ </div>
+
+ <!-- modname.tscn -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <div class="flex items-start gap-4">
+ <div class="w-12 h-12 bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+ <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+ </svg>
+ </div>
+ <div>
+ <h4 class="font-bold text-lg mb-2">
+ <span class="text-blue-500">modname</span><span class="text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600">.tscn</span>
+ </h4>
+ <ul class="space-y-1 text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ <li>• This is the Godot level with any spatial edits needed for the mod</li>
+ <li>• This will need to be exported from Godot for use in an experience</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+
+ <!-- modname.strings.json -->
+ <div class="p-6 border-b border-bf-dark-border dark:border-bf-dark-border border-bf-light-border hover:border-bf-primary transition-all hover-lift">
+ <div class="flex items-start gap-4">
+ <div class="w-12 h-12 bg-green-500/10 flex items-center justify-center flex-shrink-0">
+ <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+ </svg>
+ </div>
+ <div>
+ <h4 class="font-bold text-lg mb-2">
+ <span class="text-green-500">modname</span><span class="text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600">.strings.json</span>
+ </h4>
+ <p class="text-sm text-bf-gray-400 dark:text-bf-gray-400 text-bf-gray-700">
+ This is a predefined list of strings used in the mod.
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ </main>
+
+ <!-- Footer -->
+ <footer class="border-t border-bf-dark-border dark:border-bf-dark-border border-bf-light-border bg-bf-dark-surface dark:bg-bf-dark-surface bg-bf-light-surface">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+ <div class="text-center">
+ <p class="text-sm sm:text-base font-bold text-bf-primary uppercase tracking-wider mb-2 tracking-wide">
+ Battlefield 6 Portal SDK
+ </p>
+ <p class="text-xs sm:text-sm text-bf-gray-500 dark:text-bf-gray-500 text-bf-gray-600 mb-4">
+ Official Documentation
+ </p>
+ <a href="https://portal.battlefield.com"
+ target="_blank"
+ rel="noopener noreferrer"
+ class="inline-flex items-center gap-2 text-bf-primary hover:text-bf-secondary transition-colors font-semibold text-sm group">
+ <span>portal.battlefield.com</span>
+ <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+ </svg>
+ </a>
+ </div>
+ </div>
+ </footer>
+
+ <!-- JavaScript -->
+ <script>
+ function toggleMobileMenu() {
+ const menu = document.getElementById('mobileMenu');
+ const overlay = document.getElementById('menuOverlay');
+ const button = document.querySelector('[aria-expanded]');
+
+ const isOpen = menu.classList.contains('open');
+
+ menu.classList.toggle('open');
+ overlay.classList.toggle('hidden');
+
+ if (button) {
+ button.setAttribute('aria-expanded', !isOpen);
+ }
+
+ // Prevent body scroll when menu is open
+ document.body.style.overflow = isOpen ? '' : 'hidden';
+ }
+
+ // Close menu when clicking links
+ document.querySelectorAll('#mobileMenu a[href^="#"]').forEach(link => {
+ link.addEventListener('click', () => {
+ toggleMobileMenu();
+ });
+ });
+
+ // Close menu on escape key
+ document.addEventListener('keydown', (e) => {
+ if (e.key === 'Escape') {
+ const menu = document.getElementById('mobileMenu');
+ if (menu.classList.contains('open')) {
+ toggleMobileMenu();
+ }
+ }
+ });
+
+ // Restore body scroll on page load
+ window.addEventListener('load', () => {
+ document.body.style.overflow = '';
+ });
+
+ // Intersection Observer for scroll animations
+ const observerOptions = {
+ threshold: 0.1,
+ rootMargin: '0px 0px -50px 0px'
+ };
+
+ const observer = new IntersectionObserver((entries) => {
+ entries.forEach(entry => {
+ if (entry.isIntersecting) {
+ entry.target.style.opacity = '1';
+ entry.target.style.transform = 'translateY(0)';
+ }
+ });
+ }, observerOptions);
+
+ // Observe all sections
+ document.querySelectorAll('section').forEach(section => {
+ section.style.opacity = '0';
+ section.style.transform = 'translateY(20px)';
+ section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+ observer.observe(section);
+ });
+ </script>
+
+</body>
+</html>

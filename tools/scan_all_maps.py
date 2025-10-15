@@ -10,11 +10,18 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from bfportal.generators.constants.paths import (
+    DIR_BF1942_EXTRACTED_BASE,
+    DIR_BF1942_EXTRACTED_XPACK1,
+    DIR_BF1942_EXTRACTED_XPACK2,
+    get_project_root,
+)
+
 # BF1942 map locations
 MAP_ROOTS = [
-    Path("bf1942_source/extracted/Bf1942/Archives/bf1942/Levels"),  # Base game (21 maps)
-    Path("bf1942_source/extracted/XPack1/Bf1942/Levels"),  # Road to Rome (6 maps)
-    Path("bf1942_source/extracted/XPack2/bf1942/Levels"),  # Secret Weapons (9 maps)
+    get_project_root() / DIR_BF1942_EXTRACTED_BASE,  # Base game (21 maps)
+    get_project_root() / DIR_BF1942_EXTRACTED_XPACK1,  # Road to Rome (6 maps)
+    get_project_root() / DIR_BF1942_EXTRACTED_XPACK2,  # Secret Weapons (9 maps)
 ]
 
 
@@ -105,7 +112,7 @@ def main() -> None:
     print()
 
     # Load current catalog
-    catalog_path = Path("tools/asset_audit/bf1942_asset_catalog.json")
+    catalog_path = get_project_root() / "tools" / "asset_audit" / "bf1942_asset_catalog.json"
     with open(catalog_path) as f:
         catalog = json.load(f)
 
@@ -136,7 +143,7 @@ def main() -> None:
             )
 
         # Save missing assets to JSON
-        missing_path = Path("tools/asset_audit/MISSING_ASSETS_ALL_MAPS.json")
+        missing_path = get_project_root() / "tools" / "asset_audit" / "MISSING_ASSETS_ALL_MAPS.json"
         with open(missing_path, "w") as f:
             json.dump(
                 {
@@ -171,7 +178,7 @@ def main() -> None:
     print()
 
     # Save complete scan results
-    results_path = Path("tools/asset_audit/COMPLETE_ASSET_SCAN.json")
+    results_path = get_project_root() / "tools" / "asset_audit" / "COMPLETE_ASSET_SCAN.json"
     with open(results_path, "w") as f:
         json.dump(
             {

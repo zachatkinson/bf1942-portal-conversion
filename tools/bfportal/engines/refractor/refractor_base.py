@@ -23,6 +23,7 @@ from ...core.interfaces import (
     Vector3,
 )
 from ...parsers.con_parser import ConFileSet, ConParser
+from ...parsers.spawner_template_parser import SpawnerTemplateParser
 
 
 class RefractorCoordinateSystem(ICoordinateSystem):
@@ -42,12 +43,14 @@ class RefractorCoordinateSystem(ICoordinateSystem):
             Position in Portal coordinate system
 
         Note:
-            Both Refractor and Godot use Y-up, so conversion is minimal.
-            May need to adjust in subclasses if specific games differ.
+            Both Refractor and Godot use Y-up right-handed coordinates.
+            However, BF1942 uses +Z as north, while Portal/Godot conventionally
+            uses -Z as north. We negate Z to match Portal's orientation.
         """
-        # For now, direct conversion (both Y-up, right-handed)
-        # Subclasses can override if needed
-        return Vector3(position.x, position.y, position.z)
+        # Negate Z-axis to flip north/south orientation
+        # BF1942: +Z = north, -Z = south
+        # Portal: -Z = north, +Z = south
+        return Vector3(position.x, position.y, -position.z)
 
     def to_portal_rotation(self, rotation: Rotation) -> Rotation:
         """Convert Refractor rotation to Portal rotation.
@@ -87,6 +90,8 @@ class RefractorEngine(IGameEngine):
         """Initialize RefractorEngine."""
         self.con_parser = ConParser()
         self.coordinate_system = RefractorCoordinateSystem()
+        self.spawn_template_types: set[str] = set()  # Known SpawnPoint template types
+        self.spawner_parser = SpawnerTemplateParser()  # Vehicle spawner template parser
 
     # ========================================================================
     # Abstract Methods (Subclasses MUST implement)
@@ -135,6 +140,14 @@ class RefractorEngine(IGameEngine):
         con_files = ConFileSet(map_path)
         print(f"📁 Found {len(con_files.con_files)} .con files")
 
+        # Step 1.5: Load spawn templates (MUST be done before parsing spawns/objects)
+        # This establishes single source of truth for what constitutes a spawn point
+        self._load_spawn_templates(con_files)
+
+        # Step 1.6: Load vehicle spawner templates
+        # This maps spawner names (lighttankspawner) to vehicle types (T34, PanzerIV)
+        self._load_vehicle_spawner_templates(map_path)
+
         # Step 2: Parse spawn points
         team1_spawns = self._parse_spawns(con_files, Team.TEAM_1)
         team2_spawns = self._parse_spawns(con_files, Team.TEAM_2)
@@ -153,10 +166,16 @@ class RefractorEngine(IGameEngine):
         game_objects = self._parse_game_objects(con_files)
         print(f"📦 Game objects: {len(game_objects)}")
 
-        # Step 6: Calculate map bounds
+        # Step 6: Extract water bodies from terrain (heightmap + waterLevel)
+        water_objects = self._parse_water_bodies(map_path, con_files)
+        if water_objects:
+            print(f"💧 Water bodies: {len(water_objects)}")
+            game_objects.extend(water_objects)
+
+        # Step 7: Calculate map bounds
         bounds = self._calculate_bounds(team1_spawns + team2_spawns, capture_points, game_objects)
 
-        # Step 7: Create MapData
+        # Step 8: Create MapData
         map_data = MapData(
             map_name=map_path.name,
             game_mode=self.get_game_mode_default(),
@@ -185,10 +204,73 @@ class RefractorEngine(IGameEngine):
     # Hook Methods (Subclasses CAN override for customization)
     # ========================================================================
 
-    def _is_spawn_point(self, obj_name: str, obj_type: str = "") -> bool:
-        """Check if object name or type indicates a spawn point.
+    def _load_spawn_templates(self, con_files: ConFileSet) -> None:
+        """Load spawn point templates to establish Single Source of Truth.
 
-        Single Responsibility: Only checks spawn point identification logic.
+        Parses template .con files to identify all SpawnPoint type objects.
+        This creates a definitive list of what constitutes a spawn point,
+        replacing pattern-based detection with type-based detection.
+
+        Single Responsibility: Only loads and stores spawn template types.
+        DRY Principle: Spawn detection logic defined once in template files,
+                       not repeated across multiple pattern checks.
+
+        Args:
+            con_files: ConFileSet with all map .con files
+
+        Note:
+            This method establishes the Single Source of Truth for spawn
+            point identification. All spawn detection should reference
+            self.spawn_template_types rather than using pattern matching.
+        """
+        parsed_files = con_files.parse_all()
+
+        for _filename, parsed_data in parsed_files.items():
+            for obj in parsed_data["objects"]:
+                obj_type = obj.get("type", "").lower()
+
+                # If this is a template definition for SpawnPoint
+                if obj_type == "spawnpoint":
+                    # Store the template name (which becomes the instance type)
+                    template_name = obj.get("name", "").lower()
+                    if template_name:
+                        self.spawn_template_types.add(template_name)
+
+        # Log loaded templates for debugging
+        if self.spawn_template_types:
+            print(f"   📍 Loaded {len(self.spawn_template_types)} spawn templates")
+
+    def _load_vehicle_spawner_templates(self, map_path: Path) -> None:
+        """Load vehicle spawner templates (ObjectSpawnTemplates.con).
+
+        Parses template files to map spawner names to vehicle types.
+        This enables automatic vehicle type detection for VehicleSpawner nodes.
+
+        Single Responsibility: Only loads vehicle spawner type mappings.
+        DRY Principle: Vehicle assignments defined once in template files.
+
+        Args:
+            map_path: Path to map directory
+
+        Note:
+            Spawner templates define which vehicles spawn for each team:
+            - lighttankspawner: Team 1 = PanzerIV, Team 2 = T34-85
+            - heavytankspawner: Team 1 = Tiger, Team 2 = T34
+            This is the Single Source of Truth for vehicle→spawner mapping.
+        """
+        self.spawner_parser.parse_directory(map_path)
+
+        # Log loaded templates for debugging
+        template_count = self.spawner_parser.get_template_count()
+        if template_count > 0:
+            print(f"   🚗 Loaded {template_count} vehicle spawner templates")
+
+    def _is_spawn_point(self, obj_name: str, obj_type: str = "") -> bool:
+        """Check if object is a spawn point using template-based detection.
+
+        Single Responsibility: Only checks spawn point identification.
+        DRY Principle: Uses loaded templates as Single Source of Truth.
+        Open/Closed Principle: Extensible via template loading, not code changes.
 
         Args:
             obj_name: Lowercase object name
@@ -196,27 +278,30 @@ class RefractorEngine(IGameEngine):
 
         Returns:
             True if this is a spawn point
+
+        Note:
+            This method uses type-based detection against the loaded spawn
+            templates (self.spawn_template_types), NOT pattern matching.
+            This ensures all spawn points are detected consistently,
+            including bot spawns (al_5, ax_6, etc.) that don't match patterns.
         """
         # Exclude control points first
         if "cpoint" in obj_name:
             return False
 
-        # Check if type is SpawnPoint (template) or contains SpawnPoint
-        if obj_type and "spawnpoint" in obj_type:
-            return True
+        # Type-based detection using loaded templates (Single Source of Truth)
+        # This catches:
+        # - Template definitions: type="spawnpoint"
+        # - Template instances: type=template_name (e.g., "al_5", "ax_6", "openbasecammo")
+        if obj_type:
+            if obj_type == "spawnpoint":
+                return True
+            if obj_type in self.spawn_template_types:
+                return True
 
-        # Check name for spawn point pattern
-        if "spawn" in obj_name and "point" in obj_name:
-            return True
-
-        # Check for spawn instance pattern: name_groupnum_spawnnum (e.g., openbasecammo_4_13)
-        # These are instances created from SpawnPoint templates but have instance name as type
-        import re
-
-        return bool(
-            re.search(r"_\d+_\d+$", obj_name)
-            and ("spawn" in obj_name or "open" in obj_name or "base" in obj_name)
-        )
+        # Fallback: Pattern-based detection for legacy support
+        # This should rarely be needed if templates are loaded correctly
+        return bool("spawn" in obj_name and "point" in obj_name)
 
     def _classify_spawn_ownership(self, obj_name: str) -> str:
         """Classify spawn point ownership by team.
@@ -378,11 +463,15 @@ class RefractorEngine(IGameEngine):
                     # Default radius (can be overridden in subclasses)
                     radius = float(obj.get("properties", {}).get("radius", 50.0))
 
+                    # Auto-generate label (A, B, C, etc.)
+                    label = chr(ord('A') + len(capture_points))
+
                     cp = CapturePoint(
                         name=obj.get("name", f"CP_{len(capture_points) + 1}"),
                         transform=transform,
                         radius=radius,
                         control_area=[],  # TODO: Parse control area polygon
+                        label=label,
                     )
                     capture_points.append(cp)
 
@@ -454,21 +543,116 @@ class RefractorEngine(IGameEngine):
         return capture_points
 
     def _parse_game_objects(self, con_files: ConFileSet) -> list[GameObject]:
-        """Parse game objects (vehicles, buildings, props).
+        """Parse game objects (vehicles, buildings, props, vehicle spawners).
 
         Args:
             con_files: ConFileSet with all map .con files
 
         Returns:
-            List of GameObjects
+            List of GameObjects (includes vehicle spawners with vehicle type info)
         """
         game_objects = []
         parsed_files = con_files.parse_all()
 
         for _filename, parsed_data in parsed_files.items():
             for obj in parsed_data["objects"]:
-                # Skip spawners and control points (already handled)
-                if obj["type"] in ["ObjectSpawner", "ControlPoint"]:
+                obj_name = obj.get("name", "").lower()
+                obj_type = obj.get("type", "").lower()
+
+                # Handle ObjectSpawners (vehicles and weapon emplacements) specially
+                # obj_type will be the spawner template name (e.g., "lighttankspawner")
+                # Check if this spawner template is known
+                spawner_template = self.spawner_parser.get_template(obj_type)
+                if spawner_template:
+                    # Categorize spawner types:
+                    # 1. Functional weapon emplacements (MG, TOW)
+                    # 2. Decorative static props (AA guns, artillery wrecks)
+                    # 3. Vehicle spawners (tanks, aircraft, APCs)
+
+                    functional_emplacements = {"machinegunspawner", "antitankgunspawner"}
+                    decorative_spawners = {"aagunspawner", "artilleryspawner"}
+
+                    # Functional weapon emplacements (will generate StationaryEmplacementSpawner nodes)
+                    if obj_type in functional_emplacements:
+                        transform = self.con_parser.parse_transform(obj)
+                        if transform:
+                            team = self.con_parser.parse_team(obj)
+                            properties = obj.get("properties", {}).copy()
+                            properties["spawner_type"] = "weapon_emplacement"
+                            properties["original_spawner"] = obj_type
+
+                            # Map weapon type for StationaryEmplacementGenerator
+                            if obj_type == "machinegunspawner":
+                                properties["weapon_type"] = "machinegun"
+                            elif obj_type == "antitankgunspawner":
+                                properties["weapon_type"] = "tow_launcher"
+
+                            game_objects.append(
+                                GameObject(
+                                    name=obj["name"],
+                                    asset_type="StationaryEmplacementSpawner",
+                                    transform=transform,
+                                    team=team,
+                                    properties=properties,
+                                )
+                            )
+                        continue
+
+                    # Decorative static props (AA guns → sandbags, Artillery → wrecks)
+                    if obj_type in decorative_spawners:
+                        transform = self.con_parser.parse_transform(obj)
+                        if transform:
+                            team = self.con_parser.parse_team(obj)
+                            properties = obj.get("properties", {}).copy()
+                            properties["spawner_type"] = "decorative"
+                            properties["original_spawner"] = obj_type
+
+                            game_objects.append(
+                                GameObject(
+                                    name=obj["name"],
+                                    asset_type=obj_type,  # AssetMapper will map to SandBags/WreckTank
+                                    transform=transform,
+                                    team=team,
+                                    properties=properties,
+                                )
+                            )
+                        continue
+
+                    # Regular vehicle spawners (tanks, aircraft, APCs, etc.)
+                    transform = self.con_parser.parse_transform(obj)
+                    if transform:
+                        team = self.con_parser.parse_team(obj)
+
+                        # Get team-specific vehicle type from template
+                        vehicle_type = spawner_template.get_vehicle_for_team(team)
+
+                        # If no vehicle type found, use spawner name as fallback
+                        if not vehicle_type:
+                            vehicle_type = obj_type
+
+                        # Store vehicle type in properties for VehicleSpawnerGenerator
+                        properties = obj.get("properties", {}).copy()
+                        properties["vehicle_type"] = vehicle_type
+                        properties["spawner_template"] = obj_type
+
+                        game_objects.append(
+                            GameObject(
+                                name=obj["name"],
+                                asset_type=vehicle_type,  # Use vehicle type, not spawner template
+                                transform=transform,
+                                team=team,
+                                properties=properties,
+                            )
+                        )
+                    continue
+
+                # Skip control points and spawn points (already handled)
+                if obj_type in ["controlpoint", "spawnpoint"]:
+                    continue
+
+                # Skip single-player bot spawns (al_5, ax_6, etc.)
+                # These are SpawnPoint instances used only in SP campaign
+                if self._is_spawn_point(obj_name, obj_type):
                     continue
 
                 transform = self.con_parser.parse_transform(obj)
@@ -486,6 +670,163 @@ class RefractorEngine(IGameEngine):
                     )
 
         return game_objects
+
+    def _parse_water_bodies(self, map_path: Path, con_files: ConFileSet) -> list[GameObject]:
+        """Extract water bodies from heightmap and terrain config.
+
+        Analyzes heightmap to find terrain below waterLevel, clusters into
+        separate lakes, and creates scaled puddle decals for each.
+
+        Args:
+            map_path: Path to map directory
+            con_files: ConFileSet with terrain config
+
+        Returns:
+            List of GameObject representing water surfaces as scaled puddle decals
+        """
+        import struct
+
+        # Step 1: Parse waterLevel from terrain config
+        # waterLevel is defined as: GeometryTemplate.waterLevel 72
+        terrain_con = map_path / "Init" / "Terrain.con"
+        water_level = None
+
+        if terrain_con.exists():
+            content = terrain_con.read_text()
+            for line in content.split("\n"):
+                if "waterLevel" in line:
+                    parts = line.strip().split()
+                    if len(parts) >= 2:
+                        try:
+                            water_level = float(parts[-1])
+                            break
+                        except ValueError:
+                            continue
+
+        if not water_level:
+            # No water level defined - skip water extraction
+            return []
+
+        # Step 2: Read heightmap
+        heightmap_path = map_path / "Heightmap.raw"
+        if not heightmap_path.exists():
+            return []
+
+        try:
+            # Import BF1942 terrain constants
+            from ...generators.constants.terrain import BF1942_DEFAULT_HEIGHT_SCALE
+
+            data = heightmap_path.read_bytes()
+            size = int((len(data) / 2) ** 0.5)
+
+            # Parse heights and find water pixels
+            height_scale = BF1942_DEFAULT_HEIGHT_SCALE
+            water_pixels = []
+
+            for y in range(size):
+                for x in range(size):
+                    idx = y * size + x
+                    h = struct.unpack("<H", data[idx * 2 : (idx + 1) * 2])[0]
+                    h_scaled = (h / 65535.0) * height_scale
+                    if h_scaled < water_level:
+                        water_pixels.append((x, y))
+
+            if not water_pixels:
+                return []
+
+            # Step 3: Cluster water pixels into separate lakes
+            clusters = self._cluster_water_pixels(water_pixels)
+
+            # Step 4: Create puddle decals for each lake
+            water_objects = []
+            terrain_size = 1024.0  # Typical BF1942 map size
+            scale_factor = terrain_size / size
+
+            for i, cluster in enumerate(clusters, 1):
+                if len(cluster) < 10:  # Skip tiny puddles (< 10 pixels)
+                    continue
+
+                # Calculate bounding box
+                min_x = min(p[0] for p in cluster)
+                max_x = max(p[0] for p in cluster)
+                min_y = min(p[1] for p in cluster)
+                max_y = max(p[1] for p in cluster)
+
+                # Convert to world coordinates (centered at origin)
+                world_min_x = (min_x * scale_factor) - (terrain_size / 2)
+                world_max_x = (max_x * scale_factor) - (terrain_size / 2)
+                world_min_z = (min_y * scale_factor) - (terrain_size / 2)
+                world_max_z = (max_y * scale_factor) - (terrain_size / 2)
+
+                # Lake center and dimensions
+                center_x = (world_min_x + world_max_x) / 2
+                center_z = (world_min_z + world_max_z) / 2
+                width = world_max_x - world_min_x
+                length = world_max_z - world_min_z
+
+                # Create scaled puddle decal
+                # Scale transform: (scale_x, scale_y, scale_z)
+                # Puddle decals are small by default (~10m), so scale to match lake size
+                scale_x = width / 10.0  # Assume default puddle is ~10m wide
+                scale_z = length / 10.0
+
+                water_objects.append(
+                    GameObject(
+                        name=f"Lake_{i}",
+                        asset_type="Decal_PuddleLong_01",
+                        transform=Transform(
+                            position=Vector3(center_x, water_level, center_z),
+                            rotation=Rotation(0, 0, 0),
+                            scale=Vector3(scale_x, 1.0, scale_z),
+                        ),
+                        team=Team.NEUTRAL,
+                        properties={"water_body": True, "dimensions": f"{width:.0f}x{length:.0f}"},
+                    )
+                )
+
+            return water_objects
+
+        except Exception as e:
+            print(f"  ⚠️  Failed to extract water bodies: {e}")
+            return []
+
+    def _cluster_water_pixels(self, pixels: list[tuple[int, int]]) -> list[list[tuple[int, int]]]:
+        """Group water pixels into separate clusters (lakes).
+
+        Args:
+            pixels: List of (x, y) heightmap coordinates below waterLevel
+
+        Returns:
+            List of clusters, each cluster is a list of pixels
+        """
+        clusters = []
+        used = set()
+
+        for px, py in pixels:
+            if (px, py) in used:
+                continue
+
+            # Start new cluster (BFS)
+            cluster = [(px, py)]
+            used.add((px, py))
+            queue = [(px, py)]
+
+            while queue:
+                cx, cy = queue.pop(0)
+                # Check 8-connected neighbors
+                for dx in [-1, 0, 1]:
+                    for dy in [-1, 0, 1]:
+                        if dx == 0 and dy == 0:
+                            continue
+                        nx, ny = cx + dx, cy + dy
+                        if (nx, ny) in pixels and (nx, ny) not in used:
+                            cluster.append((nx, ny))
+                            used.add((nx, ny))
+                            queue.append((nx, ny))
+
+            clusters.append(cluster)
+
+        return clusters
 
     def _calculate_bounds(
         self,

@@ -156,6 +156,15 @@ class ConParser(IParser):
             obj["rotation"] = {"pitch": pitch, "yaw": yaw, "roll": roll}
             return
 
+        # Object.geometry.scale x/y/z (BF1942 scale format)
+        scale_match = re.match(
+            r"Object\.geometry\.scale\s+([\d\.\-eE]+)/([\d\.\-eE]+)/([\d\.\-eE]+)", line
+        )
+        if scale_match:
+            x, y, z = map(float, scale_match.groups())
+            obj["scale"] = {"x": x, "y": y, "z": z}
+            return
+
         # ObjectTemplate.setTeam <team>
         team_match = re.match(r"ObjectTemplate\.setTeam\s+(\d+)", line)
         if team_match:
@@ -192,6 +201,7 @@ class ConParser(IParser):
         """
         pos_dict = obj_dict.get("position")
         rot_dict = obj_dict.get("rotation")
+        scale_dict = obj_dict.get("scale")
 
         if not pos_dict:
             return None
@@ -204,7 +214,13 @@ class ConParser(IParser):
                 rot_dict.get("pitch", 0), rot_dict.get("yaw", 0), rot_dict.get("roll", 0)
             )
 
-        return Transform(position, rotation)
+        scale = None
+        if scale_dict:
+            scale = Vector3(
+                scale_dict.get("x", 1.0), scale_dict.get("y", 1.0), scale_dict.get("z", 1.0)
+            )
+
+        return Transform(position, rotation, scale)
 
     def parse_team(self, obj_dict: dict[str, Any]) -> Team:
         """Extract team from parsed object dictionary.

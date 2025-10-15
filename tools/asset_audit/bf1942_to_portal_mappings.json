@@ -1,9 +1,10 @@
 {
   "_metadata": {
     "description": "BF1942 to Portal asset mappings - with map-specific fallback system",
-    "total_bf1942_assets": 2166,
+    "total_bf1942_assets": 2168,
     "status": "TODO - Map each asset to Portal equivalent",
-    "last_updated": "2025-10-12"
+    "last_updated": "2025-10-12",
+    "notes": "Added 8 final unmapped assets after bot spawn filtering"
   },
   "vehicles": {
     "Carrier_AA_Base": {
@@ -4779,28 +4780,78 @@
       "confidence_score": 0.633
     },
     "EU_Spruce_large_M1": {
-      "portal_equivalent": "Pine_01_L",
+      "bf1942_type": "EU_Spruce_large_M1",
+      "portal_equivalent": "PoplarWhite_01_L_A",
       "category": "nature",
-      "confidence_score": 0.9,
-      "notes": "Large spruce \u2192 Large pine (authentic coniferous tree)"
+      "notes": "Large spruce tree \u2192 Large Poplar (tallest tree on MP_Tungsten, appropriate for Russian terrain)",
+      "manually_verified": true,
+      "variety_pool": [
+        "Birch_01_L",
+        "Birch_01_L_B",
+        "Birch_01_L_C",
+        "PoplarWhite_01_L_A",
+        "JuniperPencil_01_L",
+        "Hawthorn_01_L",
+        "PearCallery_01_L_A",
+        "Walnut_01_L"
+      ],
+      "randomize": true
     },
     "EU_Spruce2_M1": {
-      "portal_equivalent": "Pine_01_M",
+      "bf1942_type": "EU_Spruce2_M1",
+      "portal_equivalent": "Birch_01_M_A",
       "category": "nature",
-      "confidence_score": 0.9,
-      "notes": "Medium spruce \u2192 Medium pine"
+      "notes": "Medium spruce tree \u2192 Medium Birch variant A (for variety)",
+      "manually_verified": true,
+      "variety_pool": [
+        "Birch_01_M_A",
+        "Birch_01_M_B",
+        "Birch_01_M_C",
+        "Birch_01_M_D",
+        "Birch_01_M_E",
+        "Birch_01_M_F",
+        "Hawthorn_01_M",
+        "JuniperPencil_01_M_A",
+        "FigWeeping_01_M"
+      ],
+      "randomize": true
     },
     "EU_pine1_M1": {
-      "portal_equivalent": "Pine_01_L",
+      "bf1942_type": "EU_pine1_M1",
+      "portal_equivalent": "JuniperPencil_01_L",
       "category": "nature",
-      "confidence_score": 0.95,
-      "notes": "Pine tree \u2192 Large pine (perfect match!)"
+      "notes": "Pine tree \u2192 Juniper Pencil (similar coniferous shape)",
+      "manually_verified": true,
+      "variety_pool": [
+        "Birch_01_L",
+        "Birch_01_L_B",
+        "Birch_01_L_C",
+        "PoplarWhite_01_L_A",
+        "JuniperPencil_01_L",
+        "Hawthorn_01_L",
+        "PearCallery_01_L_A",
+        "Walnut_01_L"
+      ],
+      "randomize": true
     },
     "EU_Spruce3_M1": {
-      "portal_equivalent": "PineTorrey_01_M",
+      "bf1942_type": "EU_Spruce3_M1",
+      "portal_equivalent": "Birch_01_M_B",
       "category": "nature",
-      "confidence_score": 0.85,
-      "notes": "Small spruce \u2192 Medium Torrey pine"
+      "notes": "Medium spruce tree \u2192 Medium Birch variant B (for variety)",
+      "manually_verified": true,
+      "variety_pool": [
+        "Birch_01_M_A",
+        "Birch_01_M_B",
+        "Birch_01_M_C",
+        "Birch_01_M_D",
+        "Birch_01_M_E",
+        "Birch_01_M_F",
+        "Hawthorn_01_M",
+        "JuniperPencil_01_M_A",
+        "FigWeeping_01_M"
+      ],
+      "randomize": true
     },
     "EU_pine3_M1": {
       "portal_equivalent": "Pine_01_M",
@@ -4880,6 +4931,101 @@
       "category": "props",
       "confidence_score": 0.9,
       "notes": "Steel crate type 2"
+    },
+    "AlliedAirplaneAmmo": {
+      "bf1942_type": "AlliedAirplaneAmmo",
+      "portal_equivalent": "CrateAmmo_01",
+      "category": "props",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 8,
+      "notes": "Allied airplane ammo depot \u2192 Generic military ammo crate",
+      "manually_verified": true
+    },
+    "AxisAirplaneAmmo": {
+      "bf1942_type": "AxisAirplaneAmmo",
+      "portal_equivalent": "CrateAmmo_02",
+      "category": "props",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 7,
+      "notes": "Axis airplane ammo depot \u2192 Generic military ammo crate (variant)",
+      "manually_verified": true
+    },
+    "mediclocker": {
+      "bf1942_type": "mediclocker",
+      "portal_equivalent": "CabinetRural_01",
+      "category": "props",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 3,
+      "notes": "Medical supply locker \u2192 Rural cabinet (closest match on Tungsten)",
+      "manually_verified": true
+    },
+    "greencammo_m1": {
+      "bf1942_type": "greencammo_m1",
+      "portal_equivalent": "FenceTarp_01_256",
+      "category": "props",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 1,
+      "notes": "Camouflage netting \u2192 Tarp fence",
+      "manually_verified": true
+    },
+    "openbasecammo": {
+      "bf1942_type": "openbasecammo",
+      "portal_equivalent": "FenceTarp_01_256",
+      "category": "props",
+      "found_in_maps": [
+        "Kursk"
+      ],
+      "usage_count": 4,
+      "notes": "Open base camouflage \u2192 Tarp fence",
+      "manually_verified": true
+    },
+    "lake": {
+      "bf1942_type": "lake",
+      "portal_equivalent": "Decal_PuddleLong_01",
+      "category": "terrain",
+      "scale": {
+        "width": 55.3,
+        "height": 101.95
+      },
+      "notes": "Lake water body \u2192 Long puddle decal (Portal SDK doesn't support actual water bodies). BF1942 dimensions: 55.30m x 101.95m. Using Decal_PuddleLong_01 (available on MP_Tungsten) with scaling.",
+      "manually_verified": true
+    },
+    "lake2": {
+      "bf1942_type": "lake2",
+      "portal_equivalent": "Decal_PuddleLong_01",
+      "category": "terrain",
+      "scale": {
+        "width": 57.31,
+        "height": 84.19
+      },
+      "notes": "Lake water body \u2192 Long puddle decal. BF1942 dimensions: 57.31m x 84.19m. Changed from Decal_PuddleLong_02 (not on MP_Tungsten) to Decal_PuddleLong_01 with scaling.",
+      "manually_verified": true
+    },
+    "lake3": {
+      "bf1942_type": "lake3",
+      "portal_equivalent": "Decal_PuddleLong_01",
+      "category": "terrain",
+      "scale": {
+        "width": 40.34,
+        "height": 116.86
+      },
+      "notes": "Lake water body \u2192 Long puddle decal. BF1942 dimensions: 40.34m x 116.86m. Changed from Decal_PuddleLong_06 (not on MP_Tungsten) to Decal_PuddleLong_01 with scaling.",
+      "manually_verified": true
+    },
+    "r_ruswh_m1": {
+      "bf1942_type": "r_ruswh_m1",
+      "portal_equivalent": "HouseRuralLarge_01",
+      "category": "architecture",
+      "notes": "Russian White House (r_ruswh = rus white house) \u2192 Large rural house (closest match on MP_Tungsten)",
+      "manually_verified": true
     }
   },
   "buildings": {
@@ -6111,6 +6257,36 @@
       "notes": "Light tank - fast armored vehicle (Panzer III, T-70, etc.)",
       "confidence_score": 1.0,
       "auto_suggested": false
+    },
+    "aagunspawner": {
+      "bf1942_type": "aagunspawner",
+      "portal_equivalent": "SandBags_01_256x120",
+      "category": "defensive",
+      "notes": "AA gun spawner \u2192 Sandbag defensive position (decorative - Portal has no functional AA emplacements)",
+      "auto_suggested": false
+    },
+    "artilleryspawner": {
+      "bf1942_type": "artilleryspawner",
+      "portal_equivalent": "WreckTank_Bradley_01",
+      "category": "wreck",
+      "notes": "Artillery spawner \u2192 Destroyed tank wreck (decorative - these are mobile vehicles in BF1942, not emplacements)",
+      "auto_suggested": false
+    },
+    "machinegunspawner": {
+      "bf1942_type": "machinegunspawner",
+      "portal_equivalent": "StationaryEmplacementSpawner",
+      "category": "weapon_emplacement",
+      "notes": "Functional machine gun emplacement (MG42/Browning) - uses StationaryEmplacementSpawner",
+      "auto_suggested": false,
+      "weapon_type": "machinegun"
+    },
+    "antitankgunspawner": {
+      "bf1942_type": "antitankgunspawner",
+      "portal_equivalent": "StationaryEmplacementSpawner",
+      "category": "weapon_emplacement",
+      "notes": "Functional anti-tank emplacement (Pak40 \u2192 TOW launcher) - uses StationaryEmplacementSpawner",
+      "auto_suggested": false,
+      "weapon_type": "tow_launcher"
     }
   },
   "unknown": {},

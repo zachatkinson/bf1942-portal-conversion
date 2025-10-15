@@ -22,6 +22,16 @@ import subprocess
 import sys
 from pathlib import Path
 
+from bfportal.exporters import create_portal_experience, create_spatial_attachment
+from bfportal.generators.constants import (
+    EXPERIENCE_GAMEMODE_CUSTOM,
+    MAX_PLAYERS_PER_TEAM_DEFAULT,
+    MODBUILDER_GAMEMODE_CUSTOM,
+    get_fb_export_data_dir,
+    get_project_root,
+    get_spatial_levels_dir,
+)
+
 
 def export_tscn_to_spatial(tscn_path: Path, asset_dir: Path, output_dir: Path) -> Path:
     """
@@ -69,7 +79,6 @@ def create_experience_file(
     spatial_path: Path,
     base_map: str,
     max_players_per_team: int,
-    game_mode: str,
     description: str | None = None,
 ) -> Path:
     """
@@ -80,11 +89,14 @@ def create_experience_file(
         spatial_path: Path to the .spatial.json file
         base_map: Base map ID (e.g., "MP_Tungsten")
         max_players_per_team: Maximum players per team (16, 32, 64, etc.)
-        game_mode: Game mode (Conquest, Rush, TeamDeathmatch, etc.)
         description: Optional custom description
 
     Returns:
         Path to the generated experience file
+
+    Note:
+        Actual game mode (Conquest/Rush/etc.) is determined by gameplay objects
+        in the .tscn file (HQs, CapturePoints, etc.), not by this function.
     """
     # Read the spatial.json file
     with open(spatial_path, encoding="utf-8") as f:
@@ -100,52 +112,32 @@ def create_experience_file(
             f"Features authentic spawn points, vehicle spawners, and gameplay objects."
         )
 
-    # Create the complete experience structure following the official pattern
-    # Using custom mode (ModBuilder_GameMode: 0) for full control and local testing
-    experience = {
-        "mutators": {
-            "MaxPlayerCount_PerTeam": max_players_per_team,
-            "AiMaxCount_PerTeam": 0,
-            "AiSpawnType": 2,
-            "AI_ManDownExperienceType_PerTeam": 1,  # AI respawn behavior
-            "ModBuilder_GameMode": 0,  # Custom mode - full control, local testing enabled
-            "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
-            "AimAssistSnapCapsuleRadiusMultiplier": 1,
-            "FriendlyFireDamageReflectionMaxTeamKills": 2,
-            "SpawnBalancing_GamemodeStartTimer": 0,
-            "SpawnBalancing_GamemodePlayerCountRatio": 0.75,
-        },
-        "assetRestrictions": {},
-        "name": f"{map_name} - BF1942 Classic",
-        "description": description,
-        "mapRotation": [
+    # Create spatial attachment
+    spatial_attachment = create_spatial_attachment(
+        map_id=map_name.lower(),
+        map_name=map_name,
+        spatial_base64=spatial_base64,
+        map_index=0,
+    )
+
+    # Use shared DRY experience builder
+    # NOTE: Always use "ModBuilderCustom" gameMode + ModBuilder_GameMode: 2 for spatial attachments
+    #       Actual gameplay mode (Conquest/Rush/etc.) is determined by map's gameplay nodes
+    experience = create_portal_experience(
+        name=f"{map_name} - BF1942 Classic",
+        description=description,
+        map_rotation=[
             {
                 # IMPORTANT: Must follow pattern MP_<MapName>-ModBuilderCustom0
                 "id": f"{base_map}-ModBuilderCustom0",
-                "spatialAttachment": {
-                    "id": f"{map_name.lower()}-bf1942-spatial",
-                    "filename": f"{map_name}.spatial.json",
-                    "metadata": "mapIdx=0",
-                    "version": "1",
-                    "isProcessable": True,
-                    "processingStatus": 2,
-                    "attachmentData": {
-                        "original": spatial_base64,
-                        "compiled": "",  # Empty - Portal compiles server-side
-                    },
-                    "attachmentType": 1,
-                    "errors": [],
-                },
+                "spatialAttachment": spatial_attachment,
             }
         ],
-        "workspace": {},
-        "teamComposition": [
-            [1, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-        ],
-        "gameMode": game_mode,
-        "attachments": [],
-    }
+        attachments=[spatial_attachment],
+        max_players_per_team=max_players_per_team,
+        game_mode=EXPERIENCE_GAMEMODE_CUSTOM,  # "ModBuilderCustom" required for spatial attachments
+        modbuilder_gamemode=MODBUILDER_GAMEMODE_CUSTOM,  # 2 = Custom mode (required for spatials)
+    )
 
     # Create experiences directory if it doesn't exist
     experiences_dir = Path("experiences")
@@ -158,8 +150,8 @@ def create_experience_file(
 
     print(f"✅ Created {output_file}")
     print(f"   Base map: {base_map}")
-    print(f"   Game mode: {game_mode}")
     print(f"   Max players: {max_players_per_team * 2}")
+    print(f"   Mode: Custom (ModBuilderCustom)")
     print(f"   Spatial data: {len(spatial_data):,} bytes")
     print(f"   Experience file: {output_file.stat().st_size:,} bytes")
 
@@ -206,16 +198,9 @@ Available base maps (choose terrain similar to your map):
     parser.add_argument(
         "--max-players",
         type=int,
-        default=32,
+        default=MAX_PLAYERS_PER_TEAM_DEFAULT,
         choices=[16, 32, 64],
-        help="Maximum players per team (default: 32, total 64 players)",
-    )
-
-    parser.add_argument(
-        "--game-mode",
-        default="Conquest",
-        choices=["Conquest", "Rush", "TeamDeathmatch", "Breakthrough"],
-        help="Game mode (default: Conquest)",
+        help=f"Maximum players per team (default: {MAX_PLAYERS_PER_TEAM_DEFAULT}, total {MAX_PLAYERS_PER_TEAM_DEFAULT * 2} players)",
     )
 
     parser.add_argument("--description", help="Custom description for the experience")
@@ -226,10 +211,16 @@ Available base maps (choose terrain similar to your map):
         help="Custom path to .tscn file (default: GodotProject/levels/<map_name>.tscn)",
     )
 
+    parser.add_argument(
+        "--spatial-only",
+        action="store_true",
+        help="Only export to .spatial.json, skip experience file creation",
+    )
+
     args = parser.parse_args()
 
-    # Determine paths
-    project_root = Path.cwd()
+    # Determine paths using DRY path helpers
+    project_root = get_project_root()
 
     tscn_path = args.tscn_path or project_root / "GodotProject" / "levels" / f"{args.map_name}.tscn"
 
@@ -242,8 +233,8 @@ Available base maps (choose terrain similar to your map):
                 print(f"  - {tscn.stem}", file=sys.stderr)
         return 1
 
-    asset_dir = project_root / "FbExportData"
-    output_dir = project_root / "FbExportData" / "levels"
+    asset_dir = get_fb_export_data_dir()
+    output_dir = get_spatial_levels_dir()
 
     if not asset_dir.exists():
         print(f"❌ Error: FbExportData directory not found: {asset_dir}", file=sys.stderr)
@@ -259,30 +250,51 @@ Available base maps (choose terrain similar to your map):
 
         spatial_path = export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
-        # Step 2: Create complete experience file
-        print(f"\n{'=' * 60}")
-        print("Step 2: Creating Portal experience file")
-        print(f"{'=' * 60}\n")
+        # DISABLED: Terrain centering is now disabled in tscn_generator.py
+        # Terrain should already be at (0,0,0) in the .tscn file
+        # # Step 1.5: Fix terrain position (Portal requires terrain at 0,0,0)
+        # print("\n🔧 Fixing terrain position for Portal compatibility...")
+        # fix_result = subprocess.run(
+        #     [sys.executable, "tools/fix_spatial_terrain.py", str(spatial_path)],
+        #     capture_output=True,
+        #     text=True,
+        # )
+        # if fix_result.returncode != 0:
+        #     print(f"⚠️  Warning: Terrain fix failed: {fix_result.stderr}")
+        # else:
+        #     print(fix_result.stdout)
 
-        experience_path = create_experience_file(
-            map_name=args.map_name,
-            spatial_path=spatial_path,
-            base_map=args.base_map,
-            max_players_per_team=args.max_players,
-            game_mode=args.game_mode,
-            description=args.description,
-        )
+        # Step 2: Create complete experience file (unless --spatial-only)
+        if not args.spatial_only:
+            print(f"\n{'=' * 60}")
+            print("Step 2: Creating Portal experience file")
+            print(f"{'=' * 60}\n")
 
-        # Success!
-        print(f"\n{'=' * 60}")
-        print("✅ SUCCESS! Ready to import to Portal")
-        print(f"{'=' * 60}\n")
-        print(f"Import file: {experience_path}")
-        print("\nNext steps:")
-        print("1. Go to portal.battlefield.com")
-        print("2. Click the 'IMPORT' button")
-        print(f"3. Select: {experience_path}")
-        print("4. Your map will appear in Map Rotation!")
+            experience_path = create_experience_file(
+                map_name=args.map_name,
+                spatial_path=spatial_path,
+                base_map=args.base_map,
+                max_players_per_team=args.max_players,
+                description=args.description,
+            )
+
+            # Success!
+            print(f"\n{'=' * 60}")
+            print("✅ SUCCESS! Ready to import to Portal")
+            print(f"{'=' * 60}\n")
+            print(f"Import file: {experience_path}")
+            print("\nNext steps:")
+            print("1. Go to portal.battlefield.com")
+            print("2. Click the 'IMPORT' button")
+            print(f"3. Select: {experience_path}")
+            print("4. Your map will appear in Map Rotation!")
+        else:
+            # Spatial-only mode
+            print(f"\n{'=' * 60}")
+            print("✅ Spatial export complete!")
+            print(f"{'=' * 60}\n")
+            print(f"Spatial file: {spatial_path}")
+            print(f"File size: {spatial_path.stat().st_size:,} bytes")
 
         return 0
 

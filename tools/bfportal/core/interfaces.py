@@ -84,6 +84,7 @@ class CapturePoint:
     transform: Transform
     radius: float
     control_area: list[Vector3]  # Polygon points for control area
+    label: str = "A"  # Display label (A, B, C, etc.)
     team1_spawns: list["SpawnPoint"] | None = None  # Spawns for Team 1 when captured
     team2_spawns: list["SpawnPoint"] | None = None  # Spawns for Team 2 when captured
 

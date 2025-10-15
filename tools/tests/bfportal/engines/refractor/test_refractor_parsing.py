@@ -388,8 +388,8 @@ class TestRefractorEngineParseGameObjects:
         assert objects[0].properties["health"] == 1000
         assert objects[1].name == "Tree_Pine"
 
-    def test_parse_game_objects_excludes_spawners_and_control_points(self, monkeypatch):
-        """Test _parse_game_objects excludes spawners and control points."""
+    def test_parse_game_objects_handles_spawners_and_excludes_control_points(self, monkeypatch):
+        """Test _parse_game_objects includes ObjectSpawners with special handling and excludes ControlPoints."""
         # Arrange
         engine = ConcreteRefractorEngine()
 
@@ -425,12 +425,28 @@ class TestRefractorEngineParseGameObjects:
         monkeypatch.setattr(engine.con_parser, "parse_transform", mock_parse_transform)
         monkeypatch.setattr(engine.con_parser, "parse_team", mock_parse_team)
 
+        # Mock spawner_parser.get_template to return SpawnerTemplate only for ObjectSpawner
+        from bfportal.parsers.spawner_template_parser import SpawnerTemplate
+
+        def mock_get_template(obj_type: str):
+            if obj_type == "objectspawner":
+                return SpawnerTemplate(
+                    name="objectspawner", team1_vehicle="M4A3", team2_vehicle="T34-85"
+                )
+            return None  # Not a spawner template
+
+        monkeypatch.setattr(engine.spawner_parser, "get_template", mock_get_template)
+
         # Act
         objects = engine._parse_game_objects(mock_con_files)
 
-        # Assert - Only Building_01 included
-        assert len(objects) == 1
-        assert objects[0].name == "Building_01"
+        # Assert - TankSpawner (ObjectSpawner) and Building_01 included, CP_Center (ControlPoint) excluded
+        assert len(objects) == 2
+        assert objects[0].name == "TankSpawner"
+        # asset_type will be lowercase vehicle type (lines 626, 640 of refractor_base.py)
+        assert objects[0].asset_type.lower() in ["objectspawner", "m4a3", "t34-85"]
+        assert objects[1].name == "Building_01"
+        assert objects[1].asset_type.lower() == "building"
 
     def test_parse_game_objects_skips_objects_without_transform(self, monkeypatch):
         """Test _parse_game_objects skips objects with invalid transforms."""

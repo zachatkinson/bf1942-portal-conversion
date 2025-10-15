@@ -40,19 +40,19 @@ class ConcreteRefractorEngine(RefractorEngine):
 class TestRefractorCoordinateSystem:
     """Test cases for RefractorCoordinateSystem."""
 
-    def test_to_portal_preserves_coordinates(self):
-        """Test coordinate conversion preserves values (both Y-up)."""
+    def test_to_portal_negates_z_axis(self):
+        """Test coordinate conversion negates Z-axis (BF1942 +Z=north, Portal -Z=north)."""
         # Arrange
         coord_system = RefractorCoordinateSystem()
-        position = Vector3(100.0, 50.0, -200.0)
+        position = Vector3(100.0, 50.0, 200.0)  # BF1942: +Z is north
 
         # Act
         result = coord_system.to_portal(position)
 
-        # Assert
+        # Assert - X and Y preserved, Z negated
         assert result.x == 100.0
         assert result.y == 50.0
-        assert result.z == -200.0
+        assert result.z == -200.0  # Portal: -Z is north (negated)
 
     def test_to_portal_rotation_preserves_angles(self):
         """Test rotation conversion preserves angles."""
@@ -103,26 +103,33 @@ class TestRefractorEngineSpawnPointIdentification:
 
         # Act
         result1 = engine._is_spawn_point("some_object", "spawnpoint")
-        result2 = engine._is_spawn_point("some_object", "objectspawner_spawnpoint")
+        # Note: "objectspawner_spawnpoint" is not "spawnpoint", so it won't match
+        # unless it's in spawn_template_types
 
         # Assert
         assert result1
-        assert result2
 
-    def test_is_spawn_point_with_instance_pattern(self):
-        """Test identifying spawn points by instance pattern (name_groupnum_spawnnum)."""
+    def test_is_spawn_point_with_template_based_detection(self):
+        """Test identifying spawn points using template-based detection."""
         # Arrange
         engine = ConcreteRefractorEngine()
+        # Simulate loading spawn templates (normally done in parse_map)
+        engine.spawn_template_types.add("openbasecammo")
+        engine.spawn_template_types.add("al_5")
+        engine.spawn_template_types.add("ax_6")
 
-        # Act
-        result1 = engine._is_spawn_point("openbasecammo_4_13", "")
-        result2 = engine._is_spawn_point("spawnpoint_axis_1_1", "")
-        result3 = engine._is_spawn_point("basecamp_3_5", "")
+        # Act - Test template instances (type=template_name)
+        result1 = engine._is_spawn_point("openbasecammo_4_13", "openbasecammo")
+        result2 = engine._is_spawn_point("al_5_instance", "al_5")
+        result3 = engine._is_spawn_point("ax_6_instance", "ax_6")
+        # Test fallback to pattern matching for "spawn" + "point" in name
+        result4 = engine._is_spawn_point("spawnpoint_axis_1_1", "")
 
         # Assert
-        assert result1
-        assert result2
-        assert result3
+        assert result1  # Matches loaded template
+        assert result2  # Matches loaded template (bot spawn)
+        assert result3  # Matches loaded template (bot spawn)
+        assert result4  # Matches fallback pattern
 
     def test_is_spawn_point_excludes_control_points(self):
         """Test control points are not identified as spawn points."""
@@ -282,19 +289,19 @@ class TestRefractorEngineCoordinateConversion:
         assert isinstance(result, RefractorCoordinateSystem)
 
     def test_coordinate_system_converts_position(self):
-        """Test coordinate system can convert positions."""
+        """Test coordinate system can convert positions with Z-axis negation."""
         # Arrange
         engine = ConcreteRefractorEngine()
         coord_system = engine.get_coordinate_system()
-        position = Vector3(500.0, 100.0, -300.0)
+        position = Vector3(500.0, 100.0, -300.0)  # BF1942: -Z is south
 
         # Act
         result = coord_system.to_portal(position)
 
-        # Assert
+        # Assert - X and Y preserved, Z negated
         assert result.x == 500.0
         assert result.y == 100.0
-        assert result.z == -300.0
+        assert result.z == 300.0  # Portal: +Z is south (negated)
 
 
 class TestRefractorEngineBoundsCalculation:

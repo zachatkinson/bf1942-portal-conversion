@@ -146,7 +146,7 @@
       "name": "1942 Revisited",
       "description": "Experience the legend reborn. Classic Battlefield 1942 maps from the base game and both expansion packs, authentically recreated in BF6 Portal with modern graphics and gameplay.",
       "game_mode": "Conquest",
-      "max_players": 64,
+      "max_players": 32,
       "map_filter": {
         "status": "complete"
       }
@@ -155,7 +155,7 @@
       "name": "1942 Revisited - Vanilla",
       "description": "The original Battlefield 1942 base game maps, faithfully recreated for BF6 Portal.",
       "game_mode": "Conquest",
-      "max_players": 64,
+      "max_players": 32,
       "map_filter": {
         "expansion": "vanilla",
         "status": "complete"
@@ -165,7 +165,7 @@
       "name": "1942 Revisited - Road to Rome",
       "description": "The Road to Rome expansion maps recreated for BF6 Portal.",
       "game_mode": "Conquest",
-      "max_players": 64,
+      "max_players": 32,
       "map_filter": {
         "expansion": "road_to_rome",
         "status": "complete"
@@ -174,7 +174,7 @@
   },
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-10-12",
+    "last_updated": "2025-10-13",
     "total_maps_planned": 10,
     "total_maps_complete": 1
   }

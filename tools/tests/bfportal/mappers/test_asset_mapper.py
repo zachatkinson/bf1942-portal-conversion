@@ -61,10 +61,6 @@ class TestAssetMapperInitialization:
         # Arrange
         import json
 
-        fake_module_path = tmp_path / "tools" / "bfportal" / "mappers" / "asset_mapper.py"
-        fake_module_path.parent.mkdir(parents=True)
-        fake_module_path.write_text("")
-
         keywords_file = tmp_path / "tools" / "asset_audit" / "asset_fallback_keywords.json"
         keywords_file.parent.mkdir(parents=True)
         keywords_data = {
@@ -76,7 +72,7 @@ class TestAssetMapperInitialization:
         keywords_file.write_text(json.dumps(keywords_data))
 
         # Act
-        with patch("bfportal.mappers.asset_mapper.__file__", str(fake_module_path)):
+        with patch("bfportal.mappers.asset_mapper.get_project_root", return_value=tmp_path):
             mapper = AssetMapper(sample_portal_assets)
 
         # Assert
@@ -89,12 +85,10 @@ class TestAssetMapperInitialization:
     ):
         """Test initialization gracefully handles missing fallback keywords file."""
         # Arrange
-        fake_module_path = tmp_path / "tools" / "bfportal" / "mappers" / "asset_mapper.py"
-        fake_module_path.parent.mkdir(parents=True)
-        fake_module_path.write_text("")
+        # No keywords file created - should gracefully handle missing file
 
         # Act
-        with patch("bfportal.mappers.asset_mapper.__file__", str(fake_module_path)):
+        with patch("bfportal.mappers.asset_mapper.get_project_root", return_value=tmp_path):
             mapper = AssetMapper(sample_portal_assets)
 
         # Assert

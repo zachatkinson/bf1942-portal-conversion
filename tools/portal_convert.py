@@ -30,6 +30,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from bfportal.core.exceptions import BFPortalError
 from bfportal.core.interfaces import MapContext, Team
 from bfportal.engines.refractor.games.bf1942 import BF1942Engine
+from bfportal.generators.constants.clearance import (
+    MANUAL_OFFSET_X_DEFAULT,
+    MANUAL_OFFSET_Z_DEFAULT,
+    SPAWN_CLEARANCE_M,
+)
 from bfportal.generators.tscn_generator import TscnGenerator
 from bfportal.mappers.asset_mapper import AssetMapper
 from bfportal.orientation import (
@@ -38,6 +43,7 @@ from bfportal.orientation import (
     TerrainOrientationDetector,
 )
 from bfportal.terrain.terrain_provider import HeightAdjuster, MeshTerrainProvider
+from bfportal.transforms.centering_service import CenteringService
 from bfportal.transforms.coordinate_offset import CoordinateOffset
 
 
@@ -70,6 +76,10 @@ class PortalConverter:
         self.coord_offset = CoordinateOffset()
         print("   ✅ Coordinate offset calculator")
 
+        # Centering service (SOLID: Single responsibility for all centering logic)
+        self.centering_service = CenteringService()
+        print("   ✅ Universal centering service")
+
         # Terrain provider: Load Portal base terrain mesh
         terrain_mesh_path = (
             self.project_root
@@ -91,7 +101,13 @@ class PortalConverter:
         )
         print(f"   ✅ Terrain loaded: {len(self.terrain.vertices):,} vertices")
         print(
-            f"      Height range: {self.terrain.min_height:.1f}m - {self.terrain.max_height:.1f}m"
+            f"      Mesh internal Y: {self.terrain.mesh_min_height:.1f}m - {self.terrain.mesh_max_height:.1f}m"
+        )
+        print(
+            f"      Portal Y (normalized): {self.terrain.min_height:.1f}m - {self.terrain.max_height:.1f}m"
+        )
+        print(
+            f"      Y baseline offset: {self.terrain.terrain_y_baseline:.1f}m (subtracted for Portal compatibility)"
         )
         print(
             f"      Mesh bounds: X[{self.terrain.mesh_min_x:.1f}, {self.terrain.mesh_max_x:.1f}] "
@@ -199,41 +215,137 @@ class PortalConverter:
                         map_data.bounds.max_point.z + offset.z,
                     )
 
-            # Step 2.5: Detect orientation and calculate terrain rotation
-            print("\n🧭 Detecting map orientation...")
-            map_detector = MapOrientationDetector(map_data)
-            terrain_detector = TerrainOrientationDetector(
-                terrain_provider=self.terrain,
-                terrain_size=(self.args.terrain_size, self.args.terrain_size),
-            )
-            orientation_matcher = OrientationMatcher()
+            # Step 2.5: Handle terrain rotation (user override or automatic detection)
+            if self.args.rotate_terrain:
+                # User explicitly requested terrain rotation - skip automatic detection
+                print("\n🔄 Terrain rotation: MANUAL (--rotate-terrain flag)")
+                print("   User requested 90° CW rotation")
+                map_data.metadata["terrain_rotation"] = 90
 
-            source_analysis = map_detector.detect_orientation()
-            dest_analysis = terrain_detector.detect_orientation()
-            rotation_result = orientation_matcher.match(source_analysis, dest_analysis)
+                # Recenter assets to origin (0, 0) for rotated terrain
+                # The rotated terrain will be centered at origin, so assets should be too
+                print("\n📐 Recentering assets for rotated terrain...")
 
-            print(
-                f"   Source: {source_analysis.orientation.value.upper()} "
-                f"({source_analysis.width_x:.0f}m x {source_analysis.depth_z:.0f}m, "
-                f"ratio: {source_analysis.ratio:.2f})"
-            )
-            print(
-                f"   Terrain: {dest_analysis.orientation.value.upper()} "
-                f"({dest_analysis.width_x:.0f}m x {dest_analysis.depth_z:.0f}m)"
-            )
-            print(f"   Rotation needed: {'YES' if rotation_result.rotation_needed else 'NO'}")
+                # Calculate current asset centroid
+                from bfportal.core.interfaces import GameObject
 
-            if rotation_result.rotation_needed:
+                objects_for_centroid = []
+                for spawn in map_data.team1_spawns + map_data.team2_spawns:
+                    objects_for_centroid.append(
+                        GameObject(
+                            name=spawn.name,
+                            asset_type="SpawnPoint",
+                            transform=spawn.transform,
+                            team=spawn.team,
+                            properties={},
+                        )
+                    )
+                objects_for_centroid.extend(map_data.game_objects)
+
+                current_center = self.coord_offset.calculate_centroid(objects_for_centroid)
+                from bfportal.core.interfaces import Vector3
+
+                # Optional: Add manual offset adjustment (positive X = east, positive Z = north)
+                # This sets the TARGET position for the asset centroid after recentering
+                # The diagnostic showed centroid at (-149.3, -0.2), so we want target at (0, 0)
+                # Since we're setting the TARGET, use (0, 0) to center assets at origin
+                manual_offset_x = MANUAL_OFFSET_X_DEFAULT  # Target X position for asset centroid
+                manual_offset_z = MANUAL_OFFSET_Z_DEFAULT  # Target Z position for asset centroid
+
+                target_origin = Vector3(manual_offset_x, 0, manual_offset_z)
+                recenter_offset = self.coord_offset.calculate_offset(current_center, target_origin)
+
                 print(
-                    f"   ⚠️  Will rotate terrain {rotation_result.rotation_degrees}° around Y axis"
+                    f"   Current center: ({current_center.x:.1f}, {current_center.y:.1f}, {current_center.z:.1f})"
                 )
-                print(f"   Reasoning: {rotation_result.reasoning}")
-                # TODO: Apply rotation to terrain node in .tscn generation
-                # For now, store rotation for later use
-                map_data.metadata["terrain_rotation"] = rotation_result.rotation_degrees
+                print("   Target origin: (0.0, 0.0, 0.0)")
+                print(
+                    f"   Recenter offset: ({recenter_offset.x:.1f}, {recenter_offset.y:.1f}, {recenter_offset.z:.1f})"
+                )
+
+                # Apply recenter offset to all objects
+                for obj in map_data.game_objects:
+                    obj.transform = self.coord_offset.apply_offset(obj.transform, recenter_offset)
+
+                for spawn in map_data.team1_spawns + map_data.team2_spawns:
+                    spawn.transform = self.coord_offset.apply_offset(
+                        spawn.transform, recenter_offset
+                    )
+
+                # Apply to capture points
+                offset_spawns = set()
+                for cp in map_data.capture_points:
+                    cp.transform = self.coord_offset.apply_offset(cp.transform, recenter_offset)
+                    team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
+                    team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+                    for spawn in team1_spawns + team2_spawns:
+                        if id(spawn) not in offset_spawns:
+                            spawn.transform = self.coord_offset.apply_offset(
+                                spawn.transform, recenter_offset
+                            )
+                            offset_spawns.add(id(spawn))
+
+                # Apply to HQs
+                map_data.team1_hq = self.coord_offset.apply_offset(
+                    map_data.team1_hq, recenter_offset
+                )
+                map_data.team2_hq = self.coord_offset.apply_offset(
+                    map_data.team2_hq, recenter_offset
+                )
+
+                # Apply to bounds
+                if map_data.bounds:
+                    map_data.bounds.min_point = Vector3(
+                        map_data.bounds.min_point.x + recenter_offset.x,
+                        map_data.bounds.min_point.y + recenter_offset.y,
+                        map_data.bounds.min_point.z + recenter_offset.z,
+                    )
+                    map_data.bounds.max_point = Vector3(
+                        map_data.bounds.max_point.x + recenter_offset.x,
+                        map_data.bounds.max_point.y + recenter_offset.y,
+                        map_data.bounds.max_point.z + recenter_offset.z,
+                    )
+
+                print("   ✅ Recentered all objects to origin")
             else:
-                print("   ✅ No rotation needed")
-                map_data.metadata["terrain_rotation"] = 0
+                # Automatic orientation detection
+                print("\n🧭 Detecting map orientation...")
+                map_detector = MapOrientationDetector(map_data)
+
+                # Use actual mesh dimensions for orientation detection
+                actual_terrain_width = self.terrain.mesh_max_x - self.terrain.mesh_min_x
+                actual_terrain_depth = self.terrain.mesh_max_z - self.terrain.mesh_min_z
+
+                terrain_detector = TerrainOrientationDetector(
+                    terrain_provider=self.terrain,
+                    terrain_size=(actual_terrain_width, actual_terrain_depth),
+                )
+                orientation_matcher = OrientationMatcher()
+
+                source_analysis = map_detector.detect_orientation()
+                dest_analysis = terrain_detector.detect_orientation()
+                rotation_result = orientation_matcher.match(source_analysis, dest_analysis)
+
+                print(
+                    f"   Source: {source_analysis.orientation.value.upper()} "
+                    f"({source_analysis.width_x:.0f}m x {source_analysis.depth_z:.0f}m, "
+                    f"ratio: {source_analysis.ratio:.2f})"
+                )
+                print(
+                    f"   Terrain: {dest_analysis.orientation.value.upper()} "
+                    f"({dest_analysis.width_x:.0f}m x {dest_analysis.depth_z:.0f}m)"
+                )
+                print(f"   Rotation needed: {'YES' if rotation_result.rotation_needed else 'NO'}")
+
+                if rotation_result.rotation_needed:
+                    print(
+                        f"   ⚠️  Will rotate terrain {rotation_result.rotation_degrees}° around Y axis"
+                    )
+                    print(f"   Reasoning: {rotation_result.reasoning}")
+                    map_data.metadata["terrain_rotation"] = rotation_result.rotation_degrees
+                else:
+                    print("   ✅ No rotation needed")
+                    map_data.metadata["terrain_rotation"] = 0
 
             # Step 3: Map assets to Portal equivalents
             print(f"\n🔄 Mapping {len(map_data.game_objects)} assets to Portal...")
@@ -270,52 +382,10 @@ class PortalConverter:
             if skipped_terrain:
                 print(f"   ℹ️  Skipped terrain elements: {len(set(skipped_terrain))} types")
 
-            # Step 4: Adjust heights to Portal terrain
-            print("\n📏 Adjusting asset heights to Portal terrain...")
-            adjusted = 0
-
-            # Adjust HQs to terrain surface
-            map_data.team1_hq = self.height_adjuster.adjust_height(
-                map_data.team1_hq, self.terrain, ground_offset=0.0
-            )
-            map_data.team2_hq = self.height_adjuster.adjust_height(
-                map_data.team2_hq, self.terrain, ground_offset=0.0
-            )
-
-            # Adjust game objects to terrain surface
-            for obj in map_data.game_objects:
-                obj.transform = self.height_adjuster.adjust_height(
-                    obj.transform, self.terrain, ground_offset=0.0
-                )
-                adjusted += 1
-
-            # Adjust HQ spawns (1m above terrain for spawn clearance)
-            for spawn in map_data.team1_spawns + map_data.team2_spawns:
-                spawn.transform = self.height_adjuster.adjust_height(
-                    spawn.transform, self.terrain, ground_offset=1.0
-                )
-
-            # Adjust capture points and their spawns
-            adjusted_spawns = set()
-            for cp in map_data.capture_points:
-                # Adjust capture point to terrain surface
-                cp.transform = self.height_adjuster.adjust_height(
-                    cp.transform, self.terrain, ground_offset=0.0
-                )
-
-                # Adjust spawns (avoid duplicates)
-                # __post_init__ ensures these are never None, but need explicit check for mypy
-                team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
-                team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
-                for spawn in team1_spawns + team2_spawns:
-                    if id(spawn) not in adjusted_spawns:
-                        spawn.transform = self.height_adjuster.adjust_height(
-                            spawn.transform, self.terrain, ground_offset=1.0
-                        )
-                        adjusted_spawns.add(id(spawn))
-
-            print(f"   ✅ Adjusted {adjusted} objects + all HQs/spawns/CPs to Portal terrain")
-            print(f"      Assets now positioned on {self.args.base_terrain} mesh surface")
+            # Step 4: Skip automatic height adjustment - use Godot manual snapping instead
+            print("\n📏 Height positioning...")
+            print("   ℹ️  Heights preserved from BF1942 (use Godot trimesh snapping for final placement)")
+            print(f"   ℹ️  Terrain: {self.args.base_terrain} (snap assets manually in Godot editor)")
 
             # Step 5: Generate .tscn
             print("\n📝 Generating .tscn file...")
@@ -390,14 +460,21 @@ class PortalConverter:
             return self.project_root / "GodotProject" / "levels" / f"{self.args.map}.tscn"
 
     def _get_target_center(self):
-        """Get target map center.
+        """Get target center for BF1942 assets - Portal terrain's center.
 
-        Returns the center of the Portal terrain mesh so assets align with terrain.
+        NEW APPROACH: Keep Portal terrain at (0,0,0), center BF1942 assets on terrain.
+        This eliminates all centering complexity and matches Portal's coordinate system.
+
+        Returns:
+            Vector3 at Portal terrain's mesh center (terrain stays at origin)
         """
         from bfportal.core.interfaces import Vector3
 
-        # Center assets at terrain mesh center for proper alignment
-        return Vector3(self.terrain.mesh_center_x, 0, self.terrain.mesh_center_z)
+        # Return terrain's mesh center - BF1942 assets will center on this point
+        # Terrain itself stays at (0,0,0) in Godot, matching Portal requirements
+        return Vector3(
+            self.terrain.mesh_center_x, 0.0, self.terrain.mesh_center_z  # Terrain center X/Z  # Y=0 baseline
+        )
 
     def _guess_theme(self) -> str:
         """Guess map theme from name."""
@@ -415,12 +492,35 @@ class PortalConverter:
         """Generate .tscn file using production generator."""
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Use production TscnGenerator
-        generator = TscnGenerator()
+        # Use production TscnGenerator with CenteringService injection (SOLID: Dependency Injection)
+        generator = TscnGenerator(centering_service=self.centering_service)
 
         try:
-            generator.generate(map_data, output_path, self.args.base_terrain)
+            # Pass terrain mesh bounds for CombatArea generation with 20m exclusion zone
+            terrain_bounds = (
+                self.terrain.mesh_min_x,
+                self.terrain.mesh_max_x,
+                self.terrain.mesh_min_z,
+                self.terrain.mesh_max_z,
+            )
+
+            # Pass terrain offsets - rotation is already stored in map_data.metadata
+            # The generator will check metadata["terrain_rotation"] to handle rotation
+            generator.generate(
+                map_data,
+                output_path,
+                self.args.base_terrain,
+                terrain_y_offset=self.terrain.terrain_y_baseline,
+                terrain_center_x=self.terrain.mesh_center_x,
+                terrain_center_z=self.terrain.mesh_center_z,
+                rotate_terrain=(map_data.metadata.get("terrain_rotation", 0) != 0),
+                terrain_bounds=terrain_bounds,
+            )
             print("   ✅ Production .tscn generated with full Portal structure")
+            print(
+                f"      Terrain offset: {self.terrain.terrain_y_baseline:.1f}m (for Godot visualization)"
+            )
+            print("      CombatArea: Matches terrain bounds with 20m exclusion zone")
         except Exception as e:
             print(f"   ⚠️  Error using production generator: {e}")
             print("   Falling back to basic stub...")
@@ -479,6 +579,11 @@ Note:
     )
     parser.add_argument(
         "--terrain-size", type=float, default=2048.0, help="Terrain size in meters (default: 2048)"
+    )
+    parser.add_argument(
+        "--rotate-terrain",
+        action="store_true",
+        help="Rotate terrain 90° clockwise for portrait-oriented maps (rotates terrain mesh + CombatArea)",
     )
 
     args = parser.parse_args()

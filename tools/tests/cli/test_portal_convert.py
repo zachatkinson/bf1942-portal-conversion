@@ -18,15 +18,19 @@ from portal_convert import PortalConverter, main
 def _create_mock_converter(args: Namespace, tmp_path: Path | None = None):
     """Helper to create PortalConverter with mocked dependencies."""
     mock_terrain = MagicMock()
+    # Set attributes as actual values (not MagicMocks) so format strings work
     mock_terrain.vertices = [1, 2, 3]
     mock_terrain.min_height = 0.0
     mock_terrain.max_height = 100.0
+    mock_terrain.mesh_min_height = 0.0
+    mock_terrain.mesh_max_height = 100.0
     mock_terrain.mesh_min_x = -1024.0
     mock_terrain.mesh_max_x = 1024.0
     mock_terrain.mesh_min_z = -1024.0
     mock_terrain.mesh_max_z = 1024.0
     mock_terrain.mesh_center_x = 0.0
     mock_terrain.mesh_center_z = 0.0
+    mock_terrain.terrain_y_baseline = 0.0
     mock_terrain.grid_resolution = 256
 
     mock_asset_mapper = MagicMock()
@@ -58,17 +62,22 @@ class TestPortalConverterInit:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         mock_terrain = MagicMock()
+        # Set attributes as actual values (not MagicMocks) so format strings work
         mock_terrain.vertices = [1, 2, 3]
         mock_terrain.min_height = 0.0
         mock_terrain.max_height = 100.0
+        mock_terrain.mesh_min_height = 0.0
+        mock_terrain.mesh_max_height = 100.0
         mock_terrain.mesh_min_x = -1024.0
         mock_terrain.mesh_max_x = 1024.0
         mock_terrain.mesh_min_z = -1024.0
         mock_terrain.mesh_max_z = 1024.0
         mock_terrain.mesh_center_x = 0.0
         mock_terrain.mesh_center_z = 0.0
+        mock_terrain.terrain_y_baseline = 0.0
         mock_terrain.grid_resolution = 256
 
         mock_asset_mapper = MagicMock()
@@ -100,6 +109,7 @@ class TestPortalConverterInit:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         # Act & Assert
@@ -125,6 +135,7 @@ class TestResolveMapPath:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         expected_path = (
             tmp_path
@@ -156,6 +167,7 @@ class TestResolveMapPath:
             terrain_size=2048.0,
             bf1942_root=str(custom_root),
             output=None,
+            rotate_terrain=False,
         )
         expected_path = custom_root / "Kursk"
         expected_path.mkdir()
@@ -176,6 +188,7 @@ class TestResolveMapPath:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -196,6 +209,7 @@ class TestResolveOutputPath:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -216,6 +230,7 @@ class TestResolveOutputPath:
             terrain_size=2048.0,
             bf1942_root=None,
             output=str(custom_output),
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -238,6 +253,7 @@ class TestGuessTheme:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -256,6 +272,7 @@ class TestGuessTheme:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -274,6 +291,7 @@ class TestGuessTheme:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -287,8 +305,12 @@ class TestGuessTheme:
 class TestGetTargetCenter:
     """Tests for PortalConverter._get_target_center() method."""
 
-    def test_returns_terrain_mesh_center(self, tmp_path: Path):
-        """Test returns center of Portal terrain mesh."""
+    def test_returns_world_origin_using_centering_service(self, tmp_path: Path):
+        """Test returns world origin (0, 0, 0) using CenteringService.
+
+        After DRY refactoring, _get_target_center() delegates to CenteringService
+        which returns world origin for universal centering approach.
+        """
         # Arrange
         args = Namespace(
             map="Kursk",
@@ -296,18 +318,19 @@ class TestGetTargetCenter:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
-        converter.terrain.mesh_center_x = 512.0
+        converter.terrain.mesh_center_x = 512.0  # These values don't affect the result anymore
         converter.terrain.mesh_center_z = -256.0
 
         # Act
         result = converter._get_target_center()
 
-        # Assert
-        assert result.x == 512.0
-        assert result.y == 0
-        assert result.z == -256.0
+        # Assert - Expects world origin, not terrain mesh center
+        assert result.x == 0.0
+        assert result.y == 0.0
+        assert result.z == 0.0
 
 
 class TestGuessThemeTropical:
@@ -322,6 +345,7 @@ class TestGuessThemeTropical:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
         converter = _create_mock_converter(args, tmp_path)
 
@@ -353,6 +377,7 @@ class TestConvertMethod:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         # Create mock map data
@@ -488,6 +513,7 @@ class TestConvertMethod:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -572,6 +598,7 @@ class TestConvertMethod:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         map_path = (
@@ -604,6 +631,7 @@ class TestConvertMethod:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         map_path = (
@@ -651,6 +679,7 @@ class TestConvertWithCapturePoints:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         spawn1 = SpawnPoint(
@@ -778,6 +807,7 @@ class TestConvertWithRotation:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -879,6 +909,7 @@ class TestConvertAssetMapping:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -1002,6 +1033,7 @@ class TestConvertAssetMapping:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -1118,6 +1150,7 @@ class TestConvertAssetMapping:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -1229,6 +1262,7 @@ class TestGenerateTscn:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(
@@ -1273,6 +1307,7 @@ class TestGenerateTscn:
             terrain_size=2048.0,
             bf1942_root=None,
             output=None,
+            rotate_terrain=False,
         )
 
         mock_map_data = MapData(

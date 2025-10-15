@@ -24,6 +24,7 @@ from pathlib import Path
 # Add tools directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
+from bfportal.generators.constants.paths import get_asset_types_path, get_project_root
 from bfportal.indexers.portal_asset_indexer import PortalAssetIndexerFacade
 
 
@@ -31,11 +32,11 @@ def main() -> None:
     """Main entry point for Portal asset indexing."""
 
     # Paths
-    portal_sdk_root = Path("FbExportData")
-    asset_types_path = portal_sdk_root / "asset_types.json"
+    project_root = get_project_root()
+    asset_types_path = get_asset_types_path()
 
-    json_output = Path("asset_audit/portal_asset_index.json")
-    markdown_output = Path("asset_audit/Portal_Asset_Catalog.md")
+    json_output = project_root / "asset_audit" / "portal_asset_index.json"
+    markdown_output = project_root / "asset_audit" / "Portal_Asset_Catalog.md"
 
     # Validate Portal SDK file exists
     if not asset_types_path.exists():

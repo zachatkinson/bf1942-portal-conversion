@@ -158,6 +158,26 @@ points = PackedVector2Array([...])  # 2D boundary points
 - `points`: 2D polygon defining horizontal boundaries
 - Players leaving this area are warned/killed
 
+**IMPORTANT - CombatArea is a CEILING, not a floor:**
+
+Research from official Portal maps (MP_Tungsten, MP_Aftermath) reveals that CombatArea serves as a **vertical ceiling** to prevent players from flying/climbing too high, NOT a ground-level boundary:
+
+- **Positioning**: CollisionPolygon3D positioned ~140m above ground (40-50m above highest terrain)
+- **Height**: 100m (not 200m as initially assumed)
+- **Purpose**: Limits vertical movement (flying, climbing), not horizontal movement
+- **Ground boundaries**: Defined by terrain geometry itself, not CombatArea
+- **Transform**: CombatArea parent has no transform; CollisionPolygon3D child has the Y offset
+
+**Example from MP_Tungsten:**
+```gdscript
+[node name="CombatArea" parent="."]  # No transform - at origin
+[node name="CollisionPolygon3D" parent="CombatArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 472.271, 140.862, 307.146)
+height = 100.0  # Volume extends from Y=140 to Y=240
+```
+
+For terrain at Y=70-104, ceiling at Y=140 gives players 36-70m of vertical space while preventing excessive altitude.
+
 #### 4. Static Layer
 ```gdscript
 [node name="Static" type="Node3D" parent="."]

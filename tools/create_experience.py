@@ -19,7 +19,9 @@ import json
 import sys
 from pathlib import Path
 
-from bfportal.exporters import create_spatial_attachment
+from bfportal.exporters import create_portal_experience, create_spatial_attachment
+from bfportal.generators.constants import MAX_PLAYERS_PER_TEAM_DEFAULT
+from bfportal.generators.constants.paths import DIR_FB_EXPORT_LEVELS, get_spatial_json_path
 
 
 def create_experience_file(
@@ -77,25 +79,12 @@ def create_experience_file(
         map_index=0,
     )
 
-    # Create the complete experience structure following the official pattern
-    # Using custom mode (ModBuilder_GameMode: 0) for full control and local testing
-    experience = {
-        "mutators": {
-            "MaxPlayerCount_PerTeam": max_players_per_team,
-            "AiMaxCount_PerTeam": 0,
-            "AiSpawnType": 2,
-            "AI_ManDownExperienceType_PerTeam": 1,  # AI respawn behavior
-            "ModBuilder_GameMode": 0,  # Custom mode - full control, local testing enabled
-            "CQ_iModeTime": 60 if game_mode == "Conquest" else 30,
-            "AimAssistSnapCapsuleRadiusMultiplier": 1,
-            "FriendlyFireDamageReflectionMaxTeamKills": 2,
-            "SpawnBalancing_GamemodeStartTimer": 0,
-            "SpawnBalancing_GamemodePlayerCountRatio": 0.75,
-        },
-        "assetRestrictions": {},
-        "name": f"{map_name} - BF1942 Classic",
-        "description": description,
-        "mapRotation": [
+    # Use shared DRY experience builder
+    experience = create_portal_experience(
+        name=f"{map_name} - BF1942 Classic",
+        description=description,
+        game_mode=game_mode,
+        map_rotation=[
             {
                 # CRITICAL: Must follow pattern MP_<MapName>-ModBuilderCustom0
                 # This is required by Portal to recognize custom map attachments
@@ -103,16 +92,9 @@ def create_experience_file(
                 "spatialAttachment": spatial_attachment,
             }
         ],
-        "workspace": {},
-        "teamComposition": [
-            [1, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-            [2, {"humanCapacity": max_players_per_team, "aiCapacity": 0, "aiType": 0}],
-        ],
-        "gameMode": game_mode,
-        # CRITICAL: Portal requires spatial attachment in BOTH mapRotation AND root attachments
-        # Without this, map rotation UI appears empty after import
-        "attachments": [spatial_attachment],
-    }
+        attachments=[spatial_attachment],
+        max_players_per_team=max_players_per_team,
+    )
 
     # Create experiences directory if it doesn't exist
     experiences_dir = Path("experiences")
@@ -196,9 +178,9 @@ Available base maps (choose terrain similar to your map):
     parser.add_argument(
         "--max-players",
         type=int,
-        default=32,
+        default=MAX_PLAYERS_PER_TEAM_DEFAULT,
         choices=[16, 32, 64],
-        help="Maximum players per team (default: 32, total 64 players)",
+        help=f"Maximum players per team (default: {MAX_PLAYERS_PER_TEAM_DEFAULT}, total {MAX_PLAYERS_PER_TEAM_DEFAULT * 2} players)",
     )
 
     parser.add_argument(
@@ -213,12 +195,14 @@ Available base maps (choose terrain similar to your map):
     args = parser.parse_args()
 
     # Determine spatial file path
-    spatial_path = args.spatial_path or Path(f"FbExportData/levels/{args.map_name}.spatial.json")
+    spatial_path = args.spatial_path or get_spatial_json_path(args.map_name)
 
     if not spatial_path.exists():
         print(f"❌ Error: Spatial file not found: {spatial_path}\n", file=sys.stderr)
         print("Available spatial files:", file=sys.stderr)
-        levels_dir = Path("FbExportData/levels")
+        from bfportal.generators.constants.paths import get_project_root
+
+        levels_dir = get_project_root() / DIR_FB_EXPORT_LEVELS
         if levels_dir.exists():
             spatial_files = list(levels_dir.glob("*.spatial.json"))
             if spatial_files:

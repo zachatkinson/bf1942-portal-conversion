@@ -283,7 +283,6 @@ class MeshTerrainProvider(ITerrainProvider):
         self.vertices = self._extract_vertices()
 
         # Calculate terrain mesh center and bounds from actual vertex positions
-
         self.mesh_center_x = self.vertices[:, 0].mean()
         self.mesh_center_z = self.vertices[:, 2].mean()
         self.mesh_min_x = self.vertices[:, 0].min()
@@ -291,13 +290,21 @@ class MeshTerrainProvider(ITerrainProvider):
         self.mesh_min_z = self.vertices[:, 2].min()
         self.mesh_max_z = self.vertices[:, 2].max()
 
+        # Calculate mesh height bounds (raw mesh coordinates)
+        self.mesh_min_height = self.vertices[:, 1].min()
+        self.mesh_max_height = self.vertices[:, 1].max()
+
+        # For Portal compatibility: terrain Y baseline (used for scene transform offset)
+        # This is the amount we subtract from mesh heights to normalize to Y=0 baseline
+        self.terrain_y_baseline = self.mesh_min_height
+
         # Build spatial grid for fast lookups
         self.grid_resolution = 256
         self.height_grid = self._build_height_grid()
 
-        # Calculate actual bounds
-        self.min_height = self.vertices[:, 1].min()
-        self.max_height = self.vertices[:, 1].max()
+        # Portal-compatible height range (mesh heights as-is for now)
+        self.min_height = self.mesh_min_height
+        self.max_height = self.mesh_max_height
 
     def _extract_vertices(self) -> "np.ndarray":
         """Extract vertex positions from GLB mesh.

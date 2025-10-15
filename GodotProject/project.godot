@@ -14,9 +14,18 @@ config/name="Battlefield™ Portal Project"
 config/features=PackedStringArray("4.5")
 config/icon="res://addons/bf_portal/godot_portal_logo.svg"
 
+[bf1942_tools]
+
+base_terrain="MP_Tungsten"
+max_players=32
+game_mode="Conquest"
+experience_mode="custom"
+experience_filename_base="1942_Revisited"
+experience_filename_suffix=""
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/bf_portal/plugin.cfg", "res://addons/bf_portal/portal_tools/plugin.cfg", "res://addons/bf_portal/memory_plugin/plugin.cfg", "res://addons/bf_portal/level_validator/plugin.cfg", "res://addons/scene-library/plugin.cfg")
+enabled=PackedStringArray("res://addons/bf1942_tools/plugin.cfg", "res://addons/bf_portal/level_validator/plugin.cfg", "res://addons/bf_portal/memory_plugin/plugin.cfg", "res://addons/bf_portal/plugin.cfg", "res://addons/bf_portal/portal_tools/plugin.cfg", "res://addons/scene-library/plugin.cfg")
 
 [gui]
 

@@ -115,7 +115,11 @@ class TestLoadSpatialData:
         map_entry = {"id": "kursk", "display_name": "Kursk"}
 
         # Act
-        result = load_spatial_data(map_entry, tmp_path)
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch("create_multi_map_experience.get_spatial_json_path", return_value=spatial_path),
+        ):
+            result = load_spatial_data(map_entry)
 
         # Assert
         assert len(result) > 0  # Base64 encoded data
@@ -128,10 +132,15 @@ class TestLoadSpatialData:
         """Test error raised when spatial file doesn't exist."""
         # Arrange
         map_entry = {"id": "missing_map", "display_name": "MissingMap"}
+        missing_path = tmp_path / "FbExportData" / "levels" / "MissingMap.spatial.json"
 
         # Act & Assert
-        with pytest.raises(FileNotFoundError, match="Spatial file not found"):
-            load_spatial_data(map_entry, tmp_path)
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch("create_multi_map_experience.get_spatial_json_path", return_value=missing_path),
+        ):
+            with pytest.raises(FileNotFoundError, match="Spatial file not found"):
+                load_spatial_data(map_entry)
 
 
 class TestCreateMultiMapExperience:
@@ -164,14 +173,23 @@ class TestCreateMultiMapExperience:
         ]
 
         # Act
-        result = create_multi_map_experience(
-            maps=maps,
-            experience_name="Test Experience",
-            description="Test description",
-            game_mode="Conquest",
-            max_players_per_team=32,
-            project_root=tmp_path,
-        )
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
+        ):
+            result = create_multi_map_experience(
+                maps=maps,
+                experience_name="Test Experience",
+                description="Test description",
+                game_mode="Conquest",
+                max_players_per_team=32,
+            )
 
         # Assert
         assert result["name"] == "Test Experience"
@@ -204,14 +222,23 @@ class TestCreateMultiMapExperience:
         ]
 
         # Act
-        result = create_multi_map_experience(
-            maps=maps,
-            experience_name="Test Experience",
-            description="Test",
-            game_mode="Conquest",
-            max_players_per_team=32,
-            project_root=tmp_path,
-        )
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
+        ):
+            result = create_multi_map_experience(
+                maps=maps,
+                experience_name="Test Experience",
+                description="Test",
+                game_mode="Conquest",
+                max_players_per_team=32,
+            )
 
         # Assert
         assert len(result["mapRotation"]) == 1
@@ -230,14 +257,23 @@ class TestCreateMultiMapExperience:
         ]
 
         # Act & Assert
-        with pytest.raises(RuntimeError, match="No maps were successfully loaded"):
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
+            pytest.raises(RuntimeError, match="No maps were successfully loaded"),
+        ):
             create_multi_map_experience(
                 maps=maps,
                 experience_name="Test",
                 description="Test",
                 game_mode="Conquest",
                 max_players_per_team=32,
-                project_root=tmp_path,
             )
 
     def test_sets_correct_map_metadata(self, tmp_path: Path):
@@ -267,14 +303,23 @@ class TestCreateMultiMapExperience:
         ]
 
         # Act
-        result = create_multi_map_experience(
-            maps=maps,
-            experience_name="Test",
-            description="Test",
-            game_mode="Conquest",
-            max_players_per_team=32,
-            project_root=tmp_path,
-        )
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
+        ):
+            result = create_multi_map_experience(
+                maps=maps,
+                experience_name="Test",
+                description="Test",
+                game_mode="Conquest",
+                max_players_per_team=32,
+            )
 
         # Assert
         assert result["mapRotation"][0]["spatialAttachment"]["metadata"] == "mapIdx=0"
@@ -299,14 +344,23 @@ class TestCreateMultiMapExperience:
         ]
 
         # Act
-        result = create_multi_map_experience(
-            maps=maps,
-            experience_name="Test",
-            description="Test",
-            game_mode="Conquest",
-            max_players_per_team=64,
-            project_root=tmp_path,
-        )
+        with (
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
+        ):
+            result = create_multi_map_experience(
+                maps=maps,
+                experience_name="Test",
+                description="Test",
+                game_mode="Conquest",
+                max_players_per_team=64,
+            )
 
         # Assert
         assert result["teamComposition"][0][1]["humanCapacity"] == 64
@@ -425,7 +479,7 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
         ):
             result = main()
 
@@ -472,7 +526,7 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
         ):
             result = main()
 
@@ -525,7 +579,7 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
         ):
             result = main()
 
@@ -574,7 +628,7 @@ class TestMainFunction:
         # Act
         with (
             patch("sys.argv", test_args),
-            patch("create_multi_map_experience.Path.cwd", return_value=tmp_path),
+            patch("create_multi_map_experience.get_project_root", return_value=tmp_path),
         ):
             result = main()
 

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from ..core.exceptions import MappingError
 from ..core.interfaces import IAssetMapper, MapContext, PortalAsset
+from ..generators.constants.paths import get_project_root
 
 
 class AssetMapper(IAssetMapper):
@@ -38,7 +39,7 @@ class AssetMapper(IAssetMapper):
 
         # Load keyword fallback config for best-guess asset matching
         keywords_path = (
-            Path(__file__).parent.parent.parent / "asset_audit" / "asset_fallback_keywords.json"
+            get_project_root() / "tools" / "asset_audit" / "asset_fallback_keywords.json"
         )
         if keywords_path.exists():
             with open(keywords_path) as f:
