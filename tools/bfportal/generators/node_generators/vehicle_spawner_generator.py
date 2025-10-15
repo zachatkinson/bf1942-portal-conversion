@@ -67,8 +67,11 @@ class VehicleSpawnerGenerator(BaseNodeGenerator):
         for i, spawner in enumerate(vehicle_spawners, 1):
             lines.append(f'[node name="VehicleSpawner_{i}" parent="." instance=ExtResource("4")]')
             lines.append(f"transform = {transform_formatter.format(spawner.transform)}")
-            lines.append(f"Team = {spawner.team.value if spawner.team else 0}")
+            # Note: Portal SDK VehicleSpawner.gd has NO Team property
+            # Vehicles are neutral - accessible by whoever controls the area
             lines.append(f"ObjId = {1000 + i}")
+            # Enable auto-spawning so vehicles appear without TypeScript code
+            lines.append("P_AutoSpawnEnabled = true")
 
             # Get BF1942 vehicle type from properties or asset_type
             bf1942_vehicle = spawner.properties.get("vehicle_type", spawner.asset_type)

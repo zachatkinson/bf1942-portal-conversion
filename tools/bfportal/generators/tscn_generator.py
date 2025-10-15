@@ -360,6 +360,11 @@ class TscnGenerator(ISceneGenerator):
                 "type": "PackedScene",
                 "path": SCENE_PATH_POLYGON_VOLUME,
             },
+            {
+                "id": EXT_RESOURCE_WORLD_ICON,
+                "type": "PackedScene",
+                "path": SCENE_PATH_WORLD_ICON,
+            },
         ]
         self.next_ext_resource_id = int(EXT_RESOURCE_STATIC_ASSETS_START)
 
@@ -563,7 +568,8 @@ class TscnGenerator(ISceneGenerator):
                 )
 
             lines.append(f"transform = {self.transform_formatter.format(cp.transform)}")
-            lines.append("Team = 0")  # Neutral
+            # Note: Portal SDK displays CP labels (A, B, C) automatically based on node order
+            # No Label property needed - CapturePoint.gd doesn't have one
             lines.append(f"ObjId = {OBJID_CAPTURE_POINTS_START + i}")
 
             # Add spawn arrays if capture point has spawns
@@ -602,6 +608,21 @@ class TscnGenerator(ISceneGenerator):
                 rel_transform = self._make_relative_transform(spawn.transform, cp.transform)
                 lines.append(f"transform = {self.transform_formatter.format(rel_transform)}")
                 lines.append("")
+
+            # Add WorldIcon for capture point label (A, B, C, etc.)
+            # Portal SDK pattern from BombSquad mod - labels set via TypeScript
+            label = chr(64 + i)  # A, B, C, etc. (65=A, 66=B, ...)
+            obj_id = 20 + i - 1  # ObjId starts at 20 (convention from BombSquad)
+            lines.append(
+                f'[node name="CP_Label_{label}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_WORLD_ICON}")]'
+            )
+            lines.append(f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)")  # 5m above CP
+            lines.append(f"ObjId = {obj_id}")
+            lines.append(f'IconStringKey = "{label}"')
+            lines.append("iconTextVisible = true")
+            lines.append("iconImageVisible = false")
+            lines.append(f"# Labels set via TypeScript: mod.SetWorldIconText(mod.GetWorldIcon({obj_id}), '{label}')")
+            lines.append("")
 
         return lines
 

@@ -20,6 +20,7 @@ SCENE_PATH_STATIONARY_EMPLACEMENT = (
     "res://objects/Gameplay/Common/StationaryEmplacementSpawner.tscn"
 )
 SCENE_PATH_COMBAT_AREA = "res://objects/Gameplay/Common/CombatArea.tscn"
+SCENE_PATH_WORLD_ICON = "res://objects/Gameplay/Common/WorldIcon.tscn"
 SCENE_PATH_POLYGON_VOLUME = (
     "res://addons/bf_portal/portal_tools/types/PolygonVolume/PolygonVolume.tscn"
 )

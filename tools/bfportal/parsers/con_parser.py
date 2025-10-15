@@ -230,8 +230,21 @@ class ConParser(IParser):
 
         Returns:
             Team enum value
+
+        Note:
+            Falls back to setOSId if setTeam is not present.
+            In BF1942, some spawners (like aircraft) only use setOSId.
         """
         team_id = obj_dict.get("team", 0)
+
+        # Fallback: If no explicit team, try OSId (Object Spawn ID)
+        # In BF1942, setOSId 1 = Team 1, setOSId 2 = Team 2
+        if team_id == 0:
+            os_id = obj_dict.get("properties", {}).get("setOSId", "0")
+            try:
+                team_id = int(os_id)
+            except (ValueError, TypeError):
+                pass
 
         if team_id == 1:
             return Team.TEAM_1

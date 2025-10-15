@@ -10,6 +10,7 @@ from .combat_area_generator import CombatAreaGenerator
 from .hq_generator import HQGenerator
 from .static_layer_generator import StaticLayerGenerator
 from .vehicle_spawner_generator import VehicleSpawnerGenerator
+from .world_icon_generator import WorldIconGenerator
 
 __all__ = [
     "BaseNodeGenerator",
@@ -18,4 +19,5 @@ __all__ = [
     "HQGenerator",
     "StaticLayerGenerator",
     "VehicleSpawnerGenerator",
+    "WorldIconGenerator",
 ]

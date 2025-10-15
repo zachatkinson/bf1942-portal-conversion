@@ -247,10 +247,62 @@ class VehicleMapper:
             )
 
         # ========================================
-        # AIRCRAFT - FIGHTERS
+        # AIRCRAFT - DIVE BOMBERS → ATTACK HELICOPTERS
+        # ========================================
+        # User preference: Dive bombers (Stuka, IL-2) map to attack helicopters
+        # for modern ground attack role
+
+        # Axis Dive Bombers → Eurocopter (non-NATO attack heli)
+        axis_bombers = [
+            "Ju87",
+            "Stuka",
+            "Ju88",
+        ]
+        for aircraft in axis_bombers:
+            mappings[aircraft] = VehicleMapping(
+                bf1942_name=aircraft,
+                bf6_vehicle_type="Eurocopter",
+                era="WW2",
+                category="Dive Bomber",
+                notes="Axis WW2 dive bomber → Modern Eurocopter Tiger (non-NATO attack heli)",
+            )
+
+        # Soviet Dive Bombers → AH64 Apache (NATO attack heli)
+        soviet_bombers = [
+            "IL2",
+            "IL-2",
+            "Ilyushin",
+            "Sturmovik",
+        ]
+        for aircraft in soviet_bombers:
+            mappings[aircraft] = VehicleMapping(
+                bf1942_name=aircraft,
+                bf6_vehicle_type="AH64",
+                era="WW2",
+                category="Dive Bomber",
+                notes="Soviet WW2 dive bomber → Modern AH-64 Apache (NATO attack heli)",
+            )
+
+        # Allied Bombers → JAS39/F16 (prefer ground attack role)
+        allied_bombers = [
+            "B17",
+            "B-17",
+            "Lancaster",
+        ]
+        for bomber in allied_bombers:
+            mappings[bomber] = VehicleMapping(
+                bf1942_name=bomber,
+                bf6_vehicle_type="JAS39",
+                era="WW2",
+                category="Bomber",
+                notes="WW2 strategic bomber → Modern JAS39 multirole",
+            )
+
+        # ========================================
+        # AIRCRAFT - FIGHTERS (Keep for maps with pure fighters)
         # ========================================
 
-        # Axis Fighters → SU57
+        # Axis Fighters → F16 (prefer multirole)
         axis_fighters = [
             "BF109",
             "Bf109",
@@ -264,56 +316,66 @@ class VehicleMapper:
         for fighter in axis_fighters:
             mappings[fighter] = VehicleMapping(
                 bf1942_name=fighter,
-                bf6_vehicle_type="SU57",
+                bf6_vehicle_type="F16",
                 era="WW2",
                 category="Fighter",
-                notes="Axis WW2 fighter → Modern Russian SU-57",
+                notes="Axis WW2 fighter → Modern F-16 multirole (better for ground attack)",
             )
 
-        # Allied Fighters → F22/F16
+        # Allied Fighters → JAS39/F16
         allied_fighters = [
             "P51",
             "P-51",
             "Mustang",
             "Spitfire",
             "Yak9",
+            "Yak-9",
         ]
         for i, fighter in enumerate(allied_fighters):
-            # Alternate between F22 and F16
-            vehicle_type = "F22" if i % 2 == 0 else "F16"
+            # Alternate between JAS39 and F16 for variety
+            vehicle_type = "JAS39" if i % 2 == 0 else "F16"
             mappings[fighter] = VehicleMapping(
                 bf1942_name=fighter,
                 bf6_vehicle_type=vehicle_type,
                 era="WW2",
                 category="Fighter",
-                notes=f"Allied WW2 fighter → Modern {vehicle_type}",
-            )
-
-        # ========================================
-        # AIRCRAFT - BOMBERS
-        # ========================================
-
-        bombers = [
-            "B17",
-            "B-17",
-            "Lancaster",
-            "Ju88",
-            "Ju87",
-            "Stuka",
-        ]
-        for bomber in bombers:
-            mappings[bomber] = VehicleMapping(
-                bf1942_name=bomber,
-                bf6_vehicle_type="JAS39",
-                era="WW2",
-                category="Bomber",
-                notes="WW2 bomber → Modern JAS39 multirole",
+                notes=f"Allied WW2 fighter → Modern {vehicle_type} multirole",
             )
 
         # ========================================
         # HELICOPTERS
         # ========================================
-        # (BF1942 has no helicopters, but include for completeness)
+        # BF1942 had no helicopters, but we can add attack helis for modern gameplay
+
+        # Attack Helicopters (for custom/modern variants)
+        attack_helis = [
+            "AttackHeli",
+            "Apache",
+            "AH64",
+        ]
+        for heli in attack_helis:
+            mappings[heli] = VehicleMapping(
+                bf1942_name=heli,
+                bf6_vehicle_type="AH64",
+                era="Modern",
+                category="Attack Helicopter",
+                notes="Attack helicopter → AH-64 Apache",
+            )
+
+        # Transport Helicopters
+        transport_helis = [
+            "TransportHeli",
+            "BlackHawk",
+            "UH60",
+        ]
+        for heli in transport_helis:
+            mappings[heli] = VehicleMapping(
+                bf1942_name=heli,
+                bf6_vehicle_type="UH60",
+                era="Modern",
+                category="Transport Helicopter",
+                notes="Transport helicopter → UH-60 Black Hawk",
+            )
 
         # ========================================
         # BOATS & NAVAL

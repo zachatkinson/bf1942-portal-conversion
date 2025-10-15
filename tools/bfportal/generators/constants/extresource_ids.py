@@ -24,6 +24,7 @@ EXT_RESOURCE_COMBAT_AREA = "6"  # CombatArea.tscn
 EXT_RESOURCE_TERRAIN = "7"  # {base_terrain}_Terrain.tscn (dynamic)
 EXT_RESOURCE_ASSETS = "8"  # {base_terrain}_Assets.tscn (dynamic, hidden to suppress auto-load)
 EXT_RESOURCE_POLYGON_VOLUME = "9"  # PolygonVolume.tscn
+EXT_RESOURCE_WORLD_ICON = "10"  # WorldIcon.tscn (for capture point labels A, B, C)
 
 # Starting ID for dynamically registered static assets
-EXT_RESOURCE_STATIC_ASSETS_START = 10
+EXT_RESOURCE_STATIC_ASSETS_START = 11
