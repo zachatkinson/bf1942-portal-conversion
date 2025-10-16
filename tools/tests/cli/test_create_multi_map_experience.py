@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for create_multi_map_experience.py CLI script."""
 
+import base64
 import json
 import sys
 from pathlib import Path
@@ -107,8 +108,6 @@ class TestLoadSpatialData:
     def test_loads_and_encodes_spatial_data(self, tmp_path: Path):
         """Test loading and base64 encoding spatial data."""
         # Arrange
-        import base64
-
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         spatial_dir = tmp_path / "FbExportData" / "levels"
         spatial_dir.mkdir(parents=True)
@@ -157,8 +156,6 @@ class TestLoadSpatialData:
     def test_uses_custom_spatial_path_when_provided(self, tmp_path: Path):
         """Test uses custom spatial_path from map entry when provided."""
         # Arrange
-        import base64
-
         spatial_data = json.dumps({"Portal_Dynamic": [], "Static": []})
         custom_spatial_dir = tmp_path / "custom" / "path"
         custom_spatial_dir.mkdir(parents=True)
