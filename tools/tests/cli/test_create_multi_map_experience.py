@@ -531,6 +531,14 @@ class TestMainFunction:
             patch(
                 "create_multi_map_experience.get_project_root", autospec=True, return_value=tmp_path
             ),
+            patch(
+                "create_multi_map_experience.get_spatial_json_path",
+                autospec=True,
+                side_effect=lambda name: tmp_path
+                / "FbExportData"
+                / "levels"
+                / f"{name}.spatial.json",
+            ),
         ):
             result = main()
 
