@@ -407,7 +407,6 @@ class TestMainFunction:
         ]
 
         with patch("sys.argv", test_args):
-
             # Act
             result = main()
 
@@ -432,7 +431,6 @@ class TestMainFunction:
         ]
 
         with patch("sys.argv", test_args):
-
             # Act
             result = main()
 

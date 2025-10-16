@@ -14,9 +14,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from bfportal.core.exceptions import BFPortalError
 from bfportal.generators.tscn_generator import TscnGenerator
 from bfportal.mappers.asset_mapper import AssetMapper
-from bfportal.orientation.interfaces import OrientationAnalysis
 from bfportal.orientation.map_orientation_detector import MapOrientationDetector
-from bfportal.orientation.orientation_matcher import OrientationMatcher, RotationResult
+from bfportal.orientation.orientation_matcher import OrientationMatcher
 from bfportal.orientation.terrain_orientation_detector import TerrainOrientationDetector
 from portal_convert import PortalConverter, main
 
