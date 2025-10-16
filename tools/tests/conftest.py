@@ -425,7 +425,9 @@ def registry_factory(map_entry_factory, experience_template_factory):
 
         return {
             "maps": maps,
-            "experience_templates": {template_name: experience_template_factory(**template_overrides)},
+            "experience_templates": {
+                template_name: experience_template_factory(**template_overrides)
+            },
         }
 
     return _make_registry
