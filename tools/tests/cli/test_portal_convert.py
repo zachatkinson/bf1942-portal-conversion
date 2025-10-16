@@ -12,6 +12,12 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from bfportal.core.exceptions import BFPortalError
+from bfportal.generators.tscn_generator import TscnGenerator
+from bfportal.mappers.asset_mapper import AssetMapper
+from bfportal.orientation.interfaces import OrientationAnalysis
+from bfportal.orientation.map_orientation_detector import MapOrientationDetector
+from bfportal.orientation.orientation_matcher import OrientationMatcher, RotationResult
+from bfportal.orientation.terrain_orientation_detector import TerrainOrientationDetector
 from portal_convert import PortalConverter, main
 
 
@@ -26,7 +32,7 @@ def _create_mock_converter(args: Namespace, sdk_root: Path, mock_terrain_provide
     Returns:
         PortalConverter instance with mocked components
     """
-    mock_asset_mapper = MagicMock()
+    mock_asset_mapper = MagicMock(spec=AssetMapper)
     mock_asset_mapper.load_mappings = MagicMock()
 
     with (
@@ -61,7 +67,7 @@ class TestPortalConverterInit:
             rotate_terrain=False,
         )
 
-        mock_asset_mapper = MagicMock()
+        mock_asset_mapper = MagicMock(spec=AssetMapper)
         mock_asset_mapper.load_mappings = MagicMock()
 
         # Act
@@ -489,19 +495,19 @@ class TestConvertMethod:
             patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
             patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
-            mock_map_detector = MagicMock()
+            mock_map_detector = MagicMock(spec=MapOrientationDetector)
             mock_map_detector.detect_orientation.return_value = mock_source_analysis
             mock_map_detector_class.return_value = mock_map_detector
 
-            mock_terrain_detector = MagicMock()
+            mock_terrain_detector = MagicMock(spec=TerrainOrientationDetector)
             mock_terrain_detector.detect_orientation.return_value = mock_dest_analysis
             mock_terrain_detector_class.return_value = mock_terrain_detector
 
-            mock_matcher = MagicMock()
+            mock_matcher = MagicMock(spec=OrientationMatcher)
             mock_matcher.match.return_value = mock_rotation_result
             mock_matcher_class.return_value = mock_matcher
 
-            mock_generator = MagicMock()
+            mock_generator = MagicMock(spec=TscnGenerator)
             mock_generator_class.return_value = mock_generator
 
             # Act
@@ -597,7 +603,7 @@ class TestConvertMethod:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             # Act
             result = converter.convert()
@@ -811,7 +817,7 @@ class TestConvertWithCapturePoints:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             result = converter.convert()
 
@@ -910,7 +916,7 @@ class TestConvertWithRotation:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             result = converter.convert()
 
@@ -1045,7 +1051,7 @@ class TestConvertAssetMapping:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             result = converter.convert()
 
@@ -1168,7 +1174,7 @@ class TestConvertAssetMapping:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             result = converter.convert()
 
@@ -1290,7 +1296,7 @@ class TestConvertAssetMapping:
                 mock_dest_analysis
             )
             mock_matcher_class.return_value.match.return_value = mock_rotation_result
-            mock_generator_class.return_value = MagicMock()
+            mock_generator_class.return_value = MagicMock(spec=TscnGenerator)
 
             result = converter.convert()
 
@@ -1340,7 +1346,7 @@ class TestGenerateTscn:
 
         # Act
         with patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class:
-            mock_generator = MagicMock()
+            mock_generator = MagicMock(spec=TscnGenerator)
             mock_generator_class.return_value = mock_generator
 
             converter._generate_tscn(mock_map_data, output_path)
@@ -1387,7 +1393,7 @@ class TestGenerateTscn:
 
         # Act
         with patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class:
-            mock_generator = MagicMock()
+            mock_generator = MagicMock(spec=TscnGenerator)
             mock_generator.generate.side_effect = Exception("Generator failed")
             mock_generator_class.return_value = mock_generator
 

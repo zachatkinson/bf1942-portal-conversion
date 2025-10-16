@@ -7,7 +7,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from bfportal.core.exceptions import BFPortalError
-from bfportal.core.interfaces import Vector3
+from bfportal.core.interfaces import ITerrainProvider, Vector3
+from bfportal.transforms.map_rebaser import MapRebaser
 from portal_rebase import PORTAL_BASE_CENTERS, PortalRebaseApp
 
 
@@ -294,11 +295,11 @@ class TestRun:
 
         with (
             patch("sys.argv", ["portal_rebase.py"] + test_args),
-            patch.object(app, "create_terrain_provider", return_value=MagicMock()),
+            patch.object(app, "create_terrain_provider", return_value=MagicMock(spec=ITerrainProvider)),
             patch("portal_rebase.CoordinateOffset", spec=True),
             patch("portal_rebase.MapRebaser", spec=True) as mock_rebaser_class,
         ):
-            mock_rebaser = MagicMock()
+            mock_rebaser = MagicMock(spec=MapRebaser)
             mock_rebaser.rebase_map.return_value = mock_stats
             mock_rebaser_class.return_value = mock_rebaser
 
@@ -342,11 +343,11 @@ class TestRun:
 
         with (
             patch("sys.argv", ["portal_rebase.py"] + test_args),
-            patch.object(app, "create_terrain_provider", return_value=MagicMock()),
+            patch.object(app, "create_terrain_provider", return_value=MagicMock(spec=ITerrainProvider)),
             patch("portal_rebase.CoordinateOffset", spec=True),
             patch("portal_rebase.MapRebaser", spec=True) as mock_rebaser_class,
         ):
-            mock_rebaser = MagicMock()
+            mock_rebaser = MagicMock(spec=MapRebaser)
             mock_rebaser.rebase_map.return_value = mock_stats
             mock_rebaser_class.return_value = mock_rebaser
 
@@ -377,11 +378,11 @@ class TestRun:
 
         with (
             patch("sys.argv", ["portal_rebase.py"] + test_args),
-            patch.object(app, "create_terrain_provider", return_value=MagicMock()),
+            patch.object(app, "create_terrain_provider", return_value=MagicMock(spec=ITerrainProvider)),
             patch("portal_rebase.CoordinateOffset", spec=True),
             patch("portal_rebase.MapRebaser", spec=True) as mock_rebaser_class,
         ):
-            mock_rebaser = MagicMock()
+            mock_rebaser = MagicMock(spec=MapRebaser)
             mock_rebaser.rebase_map.side_effect = BFPortalError("Test error message")
             mock_rebaser_class.return_value = mock_rebaser
 
@@ -412,11 +413,11 @@ class TestRun:
 
         with (
             patch("sys.argv", ["portal_rebase.py"] + test_args),
-            patch.object(app, "create_terrain_provider", return_value=MagicMock()),
+            patch.object(app, "create_terrain_provider", return_value=MagicMock(spec=ITerrainProvider)),
             patch("portal_rebase.CoordinateOffset", spec=True),
             patch("portal_rebase.MapRebaser", spec=True) as mock_rebaser_class,
         ):
-            mock_rebaser = MagicMock()
+            mock_rebaser = MagicMock(spec=MapRebaser)
             mock_rebaser.rebase_map.side_effect = RuntimeError("Unexpected error")
             mock_rebaser_class.return_value = mock_rebaser
 
@@ -455,11 +456,11 @@ class TestRun:
 
         with (
             patch("sys.argv", ["portal_rebase.py"] + test_args),
-            patch.object(app, "create_terrain_provider", return_value=MagicMock()),
+            patch.object(app, "create_terrain_provider", return_value=MagicMock(spec=ITerrainProvider)),
             patch("portal_rebase.CoordinateOffset", spec=True),
             patch("portal_rebase.MapRebaser", spec=True) as mock_rebaser_class,
         ):
-            mock_rebaser = MagicMock()
+            mock_rebaser = MagicMock(spec=MapRebaser)
             mock_rebaser.rebase_map.return_value = mock_stats
             mock_rebaser_class.return_value = mock_rebaser
 
@@ -495,7 +496,7 @@ class TestMain:
             patch("sys.argv", test_args),
             patch("portal_rebase.PortalRebaseApp", spec=True) as mock_app_class,
         ):
-            mock_app = MagicMock()
+            mock_app = MagicMock(spec=PortalRebaseApp)
             mock_app.run.return_value = 42
             mock_app_class.return_value = mock_app
 
