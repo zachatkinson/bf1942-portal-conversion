@@ -348,3 +348,84 @@ def mock_terrain_provider():
     mock_terrain.grid_resolution = 256
 
     return mock_terrain
+
+
+@pytest.fixture
+def map_entry_factory():
+    """Factory for creating map entries with customizable fields.
+
+    Returns:
+        Callable that creates map entry dicts with overridable defaults
+
+    Example:
+        map = map_entry_factory(id="wake_island", status="in_progress")
+    """
+
+    def _make_map_entry(**overrides):
+        defaults = {
+            "id": "kursk",
+            "display_name": "Kursk",
+            "base_map": "MP_Tungsten",
+            "base_map_display": "Tungsten",
+            "status": "complete",
+        }
+        return {**defaults, **overrides}
+
+    return _make_map_entry
+
+
+@pytest.fixture
+def experience_template_factory():
+    """Factory for creating experience templates with customizable fields.
+
+    Returns:
+        Callable that creates template dicts with overridable defaults
+
+    Example:
+        template = experience_template_factory(max_players=64, game_mode="TDM")
+    """
+
+    def _make_template(**overrides):
+        defaults = {
+            "name": "Test Experience",
+            "description": "Test description",
+            "game_mode": "Conquest",
+            "max_players": 32,
+            "map_filter": {"status": "complete"},
+        }
+        return {**defaults, **overrides}
+
+    return _make_template
+
+
+@pytest.fixture
+def registry_factory(map_entry_factory, experience_template_factory):
+    """Factory for creating map registries with templates.
+
+    Args:
+        map_entry_factory: Factory for creating map entries
+        experience_template_factory: Factory for creating templates
+
+    Returns:
+        Callable that creates registry dicts
+
+    Example:
+        registry = registry_factory(
+            maps=[map_entry_factory(id="kursk"), map_entry_factory(id="alamein")],
+            template_name="all_maps"
+        )
+    """
+
+    def _make_registry(maps=None, template_name="test_template", template_overrides=None):
+        if maps is None:
+            maps = [map_entry_factory()]
+
+        if template_overrides is None:
+            template_overrides = {}
+
+        return {
+            "maps": maps,
+            "experience_templates": {template_name: experience_template_factory(**template_overrides)},
+        }
+
+    return _make_registry
