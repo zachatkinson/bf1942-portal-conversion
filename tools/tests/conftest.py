@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from bfportal.core.interfaces import MapContext, Team
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def sample_map_context() -> MapContext:
     """Create a sample MapContext for testing.
 
@@ -350,7 +350,7 @@ def mock_terrain_provider():
     return mock_terrain
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def map_entry_factory():
     """Factory for creating map entries with customizable fields.
 
@@ -374,7 +374,7 @@ def map_entry_factory():
     return _make_map_entry
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def experience_template_factory():
     """Factory for creating experience templates with customizable fields.
 
@@ -398,7 +398,7 @@ def experience_template_factory():
     return _make_template
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def registry_factory(map_entry_factory, experience_template_factory):
     """Factory for creating map registries with templates.
 

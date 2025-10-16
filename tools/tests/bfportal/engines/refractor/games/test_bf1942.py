@@ -4,6 +4,8 @@
 import sys
 from pathlib import Path
 
+import pytest
+
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent.parent.parent))
 
@@ -51,83 +53,37 @@ class TestBF1942Engine:
         # Assert
         assert result == "Conquest"
 
-    def test_get_expansion_info_base_game(self, tmp_path: Path):
-        """Test get_expansion_info identifies base game maps."""
+    @pytest.mark.parametrize(
+        "path_parts,expected",
+        [
+            (["bf1942", "levels", "Kursk"], "base"),
+            (["xpack1", "levels", "Anzio"], "xpack1_rtr"),
+            (["road_to_rome", "levels", "Anzio"], "xpack1_rtr"),
+            (["xpack2", "levels", "Raid_on_Agheila"], "xpack2_sw"),
+            (["secret_weapons", "levels", "Raid_on_Agheila"], "xpack2_sw"),
+            (["XPack1", "LEVELS", "ANZIO"], "xpack1_rtr"),  # Case insensitive
+        ],
+        ids=[
+            "base_game",
+            "road_to_rome_xpack1",
+            "road_to_rome_string",
+            "secret_weapons_xpack2",
+            "secret_weapons_string",
+            "case_insensitive",
+        ],
+    )
+    def test_get_expansion_info(self, tmp_path: Path, path_parts: list[str], expected: str):
+        """Test get_expansion_info identifies expansions correctly."""
         # Arrange
         engine = BF1942Engine()
-        map_path = tmp_path / "bf1942" / "levels" / "Kursk"
+        map_path = tmp_path.joinpath(*path_parts)
         map_path.mkdir(parents=True)
 
         # Act
         result = engine.get_expansion_info(map_path)
 
         # Assert
-        assert result == "base"
-
-    def test_get_expansion_info_road_to_rome_xpack1(self, tmp_path: Path):
-        """Test get_expansion_info identifies Road to Rome via xpack1."""
-        # Arrange
-        engine = BF1942Engine()
-        map_path = tmp_path / "xpack1" / "levels" / "Anzio"
-        map_path.mkdir(parents=True)
-
-        # Act
-        result = engine.get_expansion_info(map_path)
-
-        # Assert
-        assert result == "xpack1_rtr"
-
-    def test_get_expansion_info_road_to_rome_string(self, tmp_path: Path):
-        """Test get_expansion_info identifies Road to Rome via string."""
-        # Arrange
-        engine = BF1942Engine()
-        map_path = tmp_path / "road_to_rome" / "levels" / "Anzio"
-        map_path.mkdir(parents=True)
-
-        # Act
-        result = engine.get_expansion_info(map_path)
-
-        # Assert
-        assert result == "xpack1_rtr"
-
-    def test_get_expansion_info_secret_weapons_xpack2(self, tmp_path: Path):
-        """Test get_expansion_info identifies Secret Weapons via xpack2."""
-        # Arrange
-        engine = BF1942Engine()
-        map_path = tmp_path / "xpack2" / "levels" / "Raid_on_Agheila"
-        map_path.mkdir(parents=True)
-
-        # Act
-        result = engine.get_expansion_info(map_path)
-
-        # Assert
-        assert result == "xpack2_sw"
-
-    def test_get_expansion_info_secret_weapons_string(self, tmp_path: Path):
-        """Test get_expansion_info identifies Secret Weapons via string."""
-        # Arrange
-        engine = BF1942Engine()
-        map_path = tmp_path / "secret_weapons" / "levels" / "Raid_on_Agheila"
-        map_path.mkdir(parents=True)
-
-        # Act
-        result = engine.get_expansion_info(map_path)
-
-        # Assert
-        assert result == "xpack2_sw"
-
-    def test_get_expansion_info_case_insensitive(self, tmp_path: Path):
-        """Test get_expansion_info is case insensitive."""
-        # Arrange
-        engine = BF1942Engine()
-        map_path = tmp_path / "XPack1" / "LEVELS" / "ANZIO"
-        map_path.mkdir(parents=True)
-
-        # Act
-        result = engine.get_expansion_info(map_path)
-
-        # Assert
-        assert result == "xpack1_rtr"
+        assert result == expected
 
     def test_inherits_from_refractor_engine(self):
         """Test BF1942Engine has RefractorEngine attributes."""
