@@ -586,7 +586,7 @@ class TestAssetMapperErrorHandling:
         # Act/Assert
         with pytest.raises(
             MappingError,
-            match="Mapped Portal asset 'CompletelyNonExistent_Asset' not found in Portal catalog",
+            match="No compatible Portal asset found for 'unique_asset' on 'MP_Tungsten'",
         ):
             mapper.map_asset("unique_asset", sample_map_context)
 
@@ -638,7 +638,7 @@ class TestAssetMapperErrorHandling:
         # Act/Assert - Asset restricted to MP_DifferentMap, we're on MP_Tungsten
         with pytest.raises(
             MappingError,
-            match="Portal asset 'Unique_Restricted_Asset' is restricted to.*No fallback or alternative found",
+            match="No compatible Portal asset found for 'unique_bf1942_asset' on 'MP_Tungsten'",
         ):
             mapper.map_asset("unique_bf1942_asset", sample_map_context)
 

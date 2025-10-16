@@ -77,18 +77,30 @@ class AssetMapper(IAssetMapper):
 
                 portal_eq = asset_info.get("portal_equivalent")
                 if portal_eq and portal_eq != "TODO":
+                    # Support both old (portal_equivalent + fallbacks) and new (preferred + alternatives) formats
+                    alternatives = asset_info.get("alternatives", [])
+                    fallbacks = asset_info.get("fallbacks", {})
+
                     self.mappings[asset_type] = {
-                        "portal_type": portal_eq,
+                        "portal_type": portal_eq,  # Primary/preferred asset
+                        "alternatives": alternatives,  # Explicit alternative assets (new format)
                         "category": asset_info.get("category", "unknown"),
                         "confidence": asset_info.get("confidence_score", 1.0),
                         "notes": asset_info.get("notes", ""),
-                        "fallbacks": asset_info.get("fallbacks", {}),  # Map-specific fallbacks
+                        "fallbacks": fallbacks,  # Map-specific fallbacks (legacy format)
                     }
 
         print(f"✅ Loaded {len(self.mappings)} asset mappings from {mappings_file.name}")
 
     def map_asset(self, source_asset: str, context: MapContext) -> PortalAsset | None:
-        """Map BF1942 asset to Portal equivalent.
+        """Map BF1942 asset to Portal equivalent using preferred + alternatives cascade.
+
+        New Logic (preferred + alternatives):
+        1. Try preferred asset (portal_equivalent)
+        2. If unavailable, try explicit alternatives[] in order
+        3. If none work, try legacy fallbacks{} system
+        4. If still none, try category search
+        5. If all fail, try best-guess
 
         Args:
             source_asset: BF1942 asset type name
@@ -98,82 +110,84 @@ class AssetMapper(IAssetMapper):
             PortalAsset if mapping found and compatible, None otherwise
 
         Raises:
-            MappingError: If mapping exists but Portal asset is restricted
+            MappingError: If mapping exists but no compatible asset found
         """
-        # Check if we have a mapping
+        # Normalize asset name: Try exact match first, then lowercase
+        # BF1942 has inconsistent casing (artilleryspawner vs ArtillerySpawner)
+        asset_key = source_asset
         if source_asset not in self.mappings:
+            # Try case-insensitive lookup
+            source_lower = source_asset.lower()
+            for key in self.mappings:
+                if key.lower() == source_lower:
+                    asset_key = key
+                    break
+
+        # Check if we have a mapping (do this BEFORE terrain element check)
+        # This allows us to map water bodies like lakes to crater decals
+        if asset_key not in self.mappings:
             # Check if this is a terrain element that should be skipped
             if self._is_terrain_element(source_asset):
-                return None  # Skip terrain elements
+                return None  # Skip unmapped terrain elements
 
             # Asset not in mappings file - try best-guess fallback
             return self._find_best_guess_fallback(source_asset, context.target_base_map)
 
-        mapping = self.mappings[source_asset]
-        portal_type = mapping["portal_type"]
+        mapping = self.mappings[asset_key]
+        target_map = context.target_base_map
 
-        # Check if Portal asset exists
-        if portal_type not in self.portal_assets:
-            # Mapped asset doesn't exist - try fallback instead
-            print(
-                f"  ⚠️  Mapped asset '{portal_type}' not in catalog, trying fallback for {source_asset}"
-            )
-            alternative = self._find_alternative(
-                source_asset, mapping["category"], context.target_base_map
-            )
-            if alternative:
-                return alternative
+        # Build cascade of assets to try (preferred → alternatives → fallbacks)
+        assets_to_try = []
 
-            # No category alternative found, try best-guess
-            best_guess = self._find_best_guess_fallback(source_asset, context.target_base_map)
-            if best_guess:
-                return best_guess
+        # 1. Preferred asset (primary mapping)
+        preferred = mapping["portal_type"]
+        assets_to_try.append(("preferred", preferred))
 
-            # No fallback found at all
-            raise MappingError(
-                f"Mapped Portal asset '{portal_type}' not found in Portal catalog. "
-                f"BF1942 asset: {source_asset}"
-            )
+        # 2. Explicit alternatives (new format)
+        for alt in mapping.get("alternatives", []):
+            assets_to_try.append(("alternative", alt))
 
-        portal_asset = self.portal_assets[portal_type]
+        # 3. Map-specific fallback (legacy format)
+        fallbacks = mapping.get("fallbacks", {})
+        if target_map in fallbacks:
+            fallback = fallbacks[target_map]
+            if fallback not in [preferred] + mapping.get("alternatives", []):
+                assets_to_try.append(("fallback", fallback))
 
-        # Check level restrictions
-        if (
-            portal_asset.level_restrictions
-            and context.target_base_map not in portal_asset.level_restrictions
-        ):
-            # Asset is restricted and not available on this map
+        # Try each asset in cascade order
+        for asset_type_label, portal_type in assets_to_try:
+            # Check if asset exists in catalog
+            if portal_type not in self.portal_assets:
+                continue
 
-            # Step 1: Check for map-specific fallback
-            fallbacks = mapping.get("fallbacks", {})
-            if context.target_base_map in fallbacks:
-                fallback_type = fallbacks[context.target_base_map]
-                if fallback_type in self.portal_assets:
-                    fallback_asset = self.portal_assets[fallback_type]
-                    # Verify fallback is available on target map
-                    if self._is_asset_available_on_map(fallback_asset, context.target_base_map):
-                        print(
-                            f"  🔄 Using map-specific fallback: {fallback_type} "
-                            f"for {source_asset} on {context.target_base_map}"
-                        )
-                        return fallback_asset
+            portal_asset = self.portal_assets[portal_type]
 
-            # Step 2: Try to find an alternative (unrestricted or available on target map)
-            alternative = self._find_alternative(
-                source_asset, mapping["category"], context.target_base_map
-            )
+            # Check if available on target map
+            if self._is_asset_available_on_map(portal_asset, target_map):
+                # Found a match!
+                if asset_type_label != "preferred":
+                    print(
+                        f"  🔄 Using {asset_type_label}: {portal_type} "
+                        f"for {source_asset} on {target_map}"
+                    )
+                return portal_asset
 
-            if alternative:
-                return alternative
-            else:
-                raise MappingError(
-                    f"Portal asset '{portal_type}' is restricted to "
-                    f"{portal_asset.level_restrictions} and not available on "
-                    f"'{context.target_base_map}'. No fallback or alternative found. "
-                    f"BF1942 asset: {source_asset}"
-                )
+        # No explicit mapping worked - try category search as last resort
+        alternative = self._find_alternative(source_asset, mapping["category"], target_map)
+        if alternative:
+            return alternative
 
-        return portal_asset
+        # Still nothing - try best-guess
+        best_guess = self._find_best_guess_fallback(source_asset, target_map)
+        if best_guess:
+            return best_guess
+
+        # Complete failure - no compatible asset found
+        raise MappingError(
+            f"No compatible Portal asset found for '{source_asset}' on '{target_map}'. "
+            f"Tried: {', '.join([t for _, t in assets_to_try])}. "
+            f"Check asset availability and add alternatives to mappings file."
+        )
 
     def _find_alternative(
         self, source_asset: str, category: str, target_map: str

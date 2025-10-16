@@ -307,7 +307,7 @@ class TestTscnGenerator:
 
         # Assert
         assert 'name="CombatArea"' in content
-        assert "height = 200.0" in content
+        assert "height = 500.0" in content  # Updated to match new ceiling-based implementation
         assert "PackedVector2Array" in content
 
     def test_generate_combat_area_includes_node_paths_array(self, generator, minimal_map_data):
@@ -322,7 +322,7 @@ class TestTscnGenerator:
 
         # Assert - Portal SDK compatibility requires node_paths=PackedStringArray("CombatVolume")
         assert 'node_paths=PackedStringArray("CombatVolume")' in content
-        assert 'CombatVolume = NodePath("CombatVolume")' in content
+        assert 'CombatVolume = NodePath("CollisionPolygon3D")' in content
 
     def test_generate_combat_area_without_bounds(self, generator, minimal_map_data):
         """Test combat area generation with default bounds."""
@@ -548,12 +548,12 @@ class TestTscnGenerator:
         assert "iconTextVisible = true" in content
         assert "iconImageVisible = false" in content
 
-    def test_generate_vehicle_spawners(self, generator):
+    def test_generate_vehicle_spawners(self, generator, minimal_map_data):
         """Test vehicle spawner generation."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        spawners = [
+        minimal_map_data.game_objects = [
             GameObject(
                 name="Tank_Spawner",
                 asset_type="Tank_Sherman",
@@ -567,7 +567,7 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_vehicle_spawners(spawners)
+        lines = generator._generate_vehicle_spawners(minimal_map_data)
         content = "\n".join(lines)
 
         # Assert
@@ -772,7 +772,7 @@ class TestTscnGenerator:
 
             # Assert
             content = output_path.read_text()
-            assert 'name="VehicleSpawner_1"' in content
+            assert 'name="VehicleSpawner-' in content  # VehicleSpawner with descriptive name
 
         finally:
             if output_path.exists():

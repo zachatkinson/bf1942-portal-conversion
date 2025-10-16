@@ -4805,7 +4805,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "PoplarWhite_01_L_A",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_Spruce2_M1": {
@@ -4835,7 +4835,7 @@
         "MP_Limestone": "FigWeeping_01_M",
         "MP_Capstone": "JuniperPencil_01_M_A",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_pine1_M1": {
@@ -4864,7 +4864,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "PoplarWhite_01_L_A",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_Spruce3_M1": {
@@ -4894,7 +4894,7 @@
         "MP_Limestone": "FigWeeping_01_M",
         "MP_Capstone": "JuniperPencil_01_M_A",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_pine3_M1": {
@@ -5033,43 +5033,63 @@
     },
     "lake": {
       "bf1942_type": "lake",
-      "portal_equivalent": "Decal_PuddleLong_01",
+      "portal_equivalent": "CraterLargeDown_High_Decal_01",
       "category": "terrain",
       "scale": {
         "width": 55.3,
         "height": 101.95
       },
-      "notes": "Lake water body → Long puddle decal (Portal SDK doesn't support actual water bodies). BF1942 dimensions: 55.30m x 101.95m. Using Decal_PuddleLong_01 (available on MP_Tungsten) with scaling.",
-      "manually_verified": true
+      "notes": "Cascade: crater (desert) → puddle (rural) → oil barrel (urban) → rubble debris (Gibraltar)",
+      "manually_verified": true,
+      "alternatives": [
+        "Decal_PuddleLong_01",
+        "BarrelOil_01_D",
+        "RubbleDebris_01"
+      ]
     },
     "lake2": {
       "bf1942_type": "lake2",
-      "portal_equivalent": "Decal_PuddleLong_01",
+      "portal_equivalent": "CraterLargeDown_High_Decal_01",
       "category": "terrain",
       "scale": {
         "width": 57.31,
         "height": 84.19
       },
-      "notes": "Lake water body → Long puddle decal. BF1942 dimensions: 57.31m x 84.19m. Changed from Decal_PuddleLong_02 (not on MP_Tungsten) to Decal_PuddleLong_01 with scaling.",
-      "manually_verified": true
+      "notes": "Cascade: crater (desert) → puddle (rural) → oil barrel (urban) → rubble debris (Gibraltar)",
+      "manually_verified": true,
+      "alternatives": [
+        "Decal_PuddleLong_01",
+        "BarrelOil_01_D",
+        "RubbleDebris_01"
+      ]
     },
     "lake3": {
       "bf1942_type": "lake3",
-      "portal_equivalent": "Decal_PuddleLong_01",
+      "portal_equivalent": "CraterLargeDown_High_Decal_01",
       "category": "terrain",
       "scale": {
         "width": 40.34,
         "height": 116.86
       },
-      "notes": "Lake water body → Long puddle decal. BF1942 dimensions: 40.34m x 116.86m. Changed from Decal_PuddleLong_06 (not on MP_Tungsten) to Decal_PuddleLong_01 with scaling.",
-      "manually_verified": true
+      "notes": "Cascade: crater (desert) → puddle (rural) → oil barrel (urban) → rubble debris (Gibraltar)",
+      "manually_verified": true,
+      "alternatives": [
+        "Decal_PuddleLong_01",
+        "BarrelOil_01_D",
+        "RubbleDebris_01"
+      ]
     },
     "r_ruswh_m1": {
       "bf1942_type": "r_ruswh_m1",
       "portal_equivalent": "HouseRuralLarge_01",
+      "alternatives": [
+        "Barrack_01_A_Firestorm",
+        "OutskirtsHouseMediumRoof_01"
+      ],
       "category": "architecture",
-      "notes": "Russian White House (r_ruswh = rus white house) → Large rural house (closest match on MP_Tungsten)",
-      "manually_verified": true
+      "notes": "Russian White House (r_ruswh = rus white house) → Rural house (MP_Tungsten) → Military barrack (MP_FireStorm) → Generic house (unrestricted fallback)",
+      "manually_verified": true,
+      "confidence_score": 0.9
     }
   },
   "buildings": {
@@ -6274,15 +6294,16 @@
     },
     "ArtillerySpawner": {
       "bf1942_type": "ArtillerySpawner",
-      "portal_equivalent": "StationaryEmplacementSpawner",
-      "category": "spawner",
+      "portal_equivalent": "VEH_Vector",
+      "category": "vehicle",
       "found_in_maps": [
         "Kursk"
       ],
       "usage_count": 2,
-      "notes": "Static artillery piece - use StationaryEmplacementSpawner for fixed long-range weapons",
-      "confidence_score": 0.9,
-      "auto_suggested": false
+      "notes": "Artillery vehicles (Priest/Wespe) → Vector multi-seat transport. BF6 has no artillery vehicles, so using team transport instead.",
+      "confidence_score": 0.8,
+      "auto_suggested": false,
+      "manually_verified": true
     },
     "DiveBomberSpawner": {
       "bf1942_type": "DiveBomberSpawner",
@@ -6353,10 +6374,11 @@
     },
     "artilleryspawner": {
       "bf1942_type": "artilleryspawner",
-      "portal_equivalent": "WreckTank_Bradley_01",
-      "category": "wreck",
-      "notes": "Artillery spawner → Destroyed tank wreck (decorative - these are mobile vehicles in BF1942, not emplacements)",
-      "auto_suggested": false
+      "portal_equivalent": "VEH_Vector",
+      "category": "vehicle",
+      "notes": "Artillery vehicles (Priest/Wespe) → Vector multi-seat transport. BF6 has no artillery vehicles, so using team transport instead.",
+      "manually_verified": true,
+      "confidence_score": 0.8
     },
     "machinegunspawner": {
       "bf1942_type": "machinegunspawner",
@@ -26577,7 +26599,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "JuniperPencil_01_L",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_pine2_M1": {
@@ -26603,7 +26625,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "JuniperPencil_01_M_A",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_pine5_M1": {
@@ -26628,7 +26650,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "JuniperPencil_01_L",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     },
     "EU_pine7_M1": {
@@ -26653,7 +26675,7 @@
         "MP_Limestone": "FigWeepingPotted_01_M_A",
         "MP_Capstone": "JuniperPencil_01_L",
         "MP_Outskirts": "JuniperPencil_01_S_A",
-        "MP_FireStorm": "SFX_Destruction_Tree_PineLoblolly_Collision_Large_OneShot3D"
+        "MP_FireStorm": "AcaciaUrban_01_S"
       }
     }
   }
