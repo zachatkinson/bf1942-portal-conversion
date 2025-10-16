@@ -458,7 +458,9 @@ class PortalConverter:
         if self.args.output:
             return Path(self.args.output)
         else:
-            return self.project_root / "GodotProject" / "levels" / f"{self.args.map}.tscn"
+            # Capitalize map name for consistent naming convention
+            map_name_capitalized = self.args.map.capitalize()
+            return self.project_root / "GodotProject" / "levels" / f"{map_name_capitalized}.tscn"
 
     def _get_target_center(self):
         """Get target center for BF1942 assets - Portal terrain's center.
