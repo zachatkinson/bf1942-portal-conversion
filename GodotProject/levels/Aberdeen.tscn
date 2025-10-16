@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://objects/Gameplay/Common/DeployCam.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://static/MP_Tungsten_Terrain.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://static/MP_Tungsten_Assets.tscn" id="9"]
-[ext_resource type="PackedScene" path="res://addons/bf_portal/portal_tools/types/PolygonVolume/PolygonVolume.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://jv31so3xcr7p" path="res://addons/bf_portal/portal_tools/types/PolygonVolume/PolygonVolume.tscn" id="10"]
 [ext_resource type="PackedScene" path="res://objects/Gameplay/Common/WorldIcon.tscn" id="11"]
 [ext_resource type="PackedScene" path="res://objects/Global/Props/BarrierStoneBlock_01_A.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://objects/Tajikistan/MP_Tungsten/Generic/Common/Nature/Birch_01_L.tscn" id="13"]
@@ -20,8 +20,8 @@
 [ext_resource type="PackedScene" path="res://objects/Shared/Generic/Military/Props/Crate_01_B.tscn" id="18"]
 [ext_resource type="PackedScene" path="res://objects/Global/Architecture/OutskirtsHouseMediumRoof_01.tscn" id="19"]
 [ext_resource type="PackedScene" path="res://objects/Shared/Generic/Military/Props/SandBagsPileStraight_01_256_A.tscn" id="20"]
-[ext_resource type="PackedScene" path="res://objects/Tajikistan/MP_Tungsten/Generic/Gameplay/Vehicles/VEH_Vector.tscn" id="21"]
-[ext_resource type="PackedScene" path="res://objects/Tajikistan/MP_Tungsten/Generic/Gameplay/Common/WorldIcon.tscn" id="22"]
+[ext_resource type="PackedScene" path="res://objects/Gameplay/Vehicles/VEH_Vector.tscn" id="21"]
+[ext_resource type="PackedScene" path="res://objects/Gameplay/Common/WorldIcon.tscn" id="22"]
 
 [node name="MP_Tungsten" type="Node3D"]
 
