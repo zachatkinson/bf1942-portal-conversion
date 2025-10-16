@@ -20,6 +20,11 @@ from bfportal.orientation.orientation_matcher import OrientationMatcher, Rotatio
 from bfportal.orientation.terrain_orientation_detector import TerrainOrientationDetector
 from portal_convert import PortalConverter, main
 
+# Test constants for terrain dimensions
+TERRAIN_SIZE_SMALL = 1024.0
+TERRAIN_SIZE_STANDARD = 2048.0
+TERRAIN_CENTER_OFFSET = 512.0
+
 
 def _create_mock_converter(args: Namespace, sdk_root: Path, mock_terrain_provider):
     """Helper to create PortalConverter with mocked dependencies.
@@ -61,7 +66,7 @@ class TestPortalConverterInit:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -96,7 +101,7 @@ class TestPortalConverterInit:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_NonExistent",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -123,7 +128,7 @@ class TestResolveMapPath:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -180,7 +185,7 @@ class TestResolveMapPath:
         args = Namespace(
             map="NonExistentMap",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -203,7 +208,7 @@ class TestResolveOutputPath:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -251,7 +256,7 @@ class TestGuessTheme:
         args = Namespace(
             map="El_Alamein",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -272,7 +277,7 @@ class TestGuessTheme:
         args = Namespace(
             map="Berlin",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -293,7 +298,7 @@ class TestGuessTheme:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -323,20 +328,20 @@ class TestGetTargetCenter:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
         )
         converter = _create_mock_converter(args, mock_portal_sdk_structure, mock_terrain_provider)
-        converter.terrain.mesh_center_x = 512.0
+        converter.terrain.mesh_center_x = TERRAIN_CENTER_OFFSET
         converter.terrain.mesh_center_z = -256.0
 
         # Act
         result = converter._get_target_center()
 
         # Assert - Expects terrain mesh center coordinates
-        assert result.x == 512.0
+        assert result.x == TERRAIN_CENTER_OFFSET
         assert result.y == 0.0
         assert result.z == -256.0
 
@@ -352,7 +357,7 @@ class TestGuessThemeTropical:
         args = Namespace(
             map="Wake_Island",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -386,7 +391,7 @@ class TestConvertMethod:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -472,14 +477,14 @@ class TestConvertMethod:
         # Mock orientation detection
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_SMALL
         mock_source_analysis.ratio = 1.0
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -528,7 +533,7 @@ class TestConvertMethod:
         args = Namespace(
             map="EmptyMap",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -580,8 +585,8 @@ class TestConvertMethod:
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -619,7 +624,7 @@ class TestConvertMethod:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -654,7 +659,7 @@ class TestConvertMethod:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -704,7 +709,7 @@ class TestConvertWithCapturePoints:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -787,14 +792,14 @@ class TestConvertWithCapturePoints:
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_SMALL
         mock_source_analysis.ratio = 1.0
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -838,7 +843,7 @@ class TestConvertWithRotation:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -884,14 +889,14 @@ class TestConvertWithRotation:
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "vertical"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 2048.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_STANDARD
         mock_source_analysis.ratio = 0.5
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 1024.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_SMALL
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = True
@@ -946,7 +951,7 @@ class TestConvertAssetMapping:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -1021,14 +1026,14 @@ class TestConvertAssetMapping:
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_SMALL
         mock_source_analysis.ratio = 1.0
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -1076,7 +1081,7 @@ class TestConvertAssetMapping:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -1144,14 +1149,14 @@ class TestConvertAssetMapping:
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_SMALL
         mock_source_analysis.ratio = 1.0
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -1199,7 +1204,7 @@ class TestConvertAssetMapping:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -1266,14 +1271,14 @@ class TestConvertAssetMapping:
 
         mock_source_analysis = MagicMock()
         mock_source_analysis.orientation.value = "horizontal"
-        mock_source_analysis.width_x = 1024.0
-        mock_source_analysis.depth_z = 1024.0
+        mock_source_analysis.width_x = TERRAIN_SIZE_SMALL
+        mock_source_analysis.depth_z = TERRAIN_SIZE_SMALL
         mock_source_analysis.ratio = 1.0
 
         mock_dest_analysis = MagicMock()
         mock_dest_analysis.orientation.value = "horizontal"
-        mock_dest_analysis.width_x = 2048.0
-        mock_dest_analysis.depth_z = 2048.0
+        mock_dest_analysis.width_x = TERRAIN_SIZE_STANDARD
+        mock_dest_analysis.depth_z = TERRAIN_SIZE_STANDARD
 
         mock_rotation_result = MagicMock()
         mock_rotation_result.rotation_needed = False
@@ -1317,7 +1322,7 @@ class TestGenerateTscn:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
@@ -1364,7 +1369,7 @@ class TestGenerateTscn:
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
-            terrain_size=2048.0,
+            terrain_size=TERRAIN_SIZE_STANDARD,
             bf1942_root=None,
             output=None,
             rotate_terrain=False,
