@@ -30,11 +30,13 @@ def _create_mock_converter(args: Namespace, sdk_root: Path, mock_terrain_provide
     mock_asset_mapper.load_mappings = MagicMock()
 
     with (
-        patch("portal_convert.BF1942Engine"),
-        patch("portal_convert.AssetMapper", return_value=mock_asset_mapper),
-        patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain_provider),
-        patch("portal_convert.CoordinateOffset"),
-        patch("portal_convert.HeightAdjuster"),
+        patch("portal_convert.BF1942Engine", autospec=True),
+        patch("portal_convert.AssetMapper", autospec=True, return_value=mock_asset_mapper),
+        patch(
+            "portal_convert.MeshTerrainProvider", autospec=True, return_value=mock_terrain_provider
+        ),
+        patch("portal_convert.CoordinateOffset", autospec=True),
+        patch("portal_convert.HeightAdjuster", autospec=True),
     ):
         converter = PortalConverter(args)
         # Set project_root to sdk_root so real file checks work
@@ -64,11 +66,15 @@ class TestPortalConverterInit:
 
         # Act
         with (
-            patch("portal_convert.BF1942Engine"),
-            patch("portal_convert.AssetMapper", return_value=mock_asset_mapper),
-            patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain_provider),
-            patch("portal_convert.CoordinateOffset"),
-            patch("portal_convert.HeightAdjuster"),
+            patch("portal_convert.BF1942Engine", autospec=True),
+            patch("portal_convert.AssetMapper", autospec=True, return_value=mock_asset_mapper),
+            patch(
+                "portal_convert.MeshTerrainProvider",
+                autospec=True,
+                return_value=mock_terrain_provider,
+            ),
+            patch("portal_convert.CoordinateOffset", autospec=True),
+            patch("portal_convert.HeightAdjuster", autospec=True),
         ):
             converter = PortalConverter(args)
 
@@ -92,9 +98,9 @@ class TestPortalConverterInit:
 
         # Act & Assert
         with (
-            patch("portal_convert.BF1942Engine"),
-            patch("portal_convert.AssetMapper"),
-            patch("portal_convert.CoordinateOffset"),
+            patch("portal_convert.BF1942Engine", autospec=True),
+            patch("portal_convert.AssetMapper", autospec=True),
+            patch("portal_convert.CoordinateOffset", autospec=True),
             pytest.raises(BFPortalError, match="Portal terrain mesh not found"),
         ):
             PortalConverter(args)
@@ -474,10 +480,14 @@ class TestConvertMethod:
         mock_rotation_result.rotation_degrees = 0
 
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector = MagicMock()
             mock_map_detector.detect_orientation.return_value = mock_source_analysis
@@ -571,10 +581,14 @@ class TestConvertMethod:
         mock_rotation_result.rotation_needed = False
 
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -781,10 +795,14 @@ class TestConvertWithCapturePoints:
 
         # Act
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -876,10 +894,14 @@ class TestConvertWithRotation:
 
         # Act
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -1007,10 +1029,14 @@ class TestConvertAssetMapping:
 
         # Act
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -1126,10 +1152,14 @@ class TestConvertAssetMapping:
 
         # Act
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -1244,10 +1274,14 @@ class TestConvertAssetMapping:
 
         # Act
         with (
-            patch("portal_convert.MapOrientationDetector") as mock_map_detector_class,
-            patch("portal_convert.TerrainOrientationDetector") as mock_terrain_detector_class,
-            patch("portal_convert.OrientationMatcher") as mock_matcher_class,
-            patch("portal_convert.TscnGenerator") as mock_generator_class,
+            patch(
+                "portal_convert.MapOrientationDetector", autospec=True
+            ) as mock_map_detector_class,
+            patch(
+                "portal_convert.TerrainOrientationDetector", autospec=True
+            ) as mock_terrain_detector_class,
+            patch("portal_convert.OrientationMatcher", autospec=True) as mock_matcher_class,
+            patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class,
         ):
             mock_map_detector_class.return_value.detect_orientation.return_value = (
                 mock_source_analysis
@@ -1305,7 +1339,7 @@ class TestGenerateTscn:
         output_path = mock_portal_sdk_structure / "new_dir" / "output.tscn"
 
         # Act
-        with patch("portal_convert.TscnGenerator") as mock_generator_class:
+        with patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class:
             mock_generator = MagicMock()
             mock_generator_class.return_value = mock_generator
 
@@ -1352,7 +1386,7 @@ class TestGenerateTscn:
         output_path = mock_portal_sdk_structure / "output.tscn"
 
         # Act
-        with patch("portal_convert.TscnGenerator") as mock_generator_class:
+        with patch("portal_convert.TscnGenerator", autospec=True) as mock_generator_class:
             mock_generator = MagicMock()
             mock_generator.generate.side_effect = Exception("Generator failed")
             mock_generator_class.return_value = mock_generator
@@ -1383,7 +1417,7 @@ class TestMainFunction:
         # Act & Assert
         with (
             patch("sys.argv", test_args),
-            patch("portal_convert.PortalConverter") as mock_converter_class,
+            patch("portal_convert.PortalConverter", autospec=True) as mock_converter_class,
         ):
             mock_converter = MagicMock(spec=["convert"])
             mock_converter.convert.return_value = 0
@@ -1407,7 +1441,7 @@ class TestMainFunction:
         # Act & Assert
         with (
             patch("sys.argv", test_args),
-            patch("portal_convert.PortalConverter") as mock_converter_class,
+            patch("portal_convert.PortalConverter", autospec=True) as mock_converter_class,
         ):
             mock_converter = MagicMock(spec=["convert"])
             mock_converter.convert.return_value = 1
