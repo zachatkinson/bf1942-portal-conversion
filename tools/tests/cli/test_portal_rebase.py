@@ -73,6 +73,7 @@ class TestParseArgs:
         ]
 
         with patch("sys.argv", ["portal_rebase.py"] + test_args):
+
             # Act
             args = app.parse_args()
 
@@ -107,6 +108,7 @@ class TestParseArgs:
         ]
 
         with patch("sys.argv", ["portal_rebase.py"] + test_args):
+
             # Act
             args = app.parse_args()
 
@@ -134,6 +136,7 @@ class TestParseArgs:
         ]
 
         with patch("sys.argv", ["portal_rebase.py"] + test_args):
+
             # Act
             args = app.parse_args()
 
@@ -180,6 +183,7 @@ class TestCreateTerrainProvider:
         )
 
         with patch("portal_rebase.CustomHeightmapProvider", spec=True) as mock_provider:
+
             # Act
             app.create_terrain_provider()
 
@@ -213,6 +217,7 @@ class TestCreateTerrainProvider:
         app.args = Namespace(heightmap=None, new_base="MP_Tungsten")
 
         with patch("portal_rebase.TungstenTerrainProvider", spec=True) as mock_provider:
+
             # Act
             app.create_terrain_provider()
 
@@ -226,6 +231,7 @@ class TestCreateTerrainProvider:
         app.args = Namespace(heightmap=None, new_base="MP_Outskirts")
 
         with patch("portal_rebase.OutskirtsTerrainProvider", spec=True) as mock_provider:
+
             # Act
             app.create_terrain_provider()
 
@@ -239,6 +245,7 @@ class TestCreateTerrainProvider:
         app.args = Namespace(heightmap=None, new_base="MP_Nexus")
 
         with patch("portal_rebase.TungstenTerrainProvider", spec=True) as mock_provider:
+
             # Act
             app.create_terrain_provider()
 
@@ -263,6 +270,7 @@ class TestRun:
         ]
 
         with patch("sys.argv", ["portal_rebase.py"] + test_args):
+
             # Act
             result = app.run()
 
