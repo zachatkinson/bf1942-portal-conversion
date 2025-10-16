@@ -317,3 +317,34 @@ def mock_portal_sdk_structure(tmp_path: Path) -> Path:
     bf1942_levels.mkdir(parents=True, exist_ok=True)
 
     return sdk_root
+
+
+@pytest.fixture
+def mock_terrain_provider():
+    """Create a mock terrain provider with realistic test attributes.
+
+    This fixture provides a standard mock TerrainProvider that can be used
+    across all tests. It eliminates duplication of terrain setup code.
+
+    Returns:
+        MagicMock with terrain provider attributes set to realistic test values
+    """
+    from unittest.mock import MagicMock
+
+    mock_terrain = MagicMock()
+    # Set attributes as actual values (not MagicMocks) so format strings work
+    mock_terrain.vertices = [1, 2, 3]
+    mock_terrain.min_height = 0.0
+    mock_terrain.max_height = 100.0
+    mock_terrain.mesh_min_height = 0.0
+    mock_terrain.mesh_max_height = 100.0
+    mock_terrain.mesh_min_x = -1024.0
+    mock_terrain.mesh_max_x = 1024.0
+    mock_terrain.mesh_min_z = -1024.0
+    mock_terrain.mesh_max_z = 1024.0
+    mock_terrain.mesh_center_x = 0.0
+    mock_terrain.mesh_center_z = 0.0
+    mock_terrain.terrain_y_baseline = 0.0
+    mock_terrain.grid_resolution = 256
+
+    return mock_terrain
