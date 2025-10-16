@@ -266,3 +266,54 @@ def sample_conversion_config(tmp_path: Path) -> Path:
         json.dump(config_data, f)
 
     return config_path
+
+
+@pytest.fixture
+def mock_portal_sdk_structure(tmp_path: Path) -> Path:
+    """Create a mock Portal SDK directory structure with required files.
+
+    This fixture creates the minimal Portal SDK directory structure needed
+    for PortalConverter initialization to succeed. It creates real files
+    instead of mocking Path.exists() globally.
+
+    Args:
+        tmp_path: pytest temporary directory fixture
+
+    Returns:
+        Path to the mock SDK root directory
+    """
+    # Create Portal SDK directory structure
+    sdk_root = tmp_path / "portal_sdk"
+    godot_project = sdk_root / "GodotProject"
+    raw_models = godot_project / "raw" / "models"
+    raw_models.mkdir(parents=True, exist_ok=True)
+
+    # Create terrain mesh files for common test terrains
+    for terrain in ["MP_Tungsten", "MP_Battery", "MP_Outskirts", "MP_NonExistent"]:
+        terrain_mesh = raw_models / f"{terrain}_Terrain.glb"
+        if terrain != "MP_NonExistent":  # Don't create NonExistent terrain
+            terrain_mesh.write_text("# Mock GLB terrain mesh")
+
+    # Create FbExportData structure
+    fb_export = sdk_root / "FbExportData"
+    fb_export.mkdir(parents=True, exist_ok=True)
+
+    # Create asset_types.json
+    asset_types = fb_export / "asset_types.json"
+    asset_types.write_text('{"AssetTypes": []}')
+
+    # Create tools/asset_audit structure
+    asset_audit = sdk_root / "tools" / "asset_audit"
+    asset_audit.mkdir(parents=True, exist_ok=True)
+
+    # Create mappings file
+    mappings_file = asset_audit / "bf1942_to_portal_mappings.json"
+    mappings_file.write_text('{"_metadata": {}, "vegetation": {}, "buildings": {}}')
+
+    # Create bf1942_source/extracted structure for map files
+    bf1942_levels = (
+        sdk_root / "bf1942_source" / "extracted" / "Bf1942" / "Archives" / "bf1942" / "Levels"
+    )
+    bf1942_levels.mkdir(parents=True, exist_ok=True)
+
+    return sdk_root

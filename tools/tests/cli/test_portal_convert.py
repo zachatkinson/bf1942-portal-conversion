@@ -15,8 +15,17 @@ from bfportal.core.exceptions import BFPortalError
 from portal_convert import PortalConverter, main
 
 
-def _create_mock_converter(args: Namespace, tmp_path: Path | None = None):
-    """Helper to create PortalConverter with mocked dependencies."""
+def _create_mock_converter(args: Namespace, sdk_root: Path):
+    """Helper to create PortalConverter with mocked dependencies.
+
+    Args:
+        args: Command-line arguments Namespace
+        sdk_root: Path to mock SDK structure (from mock_portal_sdk_structure fixture)
+
+    Returns:
+        PortalConverter instance with mocked components
+    """
+    # Mock terrain provider with realistic attributes
     mock_terrain = MagicMock()
     # Set attributes as actual values (not MagicMocks) so format strings work
     mock_terrain.vertices = [1, 2, 3]
@@ -42,18 +51,17 @@ def _create_mock_converter(args: Namespace, tmp_path: Path | None = None):
         patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain),
         patch("portal_convert.CoordinateOffset"),
         patch("portal_convert.HeightAdjuster"),
-        patch.object(Path, "exists", return_value=True),
     ):
         converter = PortalConverter(args)
-        if tmp_path:
-            converter.project_root = tmp_path
+        # Set project_root to sdk_root so real file checks work
+        converter.project_root = sdk_root
         return converter
 
 
 class TestPortalConverterInit:
     """Tests for PortalConverter.__init__() initialization."""
 
-    def test_initializes_converter_successfully(self, tmp_path: Path):
+    def test_initializes_converter_successfully(self, mock_portal_sdk_structure: Path):
         """Test successful converter initialization with valid paths."""
         # Arrange
         args = Namespace(
@@ -90,7 +98,6 @@ class TestPortalConverterInit:
             patch("portal_convert.MeshTerrainProvider", return_value=mock_terrain),
             patch("portal_convert.CoordinateOffset"),
             patch("portal_convert.HeightAdjuster"),
-            patch.object(Path, "exists", return_value=True),
         ):
             converter = PortalConverter(args)
 
@@ -100,7 +107,7 @@ class TestPortalConverterInit:
         assert converter.asset_mapper is not None
         assert converter.coord_offset is not None
 
-    def test_raises_error_when_terrain_mesh_missing(self, tmp_path: Path):
+    def test_raises_error_when_terrain_mesh_missing(self, mock_portal_sdk_structure: Path):
         """Test error raised when Portal terrain mesh doesn't exist."""
         # Arrange
         args = Namespace(
@@ -117,7 +124,6 @@ class TestPortalConverterInit:
             patch("portal_convert.BF1942Engine"),
             patch("portal_convert.AssetMapper"),
             patch("portal_convert.CoordinateOffset"),
-            patch.object(Path, "exists", return_value=False),
             pytest.raises(BFPortalError, match="Portal terrain mesh not found"),
         ):
             PortalConverter(args)
@@ -126,7 +132,7 @@ class TestPortalConverterInit:
 class TestResolveMapPath:
     """Tests for PortalConverter._resolve_map_path() method."""
 
-    def test_resolves_default_bf1942_path(self, tmp_path: Path):
+    def test_resolves_default_bf1942_path(self, mock_portal_sdk_structure: Path):
         """Test resolving map path with default BF1942 root."""
         # Arrange
         args = Namespace(
@@ -138,7 +144,7 @@ class TestResolveMapPath:
             rotate_terrain=False,
         )
         expected_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -148,7 +154,7 @@ class TestResolveMapPath:
             / "Kursk"
         )
         expected_path.mkdir(parents=True)
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._resolve_map_path()
@@ -156,10 +162,10 @@ class TestResolveMapPath:
         # Assert
         assert result == expected_path
 
-    def test_resolves_custom_bf1942_path(self, tmp_path: Path):
+    def test_resolves_custom_bf1942_path(self, mock_portal_sdk_structure: Path):
         """Test resolving map path with custom BF1942 root."""
         # Arrange
-        custom_root = tmp_path / "custom_bf1942"
+        custom_root = mock_portal_sdk_structure / "custom_bf1942"
         custom_root.mkdir()
         args = Namespace(
             map="Kursk",
@@ -171,7 +177,7 @@ class TestResolveMapPath:
         )
         expected_path = custom_root / "Kursk"
         expected_path.mkdir()
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._resolve_map_path()
@@ -179,7 +185,7 @@ class TestResolveMapPath:
         # Assert
         assert result == expected_path
 
-    def test_raises_error_when_map_directory_missing(self, tmp_path: Path):
+    def test_raises_error_when_map_directory_missing(self, mock_portal_sdk_structure: Path):
         """Test error raised when map directory doesn't exist."""
         # Arrange
         args = Namespace(
@@ -190,7 +196,7 @@ class TestResolveMapPath:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act & Assert
         with pytest.raises(BFPortalError, match="Map directory not found"):
@@ -200,7 +206,7 @@ class TestResolveMapPath:
 class TestResolveOutputPath:
     """Tests for PortalConverter._resolve_output_path() method."""
 
-    def test_resolves_default_output_path(self, tmp_path: Path):
+    def test_resolves_default_output_path(self, mock_portal_sdk_structure: Path):
         """Test resolving output path with default location."""
         # Arrange
         args = Namespace(
@@ -211,19 +217,19 @@ class TestResolveOutputPath:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._resolve_output_path()
 
         # Assert
-        expected = tmp_path / "GodotProject" / "levels" / "Kursk.tscn"
+        expected = mock_portal_sdk_structure / "GodotProject" / "levels" / "Kursk.tscn"
         assert result == expected
 
-    def test_resolves_custom_output_path(self, tmp_path: Path):
+    def test_resolves_custom_output_path(self, mock_portal_sdk_structure: Path):
         """Test resolving output path with custom location."""
         # Arrange
-        custom_output = tmp_path / "custom" / "output.tscn"
+        custom_output = mock_portal_sdk_structure / "custom" / "output.tscn"
         args = Namespace(
             map="Kursk",
             base_terrain="MP_Tungsten",
@@ -232,7 +238,7 @@ class TestResolveOutputPath:
             output=str(custom_output),
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._resolve_output_path()
@@ -244,7 +250,7 @@ class TestResolveOutputPath:
 class TestGuessTheme:
     """Tests for PortalConverter._guess_theme() method."""
 
-    def test_guesses_desert_theme_from_map_name(self, tmp_path: Path):
+    def test_guesses_desert_theme_from_map_name(self, mock_portal_sdk_structure: Path):
         """Test guessing desert theme from map name."""
         # Arrange
         args = Namespace(
@@ -255,7 +261,7 @@ class TestGuessTheme:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._guess_theme()
@@ -263,7 +269,7 @@ class TestGuessTheme:
         # Assert
         assert result == "desert"
 
-    def test_guesses_urban_theme_from_map_name(self, tmp_path: Path):
+    def test_guesses_urban_theme_from_map_name(self, mock_portal_sdk_structure: Path):
         """Test guessing urban theme from map name."""
         # Arrange
         args = Namespace(
@@ -274,7 +280,7 @@ class TestGuessTheme:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._guess_theme()
@@ -282,7 +288,7 @@ class TestGuessTheme:
         # Assert
         assert result == "urban"
 
-    def test_defaults_to_temperate_theme(self, tmp_path: Path):
+    def test_defaults_to_temperate_theme(self, mock_portal_sdk_structure: Path):
         """Test defaulting to temperate theme for unknown map."""
         # Arrange
         args = Namespace(
@@ -293,7 +299,7 @@ class TestGuessTheme:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._guess_theme()
@@ -305,7 +311,7 @@ class TestGuessTheme:
 class TestGetTargetCenter:
     """Tests for PortalConverter._get_target_center() method."""
 
-    def test_returns_terrain_mesh_center(self, tmp_path: Path):
+    def test_returns_terrain_mesh_center(self, mock_portal_sdk_structure: Path):
         """Test returns Portal terrain's mesh center coordinates.
 
         The implementation returns the terrain's mesh center (mesh_center_x, 0, mesh_center_z)
@@ -321,7 +327,7 @@ class TestGetTargetCenter:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.terrain.mesh_center_x = 512.0
         converter.terrain.mesh_center_z = -256.0
 
@@ -337,7 +343,7 @@ class TestGetTargetCenter:
 class TestGuessThemeTropical:
     """Tests for PortalConverter._guess_theme() tropical detection."""
 
-    def test_guesses_tropical_theme_from_map_name(self, tmp_path: Path):
+    def test_guesses_tropical_theme_from_map_name(self, mock_portal_sdk_structure: Path):
         """Test guessing tropical theme from map name."""
         # Arrange
         args = Namespace(
@@ -348,7 +354,7 @@ class TestGuessThemeTropical:
             output=None,
             rotate_terrain=False,
         )
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
 
         # Act
         result = converter._guess_theme()
@@ -360,7 +366,7 @@ class TestGuessThemeTropical:
 class TestConvertMethod:
     """Tests for PortalConverter.convert() method."""
 
-    def test_convert_succeeds_with_valid_map_data(self, tmp_path: Path):
+    def test_convert_succeeds_with_valid_map_data(self, mock_portal_sdk_structure: Path):
         """Test successful conversion with valid map data."""
         # Arrange
         from bfportal.core.interfaces import (
@@ -428,7 +434,7 @@ class TestConvertMethod:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -438,10 +444,10 @@ class TestConvertMethod:
             / "Kursk"
         )
         map_path.mkdir(parents=True)
-        tmp_path / "GodotProject" / "levels" / "Kursk.tscn"
+        mock_portal_sdk_structure / "GodotProject" / "levels" / "Kursk.tscn"
 
         # Create converter with mocked dependencies
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
         converter.asset_mapper.map_asset = MagicMock(return_value=MagicMock(type="PortalAsset"))
         converter.asset_mapper._is_terrain_element = MagicMock(return_value=False)
@@ -503,7 +509,7 @@ class TestConvertMethod:
         converter.engine.parse_map.assert_called_once()
         mock_generator.generate.assert_called_once()
 
-    def test_convert_handles_empty_map_data(self, tmp_path: Path):
+    def test_convert_handles_empty_map_data(self, mock_portal_sdk_structure: Path):
         """Test conversion with empty map data (no objects)."""
         # Arrange
         from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
@@ -541,7 +547,7 @@ class TestConvertMethod:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -552,7 +558,7 @@ class TestConvertMethod:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
 
         mock_source_analysis = MagicMock()
@@ -590,7 +596,7 @@ class TestConvertMethod:
         # Assert
         assert result == 0
 
-    def test_convert_returns_error_on_bfportal_exception(self, tmp_path: Path):
+    def test_convert_returns_error_on_bfportal_exception(self, mock_portal_sdk_structure: Path):
         """Test convert returns error code on BFPortalError."""
         # Arrange
         args = Namespace(
@@ -603,7 +609,7 @@ class TestConvertMethod:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -614,7 +620,7 @@ class TestConvertMethod:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(side_effect=BFPortalError("Parse failed"))
 
         # Act
@@ -623,7 +629,7 @@ class TestConvertMethod:
         # Assert
         assert result == 1
 
-    def test_convert_returns_error_on_unexpected_exception(self, tmp_path: Path):
+    def test_convert_returns_error_on_unexpected_exception(self, mock_portal_sdk_structure: Path):
         """Test convert returns error code on unexpected exception."""
         # Arrange
         args = Namespace(
@@ -636,7 +642,7 @@ class TestConvertMethod:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -647,7 +653,7 @@ class TestConvertMethod:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(side_effect=RuntimeError("Unexpected error"))
 
         # Act
@@ -660,7 +666,9 @@ class TestConvertMethod:
 class TestConvertWithCapturePoints:
     """Tests for conversion with capture points containing spawns."""
 
-    def test_convert_offsets_capture_point_spawns_avoiding_duplicates(self, tmp_path: Path):
+    def test_convert_offsets_capture_point_spawns_avoiding_duplicates(
+        self, mock_portal_sdk_structure: Path
+    ):
         """Test conversion offsets capture point spawns and avoids duplicates."""
         # Arrange
         from bfportal.core.interfaces import (
@@ -732,7 +740,7 @@ class TestConvertWithCapturePoints:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -743,7 +751,7 @@ class TestConvertWithCapturePoints:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
 
         # Mock coordinate offset methods with proper Vector3 returns
@@ -797,7 +805,7 @@ class TestConvertWithCapturePoints:
 class TestConvertWithRotation:
     """Tests for conversion with terrain rotation needed."""
 
-    def test_convert_applies_terrain_rotation_when_needed(self, tmp_path: Path):
+    def test_convert_applies_terrain_rotation_when_needed(self, mock_portal_sdk_structure: Path):
         """Test conversion applies terrain rotation to metadata when needed."""
         # Arrange
         from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
@@ -835,7 +843,7 @@ class TestConvertWithRotation:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -846,7 +854,7 @@ class TestConvertWithRotation:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
 
         mock_source_analysis = MagicMock()
@@ -891,7 +899,7 @@ class TestConvertWithRotation:
 class TestConvertAssetMapping:
     """Tests for asset mapping during conversion."""
 
-    def test_convert_tracks_terrain_elements_separately(self, tmp_path: Path):
+    def test_convert_tracks_terrain_elements_separately(self, mock_portal_sdk_structure: Path):
         """Test conversion tracks skipped terrain elements separately from unmapped assets."""
         # Arrange
         from bfportal.core.interfaces import (
@@ -952,7 +960,7 @@ class TestConvertAssetMapping:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -963,7 +971,7 @@ class TestConvertAssetMapping:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
         converter.asset_mapper.map_asset = MagicMock(return_value=None)
         converter.asset_mapper._is_terrain_element = MagicMock(return_value=True)
@@ -1015,7 +1023,7 @@ class TestConvertAssetMapping:
         # Assert
         assert result == 0
 
-    def test_convert_handles_unmapped_assets_gracefully(self, tmp_path: Path):
+    def test_convert_handles_unmapped_assets_gracefully(self, mock_portal_sdk_structure: Path):
         """Test conversion handles unmapped assets gracefully."""
         # Arrange
         from bfportal.core.interfaces import (
@@ -1069,7 +1077,7 @@ class TestConvertAssetMapping:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -1080,7 +1088,7 @@ class TestConvertAssetMapping:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
         converter.asset_mapper.map_asset = MagicMock(return_value=None)
         converter.asset_mapper._is_terrain_element = MagicMock(return_value=False)
@@ -1132,7 +1140,7 @@ class TestConvertAssetMapping:
         # Assert
         assert result == 0
 
-    def test_convert_handles_asset_mapping_exception(self, tmp_path: Path):
+    def test_convert_handles_asset_mapping_exception(self, mock_portal_sdk_structure: Path):
         """Test conversion handles exception during asset mapping."""
         # Arrange
         from bfportal.core.interfaces import (
@@ -1186,7 +1194,7 @@ class TestConvertAssetMapping:
         )
 
         map_path = (
-            tmp_path
+            mock_portal_sdk_structure
             / "bf1942_source"
             / "extracted"
             / "Bf1942"
@@ -1197,7 +1205,7 @@ class TestConvertAssetMapping:
         )
         map_path.mkdir(parents=True)
 
-        converter = _create_mock_converter(args, tmp_path)
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
         converter.engine.parse_map = MagicMock(return_value=mock_map_data)
         converter.asset_mapper.map_asset = MagicMock(side_effect=Exception("Mapping error"))
 
@@ -1252,7 +1260,7 @@ class TestConvertAssetMapping:
 class TestGenerateTscn:
     """Tests for _generate_tscn() method."""
 
-    def test_generate_tscn_creates_output_directory(self, tmp_path: Path):
+    def test_generate_tscn_creates_output_directory(self, mock_portal_sdk_structure: Path):
         """Test _generate_tscn creates output directory if it doesn't exist."""
         # Arrange
         from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
@@ -1284,8 +1292,8 @@ class TestGenerateTscn:
             metadata={},
         )
 
-        converter = _create_mock_converter(args, tmp_path)
-        output_path = tmp_path / "new_dir" / "output.tscn"
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
+        output_path = mock_portal_sdk_structure / "new_dir" / "output.tscn"
 
         # Act
         with patch("portal_convert.TscnGenerator") as mock_generator_class:
@@ -1297,7 +1305,7 @@ class TestGenerateTscn:
         # Assert
         assert output_path.parent.exists()
 
-    def test_generate_tscn_falls_back_on_generator_exception(self, tmp_path: Path):
+    def test_generate_tscn_falls_back_on_generator_exception(self, mock_portal_sdk_structure: Path):
         """Test _generate_tscn falls back to basic stub when generator raises exception."""
         # Arrange
         from bfportal.core.interfaces import MapBounds, MapData, Rotation, Transform, Vector3
@@ -1329,8 +1337,8 @@ class TestGenerateTscn:
             metadata={},
         )
 
-        converter = _create_mock_converter(args, tmp_path)
-        output_path = tmp_path / "output.tscn"
+        converter = _create_mock_converter(args, mock_portal_sdk_structure)
+        output_path = mock_portal_sdk_structure / "output.tscn"
 
         # Act
         with patch("portal_convert.TscnGenerator") as mock_generator_class:
