@@ -6756,7 +6756,7 @@
   },
   "Afri_bush1_M1": {
     "bf1942_type": "Afri_bush1_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_A",
     "category": "vegetation",
     "found_in_maps": [
       "Battleaxe",
@@ -6766,13 +6766,13 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 5,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant A - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush2_M1": {
     "bf1942_type": "Afri_bush2_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_B",
     "category": "vegetation",
     "found_in_maps": [
       "Battle_of_Britain",
@@ -6785,13 +6785,13 @@
       "Tobruk"
     ],
     "usage_count": 8,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant B - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush3_M1": {
     "bf1942_type": "Afri_bush3_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_C",
     "category": "vegetation",
     "found_in_maps": [
       "El_Alamein",
@@ -6800,25 +6800,25 @@
       "Tobruk"
     ],
     "usage_count": 4,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant C - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush5_M1": {
     "bf1942_type": "Afri_bush5_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_D",
     "category": "vegetation",
     "found_in_maps": [
       "El_Alamein"
     ],
     "usage_count": 1,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant D - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush6_M1": {
     "bf1942_type": "Afri_bush6_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "DeadBush_01_S_A",
     "category": "vegetation",
     "found_in_maps": [
       "Battleaxe",
@@ -6827,26 +6827,26 @@
       "Raid_on_Agheila"
     ],
     "usage_count": 4,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal dead bush (desert appropriate) - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush7_M1": {
     "bf1942_type": "Afri_bush7_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_A",
     "category": "vegetation",
     "found_in_maps": [
       "Battleaxe",
       "El_Alamein"
     ],
     "usage_count": 2,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant A - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush8_M1": {
     "bf1942_type": "Afri_bush8_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_B",
     "category": "vegetation",
     "found_in_maps": [
       "Battleaxe",
@@ -6855,13 +6855,13 @@
       "Tobruk"
     ],
     "usage_count": 4,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant B - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_bush9_M1": {
     "bf1942_type": "Afri_bush9_M1",
-    "portal_equivalent": "FoliageAsset",
+    "portal_equivalent": "OakShrub_02_M_C",
     "category": "vegetation",
     "found_in_maps": [
       "Battleaxe",
@@ -6872,9 +6872,9 @@
       "Tobruk"
     ],
     "usage_count": 6,
-    "notes": "Auto-generated from vegetation classification",
-    "confidence_score": 0.7,
-    "auto_suggested": true
+    "notes": "Mapped to Portal oak shrub variant C - available on MP_Tungsten",
+    "confidence_score": 0.9,
+    "auto_suggested": false
   },
   "Afri_tree1_M1": {
     "bf1942_type": "Afri_tree1_M1",

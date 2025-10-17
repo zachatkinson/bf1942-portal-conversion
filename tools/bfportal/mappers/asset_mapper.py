@@ -49,6 +49,8 @@ class AssetMapper(IAssetMapper):
     def load_mappings(self, mappings_file: Path) -> None:
         """Load BF1942 → Portal mappings from JSON file.
 
+        Supports both nested (category-based) and flat (top-level) asset structures.
+
         Args:
             mappings_file: Path to bf1942_to_portal_mappings.json
 
@@ -62,33 +64,53 @@ class AssetMapper(IAssetMapper):
         with open(mappings_file) as f:
             data = json.load(f)
 
-        # Flatten category-based structure into single lookup dict
-        for category_key in data:
-            if category_key == "_metadata":
+        # Flatten category-based structure and top-level assets into single lookup dict
+        for key in data:
+            if key == "_metadata":
                 continue
 
-            category = data[category_key]
-            if not isinstance(category, dict):
+            value = data[key]
+            if not isinstance(value, dict):
                 continue
 
-            for asset_type, asset_info in category.items():
-                if not isinstance(asset_info, dict):
-                    continue
-
+            # Check if this is an asset (has bf1942_type) or a category (contains assets)
+            if "bf1942_type" in value:
+                # This is a TOP-LEVEL ASSET (e.g., Afri_bush1_M1)
+                asset_type = key
+                asset_info = value
                 portal_eq = asset_info.get("portal_equivalent")
                 if portal_eq and portal_eq != "TODO":
-                    # Support both old (portal_equivalent + fallbacks) and new (preferred + alternatives) formats
                     alternatives = asset_info.get("alternatives", [])
                     fallbacks = asset_info.get("fallbacks", {})
 
                     self.mappings[asset_type] = {
-                        "portal_type": portal_eq,  # Primary/preferred asset
-                        "alternatives": alternatives,  # Explicit alternative assets (new format)
+                        "portal_type": portal_eq,
+                        "alternatives": alternatives,
                         "category": asset_info.get("category", "unknown"),
                         "confidence": asset_info.get("confidence_score", 1.0),
                         "notes": asset_info.get("notes", ""),
-                        "fallbacks": fallbacks,  # Map-specific fallbacks (legacy format)
+                        "fallbacks": fallbacks,
                     }
+            else:
+                # This is a CATEGORY containing nested assets (e.g., "vehicles", "props")
+                category = value
+                for asset_type, asset_info in category.items():
+                    if not isinstance(asset_info, dict):
+                        continue
+
+                    portal_eq = asset_info.get("portal_equivalent")
+                    if portal_eq and portal_eq != "TODO":
+                        alternatives = asset_info.get("alternatives", [])
+                        fallbacks = asset_info.get("fallbacks", {})
+
+                        self.mappings[asset_type] = {
+                            "portal_type": portal_eq,
+                            "alternatives": alternatives,
+                            "category": asset_info.get("category", "unknown"),
+                            "confidence": asset_info.get("confidence_score", 1.0),
+                            "notes": asset_info.get("notes", ""),
+                            "fallbacks": fallbacks,
+                        }
 
         print(f"✅ Loaded {len(self.mappings)} asset mappings from {mappings_file.name}")
 
