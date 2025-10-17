@@ -975,6 +975,40 @@ def test_macos_gdconverter_export():
 
 **Solution**: Try multiple extractors (BGA, WinRFA), verify archive integrity
 
+### Issue: Battle of Britain Spawn Classification Fails
+
+**Map**: Battle of Britain (base game)
+
+**Symptom**: Conversion completes but validation fails with "Team 1 needs at least 4 spawns, got 0". All spawns misclassified as Team 2, none as Team 1.
+
+**Root Cause**: Battle of Britain uses non-standard Bundle template system for Allies spawns:
+- Allies spawns stored in `Objects/Allies_Spawn_Groups/` directories
+- Use `spawnPointManager.groupTeam 2` property to define team ownership
+- Spawn names like `WestAirfield_SoldierSpawn` don't contain "allies" or "_2_" patterns
+- Current spawn classifier (`refractor_base.py:323-342`) only checks object names, not `groupTeam` properties
+- Spawns get classified as "neutral" and filtered out
+
+**Example from `Allies_WestAirfield_Spawn.con`**:
+```
+spawnPointManager.groupTeam 2  # Team property not in spawn name
+ObjectTemplate.create Bundle Allies_WestAirfield_Spawn
+ObjectTemplate.addTemplate WestAirfield_SoldierSpawn  # No "allies" in name
+
+ObjectTemplate.create SpawnPoint WestAirfield_SoldierSpawn
+ObjectTemplate.setSpawnId 0
+ObjectTemplate.setGroup 97
+```
+
+**Solution**: Need to extend spawn parser to:
+1. Detect Bundle template definitions
+2. Parse `spawnPointManager.groupTeam` properties
+3. Associate team ownership with nested spawn points
+4. Update `_classify_spawn_ownership()` to check both name patterns and Bundle properties
+
+**Workaround**: None - map cannot be converted until parser is enhanced
+
+**Status**: Known limitation, documented for future work. Battle of Britain is a unique game mode (air combat focused) with non-standard spawn structure.
+
 ## Development Workflow
 
 ### 1. Research Phase
