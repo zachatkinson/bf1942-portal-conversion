@@ -11,6 +11,9 @@ import pytest
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+from bfportal.cli import (
+    EXIT_CONVERSION_ERROR,
+)
 from bfportal.core.exceptions import BFPortalError
 from bfportal.generators.tscn_generator import TscnGenerator
 from bfportal.mappers.asset_mapper import AssetMapper
@@ -648,7 +651,7 @@ class TestConvertMethod:
         result = converter.convert()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_CONVERSION_ERROR
 
     def test_convert_returns_error_on_unexpected_exception(
         self, mock_portal_sdk_structure: Path, mock_terrain_provider

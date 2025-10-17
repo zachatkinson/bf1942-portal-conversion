@@ -455,15 +455,17 @@ class RefractorEngine(IGameEngine):
         capture_points: list[CapturePoint] = []
         parsed_files = con_files.parse_all()
 
-        # Step 1: Find all control points
+        # Step 1: Find all control points (instances from ControlPoints.con, not templates)
         for _filename, parsed_data in parsed_files.items():
+            # Only process ControlPoints.con (instances), skip ControlPointTemplates.con
+            # ControlPoints.con contains Object.create with actual positions
+            # ControlPointTemplates.con contains ObjectTemplate.create at origin (0, 8.2, 0)
+            filename_lower = _filename.lower()
+            if filename_lower != "controlpoints.con":
+                continue
+
             for obj in parsed_data["objects"]:
                 obj_name = obj.get("name", "").lower()
-                obj_type = obj.get("type", "").lower()
-
-                # Check if this is a control point by type (not name pattern)
-                if obj_type != "controlpoint":
-                    continue
 
                 # Skip HQ bases - those are handled by _parse_hq()
                 if "base" in obj_name and (
@@ -787,10 +789,16 @@ class RefractorEngine(IGameEngine):
                 scale_x = width / 10.0  # Assume default puddle is ~10m wide
                 scale_z = length / 10.0
 
+                # Use BF1942 lake type so AssetMapper can map it properly
+                # This allows lake→crater on FireStorm, lake→puddle on Tungsten, etc.
+                # Generate unique lake types (lake, lake2, lake3) for variety
+                lake_types = ["lake", "lake2", "lake3"]
+                lake_type = lake_types[(i - 1) % len(lake_types)]
+
                 water_objects.append(
                     GameObject(
                         name=f"Lake_{i}",
-                        asset_type="Decal_PuddleLong_01",
+                        asset_type=lake_type,  # Use BF1942 type, not hardcoded Portal asset
                         transform=Transform(
                             position=Vector3(center_x, water_level, center_z),
                             rotation=Rotation(0, 0, 0),

@@ -11,6 +11,10 @@ import pytest
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+from bfportal.cli import (
+    EXIT_FILE_NOT_FOUND,
+    EXIT_VALIDATION_ERROR,
+)
 from create_experience import create_experience_file, main
 
 
@@ -260,7 +264,7 @@ class TestMainFunction:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
 
     def test_returns_success_when_experience_created(self, tmp_path: Path):
         """Test main returns success code when experience is created successfully."""
@@ -318,11 +322,11 @@ class TestMainFunction:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
         captured = capsys.readouterr()
-        assert "Available spatial files:" in captured.err
-        assert "Kursk" in captured.err
-        assert "ElAlamein" in captured.err
+        assert "Available spatial files:" in captured.out
+        assert "Kursk" in captured.out
+        assert "ElAlamein" in captured.out
 
     def test_main_shows_export_hint_when_no_spatial_files_exist_returns_error(
         self, tmp_path: Path, capsys
@@ -351,11 +355,11 @@ class TestMainFunction:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
         captured = capsys.readouterr()
-        assert "(none found)" in captured.err
-        assert "Did you export the map first?" in captured.err
-        assert "bash tools/export_map.sh TestMap" in captured.err
+        assert "(none found)" in captured.out
+        assert "Did you export the map first?" in captured.out
+        assert "bash tools/export_map.sh TestMap" in captured.out
 
     def test_main_handles_exception_during_creation_returns_error(self, tmp_path: Path, capsys):
         """Test main handles exceptions during experience creation with traceback."""
@@ -379,7 +383,7 @@ class TestMainFunction:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_VALIDATION_ERROR
         captured = capsys.readouterr()
-        assert "Error: Test exception" in captured.err
-        assert "Traceback" in captured.err
+        # The error format changed - just check for the exception message
+        assert "Test exception" in captured.out

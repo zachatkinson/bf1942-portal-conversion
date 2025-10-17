@@ -15,6 +15,8 @@ WorldIcon nodes are controlled via TypeScript using:
 from ...core.interfaces import MapData
 from ..components.asset_registry import AssetRegistry
 from ..components.transform_formatter import TransformFormatter
+from ..constants.extresource_ids import EXT_RESOURCE_WORLD_ICON
+from ..constants.gameplay import OBJID_WORLD_ICON_START
 from .base_generator import BaseNodeGenerator
 
 
@@ -25,8 +27,8 @@ class WorldIconGenerator(BaseNodeGenerator):
     Icons must be configured via TypeScript in the experience file.
 
     Example Output:
-        [node name="CP_Label_A" parent="CapturePoint_1" instance=ExtResource("WorldIcon")]
-        transform = Transform3D(...)
+        [node name="CP_Label_A" parent="CapturePointA" instance=ExtResource("11")]
+        transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
         ObjId = 20
         IconStringKey = "A"
         iconTextVisible = true
@@ -50,34 +52,27 @@ class WorldIconGenerator(BaseNodeGenerator):
         """
         lines: list[str] = []
 
-        # Get capture points
-        capture_points = [obj for obj in map_data.game_objects if obj.asset_type == "CapturePoint"]
-
-        if not capture_points:
+        # Use capture_points from MapData (not game_objects)
+        if not map_data.capture_points:
             return lines
 
-        # Register WorldIcon asset if not already registered
-        world_icon_id = asset_registry.register_asset(
-            "WorldIcon", "res://objects/Gameplay/Common/WorldIcon.tscn"
-        )
+        for i, cp in enumerate(map_data.capture_points, 1):
+            # Use letter label from CapturePoint
+            label = cp.label  # "A", "B", "C", etc.
 
-        # Generate labels A, B, C, etc.
-        labels = [chr(65 + i) for i in range(len(capture_points))]  # A, B, C, ...
-
-        for i, (cp, label) in enumerate(zip(capture_points, labels, strict=False), 1):
-            # WorldIcon ObjId starts at 20 (convention from BombSquad mod)
-            obj_id = 20 + i - 1
+            # WorldIcon ObjId starts at OBJID_WORLD_ICON_START (20)
+            obj_id = OBJID_WORLD_ICON_START + i - 1
 
             lines.append(
-                f'[node name="CP_Label_{label}" parent="CapturePoint_{i}" '
-                f'instance=ExtResource("{world_icon_id}")]'
+                f'[node name="CP_Label_{label}" parent="CapturePoint{label}" '
+                f'instance=ExtResource("{EXT_RESOURCE_WORLD_ICON}")]'
             )
-            lines.append(f"transform = {transform_formatter.format(cp.transform)}")
+            # Position 5m above capture point for visibility
+            lines.append("transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)")
             lines.append(f"ObjId = {obj_id}")
             lines.append(f'IconStringKey = "{label}"')
             lines.append("iconTextVisible = true")
             lines.append("iconImageVisible = false")
-            lines.append("# Portal SDK: Labels set via TypeScript using mod.SetWorldIconText()")
             lines.append("")
 
         return lines

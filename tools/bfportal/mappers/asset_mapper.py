@@ -205,6 +205,12 @@ class AssetMapper(IAssetMapper):
             return best_guess
 
         # Complete failure - no compatible asset found
+        # For vegetation assets, skip silently (some terrains don't have bushes/trees)
+        if mapping["category"] in ["vegetation", "foliage", "plant"]:
+            print(f"  ℹ️  Skipping {source_asset}: No compatible vegetation found on {target_map}")
+            return None
+
+        # For critical assets (vehicles, spawns, objectives), raise error
         raise MappingError(
             f"No compatible Portal asset found for '{source_asset}' on '{target_map}'. "
             f"Tried: {', '.join([t for _, t in assets_to_try])}. "
@@ -246,7 +252,7 @@ class AssetMapper(IAssetMapper):
             if self._is_asset_available_on_map(portal_asset, target_map):
                 category_mappings.append((bf_asset, mapping, portal_asset))
 
-        # Sort by: 1) matching type keywords, 2) confidence score
+        # Sort by: 1) matching type keywords, 2) map-restricted over unrestricted, 3) confidence
         def sort_key(item):
             bf_asset, mapping, portal_asset = item
             portal_type = mapping["portal_type"].lower()
@@ -256,9 +262,12 @@ class AssetMapper(IAssetMapper):
                 any(kw in portal_type for kw in portal_keywords) if portal_keywords else False
             )
 
-            # Return tuple: (type_match as int, confidence)
-            # This prioritizes type matches first, then confidence within each group
-            return (int(type_match), mapping["confidence"])
+            # Prefer map-restricted assets (more specific/appropriate) over unrestricted ones
+            is_restricted = bool(portal_asset.level_restrictions)
+
+            # Return tuple: (type_match, is_restricted, confidence)
+            # Prioritizes: 1) type matches, 2) map-specific assets, 3) confidence
+            return (int(type_match), int(is_restricted), mapping["confidence"])
 
         category_mappings.sort(key=sort_key, reverse=True)
 
@@ -285,7 +294,8 @@ class AssetMapper(IAssetMapper):
 
         # Step 2: If no mapped alternatives found, search entire Portal catalog for type matches
         if portal_keywords:
-            # Search all Portal assets for matching type keywords available on target map
+            # Collect all matching assets from catalog
+            catalog_matches = []
             for portal_type, portal_asset in self.portal_assets.items():
                 portal_type_lower = portal_type.lower()
 
@@ -293,8 +303,16 @@ class AssetMapper(IAssetMapper):
                 if any(
                     kw in portal_type_lower for kw in portal_keywords
                 ) and self._is_asset_available_on_map(portal_asset, target_map):
-                    print(f"  ℹ️  Using catalog alternative: {portal_type} for {source_asset}")
-                    return portal_asset
+                    catalog_matches.append((portal_type, portal_asset))
+
+            # Sort: prefer map-restricted (more specific) over unrestricted
+            catalog_matches.sort(key=lambda x: bool(x[1].level_restrictions), reverse=True)
+
+            # Return first match (most appropriate)
+            if catalog_matches:
+                portal_type, portal_asset = catalog_matches[0]
+                print(f"  ℹ️  Using catalog alternative: {portal_type} for {source_asset}")
+                return portal_asset
 
         return None
 

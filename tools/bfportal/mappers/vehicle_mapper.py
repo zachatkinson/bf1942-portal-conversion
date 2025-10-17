@@ -74,15 +74,35 @@ class VehicleMapper:
     def _build_mappings(self) -> dict[str, VehicleMapping]:
         """Build complete BF1942 to BF6 vehicle mapping table.
 
+        SOLID: Single Responsibility - orchestrates mapping construction by delegating
+        to specialized methods for each vehicle category.
+
         Returns:
             Dictionary mapping BF1942 vehicle names to VehicleMapping objects
         """
         mappings: dict[str, VehicleMapping] = {}
 
-        # ========================================
-        # TANKS - Heavy Armor
-        # ========================================
-        # Convention: Axis → non-NATO (Leopard), Allied → NATO (Abrams)
+        # Delegate to category-specific mapping methods (DRY/SOLID)
+        mappings.update(self._map_tanks())
+        mappings.update(self._map_tank_destroyers())
+        mappings.update(self._map_wheeled_vehicles())
+        mappings.update(self._map_anti_aircraft())
+        mappings.update(self._map_aircraft())
+        mappings.update(self._map_naval_vessels())
+        mappings.update(self._map_motorcycles())
+        mappings.update(self._map_special_objects())
+
+        return mappings
+
+    def _map_tanks(self) -> dict[str, VehicleMapping]:
+        """Map WW2 tanks to modern equivalents.
+
+        Convention: Axis → non-NATO (Leopard), Allied → NATO (Abrams)
+
+        Returns:
+            Tank mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # German Tanks (Axis) → Leopard (non-NATO)
         german_tanks = [
@@ -174,9 +194,15 @@ class VehicleMapper:
                 notes="Japanese light WW2 tank (Axis) → Leopard 2 (non-NATO)",
             )
 
-        # ========================================
-        # TANK DESTROYERS & ASSAULT GUNS
-        # ========================================
+        return mappings
+
+    def _map_tank_destroyers(self) -> dict[str, VehicleMapping]:
+        """Map WW2 tank destroyers and assault guns to modern equivalents.
+
+        Returns:
+            Tank destroyer mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # German TD/assault guns (Axis) → CV90 (non-NATO)
         german_td = [
@@ -212,9 +238,15 @@ class VehicleMapper:
                 notes="American self-propelled gun (Allied) → M2Bradley (NATO)",
             )
 
-        # ========================================
-        # WHEELED VEHICLES & TRANSPORTS
-        # ========================================
+        return mappings
+
+    def _map_wheeled_vehicles(self) -> dict[str, VehicleMapping]:
+        """Map WW2 wheeled vehicles and transports to modern equivalents.
+
+        Returns:
+            Wheeled vehicle mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Jeeps & Light Vehicles → Quadbike
         light_vehicles = [
@@ -257,9 +289,15 @@ class VehicleMapper:
                 notes="WW2 halftrack/APC → Modern Vector transport",
             )
 
-        # ========================================
-        # ANTI-AIRCRAFT
-        # ========================================
+        return mappings
+
+    def _map_anti_aircraft(self) -> dict[str, VehicleMapping]:
+        """Map WW2 anti-aircraft vehicles to modern equivalents.
+
+        Returns:
+            Anti-aircraft vehicle mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         aa_vehicles = [
             "Flak38",
@@ -282,20 +320,40 @@ class VehicleMapper:
                 notes="WW2 AA vehicle → Modern Gepard SPAAG",
             )
 
-        # ========================================
-        # AIRCRAFT - DIVE BOMBERS → ATTACK HELICOPTERS
-        # ========================================
-        # Convention: Axis → non-NATO, Allied → NATO
-        # Dive bombers map to attack helicopters for modern ground attack role
+        return mappings
+
+    def _map_aircraft(self) -> dict[str, VehicleMapping]:
+        """Map WW2 aircraft to modern equivalents.
+
+        SOLID: Single Responsibility - orchestrates aircraft mapping by delegating
+        to specialized methods for each aircraft category.
+
+        Returns:
+            Aircraft mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
+
+        # Delegate to aircraft subcategory methods
+        mappings.update(self._map_bombers())
+        mappings.update(self._map_fighters())
+        mappings.update(self._map_transport_aircraft())
+        mappings.update(self._map_experimental_aircraft())
+        mappings.update(self._map_artillery())
+
+        return mappings
+
+    def _map_bombers(self) -> dict[str, VehicleMapping]:
+        """Map WW2 bombers to modern attack helicopters and jets.
+
+        Convention: Axis → non-NATO, Allied → NATO
+
+        Returns:
+            Bomber mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Axis Dive Bombers (German) → Eurocopter (non-NATO)
-        axis_bombers = [
-            "Ju87",
-            "Stuka",
-            "stuka",
-            "Ju88",
-            "Ju88A",
-        ]
+        axis_bombers = ["Ju87", "Stuka", "stuka", "Ju88", "Ju88A"]
         for aircraft in axis_bombers:
             mappings[aircraft] = VehicleMapping(
                 bf1942_name=aircraft,
@@ -306,12 +364,7 @@ class VehicleMapper:
             )
 
         # Allied Dive Bombers (Soviet) → AH64 Apache (NATO/American)
-        allied_bombers = [
-            "IL2",
-            "IL-2",
-            "Ilyushin",
-            "Sturmovik",
-        ]
+        allied_bombers = ["IL2", "IL-2", "Ilyushin", "Sturmovik"]
         for aircraft in allied_bombers:
             mappings[aircraft] = VehicleMapping(
                 bf1942_name=aircraft,
@@ -322,12 +375,7 @@ class VehicleMapper:
             )
 
         # Allied Heavy Bombers → F16 (NATO/American)
-        heavy_bombers = [
-            "B17",
-            "b17",
-            "B-17",
-            "Lancaster",
-        ]
+        heavy_bombers = ["B17", "b17", "B-17", "Lancaster"]
         for bomber in heavy_bombers:
             mappings[bomber] = VehicleMapping(
                 bf1942_name=bomber,
@@ -337,10 +385,17 @@ class VehicleMapper:
                 notes="WW2 strategic bomber (Allied) → F-16 (NATO/American)",
             )
 
-        # ========================================
-        # AIRCRAFT - FIGHTERS
-        # ========================================
-        # Convention: Axis → non-NATO (SU57), Allied → NATO (F16)
+        return mappings
+
+    def _map_fighters(self) -> dict[str, VehicleMapping]:
+        """Map WW2 fighters to modern jets.
+
+        Convention: Axis → non-NATO (SU57), Allied → NATO (F16)
+
+        Returns:
+            Fighter mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Axis Fighters (German, Japanese) → SU57 (non-NATO)
         axis_fighters = [
@@ -389,20 +444,20 @@ class VehicleMapper:
                 notes="Allied fighter → F-16 (NATO/American)",
             )
 
-        # ========================================
-        # TRANSPORT AIRCRAFT & HELICOPTERS
-        # ========================================
-        # Convention: Axis → non-NATO (Eurocopter), Allied → NATO (UH60)
+        return mappings
+
+    def _map_transport_aircraft(self) -> dict[str, VehicleMapping]:
+        """Map WW2 transport aircraft to modern helicopters.
+
+        Convention: Axis → non-NATO (Eurocopter), Allied → NATO (UH60)
+
+        Returns:
+            Transport aircraft mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Allied Transport Aircraft → UH60 (NATO)
-        allied_transports = [
-            "C47",
-            "c47",
-            "Dakota",
-            "SBD",
-            "sbd",
-            "Dauntless",
-        ]
+        allied_transports = ["C47", "c47", "Dakota", "SBD", "sbd", "Dauntless"]
         for transport in allied_transports:
             mappings[transport] = VehicleMapping(
                 bf1942_name=transport,
@@ -412,14 +467,8 @@ class VehicleMapper:
                 notes="Allied transport aircraft → UH-60 Black Hawk (NATO)",
             )
 
-        # German Transport/Recon Aircraft → Eurocopter (non-NATO)
-        axis_transports = [
-            "Fi156",
-            "fi156",
-            "Storch",
-            "Flettner",
-            "flettner",
-        ]
+        # Axis Transport/Recon Aircraft → Eurocopter (non-NATO)
+        axis_transports = ["Fi156", "fi156", "Storch", "Flettner", "flettner"]
         for transport in axis_transports:
             mappings[transport] = VehicleMapping(
                 bf1942_name=transport,
@@ -429,10 +478,17 @@ class VehicleMapper:
                 notes="Axis transport/recon aircraft → Eurocopter Tiger (non-NATO)",
             )
 
-        # ========================================
-        # EXPERIMENTAL & SECRET WEAPONS
-        # ========================================
-        # Convention: Axis → non-NATO, Allied → NATO
+        return mappings
+
+    def _map_experimental_aircraft(self) -> dict[str, VehicleMapping]:
+        """Map WW2 experimental and secret weapons aircraft to modern jets.
+
+        Convention: Axis → non-NATO, Allied → NATO
+
+        Returns:
+            Experimental aircraft mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Axis Experimental Aircraft → SU57 (non-NATO)
         axis_experimental = [
@@ -457,14 +513,7 @@ class VehicleMapper:
             )
 
         # Allied Experimental Aircraft → F16 (NATO)
-        allied_experimental = [
-            "Goblin",
-            "goblin",
-            "XF85",
-            "xf85",
-            "AW52",
-            "aw52",
-        ]
+        allied_experimental = ["Goblin", "goblin", "XF85", "xf85", "AW52", "aw52"]
         for experimental in allied_experimental:
             mappings[experimental] = VehicleMapping(
                 bf1942_name=experimental,
@@ -474,10 +523,17 @@ class VehicleMapper:
                 notes="Allied experimental aircraft → F-16 (NATO/American)",
             )
 
-        # ========================================
-        # ARTILLERY & STATIONARY WEAPONS
-        # ========================================
-        # These don't convert to vehicles, but map them for completeness
+        return mappings
+
+    def _map_artillery(self) -> dict[str, VehicleMapping]:
+        """Map WW2 artillery and stationary weapons to vehicle placeholders.
+
+        These don't convert to vehicles, but map them for completeness.
+
+        Returns:
+            Artillery mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Axis Artillery → Gepard (closest available)
         axis_artillery = [
@@ -503,15 +559,8 @@ class VehicleMapper:
                 notes="Axis artillery/AA → Gepard SPAAG (non-NATO, stationary weapons unsupported)",
             )
 
-        # Allied Artillery → Gepard (closest available)
-        allied_artillery = [
-            "Katyusha",
-            "katyusha",
-            "Priest",
-            "priest",
-            "Sexton",
-            "sexton",
-        ]
+        # Allied Artillery → M2Bradley
+        allied_artillery = ["Katyusha", "katyusha", "Priest", "priest", "Sexton", "sexton"]
         for arty in allied_artillery:
             mappings[arty] = VehicleMapping(
                 bf1942_name=arty,
@@ -521,11 +570,17 @@ class VehicleMapper:
                 notes="Allied artillery/SPG → M2Bradley (NATO, mobile fire support)",
             )
 
-        # ========================================
-        # NAVAL - CAPITAL SHIPS
-        # ========================================
-        # Large ships don't have Portal equivalents - map to hovercraft as placeholder
-        # Convention: Axis → non-NATO themed, Allied → NATO themed
+        return mappings
+
+    def _map_naval_vessels(self) -> dict[str, VehicleMapping]:
+        """Map WW2 naval vessels to modern equivalents.
+
+        Large ships don't have Portal equivalents - map to hovercraft as placeholder.
+
+        Returns:
+            Naval vessel mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         # Axis Capital Ships → Flyer60 (placeholder)
         axis_capital_ships = [
@@ -632,9 +687,15 @@ class VehicleMapper:
                 notes="WW2 landing craft → Modern Flyer60 hovercraft",
             )
 
-        # ========================================
-        # MOTORCYCLES & BICYCLES
-        # ========================================
+        return mappings
+
+    def _map_motorcycles(self) -> dict[str, VehicleMapping]:
+        """Map WW2 motorcycles and bicycles to modern equivalents.
+
+        Returns:
+            Motorcycle mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         motorcycles = [
             "Motorcycle",
@@ -655,11 +716,17 @@ class VehicleMapper:
                 notes="WW2 motorcycle/bicycle → Modern quadbike",
             )
 
-        # ========================================
-        # SPECIAL STRUCTURES & OBJECTS
-        # ========================================
-        # These aren't vehicles but appear in spawner templates
-        # Map to closest available vehicle type
+        return mappings
+
+    def _map_special_objects(self) -> dict[str, VehicleMapping]:
+        """Map special structures and objects to vehicle placeholders.
+
+        These aren't vehicles but appear in spawner templates.
+
+        Returns:
+            Special object mappings dictionary
+        """
+        mappings: dict[str, VehicleMapping] = {}
 
         special_objects = [
             "DefGun",

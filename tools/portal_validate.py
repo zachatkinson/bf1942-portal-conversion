@@ -38,6 +38,24 @@ from typing import Any
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
+# Import CLI utilities (DRY/SOLID)
+from bfportal.cli import (
+    EXIT_ERROR,
+    EXIT_SUCCESS,
+    EXIT_VALIDATION_ERROR,
+    create_base_parser,
+    handle_cli_errors,
+    print_divider,
+    print_error,
+    print_header,
+    print_info,
+    print_separator,
+    print_subheader,
+)
+
+# Import constants (DRY principle - no magic numbers)
+from bfportal.generators.constants import MIN_SPAWNS_PER_TEAM
+
 
 @dataclass
 class ValidationResult:
@@ -89,10 +107,8 @@ class PortalMapValidator:
         """
         self.results = []
 
-        print("=" * 70)
-        print(f"🔍 Validating Map: {tscn_path.name}")
-        print("=" * 70)
-        print()
+        print_header(f"Validating Map: {tscn_path.name}")
+        print_separator()
 
         # Read .tscn file
         with open(tscn_path) as f:
@@ -211,15 +227,13 @@ class PortalMapValidator:
         team1_spawns = len(re.findall(r'name="SpawnPoint_1_\d+"', content))
         team2_spawns = len(re.findall(r'name="SpawnPoint_2_\d+"', content))
 
-        # Check minimum spawns (Portal requires at least 4 per team)
-        min_spawns = 4
-
-        if team1_spawns < min_spawns:
+        # Check minimum spawns (use constant from gameplay.py - DRY principle)
+        if team1_spawns < MIN_SPAWNS_PER_TEAM:
             self.results.append(
                 ValidationResult(
                     check_name="Team 1 Spawns",
                     passed=False,
-                    message=f"Team 1 has only {team1_spawns} spawn(s), minimum {min_spawns} required",
+                    message=f"Team 1 has only {team1_spawns} spawn(s), minimum {MIN_SPAWNS_PER_TEAM} required",
                     severity="error",
                 )
             )
@@ -233,12 +247,12 @@ class PortalMapValidator:
                 )
             )
 
-        if team2_spawns < min_spawns:
+        if team2_spawns < MIN_SPAWNS_PER_TEAM:
             self.results.append(
                 ValidationResult(
                     check_name="Team 2 Spawns",
                     passed=False,
-                    message=f"Team 2 has only {team2_spawns} spawn(s), minimum {min_spawns} required",
+                    message=f"Team 2 has only {team2_spawns} spawn(s), minimum {MIN_SPAWNS_PER_TEAM} required",
                     severity="error",
                 )
             )
@@ -369,11 +383,9 @@ class PortalMapValidator:
 
     def _report_results(self) -> None:
         """Report validation results."""
-        print()
-        print("=" * 70)
-        print("📊 Validation Results")
-        print("=" * 70)
-        print()
+        print_separator()
+        print_header("Validation Results")
+        print_separator()
 
         errors = []
         warnings = []
@@ -389,38 +401,38 @@ class PortalMapValidator:
 
         # Report errors
         if errors:
-            print("❌ ERRORS:")
+            print_subheader("ERRORS")
             for r in errors:
                 print(f"   - {r.check_name}: {r.message}")
-            print()
+            print_separator()
 
         # Report warnings
         if warnings:
-            print("⚠️  WARNINGS:")
+            print_subheader("WARNINGS")
             for r in warnings:
                 print(f"   - {r.check_name}: {r.message}")
-            print()
+            print_separator()
 
         # Report passed checks
         if info:
-            print("✅ PASSED:")
+            print_subheader("PASSED")
             for r in info:
                 print(f"   - {r.check_name}: {r.message}")
-            print()
+            print_separator()
 
         # Summary
         len(self.results)
         passed = len([r for r in self.results if r.passed])
 
-        print("=" * 70)
+        print_divider()
         if errors:
-            print(f"❌ VALIDATION FAILED: {len(errors)} error(s), {len(warnings)} warning(s)")
+            print_error(f"VALIDATION FAILED: {len(errors)} error(s), {len(warnings)} warning(s)")
         elif warnings:
-            print(f"⚠️  VALIDATION PASSED WITH WARNINGS: {len(warnings)} warning(s)")
+            print_info(f"VALIDATION PASSED WITH WARNINGS: {len(warnings)} warning(s)")
         else:
-            print(f"✅ VALIDATION PASSED: All {passed} checks passed")
-        print("=" * 70)
-        print()
+            print_info(f"VALIDATION PASSED: All {passed} checks passed")
+        print_divider()
+        print_separator()
 
 
 class PortalValidateApp:
@@ -430,16 +442,18 @@ class PortalValidateApp:
         """Initialize the app."""
         self.args: argparse.Namespace
 
-    def parse_args(self) -> argparse.Namespace:
+    def parse_args(self) -> argparse.Namespace:  # type: ignore[type-arg]
         """Parse command-line arguments.
 
         Returns:
             Parsed arguments namespace
         """
-        parser = argparse.ArgumentParser(
+        parser = create_base_parser(
             description="Validate Portal maps for compatibility",
-            formatter_class=argparse.RawDescriptionHelpFormatter,
-            epilog="""
+            add_verbose=False,  # Not needed for validation
+        )
+
+        parser.epilog = """
 Examples:
   # Validate a single map
   python3 tools/portal_validate.py GodotProject/levels/Kursk.tscn
@@ -459,8 +473,7 @@ Validation Checks:
   - Combat Area: Proper boundary definition
   - Assets: Valid Portal asset references
   - Bounds: All objects within playable area
-            """,
-        )
+"""
 
         parser.add_argument("maps", type=Path, nargs="+", help=".tscn files to validate")
 
@@ -475,18 +488,17 @@ Validation Checks:
 
         return parser.parse_args()
 
+    @handle_cli_errors(verbose=False)
     def run(self) -> int:
         """Execute validation.
 
         Returns:
-            Exit code (0 for success, 1 for error)
+            Exit code (EXIT_SUCCESS for success, EXIT_ERROR/EXIT_VALIDATION_ERROR for errors)
         """
         self.args = self.parse_args()
 
-        print("=" * 70)
-        print("🔍 Portal Map Validator")
-        print("=" * 70)
-        print()
+        print_header("Portal Map Validator")
+        print_separator()
 
         # Create validator
         validator = PortalMapValidator(self.args.sdk_root)
@@ -496,7 +508,7 @@ Validation Checks:
         # Validate each map
         for map_path in self.args.maps:
             if not map_path.exists():
-                print(f"❌ Error: Map not found: {map_path}")
+                print_error(f"Map not found: {map_path}")
                 all_passed = False
                 continue
 
@@ -506,25 +518,25 @@ Validation Checks:
                     all_passed = False
 
             except Exception as e:
-                print(f"❌ Error validating {map_path}: {e}")
+                print_error(f"Error validating {map_path}: {e}")
                 import traceback
 
                 traceback.print_exc()
                 all_passed = False
 
-            print()
+            print_separator()
 
         # Final summary
         if len(self.args.maps) > 1:
-            print("=" * 70)
-            print(f"📊 Overall Summary: {len(self.args.maps)} map(s) validated")
+            print_divider()
+            print_info(f"Overall Summary: {len(self.args.maps)} map(s) validated")
             if all_passed:
-                print("✅ All maps passed validation")
+                print_info("All maps passed validation")
             else:
-                print("❌ Some maps failed validation")
-            print("=" * 70)
+                print_error("Some maps failed validation")
+            print_divider()
 
-        return 0 if all_passed else 1
+        return EXIT_SUCCESS if all_passed else EXIT_VALIDATION_ERROR
 
 
 def main() -> None:

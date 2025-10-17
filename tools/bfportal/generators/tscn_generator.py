@@ -16,13 +16,11 @@ Date: 2025-10-11
 """
 # ruff: noqa: F405
 
-import json
 import math
 from pathlib import Path
 
 from ..core.exceptions import ValidationError
 from ..core.interfaces import (
-    CapturePoint,
     GameObject,
     ISceneGenerator,
     MapData,
@@ -30,11 +28,14 @@ from ..core.interfaces import (
     Vector3,
 )
 from ..transforms.centering_service import CenteringService
+from .components.asset_catalog import AssetCatalog
 from .components.asset_registry import AssetRegistry
 from .components.transform_formatter import TransformFormatter
 from .constants import *  # Import all constants from modular constants package  # noqa: F403, F405
+from .node_generators.capture_point_generator import CapturePointGenerator
 from .node_generators.stationary_emplacement_generator import StationaryEmplacementGenerator
 from .node_generators.vehicle_spawner_generator import VehicleSpawnerGenerator
+from .node_generators.world_icon_generator import WorldIconGenerator
 
 
 class TscnGenerator(ISceneGenerator):
@@ -61,42 +62,24 @@ class TscnGenerator(ISceneGenerator):
         )
         self.min_safe_y: float = 0.0  # Minimum safe Y for object placement (above terrain)
         self.asset_type_to_ext_id: dict[str, str] = {}  # Maps asset type to ExtResource ID
-        self.asset_catalog: dict[str, dict] = {}  # Maps asset type to Portal metadata
-        self._load_asset_catalog()
+
+        # DRY/SOLID: Use AssetCatalog class for scene path resolution (single source of truth)
+        self.asset_catalog = AssetCatalog()  # Shared asset catalog instance
 
         # SOLID: Dependency Injection - Use specialized generators
+        self.capture_point_generator = CapturePointGenerator()
+        self.world_icon_generator = WorldIconGenerator()
         self.vehicle_spawner_generator = VehicleSpawnerGenerator()
         self.stationary_emplacement_generator = StationaryEmplacementGenerator()
         self.transform_formatter = TransformFormatter()
         self.asset_registry = AssetRegistry()  # Tracks ExtResource IDs
         self.centering_service = centering_service or CenteringService()  # DRY centering logic
 
-    def _load_asset_catalog(self) -> None:
-        """Load Portal asset catalog from asset_types.json."""
-        from .constants.paths import get_asset_types_path
-
-        catalog_path = get_asset_types_path()
-
-        if not catalog_path.exists():
-            print(f"⚠️  Warning: asset_types.json not found at {catalog_path}")
-            return
-
-        try:
-            with open(catalog_path) as f:
-                data = json.load(f)
-                for asset in data.get("AssetTypes", []):
-                    asset_type = asset.get("type")
-                    directory = asset.get("directory", "")
-                    if asset_type:
-                        self.asset_catalog[asset_type] = {
-                            "directory": directory,
-                            "level_restrictions": asset.get("levelRestrictions", []),
-                        }
-        except Exception as e:
-            print(f"⚠️  Warning: Failed to load asset catalog: {e}")
-
     def _get_asset_scene_path(self, asset_type: str) -> str | None:
         """Get Godot scene path for an asset type.
+
+        DRY/SOLID: Delegates to AssetCatalog for scene path resolution.
+        Single source of truth for path patterns.
 
         Args:
             asset_type: Asset type name (e.g., "Birch_01_L")
@@ -111,71 +94,16 @@ class TscnGenerator(ISceneGenerator):
         if debug_this:
             self._debug_asset_count += 1
 
-        # First check asset catalog
-        if asset_type in self.asset_catalog:
-            directory = self.asset_catalog[asset_type]["directory"]
+        # DRY: Delegate to AssetCatalog (single source of truth for path resolution)
+        scene_path = self.asset_catalog.get_scene_path(asset_type, self.base_terrain)
 
-            if debug_this:
-                print(f"\n   🔍 DEBUG: Looking for {asset_type}")
-                print(f"      Catalog directory: {directory}")
-
-            # Portal SDK structure:
-            # NOTE: The catalog's "directory" field already contains the FULL path including
-            # "Generic/Common/" prefix when applicable. We should NOT prepend it again.
-            # - Map-specific: res://objects/<MapName>/<Terrain>/directory/asset.tscn
-            # - Shared: res://objects/Shared/directory/asset.tscn
-
-            # Try map-specific and shared paths
-            if self.base_terrain == "MP_Tungsten":
-                paths_to_try = [
-                    # Tajikistan/MP_Tungsten map-specific path
-                    f"res://objects/Tajikistan/{self.base_terrain}/{directory}/{asset_type}.tscn",
-                    # Tajikistan/Shared (region-specific shared assets)
-                    f"res://objects/Tajikistan/Shared/{directory}/{asset_type}.tscn",
-                    # Shared path (most common)
-                    f"res://objects/Shared/{directory}/{asset_type}.tscn",
-                    # Global fallback
-                    f"res://objects/Global/{directory}/{asset_type}.tscn",
-                ]
+        if debug_this:
+            if scene_path:
+                print(f"\n   🔍 DEBUG: Found {asset_type} → {scene_path}")
             else:
-                # For other maps, use standard paths
-                paths_to_try = [
-                    f"res://objects/Shared/{directory}/{asset_type}.tscn",
-                    f"res://objects/Global/{directory}/{asset_type}.tscn",
-                ]
+                print(f"\n   ⚠️  DEBUG: {asset_type} NOT found in catalog")
 
-            # Check which path actually exists on disk
-            # Handle both running from Portal SDK root and from GodotProject
-            cwd = Path.cwd()
-            if cwd.name == "GodotProject" or (cwd / "project.godot").exists():
-                # Already in GodotProject directory
-                project_root = cwd
-            else:
-                # In Portal SDK root, navigate to GodotProject
-                project_root = cwd / "GodotProject"
-
-            if debug_this:
-                print(f"      Project root: {project_root}")
-                print("      Trying paths:")
-
-            for res_path in paths_to_try:
-                # Convert res:// path to filesystem path
-                fs_path = project_root / res_path.replace("res://", "")
-                if debug_this:
-                    exists_str = "✅ FOUND" if fs_path.exists() else "❌ Not found"
-                    print(f"         {res_path}")
-                    print(f"            → {fs_path} [{exists_str}]")
-                if fs_path.exists():
-                    return res_path
-
-            # If none exist, return None to signal asset not found
-            if debug_this:
-                print(f"      ⚠️  No valid path found for {asset_type}")
-            return None
-        else:
-            if debug_this:
-                print(f"\n   ⚠️  DEBUG: {asset_type} NOT in catalog")
-            return None
+        return scene_path
 
     def generate(
         self,
@@ -269,7 +197,7 @@ class TscnGenerator(ISceneGenerator):
 
         # Capture points (can now snap to terrain)
         if map_data.capture_points:
-            lines.extend(self._generate_capture_points(map_data.capture_points))
+            lines.extend(self._generate_capture_points(map_data))
 
         # Vehicle spawners (can now snap to terrain)
         # Pass full map_data so generator has access to HQ positions for team assignment
@@ -457,6 +385,7 @@ class TscnGenerator(ISceneGenerator):
             f'[node name="TEAM_1_HQ" parent="." node_paths=PackedStringArray("HQArea", "InfantrySpawns") instance=ExtResource("{EXT_RESOURCE_HQ_SPAWNER}")]'
         )
         lines.append(f"transform = {self.transform_formatter.format(team1_hq_transform)}")
+        lines.append("Team = 1")
         lines.append("AltTeam = 0")
         lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START}")
@@ -495,6 +424,7 @@ class TscnGenerator(ISceneGenerator):
             f'[node name="TEAM_2_HQ" parent="." node_paths=PackedStringArray("HQArea", "InfantrySpawns") instance=ExtResource("{EXT_RESOURCE_HQ_SPAWNER}")]'
         )
         lines.append(f"transform = {self.transform_formatter.format(team2_hq_transform)}")
+        lines.append("Team = 2")
         lines.append("AltTeam = 0")
         lines.append("VehicleSpawnersEnabled = true")
         lines.append(f"ObjId = {OBJID_HQ_START + 1}")
@@ -565,103 +495,43 @@ class TscnGenerator(ISceneGenerator):
             return Transform(safe_pos, transform.rotation, transform.scale)
         return transform
 
-    def _generate_capture_points(self, capture_points: list[CapturePoint]) -> list[str]:
+    def _generate_capture_points(self, map_data: MapData) -> list[str]:
         """Generate capture point nodes with spawn points.
 
+        SOLID/DRY: Delegates to CapturePointGenerator and WorldIconGenerator.
+
         Args:
-            capture_points: List of capture points
+            map_data: Complete map data with capture points
 
         Returns:
             List of .tscn lines
         """
-        lines = []
+        lines: list[str] = []
 
-        for i, cp in enumerate(capture_points, 1):
-            # __post_init__ ensures these are never None, but need explicit check for mypy
-            team1_spawns = cp.team1_spawns if cp.team1_spawns is not None else []
-            team2_spawns = cp.team2_spawns if cp.team2_spawns is not None else []
+        if not map_data.capture_points:
+            return lines
 
-            # Build spawn arrays
-            team1_spawn_paths = [
-                f'NodePath("CP{i}_Spawn_1_{j + 1}")' for j in range(len(team1_spawns))
-            ]
-            team2_spawn_paths = [
-                f'NodePath("CP{i}_Spawn_2_{j + 1}")' for j in range(len(team2_spawns))
-            ]
-
-            team1_spawns_str = ", ".join(team1_spawn_paths) if team1_spawn_paths else ""
-            team2_spawns_str = ", ".join(team2_spawn_paths) if team2_spawn_paths else ""
-
-            # Build node_paths array for Portal SDK compatibility
-            node_paths = ["CaptureArea"]
-            if team1_spawn_paths:
-                node_paths.append("InfantrySpawnPoints_Team1")
-            if team2_spawn_paths:
-                node_paths.append("InfantrySpawnPoints_Team2")
-            node_paths_str = ", ".join([f'"{path}"' for path in node_paths])
-
-            lines.append(
-                f'[node name="CapturePoint_{i}" parent="." node_paths=PackedStringArray({node_paths_str}) instance=ExtResource("{EXT_RESOURCE_CAPTURE_POINT}")]'
+        # Delegate to CapturePointGenerator
+        # SOLID: Single Responsibility - capture point logic centralized
+        # DRY: No duplicated capture point generation code
+        lines.extend(
+            self.capture_point_generator.generate(
+                map_data=map_data,
+                asset_registry=self.asset_registry,
+                transform_formatter=self.transform_formatter,
+                min_safe_y=self.min_safe_y,
             )
-            # Ensure capture point is above terrain for snapping
-            safe_cp_transform = self._ensure_safe_height(cp.transform)
-            lines.append(f"transform = {self.transform_formatter.format(safe_cp_transform)}")
-            lines.append("Team = 0")  # Neutral
-            lines.append(f"ObjId = {OBJID_CAPTURE_POINTS_START + i}")
-            lines.append(f'CaptureArea = NodePath("CaptureZone_{i}")')
+        )
 
-            # Add spawn arrays if capture point has spawns
-            if team1_spawn_paths:
-                lines.append(f"InfantrySpawnPoints_Team1 = [{team1_spawns_str}]")
-            if team2_spawn_paths:
-                lines.append(f"InfantrySpawnPoints_Team2 = [{team2_spawns_str}]")
-
-            lines.append("")
-
-            # Add capture zone using BF1942 radius
-            radius = cp.radius
-            lines.append(
-                f'[node name="CaptureZone_{i}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_POLYGON_VOLUME}")]'
+        # Delegate to WorldIconGenerator for CP labels
+        # SOLID: Single Responsibility - world icon logic centralized
+        lines.extend(
+            self.world_icon_generator.generate(
+                map_data=map_data,
+                asset_registry=self.asset_registry,
+                transform_formatter=self.transform_formatter,
             )
-            lines.append(f"height = {CAPTURE_ZONE_HEIGHT_M}")
-            # Create square capture zone with BF1942 radius
-            lines.append(
-                f"points = PackedVector2Array(-{radius}, -{radius}, {radius}, -{radius}, {radius}, {radius}, -{radius}, {radius})"
-            )
-            lines.append("")
-
-            # Generate spawn point nodes as children of the capture point
-            for j, spawn in enumerate(team1_spawns, 1):
-                lines.append(
-                    f'[node name="CP{i}_Spawn_1_{j}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_SPAWN_POINT}")]'
-                )
-                rel_transform = self._make_relative_transform(spawn.transform, cp.transform)
-                lines.append(f"transform = {self.transform_formatter.format(rel_transform)}")
-                lines.append("")
-
-            for j, spawn in enumerate(team2_spawns, 1):
-                lines.append(
-                    f'[node name="CP{i}_Spawn_2_{j}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_SPAWN_POINT}")]'
-                )
-                rel_transform = self._make_relative_transform(spawn.transform, cp.transform)
-                lines.append(f"transform = {self.transform_formatter.format(rel_transform)}")
-                lines.append("")
-
-            # Add WorldIcon for capture point label (A, B, C, etc.)
-            # Portal SDK pattern from BombSquad mod - labels set via TypeScript
-            label = chr(64 + i)  # A, B, C, etc. (65=A, 66=B, ...)
-            obj_id = 20 + i - 1  # ObjId starts at 20 (convention from BombSquad)
-            lines.append(
-                f'[node name="CP_Label_{label}" parent="CapturePoint_{i}" instance=ExtResource("{EXT_RESOURCE_WORLD_ICON}")]'
-            )
-            lines.append(
-                "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)"
-            )  # 5m above CP
-            lines.append(f"ObjId = {obj_id}")
-            lines.append(f'IconStringKey = "{label}"')
-            lines.append("iconTextVisible = true")
-            lines.append("iconImageVisible = false")
-            lines.append("")
+        )
 
         return lines
 

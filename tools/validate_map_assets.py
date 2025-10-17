@@ -6,33 +6,15 @@ This tool checks:
 2. Objects positioned outside terrain mesh bounds
 """
 
-import json
 import re
 import sys
 from pathlib import Path
 
 from bfportal.generators.constants.paths import (
-    get_asset_types_path,
     get_level_tscn_path,
     get_terrain_glb_path,
 )
-
-
-def load_asset_catalog() -> dict:
-    """Load Portal asset catalog."""
-    catalog_path = get_asset_types_path()
-    with open(catalog_path) as f:
-        data = json.load(f)
-
-    catalog = {}
-    for asset in data.get("AssetTypes", []):
-        asset_type = asset.get("type")
-        if asset_type:
-            catalog[asset_type] = {
-                "directory": asset.get("directory", ""),
-                "level_restrictions": asset.get("levelRestrictions", []),
-            }
-    return catalog
+from bfportal.validators import AssetCatalog
 
 
 def parse_tscn_objects(tscn_path: Path) -> list[dict]:
@@ -142,13 +124,13 @@ def validate_map_assets(map_name: str, terrain_name: str) -> dict:
     print(f"MAP ASSET VALIDATION: {map_name} on {terrain_name}")
     print(f"{'=' * 70}\n")
 
-    # Load asset catalog and objects
-    catalog = load_asset_catalog()
+    # Load asset catalog and objects using shared DRY utilities
+    catalog = AssetCatalog()
     load_ext_resources(tscn_path)
     objects = parse_tscn_objects(tscn_path)
 
     print(f"📦 Found {len(objects)} static objects in .tscn")
-    print(f"📖 Loaded {len(catalog)} assets from catalog")
+    print(f"📖 Loaded {catalog.get_asset_count()} assets from catalog")
     print()
 
     # Check level restrictions
@@ -159,15 +141,17 @@ def validate_map_assets(map_name: str, terrain_name: str) -> dict:
     for obj in objects:
         asset_type = obj["asset_type"]
 
-        if asset_type in catalog:
-            restrictions = catalog[asset_type]["level_restrictions"]
-            if restrictions and terrain_name not in restrictions:
-                if asset_type not in restricted_assets:
-                    restricted_assets[asset_type] = {
-                        "count": 0,
-                        "allowed_maps": restrictions,
-                    }
-                restricted_assets[asset_type]["count"] += 1
+        # Use shared AssetCatalog methods (DRY principle)
+        if catalog.has_asset(asset_type):
+            if catalog.has_level_restrictions(asset_type):
+                if not catalog.is_allowed_on_map(asset_type, terrain_name):
+                    restrictions = catalog.get_level_restrictions(asset_type)
+                    if asset_type not in restricted_assets:
+                        restricted_assets[asset_type] = {
+                            "count": 0,
+                            "allowed_maps": restrictions,
+                        }
+                    restricted_assets[asset_type]["count"] += 1
 
     if restricted_assets:
         print(f"❌ Found {len(restricted_assets)} asset types with level restrictions violated:\n")

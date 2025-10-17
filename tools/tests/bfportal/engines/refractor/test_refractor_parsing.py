@@ -573,13 +573,17 @@ class TestRefractorEngineParseCapturePoints:
 
         mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
-            "map.con": {
+            "controlpoints.con": {
                 "objects": [
                     {
                         "name": "CP_Center",
                         "type": "ControlPoint",
                         "properties": {},
                     },
+                ]
+            },
+            "map.con": {
+                "objects": [
                     {
                         "name": "spawn_3_1",
                         "type": "SpawnPoint",
@@ -591,7 +595,7 @@ class TestRefractorEngineParseCapturePoints:
                         "properties": {},
                     },
                 ]
-            }
+            },
         }
 
         def mock_parse_transform(obj: dict):
@@ -619,13 +623,17 @@ class TestRefractorEngineParseCapturePoints:
 
         mock_con_files = create_autospec(ConFileSet, instance=True)
         mock_con_files.parse_all.return_value = {
-            "map.con": {
+            "controlpoints.con": {
                 "objects": [
                     {
                         "name": "CP_Center",
                         "type": "ControlPoint",
                         "properties": {},
                     },
+                ]
+            },
+            "map.con": {
+                "objects": [
                     {
                         "name": "spawn_3_1",
                         "type": "SpawnPoint",
@@ -637,7 +645,7 @@ class TestRefractorEngineParseCapturePoints:
                         "properties": {},
                     },
                 ]
-            }
+            },
         }
 
         call_count = [0]

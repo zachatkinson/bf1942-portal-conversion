@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Export a Godot .tscn map to complete Battlefield 6 Portal experience format.
+"""Export a Godot .tscn map to complete Battlefield 6 Portal experience format.
 
 This tool:
 1. Exports the .tscn file to .spatial.json (via gdconverter)
@@ -13,6 +12,10 @@ Usage:
 Examples:
     python3 tools/export_to_portal.py Kursk
     python3 tools/export_to_portal.py Kursk --base-map MP_Tungsten --max-players 64
+
+Author: Zach Atkinson
+AI Assistant: Claude (Anthropic)
+Date: 2025-10-17
 """
 
 import argparse
@@ -22,6 +25,24 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+# Import CLI utilities (DRY/SOLID)
+from bfportal.cli import (
+    EXIT_ERROR,
+    EXIT_EXPORT_ERROR,
+    EXIT_FILE_NOT_FOUND,
+    EXIT_SUCCESS,
+    create_base_parser,
+    handle_cli_errors,
+    print_divider,
+    print_error,
+    print_header,
+    print_info,
+    print_separator,
+    print_success,
+)
 from bfportal.exporters import create_portal_experience, create_spatial_attachment
 from bfportal.generators.constants import (
     EXPERIENCE_GAMEMODE_CUSTOM,
@@ -53,7 +74,7 @@ def export_tscn_to_spatial(tscn_path: Path, asset_dir: Path, output_dir: Path) -
     if not export_script.exists():
         raise RuntimeError(f"Export script not found: {export_script}")
 
-    print(f"Exporting {tscn_path.name} to .spatial.json...")
+    print_info(f"Exporting {tscn_path.name} to .spatial.json...")
 
     result = subprocess.run(
         [sys.executable, str(export_script), str(tscn_path), str(asset_dir), str(output_dir)],
@@ -70,7 +91,7 @@ def export_tscn_to_spatial(tscn_path: Path, asset_dir: Path, output_dir: Path) -
     if not spatial_path.exists():
         raise RuntimeError(f"Expected output file not created: {spatial_path}")
 
-    print(f"✅ Created {spatial_path}")
+    print_success(f"Created {spatial_path}")
     return spatial_path
 
 
@@ -148,7 +169,7 @@ def create_experience_file(
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(experience, f, indent=2)
 
-    print(f"✅ Created {output_file}")
+    print_success(f"Created {output_file}")
     print(f"   Base map: {base_map}")
     print(f"   Max players: {max_players_per_team * 2}")
     print("   Mode: Custom (ModBuilderCustom)")
@@ -158,12 +179,19 @@ def create_experience_file(
     return output_file
 
 
+@handle_cli_errors(verbose=False)
 def main() -> int:
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
+    """Main entry point.
+
+    Returns:
+        Exit code (EXIT_SUCCESS, EXIT_ERROR, EXIT_FILE_NOT_FOUND, or EXIT_EXPORT_ERROR)
+    """
+    parser = create_base_parser(
         description="Export Godot map to complete Portal experience format",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        add_verbose=False,
+    )
+
+    parser.epilog = """
 Examples:
   Export Kursk with default settings:
     %(prog)s Kursk
@@ -184,8 +212,7 @@ Available base maps (choose terrain similar to your map):
   - MP_Dumbo (Brooklyn - urban)
   - MP_FireStorm (Turkmenistan - desert)
   - MP_Limestone (Gibraltar - coastal)
-        """,
-    )
+"""
 
     parser.add_argument("map_name", help="Name of the map to export (e.g., Kursk, El_Alamein)")
 
@@ -225,82 +252,89 @@ Available base maps (choose terrain similar to your map):
     tscn_path = args.tscn_path or project_root / "GodotProject" / "levels" / f"{args.map_name}.tscn"
 
     if not tscn_path.exists():
-        print(f"❌ Error: Map file not found: {tscn_path}", file=sys.stderr)
-        print("\nAvailable maps:", file=sys.stderr)
+        print_error(f"Map file not found: {tscn_path}")
+        print_separator()
+        print_info("Available maps:")
         levels_dir = project_root / "GodotProject" / "levels"
         if levels_dir.exists():
             for tscn in sorted(levels_dir.glob("*.tscn")):
-                print(f"  - {tscn.stem}", file=sys.stderr)
-        return 1
+                print(f"  - {tscn.stem}")
+        return EXIT_FILE_NOT_FOUND
 
     asset_dir = get_fb_export_data_dir()
     output_dir = get_spatial_levels_dir()
 
     if not asset_dir.exists():
-        print(f"❌ Error: FbExportData directory not found: {asset_dir}", file=sys.stderr)
-        return 1
+        print_error(f"FbExportData directory not found: {asset_dir}")
+        return EXIT_FILE_NOT_FOUND
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    try:
-        # Step 1: Export .tscn to .spatial.json
-        print(f"\n{'=' * 60}")
-        print(f"Step 1: Exporting {args.map_name}.tscn to .spatial.json")
-        print(f"{'=' * 60}\n")
+    # Step 1: Export .tscn to .spatial.json
+    print_separator()
+    print_divider()
+    print_header(f"Step 1: Exporting {args.map_name}.tscn to .spatial.json")
+    print_divider()
+    print_separator()
 
-        spatial_path = export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
+    spatial_path = export_tscn_to_spatial(tscn_path, asset_dir, output_dir)
 
-        # DISABLED: Terrain centering is now disabled in tscn_generator.py
-        # Terrain should already be at (0,0,0) in the .tscn file
-        # # Step 1.5: Fix terrain position (Portal requires terrain at 0,0,0)
-        # print("\n🔧 Fixing terrain position for Portal compatibility...")
-        # fix_result = subprocess.run(
-        #     [sys.executable, "tools/fix_spatial_terrain.py", str(spatial_path)],
-        #     capture_output=True,
-        #     text=True,
-        # )
-        # if fix_result.returncode != 0:
-        #     print(f"⚠️  Warning: Terrain fix failed: {fix_result.stderr}")
-        # else:
-        #     print(fix_result.stdout)
+    # DISABLED: Terrain centering is now disabled in tscn_generator.py
+    # Terrain should already be at (0,0,0) in the .tscn file
+    # # Step 1.5: Fix terrain position (Portal requires terrain at 0,0,0)
+    # print("\n🔧 Fixing terrain position for Portal compatibility...")
+    # fix_result = subprocess.run(
+    #     [sys.executable, "tools/fix_spatial_terrain.py", str(spatial_path)],
+    #     capture_output=True,
+    #     text=True,
+    # )
+    # if fix_result.returncode != 0:
+    #     print(f"⚠️  Warning: Terrain fix failed: {fix_result.stderr}")
+    # else:
+    #     print(fix_result.stdout)
 
-        # Step 2: Create complete experience file (unless --spatial-only)
-        if not args.spatial_only:
-            print(f"\n{'=' * 60}")
-            print("Step 2: Creating Portal experience file")
-            print(f"{'=' * 60}\n")
+    # Step 2: Create complete experience file (unless --spatial-only)
+    if not args.spatial_only:
+        print_separator()
+        print_divider()
+        print_header("Step 2: Creating Portal experience file")
+        print_divider()
+        print_separator()
 
-            experience_path = create_experience_file(
-                map_name=args.map_name,
-                spatial_path=spatial_path,
-                base_map=args.base_map,
-                max_players_per_team=args.max_players,
-                description=args.description,
-            )
+        experience_path = create_experience_file(
+            map_name=args.map_name,
+            spatial_path=spatial_path,
+            base_map=args.base_map,
+            max_players_per_team=args.max_players,
+            description=args.description,
+        )
 
-            # Success!
-            print(f"\n{'=' * 60}")
-            print("✅ SUCCESS! Ready to import to Portal")
-            print(f"{'=' * 60}\n")
-            print(f"Import file: {experience_path}")
-            print("\nNext steps:")
-            print("1. Go to portal.battlefield.com")
-            print("2. Click the 'IMPORT' button")
-            print(f"3. Select: {experience_path}")
-            print("4. Your map will appear in Map Rotation!")
-        else:
-            # Spatial-only mode
-            print(f"\n{'=' * 60}")
-            print("✅ Spatial export complete!")
-            print(f"{'=' * 60}\n")
-            print(f"Spatial file: {spatial_path}")
-            print(f"File size: {spatial_path.stat().st_size:,} bytes")
+        # Success!
+        print_separator()
+        print_divider()
+        print_success("SUCCESS! Ready to import to Portal")
+        print_divider()
+        print_separator()
+        print(f"Import file: {experience_path}")
+        print_separator()
+        print_header("Next Steps")
+        print("1. Go to portal.battlefield.com")
+        print("2. Click the 'IMPORT' button")
+        print(f"3. Select: {experience_path}")
+        print("4. Your map will appear in Map Rotation!")
+        print_separator()
+    else:
+        # Spatial-only mode
+        print_separator()
+        print_divider()
+        print_success("Spatial export complete!")
+        print_divider()
+        print_separator()
+        print(f"Spatial file: {spatial_path}")
+        print(f"File size: {spatial_path.stat().st_size:,} bytes")
+        print_separator()
 
-        return 0
-
-    except Exception as e:
-        print(f"\n❌ Error: {e}", file=sys.stderr)
-        return 1
+    return EXIT_SUCCESS
 
 
 if __name__ == "__main__":

@@ -33,6 +33,7 @@ CAPTURE_ZONE_HEIGHT_M = 50.0  # Height of capture zone trigger
 # ==============================================================================
 
 OBJID_HQ_START = 1  # Team HQs: 1, 2
+OBJID_WORLD_ICON_START = 20  # WorldIcon labels (CP labels): 20, 21, 22...
 OBJID_CAPTURE_POINTS_START = 100  # Capture points: 100, 101, 102...
 OBJID_VEHICLE_SPAWNERS_START = 1000  # Vehicle spawners: 1000+
 OBJID_STATIONARY_EMPLACEMENTS_START = 2000  # Weapon emplacements: 2000+

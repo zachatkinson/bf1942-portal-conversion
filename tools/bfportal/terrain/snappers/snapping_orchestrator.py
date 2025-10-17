@@ -64,6 +64,9 @@ class SnappingOrchestrator:
     ) -> SnappingStats:
         """Snap all objects in .tscn file to terrain.
 
+        SOLID: Single Responsibility - orchestrates the snapping workflow by delegating
+        to specialized methods for each step.
+
         Args:
             tscn_path: Input .tscn file
             output_path: Output path (defaults to overwriting input)
@@ -78,23 +81,44 @@ class SnappingOrchestrator:
         if not tscn_path.exists():
             raise FileNotFoundError(f"TSCN file not found: {tscn_path}")
 
-        if output_path is None:
-            output_path = tscn_path
+        output_path = output_path or tscn_path
 
         print(f"\n🎯 Snapping {tscn_path.name} to terrain...")
         if dry_run:
             print("   [DRY RUN MODE - no changes will be written]")
 
-        # Read file
+        # Read input file
         with open(tscn_path) as f:
             lines = f.readlines()
 
-        # Process lines
+        # Process all lines (DRY: extracted to separate method)
+        new_lines, stats, adjustments_shown = self._process_all_lines(lines)
+
+        # Write results (DRY: extracted to separate method)
+        if not dry_run:
+            self._write_snapped_file(tscn_path, output_path, new_lines)
+
+        # Print summary
+        self._print_stats(stats, adjustments_shown, max_shown=10)
+
+        return stats
+
+    def _process_all_lines(self, lines: list[str]) -> tuple[list[str], SnappingStats, int]:
+        """Process all lines in .tscn file and snap objects to terrain.
+
+        SOLID: Single Responsibility - handles the core snapping logic.
+
+        Args:
+            lines: Input .tscn file lines
+
+        Returns:
+            Tuple of (new_lines, stats, adjustments_shown)
+        """
         new_lines = []
         stats = SnappingStats()
         current_node_name = None
         current_asset_type = None
-        current_parent = None  # Track if node has a parent
+        current_parent = None
         skip_terrain_node = False
         adjustments_shown = 0
         max_adjustments_to_show = 10
@@ -197,22 +221,28 @@ class SnappingOrchestrator:
                 # Not a transform line
                 new_lines.append(line)
 
-        # Write results
-        if not dry_run:
-            # Backup original
-            backup_path = tscn_path.with_suffix(".tscn.backup")
-            if tscn_path.exists():
-                tscn_path.rename(backup_path)
-                print(f"\n   📦 Backed up original to {backup_path.name}")
+        return new_lines, stats, adjustments_shown
 
-            with open(output_path, "w") as f:
-                f.writelines(new_lines)
-            print(f"   ✅ Wrote updated .tscn to {output_path}")
+    def _write_snapped_file(self, tscn_path: Path, output_path: Path, new_lines: list[str]) -> None:
+        """Write snapped .tscn file with backup.
 
-        # Print summary
-        self._print_stats(stats, adjustments_shown, max_adjustments_to_show)
+        SOLID: Single Responsibility - handles file writing and backup creation.
 
-        return stats
+        Args:
+            tscn_path: Original .tscn file path (for backup)
+            output_path: Output path to write
+            new_lines: Lines to write to file
+        """
+        # Backup original
+        backup_path = tscn_path.with_suffix(".tscn.backup")
+        if tscn_path.exists():
+            tscn_path.rename(backup_path)
+            print(f"\n   📦 Backed up original to {backup_path.name}")
+
+        # Write new file
+        with open(output_path, "w") as f:
+            f.writelines(new_lines)
+        print(f"   ✅ Wrote updated .tscn to {output_path}")
 
     def _find_snapper(self, node_name: str, asset_type: str | None) -> IObjectSnapper | None:
         """Find appropriate snapper for an object.

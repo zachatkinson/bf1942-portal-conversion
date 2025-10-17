@@ -339,12 +339,12 @@ class TestTscnGenerator:
         assert 'name="CombatArea"' in content
         assert "PackedVector2Array" in content
 
-    def test_generate_capture_points(self, generator):
+    def test_generate_capture_points(self, generator, minimal_map_data):
         """Test capture point generation with spawns."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -377,21 +377,21 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
-        # Assert
-        assert 'name="CapturePoint_1"' in content
+        # Assert - Updated for letter-based naming
+        assert 'name="CapturePointA"' in content
         assert "ObjId = 101" in content
-        assert 'name="CaptureZone_1"' in content
+        assert 'name="CapturePointArea"' in content
         assert "30.0" in content or "30" in content
 
-    def test_generate_capture_points_includes_node_paths_array(self, generator):
+    def test_generate_capture_points_includes_node_paths_array(self, generator, minimal_map_data):
         """Test capture point generation includes Portal SDK node_paths array."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -424,7 +424,7 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
         # Assert - Portal SDK compatibility requires node_paths=PackedStringArray(...)
@@ -432,12 +432,14 @@ class TestTscnGenerator:
         assert '"InfantrySpawnPoints_Team1"' in content
         assert '"InfantrySpawnPoints_Team2"' in content
 
-    def test_generate_capture_points_includes_capture_area_property(self, generator):
+    def test_generate_capture_points_includes_capture_area_property(
+        self, generator, minimal_map_data
+    ):
         """Test capture point generation includes CaptureArea = NodePath property."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -450,18 +452,20 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
-        # Assert - Portal SDK requires CaptureArea = NodePath("CaptureZone_X")
-        assert 'CaptureArea = NodePath("CaptureZone_1")' in content
+        # Assert - Portal SDK requires CaptureArea = NodePath("CapturePointArea")
+        assert 'CaptureArea = NodePath("CapturePointArea")' in content
 
-    def test_generate_capture_points_without_spawns_has_minimal_node_paths(self, generator):
+    def test_generate_capture_points_without_spawns_has_minimal_node_paths(
+        self, generator, minimal_map_data
+    ):
         """Test capture point without spawns only includes CaptureArea in node_paths."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -476,7 +480,7 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
         # Assert - Only CaptureArea should be in node_paths when no spawns
@@ -484,12 +488,12 @@ class TestTscnGenerator:
         assert '"InfantrySpawnPoints_Team1"' not in content
         assert '"InfantrySpawnPoints_Team2"' not in content
 
-    def test_generate_capture_points_uses_correct_ext_resources(self, generator):
+    def test_generate_capture_points_uses_correct_ext_resources(self, generator, minimal_map_data):
         """Test capture point generation uses correct ExtResource IDs."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -502,7 +506,7 @@ class TestTscnGenerator:
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
         # Assert - Check correct ExtResource IDs
@@ -510,12 +514,12 @@ class TestTscnGenerator:
         assert 'instance=ExtResource("10")' in content  # PolygonVolume
         assert 'instance=ExtResource("11")' in content  # WorldIcon
 
-    def test_generate_capture_points_includes_world_icon_labels(self, generator):
+    def test_generate_capture_points_includes_world_icon_labels(self, generator, minimal_map_data):
         """Test capture point generation includes WorldIcon labels (A, B, C, etc.)."""
         # Arrange
         generator.base_terrain = "MP_Tungsten"
         generator._init_ext_resources()
-        capture_points = [
+        minimal_map_data.capture_points = [
             CapturePoint(
                 name="CP1",
                 transform=Transform(
@@ -524,6 +528,7 @@ class TestTscnGenerator:
                 ),
                 radius=30.0,
                 control_area=[],
+                label="A",
             ),
             CapturePoint(
                 name="CP2",
@@ -533,11 +538,12 @@ class TestTscnGenerator:
                 ),
                 radius=30.0,
                 control_area=[],
+                label="B",
             ),
         ]
 
         # Act
-        lines = generator._generate_capture_points(capture_points)
+        lines = generator._generate_capture_points(minimal_map_data)
         content = "\n".join(lines)
 
         # Assert - Check WorldIcon labels
@@ -740,7 +746,7 @@ class TestTscnGenerator:
 
             # Assert
             content = output_path.read_text()
-            assert 'name="CapturePoint_1"' in content
+            assert 'name="CapturePointA"' in content
 
         finally:
             if output_path.exists():

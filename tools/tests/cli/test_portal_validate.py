@@ -11,6 +11,9 @@ import pytest
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+from bfportal.cli import (
+    EXIT_VALIDATION_ERROR,
+)
 from portal_validate import (
     PortalMapValidator,
     PortalValidateApp,
@@ -633,11 +636,11 @@ class TestReportResults:
         captured = capsys.readouterr()
 
         # Assert
-        assert "ERRORS:" in captured.out
+        assert "ERRORS" in captured.out
         assert "Error Check" in captured.out
-        assert "WARNINGS:" in captured.out
+        assert "WARNINGS" in captured.out
         assert "Warning Check" in captured.out
-        assert "PASSED:" in captured.out
+        assert "PASSED" in captured.out
         assert "Info Check" in captured.out
         assert "VALIDATION FAILED" in captured.out
 
@@ -792,7 +795,7 @@ class TestPortalValidateAppRun:
             result = app.run()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_VALIDATION_ERROR
 
     def test_run_returns_error_when_map_not_found(self, tmp_path: Path, capsys):
         """Test run returns error when map file doesn't exist."""
@@ -812,8 +815,8 @@ class TestPortalValidateAppRun:
         captured = capsys.readouterr()
 
         # Assert
-        assert result == 1
-        assert "Error: Map not found" in captured.out
+        assert result == EXIT_VALIDATION_ERROR
+        assert "Map not found" in captured.out
 
     def test_run_handles_exception_during_validation(
         self, tmp_path: Path, valid_tscn_content, capsys
@@ -841,7 +844,7 @@ class TestPortalValidateAppRun:
         captured = capsys.readouterr()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_VALIDATION_ERROR
         assert "Error validating" in captured.out
 
     def test_run_validates_multiple_maps_and_reports_summary(
@@ -908,7 +911,7 @@ class TestPortalValidateAppRun:
         captured = capsys.readouterr()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_VALIDATION_ERROR
         assert "Overall Summary: 2 map(s) validated" in captured.out
         assert "Some maps failed validation" in captured.out
 

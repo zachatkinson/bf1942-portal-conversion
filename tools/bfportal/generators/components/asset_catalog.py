@@ -113,24 +113,47 @@ class AssetCatalog:
             return None
 
         # Portal SDK structure:
-        # - Map-specific: res://objects/<MapName>/<Terrain>/directory/asset.tscn
+        # - Map-specific: res://objects/<Region>/<Terrain>/directory/asset.tscn
         # - Shared: res://objects/Shared/directory/asset.tscn
-        # - Generic: res://objects/<MapName>/<Terrain>/Generic/directory/asset.tscn
+        # - Generic: res://objects/<Region>/<Terrain>/Generic/directory/asset.tscn
 
-        if base_terrain == "MP_Tungsten":
-            # Tungsten uses Tajikistan region structure
-            paths_to_try = [
-                f"res://objects/Tajikistan/{base_terrain}/Generic/Common/{directory}/{asset_type}.tscn",
+        # Map terrain to region (auto-discovered from filesystem)
+        terrain_regions = {
+            "MP_Tungsten": "Tajikistan",
+            "MP_Dumbo": "Tajikistan",
+            "MP_Capstone": "Tajikistan",
+            "MP_FireStorm": "Turkmenistan",
+            "MP_Outskirts": "Cairo",
+            "MP_Battery": "Brooklyn",
+            "MP_Aftermath": "Brooklyn",
+            "MP_Limestone": "Gibraltar",
+            "MP_Abbasid": "Cairo",  # Guess based on Middle East theme
+        }
+
+        region = terrain_regions.get(base_terrain)
+
+        # Build path list dynamically based on region
+        paths_to_try = []
+
+        if region:
+            # Try region-specific paths first
+            paths_to_try.extend(
+                [
+                    f"res://objects/{region}/{base_terrain}/Generic/{directory}/{asset_type}.tscn",
+                    f"res://objects/{region}/{base_terrain}/Generic/Common/{directory}/{asset_type}.tscn",
+                    f"res://objects/{region}/{base_terrain}/{directory}/{asset_type}.tscn",
+                ]
+            )
+
+        # Then try shared/global paths (work for all terrains)
+        paths_to_try.extend(
+            [
+                f"res://objects/Shared/Generic/{directory}/{asset_type}.tscn",
                 f"res://objects/Shared/Generic/Common/{directory}/{asset_type}.tscn",
-                f"res://objects/Tajikistan/{base_terrain}/{directory}/{asset_type}.tscn",
-                f"res://objects/Shared/{directory}/{asset_type}.tscn",
-            ]
-        else:
-            # Other maps use standard paths
-            paths_to_try = [
                 f"res://objects/Shared/{directory}/{asset_type}.tscn",
                 f"res://objects/Global/{directory}/{asset_type}.tscn",
             ]
+        )
 
         # Check which path actually exists on disk
         godot_project = get_godot_project_dir()

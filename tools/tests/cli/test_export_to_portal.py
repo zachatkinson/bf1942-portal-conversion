@@ -12,6 +12,9 @@ import pytest
 # Add tools directory to Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+from bfportal.cli import (
+    EXIT_FILE_NOT_FOUND,
+)
 from export_to_portal import create_experience_file, export_tscn_to_spatial, main
 
 
@@ -171,7 +174,7 @@ class TestMainFunctionFromExportToPortal:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
 
     def test_lists_available_maps_when_tscn_file_missing(self, tmp_path: Path, monkeypatch):
         """Test main lists available maps when .tscn file doesn't exist and levels dir exists."""
@@ -189,7 +192,7 @@ class TestMainFunctionFromExportToPortal:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
 
     def test_returns_error_when_asset_dir_missing(self, tmp_path: Path, monkeypatch):
         """Test main returns error code when FbExportData doesn't exist."""
@@ -206,7 +209,7 @@ class TestMainFunctionFromExportToPortal:
             result = main()
 
         # Assert
-        assert result == 1
+        assert result == EXIT_FILE_NOT_FOUND
 
     def test_returns_success_when_export_completes(self, tmp_path: Path, monkeypatch):
         """Test main returns success code when export completes."""

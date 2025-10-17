@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Create a complete Battlefield 6 Portal experience file from a .spatial.json map.
+"""Create a complete Battlefield 6 Portal experience file from a .spatial.json map.
 
 This tool takes an existing .spatial.json file and wraps it in a complete
 experience format ready for import into the Portal web builder.
@@ -11,6 +10,10 @@ Usage:
 Examples:
     python3 tools/create_experience.py Kursk
     python3 tools/create_experience.py Kursk --base-map MP_Outskirts --max-players 64
+
+Author: Zach Atkinson
+AI Assistant: Claude (Anthropic)
+Date: 2025-10-17
 """
 
 import argparse
@@ -19,6 +22,23 @@ import json
 import sys
 from pathlib import Path
 
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+# Import CLI utilities (DRY/SOLID)
+from bfportal.cli import (
+    EXIT_ERROR,
+    EXIT_FILE_NOT_FOUND,
+    EXIT_SUCCESS,
+    create_base_parser,
+    handle_cli_errors,
+    print_divider,
+    print_error,
+    print_header,
+    print_info,
+    print_separator,
+    print_success,
+)
 from bfportal.exporters import create_portal_experience, create_spatial_attachment
 from bfportal.generators.constants import MAX_PLAYERS_PER_TEAM_DEFAULT
 from bfportal.generators.constants.paths import DIR_FB_EXPORT_LEVELS, get_spatial_json_path
@@ -54,12 +74,12 @@ def create_experience_file(
         raise FileNotFoundError(f"Spatial file not found: {spatial_path}")
 
     # Read the spatial.json file
-    print(f"Reading spatial data from {spatial_path}...")
+    print_info(f"Reading spatial data from {spatial_path}...")
     with open(spatial_path, encoding="utf-8") as f:
         spatial_data = f.read()
 
     # Base64 encode the spatial data
-    print("Encoding spatial data (base64)...")
+    print_info("Encoding spatial data (base64)...")
     spatial_base64 = base64.b64encode(spatial_data.encode("utf-8")).decode("utf-8")
 
     # Create default description if none provided
@@ -69,7 +89,7 @@ def create_experience_file(
             f"Features authentic spawn points, vehicle spawners, and gameplay objects."
         )
 
-    print("Creating experience structure...")
+    print_info("Creating experience structure...")
 
     # Create spatial attachment (used in both mapRotation and root attachments)
     spatial_attachment = create_spatial_attachment(
@@ -102,14 +122,15 @@ def create_experience_file(
 
     # Write the experience file
     output_file = experiences_dir / f"{map_name}_Experience.json"
-    print(f"Writing experience file to {output_file}...")
+    print_info(f"Writing experience file to {output_file}...")
 
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(experience, f, indent=2)
 
-    print(f"\n{'=' * 60}")
-    print(f"✅ Created {output_file}")
-    print(f"{'=' * 60}")
+    print_separator()
+    print_divider()
+    print_success(f"Created {output_file}")
+    print_divider()
     print(f"   Name: {experience['name']}")
     print(f"   Base map: {base_map}")
     print(f"   Game mode: {game_mode}")
@@ -119,17 +140,25 @@ def create_experience_file(
     print(f"   Spatial data: {len(spatial_data):,} bytes")
     print(f"   Encoded size: {len(spatial_base64):,} bytes")
     print(f"   Total file size: {output_file.stat().st_size:,} bytes")
-    print(f"{'=' * 60}\n")
+    print_divider()
+    print_separator()
 
     return output_file
 
 
+@handle_cli_errors(verbose=False)
 def main() -> int:
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
+    """Main entry point.
+
+    Returns:
+        Exit code (EXIT_SUCCESS, EXIT_ERROR, or EXIT_FILE_NOT_FOUND)
+    """
+    parser = create_base_parser(
         description="Create a complete Portal experience file from a .spatial.json map",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        add_verbose=False,  # Not needed for this simple script
+    )
+
+    parser.epilog = """
 Examples:
   Create experience from Kursk.spatial.json with defaults:
     %(prog)s Kursk
@@ -160,8 +189,7 @@ Available base maps (choose terrain similar to your map):
   - MP_Dumbo        (Brooklyn - urban)
   - MP_FireStorm    (Turkmenistan - desert)
   - MP_Limestone    (Gibraltar - coastal)
-        """,
-    )
+"""
 
     parser.add_argument("map_name", help="Name of the map (e.g., Kursk, El_Alamein)")
 
@@ -198,8 +226,9 @@ Available base maps (choose terrain similar to your map):
     spatial_path = args.spatial_path or get_spatial_json_path(args.map_name)
 
     if not spatial_path.exists():
-        print(f"❌ Error: Spatial file not found: {spatial_path}\n", file=sys.stderr)
-        print("Available spatial files:", file=sys.stderr)
+        print_error(f"Spatial file not found: {spatial_path}")
+        print_separator()
+        print_info("Available spatial files:")
         from bfportal.generators.constants.paths import get_project_root
 
         levels_dir = get_project_root() / DIR_FB_EXPORT_LEVELS
@@ -207,38 +236,33 @@ Available base maps (choose terrain similar to your map):
             spatial_files = list(levels_dir.glob("*.spatial.json"))
             if spatial_files:
                 for f in sorted(spatial_files):
-                    print(f"  - {f.stem}", file=sys.stderr)
+                    print(f"  - {f.stem}")
             else:
-                print("  (none found)", file=sys.stderr)
-                print("\nDid you export the map first?", file=sys.stderr)
-                print(f"Run: bash tools/export_map.sh {args.map_name}", file=sys.stderr)
-        return 1
+                print("  (none found)")
+                print_separator()
+                print_info("Did you export the map first?")
+                print(f"Run: bash tools/export_map.sh {args.map_name}")
+        return EXIT_FILE_NOT_FOUND
 
-    try:
-        experience_path = create_experience_file(
-            map_name=args.map_name,
-            spatial_path=spatial_path,
-            base_map=args.base_map,
-            max_players_per_team=args.max_players,
-            game_mode=args.game_mode,
-            description=args.description,
-        )
+    experience_path = create_experience_file(
+        map_name=args.map_name,
+        spatial_path=spatial_path,
+        base_map=args.base_map,
+        max_players_per_team=args.max_players,
+        game_mode=args.game_mode,
+        description=args.description,
+    )
 
-        print("✅ SUCCESS! Ready to import to Portal\n")
-        print("Next steps:")
-        print("1. Go to portal.battlefield.com")
-        print("2. Click 'IMPORT' button")
-        print(f"3. Select: {experience_path.name}")
-        print("4. Your map will appear in the Map Rotation!")
+    print_success("SUCCESS! Ready to import to Portal")
+    print_separator()
+    print_header("Next Steps")
+    print("1. Go to portal.battlefield.com")
+    print("2. Click 'IMPORT' button")
+    print(f"3. Select: {experience_path.name}")
+    print("4. Your map will appear in the Map Rotation!")
+    print_separator()
 
-        return 0
-
-    except Exception as e:
-        print(f"\n❌ Error: {e}", file=sys.stderr)
-        import traceback
-
-        traceback.print_exc()
-        return 1
+    return EXIT_SUCCESS
 
 
 if __name__ == "__main__":
